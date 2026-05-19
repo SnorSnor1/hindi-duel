@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hindi Duel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <h1>Hindi <span>Duel</span></h1>
+    <div class="nav-btns">
+      <button class="nav-btn active" data-screen="quiz">Practice</button>
+      <button class="nav-btn private hidden" data-screen="challenge">Daily Challenge</button>
+      <button class="nav-btn private hidden" data-screen="mistakes">Mistakes</button>
+      <button class="nav-btn private hidden" data-screen="stats">Stats</button>
+      <button class="nav-btn private hidden" data-screen="scoreboard">Scoreboard</button>
+      <button class="nav-btn maaike hidden" data-screen="manage">Manage</button>
+      <button class="nav-btn" id="loginBtn">Log in</button>
+      <button class="nav-btn hidden" id="logoutBtn">Log out</button>
+    </div>
+  </nav>
+  <main>
+    <section id="quiz" class="screen"></section>
+    <section id="challenge" class="screen hidden"></section>
+    <section id="mistakes" class="screen hidden"></section>
+    <section id="stats" class="screen hidden"></section>
+    <section id="scoreboard" class="screen hidden"></section>
+    <section id="manage" class="screen hidden"></section>
+    <section id="login" class="screen hidden"></section>
+  </main>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
