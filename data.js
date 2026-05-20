@@ -8571,6 +8571,59 @@ export const PHASE_DATA = {
           "minister"
         ],
         "category": "Lesson 2b"
+      },
+      {
+        "hindi": "मदद मांगना",
+        "english": [
+          "ask for help",
+          "request help"
+        ],
+        "category": "Lesson 3b"
+      },
+      {
+        "hindi": "धुआं",
+        "english": [
+          "smoke"
+        ],
+        "category": "Lesson 3b"
+      },
+      {
+        "hindi": "गिलहरी",
+        "english": [
+          "squirrel"
+        ],
+        "category": "Lesson 3b"
+      },
+      {
+        "hindi": "जगह",
+        "english": [
+          "place",
+          "space"
+        ],
+        "category": "Lesson 3b"
+      },
+      {
+        "hindi": "पहुंचना",
+        "english": [
+          "reach",
+          "arrive"
+        ],
+        "category": "Lesson 3b"
+      },
+      {
+        "hindi": "हरियाली",
+        "english": [
+          "greenery"
+        ],
+        "category": "Lesson 3b"
+      },
+      {
+        "hindi": "मीनार",
+        "english": [
+          "tower",
+          "minaret"
+        ],
+        "category": "Lesson 3b"
       }
     ]
   }
