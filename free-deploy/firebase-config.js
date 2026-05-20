@@ -1,1 +1,0 @@
-window.HINDI_DUEL_FIREBASE_CONFIG = null;
