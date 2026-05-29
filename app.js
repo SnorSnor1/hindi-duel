@@ -7,6 +7,10 @@ const FIREBASE_STATE_PATH = "hindiDuel/sharedState";
 const CLOUD_SYNC_ENABLED = Boolean(FIREBASE_CONFIG);
 const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xTL5N_-A1YUIWmkjWMl9JWJIkq9RYs4/export?format=csv&gid=0";
 const PHASE2_SHEET_URL = "https://docs.google.com/spreadsheets/d/14BD6b5P1dCkUB9pouUzWuQsN6woZyNpPOkKihyngKHo/export?format=csv&gid=1937597985";
+const DAILY_PHASE2_TARGET = 15;
+const DAILY_MISTAKE_TARGET = 10;
+const PREP_WINDOW_HOURS = 48;
+const MAINTENANCE_STALE_DAYS = 7;
 const CHALLENGE_RESETS = [
   { id: "2026-05-15-initial-reset", date: "2026-05-15" },
   { id: "2026-05-15-manual-reset-2", date: "2026-05-15" }
@@ -25,8 +29,9 @@ let cloudSaveInFlight = false;
 let lastCloudPayload = "";
 let firebaseRef = null;
 let applyingCloudState = false;
+let coachNotice = "";
 
-const screens = ["quiz","challenge","mistakes","stats","scoreboard","manage","login"];
+const screens = ["coach","quiz","challenge","mistakes","stats","scoreboard","manage","login"];
 const $ = (selector) => document.querySelector(selector);
 const phaseWords = () => state.words[phase].filter((word) => word.english.length);
 const categories = () => [...new Set(phaseWords().map((word) => word.category))];
@@ -68,7 +73,8 @@ function loadState(){
             phase1: Array.isArray(parsed.attempts?.vincent?.phase1) ? parsed.attempts.vincent.phase1 : [],
             phase2: Array.isArray(parsed.attempts?.vincent?.phase2) ? parsed.attempts.vincent.phase2 : []
           }
-        }
+        },
+        maintenance: normalizeMaintenance(parsed.maintenance || fresh.maintenance)
       });
     } catch {}
   }
@@ -103,11 +109,42 @@ function freshState(){
     scores: { maaike: [], vincent: [] },
     mistakes: { maaike: { phase1: {}, phase2: {} }, vincent: { phase1: {}, phase2: {} } },
     attempts: { maaike: { phase1: [], phase2: [] }, vincent: { phase1: [], phase2: [] } },
+    maintenance: emptyMaintenance(),
     challengeResets: []
+  };
+}
+function emptyMaintenance(){
+  return {
+    phase1: { lastSyncedAt: null, lastCount: PHASE_DATA.phase1.words.length },
+    phase2: { lastSyncedAt: null, lastCount: PHASE_DATA.phase2.words.length },
+    lessonPrep: { nextLessonAt: "", checkedAt: null, note: "" }
+  };
+}
+function normalizeMaintenance(value={}){
+  const fresh = emptyMaintenance();
+  return {
+    phase1: { ...fresh.phase1, ...(value.phase1 || {}) },
+    phase2: { ...fresh.phase2, ...(value.phase2 || {}) },
+    lessonPrep: { ...fresh.lessonPrep, ...(value.lessonPrep || {}) }
+  };
+}
+function newestByTime(a={}, b={}){
+  const aTime = a.updatedAt || a.checkedAt || a.lastSyncedAt || "";
+  const bTime = b.updatedAt || b.checkedAt || b.lastSyncedAt || "";
+  return bTime > aTime ? b : a;
+}
+function mergeMaintenance(local={}, remote={}){
+  const base = normalizeMaintenance(local);
+  const incoming = normalizeMaintenance(remote);
+  return {
+    phase1: newestByTime(base.phase1, incoming.phase1),
+    phase2: newestByTime(base.phase2, incoming.phase2),
+    lessonPrep: newestByTime(base.lessonPrep, incoming.lessonPrep)
   };
 }
 function applyChallengeResetMigrations(nextState){
   nextState.challengeResets = Array.isArray(nextState.challengeResets) ? nextState.challengeResets : [];
+  nextState.maintenance = normalizeMaintenance(nextState.maintenance);
   CHALLENGE_RESETS.forEach((reset)=>{
     const id = typeof reset === "string" ? reset : reset.id;
     const date = typeof reset === "string" ? reset : reset.date;
@@ -134,6 +171,7 @@ function sharedState(){
     scores: state.scores,
     mistakes: state.mistakes,
     attempts: state.attempts,
+    maintenance: state.maintenance,
     challengeResets: state.challengeResets
   };
 }
@@ -182,10 +220,12 @@ function mergeCloudState(remote){
     });
   });
   state.challengeResets = [...new Set([...(state.challengeResets || []), ...(remote.challengeResets || [])])];
+  state.maintenance = mergeMaintenance(state.maintenance, remote.maintenance);
   applyChallengeResetMigrations(state);
 }
 function rerenderCloudSensitiveScreen(){
   if(session) return;
+  if(activeScreen === "coach") renderCoach();
   if(activeScreen === "challenge") renderChallenge();
   if(activeScreen === "scoreboard") renderScoreboard();
   if(activeScreen === "stats") renderStats();
@@ -295,7 +335,13 @@ function formatEnglishAnswer(word, value){
 }
 function formatEnglishList(word){ return word.english.map((answer)=>formatEnglishAnswer(word, answer)).join("; "); }
 function formatPrimaryEnglish(word){ return formatEnglishAnswer(word, word.english[0] || ""); }
-function today(){ return new Date().toISOString().slice(0,10); }
+function today(value=new Date()){
+  const date = value instanceof Date ? value : new Date(value);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 function displayDate(date){
   const [year, month, day] = String(date || "").slice(0,10).split("-");
   return day && month ? `${day}/${month}` : String(date || "");
@@ -336,11 +382,10 @@ function parseCsv(text){
 function splitAnswers(...values){
   return values.flatMap((value)=>String(value || "").split(/[;,/]/)).map((item)=>item.trim()).filter(Boolean);
 }
-async function syncPhase1FromSheet(){
-  const status = $("#syncStatus");
-  status.textContent = "Syncing...";
+async function syncPhase1FromSheet(status = $("#syncStatus")){
+  if(status) status.textContent = "Syncing...";
   const response = await fetch(PHASE1_SHEET_URL);
-  if (!response.ok) { status.textContent = "Sync failed. Check whether the Google Sheet is accessible."; return; }
+  if (!response.ok) { if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible."; return; }
   const rows = parseCsv(await response.text()).slice(1);
   const words = rows.map((cells,index)=>({
     hindi: String(cells[0] || "").replace(/\s+/g," ").trim(),
@@ -348,17 +393,19 @@ async function syncPhase1FromSheet(){
     category: categoryForPhase1Row(index + 2)
   })).filter((word)=>word.hindi && word.english.length);
   state.words.phase1 = words;
+  state.maintenance = normalizeMaintenance(state.maintenance);
+  state.maintenance.phase1 = { lastSyncedAt: new Date().toISOString(), lastCount: words.length, updatedAt: new Date().toISOString() };
   phase = "phase1";
   selectedCategories = new Set(categories());
   save();
-  status.textContent = `Synced ${words.length} Phase 1 words from Google Sheet.`;
-  renderManage();
+  if(status) status.textContent = `Synced ${words.length} Phase 1 words from Google Sheet.`;
+  if(activeScreen === "manage") renderManage();
+  if(activeScreen === "coach") renderCoach();
 }
-async function syncPhase2FromSheet(){
-  const status = $("#syncStatus");
-  status.textContent = "Syncing...";
+async function syncPhase2FromSheet(status = $("#syncStatus")){
+  if(status) status.textContent = "Syncing...";
   const response = await fetch(PHASE2_SHEET_URL);
-  if (!response.ok) { status.textContent = "Sync failed. Check whether the Google Sheet is accessible."; return; }
+  if (!response.ok) { if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible."; return; }
   const rows = parseCsv(await response.text());
   const header = rows[0].map((cell)=>normEnglish(cell));
   const categoryIndex = header.findIndex((cell)=>cell.includes("category"));
@@ -372,27 +419,38 @@ async function syncPhase2FromSheet(){
     category: cleanCategoryName(cells[categoryIndex] || (lessonIndex >= 0 ? cells[lessonIndex] : "") || "Imported")
   })).filter((word)=>word.hindi && word.english.length);
   state.words.phase2 = mergeImportedWords(PHASE_DATA.phase2.words, words);
+  state.maintenance = normalizeMaintenance(state.maintenance);
+  state.maintenance.phase2 = { lastSyncedAt: new Date().toISOString(), lastCount: state.words.phase2.length, importedRows: words.length, updatedAt: new Date().toISOString() };
   phase = "phase2";
   selectedCategories = new Set(categories());
   save();
-  status.textContent = words.length
+  if(status) status.textContent = words.length
     ? `Synced ${words.length} Sheet rows. Phase 2 now has ${state.words.phase2.length} words.`
     : `The Sheet has no word rows yet. Kept ${state.words.phase2.length} built-in Phase 2 words.`;
-  renderManage();
+  if(activeScreen === "manage") renderManage();
+  if(activeScreen === "coach") renderCoach();
 }
 
 function show(screen){
   if(!canUsePhase2() && phase==="phase2") phase = "phase1";
+  const gatedScreens = ["mistakes","stats","scoreboard"];
+  if(user && gatedScreens.includes(screen) && !dailyContractFor(user).complete){
+    coachNotice = "Finish today's contract first. Stats, scoreboard and mistake browsing unlock after the daily work is done.";
+    screen = "coach";
+  } else {
+    coachNotice = "";
+  }
   activeScreen = screen;
   screens.forEach((id)=>$("#"+id).classList.toggle("hidden", id!==screen));
   document.querySelectorAll("[data-screen]").forEach((button)=>button.classList.toggle("active", button.dataset.screen===screen));
+  if(screen==="coach") renderCoach();
   if(screen==="quiz") renderQuizSetup();
   if(screen==="challenge") renderChallenge();
   if(screen==="mistakes") renderMistakes();
   if(screen==="stats") renderStats();
   if(screen==="scoreboard") renderScoreboard();
   if(screen==="manage") renderManage();
-  if(user && ["challenge","scoreboard","stats","mistakes"].includes(screen)) loadCloudState({ rerender:true });
+  if(user && ["coach","challenge","scoreboard","stats","mistakes"].includes(screen)) loadCloudState({ rerender:true });
 }
 function renderNav(){
   const logged = Boolean(user);
@@ -421,7 +479,7 @@ function updateCategoryChipStates(){
   document.querySelectorAll("[data-cat]").forEach((button)=>button.classList.toggle("selected", selectedCategories.has(button.dataset.cat)));
 }
 function todaysChallengeScore(name=user){
-  return name ? state.scores[name]?.find((score)=>score.date===today() && score.phase==="phase1") : null;
+  return name ? (state.scores[name] || []).filter((score)=>score.date===today() && score.phase==="phase1").at(-1) || null : null;
 }
 function lockChallengeNavigation(){
   if(!session || session.source!=="challenge") return;
@@ -443,6 +501,210 @@ function updateChallengeScore(completed=false){
   score.completed = Boolean(completed);
   score.updatedAt = new Date().toISOString();
   save();
+}
+function attemptsFor(name, phaseKey){
+  return state.attempts[name]?.[phaseKey] || [];
+}
+function attemptsToday(name, phaseKey){
+  const date = today();
+  return attemptsFor(name, phaseKey).filter((attempt)=>attempt.date===date);
+}
+function allAttemptsToday(name){
+  return ["phase1","phase2"].flatMap((phaseKey)=>attemptsToday(name, phaseKey).map((attempt)=>({ ...attempt, phaseKey })));
+}
+function activeMistakesFor(name, phaseKey){
+  return Object.values(state.mistakes[name]?.[phaseKey] || {}).filter((word)=>word.hindi && word.english?.length);
+}
+function allActiveMistakes(name){
+  return ["phase1","phase2"].flatMap((phaseKey)=>activeMistakesFor(name, phaseKey).map((word)=>({ ...word, phaseKey })));
+}
+function taskProgressLabel(done, target, fallback="Done"){
+  if(!target) return fallback;
+  return `${Math.min(done, target)}/${target}`;
+}
+function lessonRank(category){
+  const values = [...String(category || "").matchAll(/\d+/g)].map((match)=>Number(match[0]));
+  const numeric = values.length ? Math.max(...values) : 0;
+  return numeric + (/b\b/i.test(category) ? 0.5 : 0);
+}
+function latestPhaseCategories(phaseKey, limit=3){
+  const seen = [];
+  (state.words[phaseKey] || []).forEach((word)=>{
+    if(word.english?.length && !seen.includes(word.category)) seen.push(word.category);
+  });
+  return seen
+    .map((category,index)=>({ category, index }))
+    .sort((a,b)=>lessonRank(b.category)-lessonRank(a.category) || b.index-a.index)
+    .map((item)=>item.category)
+    .slice(0, limit);
+}
+function scoreTaskStatus(name){
+  const score = todaysChallengeScore(name);
+  const target = score?.total || 20;
+  return {
+    id: "challenge",
+    title: "Phase 1 daily",
+    started: Boolean(score),
+    done: Boolean(score?.completed),
+    progress: score?.completed ? target : score?.correct || 0,
+    target,
+    label: score?.completed ? `${score.correct || 0}/${target}` : score ? `${score.correct || 0}/${target} locked` : `0/${target}`
+  };
+}
+function mistakeTaskStatus(name){
+  const active = allActiveMistakes(name);
+  const target = Math.min(DAILY_MISTAKE_TARGET, active.length);
+  const progress = allAttemptsToday(name).filter((attempt)=>attempt.source==="coach-mistakes").length;
+  return {
+    id: "mistakes",
+    title: "Mistake repair",
+    done: target === 0 || progress >= target,
+    progress,
+    target,
+    active,
+    label: taskProgressLabel(progress, target, "Clean")
+  };
+}
+function phase2TaskStatus(name){
+  const available = (state.words.phase2 || []).filter((word)=>word.english?.length);
+  const target = name === "maaike" ? Math.min(DAILY_PHASE2_TARGET, available.length) : 0;
+  const progress = attemptsToday(name, "phase2").length;
+  return {
+    id: "phase2",
+    title: "Phase 2 focus",
+    done: target === 0 || progress >= target,
+    progress,
+    target,
+    categories: latestPhaseCategories("phase2", 3),
+    label: taskProgressLabel(progress, target, "Not needed")
+  };
+}
+function dailyContractFor(name=user){
+  const tasks = [scoreTaskStatus(name), mistakeTaskStatus(name), phase2TaskStatus(name)];
+  const required = tasks.filter((task)=>task.target > 0);
+  const complete = required.every((task)=>task.done);
+  const doneUnits = required.reduce((sum,task)=>sum+Math.min(task.progress, task.target),0);
+  const targetUnits = required.reduce((sum,task)=>sum+task.target,0);
+  return { name, date: today(), tasks, required, complete, doneUnits, targetUnits };
+}
+function maintenanceStatus(){
+  state.maintenance = normalizeMaintenance(state.maintenance);
+  const now = Date.now();
+  const nextLessonTime = state.maintenance.lessonPrep.nextLessonAt ? Date.parse(state.maintenance.lessonPrep.nextLessonAt) : 0;
+  const phase1Sync = state.maintenance.phase1.lastSyncedAt ? Date.parse(state.maintenance.phase1.lastSyncedAt) : 0;
+  const phase2Sync = state.maintenance.phase2.lastSyncedAt ? Date.parse(state.maintenance.phase2.lastSyncedAt) : 0;
+  const phase1Fresh = Boolean(phase1Sync && now - phase1Sync <= MAINTENANCE_STALE_DAYS * 24 * 60 * 60 * 1000);
+  const prepStart = nextLessonTime ? nextLessonTime - PREP_WINDOW_HOURS * 60 * 60 * 1000 : 0;
+  const lessonPassed = Boolean(nextLessonTime && nextLessonTime < now);
+  const phase2Ready = Boolean(nextLessonTime && phase2Sync >= prepStart && phase2Sync <= nextLessonTime);
+  const dueNow = Boolean(nextLessonTime && !lessonPassed && nextLessonTime - now <= PREP_WINDOW_HOURS * 60 * 60 * 1000);
+  return { phase1Fresh, phase2Ready, dueNow, lessonPassed, nextLessonTime, phase1Sync, phase2Sync };
+}
+function formatDateTime(iso){
+  if(!iso) return "Never";
+  const date = new Date(iso);
+  if(Number.isNaN(date.getTime())) return "Invalid date";
+  return date.toLocaleString([], { day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit" });
+}
+function dateTimeInputValue(iso){
+  if(!iso) return "";
+  const date = new Date(iso);
+  if(Number.isNaN(date.getTime())) return "";
+  const offset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - offset).toISOString().slice(0,16);
+}
+function isoFromDateTimeInput(value){
+  if(!value) return "";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "" : date.toISOString();
+}
+function taskCardHtml(task, body, actionHtml=""){
+  return `<div class="coach-task ${task.done?"task-done":"task-open"}"><div class="task-head"><div><span>${escapeHtml(task.title)}</span><strong>${escapeHtml(task.label)}</strong></div><b>${task.done?"Done":"Due"}</b></div>${body}${actionHtml}</div>`;
+}
+function whatsappProofText(contract){
+  const taskText = contract.tasks.map((task)=>`${task.title}: ${task.label}`).join(" | ");
+  return `Hindi done for ${displayDate(contract.date)}. ${taskText}. Tomorrow I do it again.`;
+}
+function whatsappProofUrl(contract){
+  return `https://wa.me/?text=${encodeURIComponent(whatsappProofText(contract))}`;
+}
+function coachHeroHtml(contract){
+  const pct = contract.targetUnits ? Math.round((contract.doneUnits / contract.targetUnits) * 100) : 100;
+  return `<div class="coach-hero"><div><div class="daily-badge">Daily contract</div><h2>Hindi Coach</h2><p>${contract.complete?"Today is complete. Send the receipt and keep the streak clean.":"Finish the contract before the rest of the app becomes useful."}</p></div><div class="contract-meter"><strong>${pct}%</strong><span>${contract.doneUnits}/${contract.targetUnits || 0} required answers</span></div></div>`;
+}
+function coachChallengeHtml(task){
+  const body = `<p>Fixed Phase 1 run. One attempt per day, timed, saved to the scoreboard.</p>`;
+  const action = task.done
+    ? `<button class="retry-btn secondary-action" id="coachChallengeReview" type="button">Review result</button>`
+    : task.started
+      ? `<button class="retry-btn secondary-action" id="coachChallengeReview" type="button">Review locked score</button>`
+    : `<button class="start-btn" id="startCoachChallenge" type="button">Start Phase 1 daily</button>`;
+  return taskCardHtml(task, body, action);
+}
+function coachMistakesHtml(task){
+  const phase1Count = activeMistakesFor(user, "phase1").length;
+  const phase2Count = activeMistakesFor(user, "phase2").length;
+  const body = `<p>${task.target ? `${task.active.length} active mistake words. Repair ${task.target} today.` : "No active mistake words right now."}</p>`;
+  const action = task.target
+    ? `<div class="coach-actions"><button class="ghost" id="startCoachMistakes1" type="button" ${phase1Count?"":"disabled"}>Phase 1 mistakes (${phase1Count})</button><button class="ghost" id="startCoachMistakes2" type="button" ${phase2Count?"":"disabled"}>Phase 2 mistakes (${phase2Count})</button></div>`
+    : "";
+  return taskCardHtml(task, body, action);
+}
+function coachPhase2Html(task){
+  const lessons = task.categories.length ? task.categories.map(displayCategory).join(", ") : "No Phase 2 words";
+  const body = `<p>Newest lessons: ${escapeHtml(lessons)}.</p>`;
+  const action = task.target
+    ? `<button class="start-btn" id="startCoachPhase2" type="button">Start Phase 2 focus</button>`
+    : "";
+  return taskCardHtml(task, body, action);
+}
+function coachProofHtml(contract){
+  const text = escapeHtml(whatsappProofText(contract));
+  const action = contract.complete
+    ? `<a class="start-btn coach-whatsapp" id="whatsappProof" href="${whatsappProofUrl(contract)}" target="_blank" rel="noopener">Send WhatsApp proof</a>`
+    : `<button class="start-btn" type="button" disabled>WhatsApp proof locked</button>`;
+  return `<div class="coach-proof"><div><h3>Receipt</h3><p>${text}</p></div>${action}</div>`;
+}
+function maintenanceHtml(){
+  const status = maintenanceStatus();
+  const phase1 = state.maintenance.phase1;
+  const phase2 = state.maintenance.phase2;
+  const prep = state.maintenance.lessonPrep;
+  const phase1Status = status.phase1Fresh ? "Fresh" : "Sync due";
+  const phase2Status = !prep.nextLessonAt ? "No lesson set" : status.lessonPassed ? "Lesson passed" : status.phase2Ready ? "Ready" : status.dueNow ? "Prep due now" : "Planned";
+  return `<div class="coach-maintenance"><div class="maintenance-head"><div><h3>Lesson list maintenance</h3><p>Phase 1 stays maintained. Phase 2 gets checked before lessons.</p></div><button class="ghost" id="openManage" type="button">Manage lists</button></div><div class="maintenance-grid"><div><span>Phase 1</span><strong>${phase1Status}</strong><small>${phase1.lastCount || state.words.phase1.length} words · last sync ${formatDateTime(phase1.lastSyncedAt)}</small><button class="ghost" id="coachSyncPhase1" type="button">Sync Phase 1</button></div><div><span>Phase 2</span><strong>${phase2Status}</strong><small>${phase2.lastCount || state.words.phase2.length} words · last sync ${formatDateTime(phase2.lastSyncedAt)}</small><button class="ghost" id="coachSyncPhase2" type="button">Sync Phase 2</button></div></div><label class="form-label" for="nextLessonAt">Next Hindi lesson</label><div class="lesson-prep-row"><input id="nextLessonAt" type="datetime-local" value="${dateTimeInputValue(prep.nextLessonAt)}"><button class="retry-btn" id="saveLessonPrep" type="button">Save lesson prep</button></div><p id="coachSyncStatus" class="sync-line">${prep.checkedAt?`Last prep check ${formatDateTime(prep.checkedAt)}.`:"No prep check saved yet."}</p></div>`;
+}
+function renderCoach(){
+  if(!user)return showLogin();
+  const contract = dailyContractFor(user);
+  const notice = coachNotice ? `<div class="coach-notice">${escapeHtml(coachNotice)}</div>` : "";
+  const tasks = Object.fromEntries(contract.tasks.map((task)=>[task.id, task]));
+  $("#coach").innerHTML = `<div class="coach-shell">${notice}${coachHeroHtml(contract)}<div class="coach-grid">${coachChallengeHtml(tasks.challenge)}${coachMistakesHtml(tasks.mistakes)}${coachPhase2Html(tasks.phase2)}</div>${coachProofHtml(contract)}${user==="maaike"?maintenanceHtml():""}</div>`;
+  $("#startCoachChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); phase="phase1"; selectedCategories=new Set(categories()); startSession("challenge",20,"mixed"); });
+  $("#coachChallengeReview")?.addEventListener("click",()=>show("challenge"));
+  $("#startCoachPhase2")?.addEventListener("click",()=>startPhase2Focus());
+  $("#startCoachMistakes1")?.addEventListener("click",()=>startCoachMistakes("phase1"));
+  $("#startCoachMistakes2")?.addEventListener("click",()=>startCoachMistakes("phase2"));
+  $("#openManage")?.addEventListener("click",()=>show("manage"));
+  $("#coachSyncPhase1")?.addEventListener("click",()=>syncPhase1FromSheet($("#coachSyncStatus")));
+  $("#coachSyncPhase2")?.addEventListener("click",()=>syncPhase2FromSheet($("#coachSyncStatus")));
+  $("#saveLessonPrep")?.addEventListener("click",()=>{ state.maintenance = normalizeMaintenance(state.maintenance); state.maintenance.lessonPrep = { ...state.maintenance.lessonPrep, nextLessonAt: isoFromDateTimeInput($("#nextLessonAt").value), checkedAt: new Date().toISOString(), updatedAt: new Date().toISOString() }; save({ immediate:true }); renderCoach(); });
+}
+function startPhase2Focus(){
+  phase = "phase2";
+  selectedCategories = new Set(latestPhaseCategories("phase2", 3));
+  if(!selectedCategories.size) selectedCategories = new Set(categories());
+  save();
+  const target = phase2TaskStatus(user).target || DAILY_PHASE2_TARGET;
+  startSession("coach-phase2", target, "mixed");
+}
+function startCoachMistakes(phaseKey){
+  const words = activeMistakesFor(user, phaseKey);
+  if(!words.length) return renderCoach();
+  phase = phaseKey;
+  selectedCategories = new Set(words.map((word)=>word.category));
+  save();
+  startWordSession(words.slice(0, DAILY_MISTAKE_TARGET), "coach-mistakes");
 }
 function renderQuizSetup(){
   if(!selectedCategories.size) selectedCategories = new Set(categories());
@@ -583,13 +845,14 @@ function finishSession(){
     pushCloudState();
     session=null;
     renderNav();
-    show("challenge");
+    show("coach");
     return;
   }
-  $("#quiz").innerHTML=`<div class="panel"><h2>Session complete</h2><div class="result-grid"><div class="stat-box"><strong>${finished.correct}/${finished.queue.length}</strong><br><small>correct</small></div><div class="stat-box"><strong>${Math.round((finished.correct/finished.queue.length)*100)}%</strong><br><small>score</small></div></div><button class="retry-btn" id="backToPractice" type="button">Back to practice</button></div>`;
+  const returnsToCoach = String(finished.source || "").startsWith("coach-");
+  $("#quiz").innerHTML=`<div class="panel"><h2>Session complete</h2><div class="result-grid"><div class="stat-box"><strong>${finished.correct}/${finished.queue.length}</strong><br><small>correct</small></div><div class="stat-box"><strong>${Math.round((finished.correct/finished.queue.length)*100)}%</strong><br><small>score</small></div></div><button class="retry-btn" id="backToPractice" type="button">${returnsToCoach?"Back to coach":"Back to practice"}</button></div>`;
   session=null;
   renderNav();
-  $("#backToPractice")?.addEventListener("click",()=>show("quiz"));
+  $("#backToPractice")?.addEventListener("click",()=>show(returnsToCoach ? "coach" : "quiz"));
 }
 function challengeReviewHtml(){
   const misses = todaysChallengeAttempts().filter((attempt)=>!attempt.correct);
@@ -877,7 +1140,7 @@ function renderScoreboard(){
 }
 function renderManage(){ if(user!=="maaike")return show("quiz"); $("#manage").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Manage vocabulary</h2><div class="actions"><button class="ghost" id="syncPhase1" type="button">Sync Phase 1 from Google Sheet</button><button class="ghost" id="syncPhase2" type="button">Sync Phase 2 from Google Sheet</button><span id="syncStatus" style="color:var(--text-secondary);font-size:.85rem;align-self:center"></span></div><input id="search" type="search" placeholder="Search"><div style="overflow:auto"><table class="table"><thead><tr><th>Hindi</th><th>English</th><th>Category</th></tr></thead><tbody id="wordRows"></tbody></table></div></div>`; bindPhaseButtons(); $("#syncPhase1").addEventListener("click", syncPhase1FromSheet); $("#syncPhase2").addEventListener("click", syncPhase2FromSheet); const renderRows=()=>{const q=normEnglish($("#search").value); $("#wordRows").innerHTML=state.words[phase].map((word,index)=>({word,index})).filter(({word})=>!q||normEnglish(word.hindi+" "+word.english.join(" ")+word.category).includes(q)).map(({word,index})=>`<tr><td class="hindi-cell" contenteditable data-i="${index}" data-field="hindi">${word.hindi}</td><td contenteditable data-i="${index}" data-field="english">${word.english.join("; ")}</td><td contenteditable data-i="${index}" data-field="category">${word.category}</td></tr>`).join(""); document.querySelectorAll("[contenteditable]").forEach((cell)=>cell.addEventListener("blur",()=>{const word=state.words[phase][Number(cell.dataset.i)]; word[cell.dataset.field]=cell.dataset.field==="english"?cell.textContent.split(";").map(x=>x.trim()).filter(Boolean):cell.textContent.trim(); save();}));}; $("#search").addEventListener("input",renderRows); renderRows(); }
 function showLogin(){ renderLogin(); show("login"); }
-function renderLogin(){ $("#login").innerHTML=`<div class="login-card"><h2>Log in</h2><p>Daily Challenge, scoreboard and personal mistakes.</p><input id="username" type="text" placeholder="Username"><input id="password" type="password" placeholder="Password"><button class="login-btn" id="doLogin">Log in</button><p id="loginError" style="color:var(--red);min-height:22px;margin-top:10px"></p></div>`; $("#doLogin").addEventListener("click",()=>{const name=$("#username").value.trim().toLowerCase(); const pass=$("#password").value; if(USERS[name] && USERS[name]===pass){user=name; if(user==="vincent") phase="phase1"; save(); renderNav(); show("challenge");} else $("#loginError").textContent="Incorrect username or password.";}); }
+function renderLogin(){ $("#login").innerHTML=`<div class="login-card"><h2>Log in</h2><p>Daily Coach, scoreboard and personal mistakes.</p><input id="username" type="text" placeholder="Username"><input id="password" type="password" placeholder="Password"><button class="login-btn" id="doLogin">Log in</button><p id="loginError" style="color:var(--red);min-height:22px;margin-top:10px"></p></div>`; $("#doLogin").addEventListener("click",()=>{const name=$("#username").value.trim().toLowerCase(); const pass=$("#password").value; if(USERS[name] && USERS[name]===pass){user=name; if(user==="vincent") phase="phase1"; save(); renderNav(); show("coach");} else $("#loginError").textContent="Incorrect username or password.";}); }
 document.querySelectorAll("[data-screen]").forEach((button)=>button.addEventListener("click",()=>show(button.dataset.screen)));
 $("#loginBtn").addEventListener("click",()=>{renderLogin(); show("login");});
 $("#logoutBtn").addEventListener("click",()=>{user=null; save(); renderNav(); show("quiz");});
@@ -898,5 +1161,7 @@ window.addEventListener("visibilitychange",()=>{
   if(CLOUD_SYNC_ENABLED && document.visibilityState === "visible" && user) loadCloudState({ rerender:true });
 });
 if(CLOUD_SYNC_ENABLED) setInterval(()=>{ if(user && !session) loadCloudState({ rerender:true }); }, 60000);
-renderNav(); renderQuizSetup();
+renderNav();
+if(user) show("coach");
+else renderQuizSetup();
 initCloudSync().then(()=>loadCloudState({ rerender:true }));
