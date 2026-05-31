@@ -9,6 +9,7 @@ const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xT
 const PHASE2_SHEET_URL = "https://docs.google.com/spreadsheets/d/14BD6b5P1dCkUB9pouUzWuQsN6woZyNpPOkKihyngKHo/export?format=csv&gid=1937597985";
 const DAILY_PHASE2_TARGET = 15;
 const DAILY_MISTAKE_TARGET = 10;
+const CHALLENGE_REVIEW_MS = 1400;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
 const CHALLENGE_RESETS = [
@@ -30,6 +31,7 @@ let lastCloudPayload = "";
 let firebaseRef = null;
 let applyingCloudState = false;
 let coachNotice = "";
+let nextKeyHandler = null;
 
 const screens = ["coach","quiz","challenge","mistakes","stats","scoreboard","manage","login"];
 const $ = (selector) => document.querySelector(selector);
@@ -786,7 +788,9 @@ function startWordSession(words, source="practice"){
 }
 function renderQuestion(){
   clearTimer();
+  clearNextKeyHandler();
   if(!session || session.index>=session.queue.length) return finishSession();
+  session.awaitingNext = false;
   const word = session.queue[session.index];
   const qMode = session.source==="challenge" ? session.modes[session.index] : (session.mode==="mixed" ? (Math.random()>.5?"type":"mc") : session.mode);
   session.currentMode = qMode; session.started = performance.now();
@@ -804,11 +808,19 @@ function makeChoices(word){ const others=phaseWords().filter((candidate)=>normHi
 function bindMc(word){ document.querySelectorAll(".mc-btn").forEach((button)=>button.addEventListener("click",()=>answerMc(word, button))); }
 function answerType(word){ const answer=$("#answerInput").value.trim(); const result=checkAnswer(answer, word.english); completeAnswer(word,result.correct,result.close,answer); }
 function answerMc(word, button){ const correct=normHindi(button.textContent)===normHindi(word.hindi); document.querySelectorAll(".mc-btn").forEach((btn)=>{btn.disabled=true; if(normHindi(btn.textContent)===normHindi(word.hindi)) btn.classList.add("correct"); else if(btn===button) btn.classList.add("wrong"); else btn.classList.add("dimmed");}); completeAnswer(word, correct, false, button.textContent); }
+function correctTypeAnswerHtml(word){
+  return `<div class="answer-reveal answer-reveal-big answer-reveal-type"><span>Correct answer</span><strong>${escapeHtml(formatEnglishList(word))}</strong><small>${escapeHtml(word.hindi)}</small></div>`;
+}
 function correctTranslationHtml(word){
   return `<div class="answer-reveal answer-reveal-big"><span>Correct translation</span><strong class="answer-pair"><b>${escapeHtml(word.hindi)}</b><em>${escapeHtml(formatEnglishList(word))}</em></strong></div>`;
 }
 function completeAnswer(word, correct, close, answer=""){
+  if(!session || session.awaitingNext) return;
+  session.awaitingNext = true;
   clearTimer();
+  $("#answerInput")?.setAttribute("disabled", "true");
+  $("#answerForm button")?.setAttribute("disabled", "true");
+  document.querySelectorAll(".mc-btn").forEach((button)=>button.disabled = true);
   if(correct) session.correct++;
   else session.wrong++;
   updateChallengeScore(false);
@@ -817,7 +829,7 @@ function completeAnswer(word, correct, close, answer=""){
   const fb=$("#feedback");
   const isTyping = session.currentMode === "type";
   const answerLine = !correct
-    ? correctTranslationHtml(word)
+    ? (isTyping ? correctTypeAnswerHtml(word) : correctTranslationHtml(word))
     : "";
   const typedLine = !correct&&isTyping
     ? `<div class="typed-answer"><span>You typed</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
@@ -826,19 +838,28 @@ function completeAnswer(word, correct, close, answer=""){
     ? `<div class="typed-answer"><span>You chose</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
     : "";
   const canApprove = !correct && session.source !== "challenge";
+  const requiresReview = !correct && session.source === "challenge";
 
   fb.className=`feedback ${correct?(close?"close":"good"):"bad"}`;
   fb.innerHTML=correct
     ? (close?`Accepted <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`:`Correct <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`)
     : `${answerLine}${typedLine}${selectedLine}`;
-  $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}<button class="btn-next" id="nextBtn">Next →</button>`;
-  $("#nextBtn").focus();
-  $("#nextBtn").addEventListener("click", nextQuestion);
+  $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}<button class="btn-next" id="nextBtn" ${requiresReview?"disabled":""}>Next →</button>`;
+  const nextButton = $("#nextBtn");
+  if(requiresReview) setTimeout(()=>{ if(nextButton){ nextButton.disabled = false; nextButton.focus(); } }, CHALLENGE_REVIEW_MS);
+  else nextButton?.focus();
+  nextButton?.addEventListener("click", nextQuestion);
   $("#approveBtn")?.addEventListener("click",()=>{session.correct++; session.wrong--; session.approved++; approveAttempt(attemptId, word); $("#approveBtn").remove();});
-  const handler=(event)=>{if(event.key==="Enter"){event.preventDefault(); document.removeEventListener("keydown",handler); nextQuestion();}};
-  document.addEventListener("keydown",handler);
+  nextKeyHandler=(event)=>{if(event.key==="Enter" && nextButton && !nextButton.disabled){event.preventDefault(); nextQuestion();}};
+  document.addEventListener("keydown",nextKeyHandler);
 }
-function nextQuestion(){ session.index++; renderQuestion(); }
+function clearNextKeyHandler(){
+  if(nextKeyHandler){
+    document.removeEventListener("keydown", nextKeyHandler);
+    nextKeyHandler = null;
+  }
+}
+function nextQuestion(){ clearNextKeyHandler(); session.index++; renderQuestion(); }
 function recordAttempt(word, correct, close, answer){
   if(!user) return null;
   const createdAt = new Date().toISOString();
