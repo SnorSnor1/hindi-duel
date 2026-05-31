@@ -8624,6 +8624,114 @@ export const PHASE_DATA = {
           "minaret"
         ],
         "category": "Lesson 3b"
+      },
+      {
+        "hindi": "इमारत",
+        "english": [
+          "building"
+        ],
+        "category": "Lesson 4b"
+      },
+      {
+        "hindi": "पिंजरा",
+        "english": [
+          "cage"
+        ],
+        "category": "Lesson 4b"
+      },
+      {
+        "hindi": "ढँकना",
+        "english": [
+          "cover"
+        ],
+        "category": "Lesson 4b"
+      },
+      {
+        "hindi": "जश्न मनाना",
+        "english": [
+          "celebrate"
+        ],
+        "category": "Lesson 4b"
+      },
+      {
+        "hindi": "हिलाना",
+        "english": [
+          "shake",
+          "move"
+        ],
+        "category": "Lesson 4b"
+      },
+      {
+        "hindi": "छोड़ना",
+        "english": [
+          "leave",
+          "let go",
+          "release"
+        ],
+        "category": "Lesson 5b"
+      },
+      {
+        "hindi": "जोड़ना",
+        "english": [
+          "join",
+          "connect",
+          "add"
+        ],
+        "category": "Lesson 5b"
+      },
+      {
+        "hindi": "किसी ने",
+        "english": [
+          "someone",
+          "somebody"
+        ],
+        "category": "Lesson 5b"
+      },
+      {
+        "hindi": "दुम",
+        "english": [
+          "tail"
+        ],
+        "category": "Lesson 5b"
+      },
+      {
+        "hindi": "अरे वाह",
+        "english": [
+          "wow",
+          "oh wow"
+        ],
+        "category": "Lesson 5b"
+      },
+      {
+        "hindi": "अरे यार",
+        "english": [
+          "oh man",
+          "come on"
+        ],
+        "category": "Lesson 5b"
+      },
+      {
+        "hindi": "कद",
+        "english": [
+          "height",
+          "stature"
+        ],
+        "category": "Lesson 5b"
+      },
+      {
+        "hindi": "चाटना",
+        "english": [
+          "lick"
+        ],
+        "category": "Lesson 5b"
+      },
+      {
+        "hindi": "चिढ़ना",
+        "english": [
+          "get annoyed",
+          "be irritated"
+        ],
+        "category": "Lesson 5b"
       }
     ]
   }
