@@ -382,16 +382,43 @@ function parseCsv(text){
 function splitAnswers(...values){
   return values.flatMap((value)=>String(value || "").split(/[;,/]/)).map((item)=>item.trim()).filter(Boolean);
 }
-async function syncPhase1FromSheet(status = $("#syncStatus")){
-  if(status) status.textContent = "Syncing...";
-  const response = await fetch(PHASE1_SHEET_URL);
-  if (!response.ok) { if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible."; return; }
+async function fetchPhase1WordsFromSheet(){
+  const response = await fetch(PHASE1_SHEET_URL, { cache: "no-store" });
+  if (!response.ok) throw new Error("Phase 1 Sheet is not accessible.");
   const rows = parseCsv(await response.text()).slice(1);
-  const words = rows.map((cells,index)=>({
+  return rows.map((cells,index)=>({
     hindi: String(cells[0] || "").replace(/\s+/g," ").trim(),
     english: String(cells[1] || "").split(";").map((item)=>item.trim()).filter(Boolean),
     category: categoryForPhase1Row(index + 2)
   })).filter((word)=>word.hindi && word.english.length);
+}
+async function fetchPhase2WordsFromSheet(){
+  const response = await fetch(PHASE2_SHEET_URL, { cache: "no-store" });
+  if (!response.ok) throw new Error("Phase 2 Sheet is not accessible.");
+  const rows = parseCsv(await response.text());
+  if(!rows.length) return [];
+  const header = rows[0].map((cell)=>normEnglish(cell));
+  const categoryIndex = header.findIndex((cell)=>cell.includes("category"));
+  const lessonIndex = header.findIndex((cell)=>cell.includes("lesson"));
+  const hindiIndex = header.findIndex((cell)=>cell.includes("hindi"));
+  const englishIndex = header.findIndex((cell)=>cell.includes("english"));
+  const synonymIndex = header.findIndex((cell)=>cell.includes("synonym"));
+  if(hindiIndex < 0 || englishIndex < 0) return [];
+  return rows.slice(1).map((cells)=>({
+    hindi: String(cells[hindiIndex] || "").replace(/\s+/g," ").trim(),
+    english: splitAnswers(cells[englishIndex], synonymIndex >= 0 ? cells[synonymIndex] : ""),
+    category: cleanCategoryName((categoryIndex >= 0 ? cells[categoryIndex] : "") || (lessonIndex >= 0 ? cells[lessonIndex] : "") || "Imported")
+  })).filter((word)=>word.hindi && word.english.length);
+}
+async function syncPhase1FromSheet(status = $("#syncStatus")){
+  if(status) status.textContent = "Syncing...";
+  let words = [];
+  try {
+    words = await fetchPhase1WordsFromSheet();
+  } catch {
+    if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible.";
+    return;
+  }
   state.words.phase1 = words;
   state.maintenance = normalizeMaintenance(state.maintenance);
   state.maintenance.phase1 = { lastSyncedAt: new Date().toISOString(), lastCount: words.length, updatedAt: new Date().toISOString() };
@@ -404,20 +431,13 @@ async function syncPhase1FromSheet(status = $("#syncStatus")){
 }
 async function syncPhase2FromSheet(status = $("#syncStatus")){
   if(status) status.textContent = "Syncing...";
-  const response = await fetch(PHASE2_SHEET_URL);
-  if (!response.ok) { if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible."; return; }
-  const rows = parseCsv(await response.text());
-  const header = rows[0].map((cell)=>normEnglish(cell));
-  const categoryIndex = header.findIndex((cell)=>cell.includes("category"));
-  const lessonIndex = header.findIndex((cell)=>cell.includes("lesson"));
-  const hindiIndex = header.findIndex((cell)=>cell.includes("hindi"));
-  const englishIndex = header.findIndex((cell)=>cell.includes("english"));
-  const synonymIndex = header.findIndex((cell)=>cell.includes("synonym"));
-  const words = rows.slice(1).map((cells)=>({
-    hindi: String(cells[hindiIndex] || "").replace(/\s+/g," ").trim(),
-    english: splitAnswers(cells[englishIndex], synonymIndex >= 0 ? cells[synonymIndex] : ""),
-    category: cleanCategoryName(cells[categoryIndex] || (lessonIndex >= 0 ? cells[lessonIndex] : "") || "Imported")
-  })).filter((word)=>word.hindi && word.english.length);
+  let words = [];
+  try {
+    words = await fetchPhase2WordsFromSheet();
+  } catch {
+    if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible.";
+    return;
+  }
   state.words.phase2 = mergeImportedWords(PHASE_DATA.phase2.words, words);
   state.maintenance = normalizeMaintenance(state.maintenance);
   state.maintenance.phase2 = { lastSyncedAt: new Date().toISOString(), lastCount: state.words.phase2.length, importedRows: words.length, updatedAt: new Date().toISOString() };
@@ -429,6 +449,39 @@ async function syncPhase2FromSheet(status = $("#syncStatus")){
     : `The Sheet has no word rows yet. Kept ${state.words.phase2.length} built-in Phase 2 words.`;
   if(activeScreen === "manage") renderManage();
   if(activeScreen === "coach") renderCoach();
+}
+async function autoSyncPublishedSheets(){
+  const [phase1Result, phase2Result] = await Promise.allSettled([
+    fetchPhase1WordsFromSheet(),
+    fetchPhase2WordsFromSheet()
+  ]);
+  let changed = false;
+  const now = new Date().toISOString();
+
+  if(phase1Result.status === "fulfilled" && phase1Result.value.length){
+    state.words.phase1 = phase1Result.value;
+    state.maintenance = normalizeMaintenance(state.maintenance);
+    state.maintenance.phase1 = { lastSyncedAt: now, lastCount: phase1Result.value.length, updatedAt: now };
+    changed = true;
+  }
+
+  if(phase2Result.status === "fulfilled" && phase2Result.value.length){
+    state.words.phase2 = mergeImportedWords(PHASE_DATA.phase2.words, phase2Result.value);
+    state.maintenance = normalizeMaintenance(state.maintenance);
+    state.maintenance.phase2 = { lastSyncedAt: now, lastCount: state.words.phase2.length, importedRows: phase2Result.value.length, updatedAt: now };
+    changed = true;
+  }
+
+  if(!changed) return;
+  selectedCategories = new Set(categories());
+  save();
+  if(session) return;
+  if(activeScreen === "coach") renderCoach();
+  if(activeScreen === "quiz") renderQuizSetup();
+  if(activeScreen === "manage") renderManage();
+  if(activeScreen === "mistakes") renderMistakes();
+  if(activeScreen === "stats") renderStats();
+  if(activeScreen === "scoreboard") renderScoreboard();
 }
 
 function show(screen){
@@ -1164,4 +1217,5 @@ if(CLOUD_SYNC_ENABLED) setInterval(()=>{ if(user && !session) loadCloudState({ r
 renderNav();
 if(user) show("coach");
 else renderQuizSetup();
+autoSyncPublishedSheets();
 initCloudSync().then(()=>loadCloudState({ rerender:true }));
