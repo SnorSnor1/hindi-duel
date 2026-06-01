@@ -11,6 +11,8 @@ const DAILY_PHASE2_TARGET = 15;
 const DAILY_MISTAKE_TARGET = 10;
 const SPACED_REVIEW_TARGET = 12;
 const SPACED_REVIEW_INTERVALS = [1, 3, 7, 14, 30];
+const FRAGILE_TYPED_MS = 8000;
+const FRAGILE_CHOICE_MS = 5000;
 const CHALLENGE_REVIEW_MS = 1400;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
@@ -673,10 +675,11 @@ function reviewStatsForWord(name, phaseKey, word){
   });
   const lastCorrect = [...attempts].reverse().find((attempt)=>attempt.correct);
   if(!lastCorrect || !correctStreak) return null;
-  const interval = SPACED_REVIEW_INTERVALS[Math.min(correctStreak - 1, SPACED_REVIEW_INTERVALS.length - 1)];
+  const fragile = Boolean(lastCorrect.close || (lastCorrect.ms || 0) > (lastCorrect.mode === "mc" ? FRAGILE_CHOICE_MS : FRAGILE_TYPED_MS));
+  const interval = fragile ? 1 : SPACED_REVIEW_INTERVALS[Math.min(correctStreak - 1, SPACED_REVIEW_INTERVALS.length - 1)];
   const reviewedAt = lastCorrect.date || (lastCorrect.createdAt || "").slice(0,10);
   const dueAt = addDays(reviewedAt, interval);
-  return { correctStreak, wrongCount, reviewedAt, dueAt, overdueDays: Math.max(0, Math.floor((dateValue(today()) - dateValue(dueAt)) / 86400000)) };
+  return { correctStreak, wrongCount, reviewedAt, dueAt, fragile, overdueDays: Math.max(0, Math.floor((dateValue(today()) - dateValue(dueAt)) / 86400000)) };
 }
 function spacedReviewWords(name){
   if(!name) return [];
