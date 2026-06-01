@@ -7,7 +7,7 @@ const FIREBASE_STATE_PATH = "hindiDuel/sharedState";
 const CLOUD_SYNC_ENABLED = Boolean(FIREBASE_CONFIG);
 const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xTL5N_-A1YUIWmkjWMl9JWJIkq9RYs4/export?format=csv&gid=0";
 const PHASE2_SHEET_URL = "https://docs.google.com/spreadsheets/d/14BD6b5P1dCkUB9pouUzWuQsN6woZyNpPOkKihyngKHo/export?format=csv&gid=1937597985";
-const DAILY_PHASE2_TARGET = 15;
+const DAILY_PHASE2_TARGET = 8;
 const DAILY_MISTAKE_TARGET = 10;
 const DAILY_WEAK_LESSON_TARGET = 8;
 const DAILY_FLUENCY_TARGET = 5;
@@ -628,6 +628,11 @@ function allAttemptsToday(name){
 function correctAttemptsToday(name, predicate=()=>true){
   return allAttemptsToday(name).filter((attempt)=>attempt.correct && predicate(attempt)).length;
 }
+function correctTypedWordKeysToday(name, phaseKey, predicate=()=>true){
+  return new Set(attemptsToday(name, phaseKey)
+    .filter((attempt)=>attempt.correct && attempt.mode==="type" && predicate(attempt))
+    .map((attempt)=>`${attempt.hindi}|${attempt.category}`));
+}
 function activeMistakesFor(name, phaseKey){
   return Object.values(state.mistakes[name]?.[phaseKey] || {}).filter((word)=>word.hindi && word.english?.length);
 }
@@ -703,7 +708,7 @@ function spacedReviewWords(name){
 }
 function coverageWords(name, phaseKey, count=DAILY_PHASE2_TARGET){
   if(!name) return [];
-  const latest = new Set(latestPhaseCategories(phaseKey, 4));
+  const latest = new Set(phaseKey==="phase2" ? phase2PrepCategories(4) : latestPhaseCategories(phaseKey, 4));
   const mistakeKeys = new Set(activeMistakesFor(name, phaseKey).map(keyFor));
   return phaseWordsFor(phaseKey)
     .filter((word)=>!mistakeKeys.has(keyFor(word)))
@@ -836,6 +841,39 @@ function latestPhaseCategories(phaseKey, limit=3){
     .map((item)=>item.category)
     .slice(0, limit);
 }
+function phase2PrepCategories(limit=1){
+  const seen = [];
+  phaseWordsFor("phase2").forEach((word)=>{
+    if(word.english?.length && !seen.includes(word.category)) seen.push(word.category);
+  });
+  const bTrack = seen.filter((category)=>/\d+\s*b\b/i.test(category));
+  return (bTrack.length ? bTrack : seen)
+    .map((category,index)=>({ category, index }))
+    .sort((a,b)=>lessonRank(b.category)-lessonRank(a.category) || b.index-a.index)
+    .map((item)=>item.category)
+    .slice(0, limit);
+}
+function phase2LessonPrepWords(name, count=DAILY_PHASE2_TARGET){
+  if(name !== "maaike") return [];
+  const prepCategories = new Set(phase2PrepCategories(1));
+  if(!prepCategories.size) return [];
+  const mistakeKeys = new Set(activeMistakesFor(name, "phase2").map(keyFor));
+  const doneToday = correctTypedWordKeysToday(name, "phase2", (attempt)=>prepCategories.has(attempt.category));
+  return phaseWordsFor("phase2")
+    .filter((word)=>prepCategories.has(word.category))
+    .filter((word)=>!mistakeKeys.has(keyFor(word)))
+    .filter((word)=>!doneToday.has(`${word.hindi}|${word.category}`))
+    .map((word)=>{
+      const attempts = attemptsForWord(name, "phase2", word);
+      const typedCorrectAttempts = attempts.filter((attempt)=>attempt.correct && attempt.mode==="type");
+      const typedDays = new Set(typedCorrectAttempts.map(attemptDate).filter(Boolean));
+      const last = attempts.at(-1);
+      const priority = (!last ? 160 : 0) + (!last?.correct ? 120 : 0) + Math.max(0, COVERAGE_DAY_TARGET - typedDays.size) * 90 + Math.max(0, 5 - attempts.length) + Math.random();
+      return { ...word, phaseKey:"phase2", prep:{ categories:[...prepCategories], typedDays:typedDays.size, attempts:attempts.length, priority } };
+    })
+    .sort((a,b)=>b.prep.priority-a.prep.priority || a.prep.typedDays-b.prep.typedDays || a.prep.attempts-b.prep.attempts)
+    .slice(0, count);
+}
 function scoreTaskStatus(name){
   const score = todaysChallengeScore(name);
   const target = score?.total || 20;
@@ -914,11 +952,12 @@ function smartPracticeWords(phaseKey=phase, count=20){
   const mistakeWords = wordsForPhaseWithKey(phaseKey, user ? activeMistakesFor(user, phaseKey) : []);
   const dueWords = user ? spacedReviewWords(user).filter((word)=>word.phaseKey===phaseKey) : [];
   const weakWords = user ? weakLessonWords(user, count).filter((word)=>word.phaseKey===phaseKey) : [];
+  const lessonPrep = user && phaseKey==="phase2" ? phase2LessonPrepWords(user, Math.min(DAILY_PHASE2_TARGET, count)) : [];
   const coverage = user ? coverageWords(user, phaseKey, Math.min(10, count)) : [];
-  const latest = new Set(latestPhaseCategories(phaseKey, 3));
+  const latest = new Set(phaseKey==="phase2" ? phase2PrepCategories(3) : latestPhaseCategories(phaseKey, 3));
   const newestWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>latest.has(word.category))).slice(0, 10));
   const selectedWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>selectedCategories.has(word.category))));
-  return uniqueWords([...mistakeWords, ...dueWords, ...weakWords, ...coverage, ...newestWords, ...selectedWords]).slice(0, count);
+  return uniqueWords([...mistakeWords, ...dueWords, ...weakWords, ...lessonPrep, ...coverage, ...newestWords, ...selectedWords]).slice(0, count);
 }
 function smartPracticeHtml(count=20){
   if(!user) return "";
@@ -926,22 +965,25 @@ function smartPracticeHtml(count=20){
   const dueCount = spacedReviewWords(user).filter((word)=>word.phaseKey===phase).length;
   const mistakeCount = activeMistakesFor(user, phase).length;
   const weakCount = weakLessonWords(user, count).filter((word)=>word.phaseKey===phase).length;
+  const prepCount = phase==="phase2" ? phase2LessonPrepWords(user, Math.min(DAILY_PHASE2_TARGET, count)).length : 0;
   const coverageCount = coverageWords(user, phase, Math.min(10, count)).length;
   const label = words.length ? `${Math.min(words.length, count)} prioritized words` : "No words available";
-  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · ${mistakeCount} mistakes · ${dueCount} spaced · ${weakCount} weak lesson · ${coverageCount} coverage</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
+  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · ${mistakeCount} mistakes · ${dueCount} spaced · ${weakCount} weak lesson${phase==="phase2"?` · ${prepCount} lesson prep`:""} · ${coverageCount} coverage</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
 }
 function phase2TaskStatus(name){
-  const active = name === "maaike" ? coverageWords(name, "phase2", DAILY_PHASE2_TARGET) : [];
-  const progress = correctAttemptsToday(name, (attempt)=>attempt.phaseKey==="phase2" && attempt.mode==="type");
+  const categories = phase2PrepCategories(1);
+  const categorySet = new Set(categories);
+  const active = phase2LessonPrepWords(name, DAILY_PHASE2_TARGET);
+  const progress = name === "maaike" ? correctTypedWordKeysToday(name, "phase2", (attempt)=>categorySet.has(attempt.category)).size : 0;
   const target = name === "maaike" ? Math.min(DAILY_PHASE2_TARGET, active.length + progress) : 0;
   return {
     id: "phase2",
-    title: "Phase 2 focus",
+    title: "Phase 2 lesson prep",
     done: target === 0 || progress >= target,
     progress,
     target,
     active,
-    categories: active.length ? [...new Set(active.map((word)=>word.category))].slice(0, 3) : latestPhaseCategories("phase2", 3),
+    categories,
     label: taskProgressLabel(progress, target, "Not needed")
   };
 }
@@ -999,7 +1041,7 @@ function coachHeroHtml(contract){
   return `<div class="coach-hero"><div><div class="daily-badge">Daily contract</div><h2>Hindi Coach</h2><p>${contract.complete?"Today is complete. Send the receipt and keep the streak clean.":"Finish the contract before the rest of the app becomes useful."}</p></div><div class="contract-meter"><strong>${pct}%</strong><span>${contract.doneUnits}/${contract.targetUnits || 0} required answers</span></div></div>`;
 }
 function coachChallengeHtml(task){
-  const body = `<p>Fixed Phase 1 run. One attempt per day, timed, saved to the scoreboard.</p>`;
+  const body = `<p>Fixed Phase 1 maintenance run. One attempt per day, timed, saved to the scoreboard.</p>`;
   const action = task.done
     ? `<button class="retry-btn secondary-action" id="coachChallengeReview" type="button">Review result</button>`
     : task.started
@@ -1056,10 +1098,10 @@ function coachFluencyHtml(task){
 function coachPhase2Html(task){
   const lessons = task.categories.length ? task.categories.map(displayCategory).join(", ") : "No Phase 2 words";
   const body = task.target
-    ? `<p>Coverage from ${escapeHtml(lessons)}. Each new word needs typed recall on ${COVERAGE_DAY_TARGET} different days before it is treated as introduced.</p>`
-    : `<p>Newest lessons: ${escapeHtml(lessons)}.</p>`;
+    ? `<p>Small prep from ${escapeHtml(lessons)} before the next lesson. ${task.target} typed recalls, so this stays light next to Phase 1 maintenance.</p>`
+    : `<p>Current prep lesson: ${escapeHtml(lessons)}. All required words for today are done.</p>`;
   const action = task.target
-    ? `<button class="start-btn" id="startCoachPhase2" type="button">Start Phase 2 focus</button>`
+    ? `<button class="start-btn" id="startCoachPhase2" type="button">Start lesson prep</button>`
     : "";
   return taskCardHtml(task, body, action);
 }
