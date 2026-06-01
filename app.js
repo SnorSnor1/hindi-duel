@@ -1510,9 +1510,10 @@ function showRecallAnswer(word){
   const fb = $("#feedback");
   fb.className = "feedback";
   fb.innerHTML = correctTranslationHtml(word);
-  $("#feedbackButtons").innerHTML = `<button class="btn-missed" id="recallMissed" type="button">Missed it</button><button class="btn-known" id="recallKnown" type="button">I knew it</button>`;
+  $("#feedbackButtons").innerHTML = `<button class="btn-missed" id="recallMissed" type="button">Missed it</button><button class="btn-almost" id="recallAlmost" type="button">Almost</button><button class="btn-known" id="recallKnown" type="button">I knew it</button>`;
   $("#recallKnown")?.focus();
   $("#recallKnown")?.addEventListener("click",()=>completeAnswer(word, true, false, "self-check known"));
+  $("#recallAlmost")?.addEventListener("click",()=>completeAnswer(word, true, true, "self-check almost"));
   $("#recallMissed")?.addEventListener("click",()=>completeAnswer(word, false, false, "self-check missed"));
 }
 function autoRepeatSource(source){
