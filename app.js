@@ -719,6 +719,33 @@ function reviewStatsForWord(name, phaseKey, word){
   const dueAt = addDays(reviewedAt, interval);
   return { correctStreak, wrongCount, reviewedAt, dueAt, fragile, recognitionOnly, overdueDays: Math.max(0, Math.floor((dateValue(today()) - dateValue(dueAt)) / 86400000)) };
 }
+function masteryLevelForWord(name, phaseKey, word){
+  const activeMistake = Boolean(state.mistakes[name]?.[phaseKey]?.[keyFor(word)]);
+  if(activeMistake) return "repair";
+  const attempts = attemptsForWord(name, phaseKey, word);
+  if(!attempts.length) return "new";
+  const typedCorrectAttempts = attempts.filter((attempt)=>attempt.correct && attempt.mode === "type");
+  const typedDays = new Set(typedCorrectAttempts.map(attemptDate).filter(Boolean));
+  const stats = reviewStatsForWord(name, phaseKey, word);
+  if(!stats) return "repair";
+  if(dateValue(stats.dueAt) <= dateValue(today())) return "due";
+  if(stats.recognitionOnly || stats.fragile || stats.correctStreak < 2 || typedDays.size < 2) return "fragile";
+  if(stats.correctStreak >= 3 && typedDays.size >= 2) return "mastered";
+  return "building";
+}
+function masterySummary(name){
+  const phases = canUsePhase2() ? ["phase1","phase2"] : ["phase1"];
+  const counts = { total:0, mastered:0, building:0, fragile:0, due:0, repair:0, new:0 };
+  phases.forEach((phaseKey)=>{
+    phaseWordsFor(phaseKey).forEach((word)=>{
+      counts.total++;
+      counts[masteryLevelForWord(name, phaseKey, word)]++;
+    });
+  });
+  const unstable = counts.repair + counts.due + counts.fragile;
+  const pct = counts.total ? Math.round((counts.mastered / counts.total) * 100) : 0;
+  return { ...counts, unstable, pct };
+}
 function spacedReviewWords(name){
   if(!name) return [];
   return ["phase1","phase2"].flatMap((phaseKey)=>{
@@ -1151,6 +1178,24 @@ function whatsappProofText(contract){
 function whatsappProofUrl(contract){
   return `https://wa.me/?text=${encodeURIComponent(whatsappProofText(contract))}`;
 }
+function coachFocusLine(contract){
+  const task = contract.tasks.find((item)=>!item.done && item.target > 0 && item.id !== "challenge") || contract.tasks.find((item)=>!item.done && item.target > 0);
+  if(!task) return "All required retrieval is done. Stop adding more today unless you want optional practice.";
+  const lines = {
+    mistakes: "Primary focus: repair active mistakes until they survive typed recall.",
+    spaced: "Primary focus: spaced retrieval. These words are due before they fade.",
+    weak: "Primary focus: weak lesson pattern. The app is clustering the category that keeps slipping.",
+    fluency: "Primary focus: speed. These words are correct but not automatic yet.",
+    phase2: "Primary focus: tomorrow's Phase 2 lesson prep. Keep it small and typed.",
+    challenge: "Primary focus: Phase 1 daily retrieval. One locked attempt keeps maintenance honest."
+  };
+  return lines[task.id] || "Primary focus: finish the next open retrieval task.";
+}
+function coachMasteryHtml(contract){
+  const summary = masterySummary(contract.name);
+  const pct = summary.pct;
+  return `<div class="coach-mastery"><div><div class="daily-badge">Mastery map</div><h3>${pct}% sturdy recall</h3><p>${coachFocusLine(contract)}</p></div><div class="mastery-meter" aria-label="Mastery progress"><span style="width:${pct}%"></span></div><div class="mastery-grid"><div><strong>${summary.repair}</strong><small>repair</small></div><div><strong>${summary.due}</strong><small>due</small></div><div><strong>${summary.fragile}</strong><small>fragile</small></div><div><strong>${summary.building}</strong><small>building</small></div><div><strong>${summary.mastered}</strong><small>sturdy</small></div><div><strong>${summary.new}</strong><small>unproven</small></div></div></div>`;
+}
 function coachHeroHtml(contract){
   const pct = contract.targetUnits ? Math.round((contract.doneUnits / contract.targetUnits) * 100) : 100;
   return `<div class="coach-hero"><div><div class="daily-badge">Daily contract</div><h2>Hindi Coach</h2><p>${contract.complete?"Today is complete. Send the receipt and keep the streak clean.":"Finish the contract before the rest of the app becomes useful."}</p></div><div class="contract-meter"><strong>${pct}%</strong><span>${contract.doneUnits}/${contract.targetUnits || 0} required answers</span></div></div>`;
@@ -1251,7 +1296,7 @@ function renderCoach(){
   const contract = dailyContractFor(user);
   const notice = coachNotice ? `<div class="coach-notice">${escapeHtml(coachNotice)}</div>` : "";
   const tasks = Object.fromEntries(contract.tasks.map((task)=>[task.id, task]));
-  $("#coach").innerHTML = `<div class="coach-shell">${notice}${coachHeroHtml(contract)}<div class="coach-grid">${coachChallengeHtml(tasks.challenge)}${coachSpacedHtml(tasks.spaced)}${coachMistakesHtml(tasks.mistakes)}${coachWeakLessonHtml(tasks.weak)}${coachFluencyHtml(tasks.fluency)}${coachPhase2Html(tasks.phase2)}</div>${coachProofHtml(contract)}${user==="maaike"?maintenanceHtml():""}</div>`;
+  $("#coach").innerHTML = `<div class="coach-shell">${notice}${coachHeroHtml(contract)}${coachMasteryHtml(contract)}<div class="coach-grid">${coachChallengeHtml(tasks.challenge)}${coachSpacedHtml(tasks.spaced)}${coachMistakesHtml(tasks.mistakes)}${coachWeakLessonHtml(tasks.weak)}${coachFluencyHtml(tasks.fluency)}${coachPhase2Html(tasks.phase2)}</div>${coachProofHtml(contract)}${user==="maaike"?maintenanceHtml():""}</div>`;
   $("#startCoachChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); phase="phase1"; selectedCategories=new Set(categories()); startSession("challenge",DAILY_CHALLENGE_TARGET,"mixed"); });
   $("#coachChallengeReview")?.addEventListener("click",()=>show("challenge"));
   $("#startCoachSpaced")?.addEventListener("click",()=>startCoachSpacedReview());
