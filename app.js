@@ -31,6 +31,7 @@ const MISTAKE_REPAIR_DAY_TARGET = 2;
 const HARD_WORD_WRONG_THRESHOLD = 4;
 const HARD_WORD_REPAIR_DAY_TARGET = 3;
 const CHALLENGE_REVIEW_MS = 1400;
+const WRONG_REVIEW_MS = 900;
 const SUCCESSIVE_RELEARNING_TYPED_TARGET = 2;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
@@ -1760,15 +1761,15 @@ function completeAnswer(word, correct, close, answer=""){
     : "";
   const canApprove = !correct && session.source !== "challenge" && !isRecall;
   const canMarkHard = correct && isTyping && !close;
-  const requiresReview = !correct && session.source === "challenge";
+  const reviewDelay = !correct ? (session.source === "challenge" ? CHALLENGE_REVIEW_MS : WRONG_REVIEW_MS) : 0;
 
   fb.className=`feedback ${correct?(close?"close":"good"):"bad"}`;
   fb.innerHTML=correct
     ? `${successLine || (close?`Accepted <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`:`Correct <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`)}${fluencyLine}${criterionLine}`
     : `${answerLine}${typedLine}${confusionLine}${selectedLine}`;
-  $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}${canMarkHard?'<button class="btn-hard" id="markHardBtn">Felt hard</button>':""}<button class="btn-next" id="nextBtn" ${requiresReview?"disabled":""}>Next →</button>`;
+  $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}${canMarkHard?'<button class="btn-hard" id="markHardBtn">Felt hard</button>':""}<button class="btn-next" id="nextBtn" ${reviewDelay?"disabled":""}>Next →</button>`;
   const nextButton = $("#nextBtn");
-  if(requiresReview) setTimeout(()=>{ if(nextButton){ nextButton.disabled = false; nextButton.focus(); } }, CHALLENGE_REVIEW_MS);
+  if(reviewDelay) setTimeout(()=>{ if(nextButton){ nextButton.disabled = false; nextButton.focus(); } }, reviewDelay);
   else nextButton?.focus();
   nextButton?.addEventListener("click", nextQuestion);
   $("#approveBtn")?.addEventListener("click",()=>{session.correct++; session.wrong--; session.approved++; delete session.missed[wordSessionKey(word)]; approveAttempt(attemptId, word); $("#approveBtn").remove();});
