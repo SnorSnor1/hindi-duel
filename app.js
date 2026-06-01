@@ -11,6 +11,7 @@ const DAILY_PHASE2_TARGET = 8;
 const DAILY_MISTAKE_TARGET = 10;
 const DAILY_WEAK_LESSON_TARGET = 8;
 const DAILY_FLUENCY_TARGET = 5;
+const DAILY_BACKLOG_TARGET = 12;
 const SPACED_REVIEW_TARGET = 12;
 const SPACED_REVIEW_INTERVALS = [1, 3, 7, 14, 30];
 const FRAGILE_TYPED_MS = 8000;
@@ -987,8 +988,41 @@ function phase2TaskStatus(name){
     label: taskProgressLabel(progress, target, "Not needed")
   };
 }
+function capDailyBacklogTasks(tasks){
+  let remaining = DAILY_BACKLOG_TARGET;
+  const core = new Set(["challenge","phase2"]);
+  const backlogPriority = ["mistakes","spaced","weak","fluency"];
+  const allowedById = new Map();
+  backlogPriority.forEach((id)=>{
+    const task = tasks.find((item)=>item.id===id);
+    if(!task) return;
+    const need = Math.max(0, task.target - task.progress);
+    const allowed = Math.min(need, remaining);
+    remaining -= allowed;
+    allowedById.set(id, allowed);
+  });
+  return tasks.map((task)=>{
+    if(core.has(task.id)) return { ...task, core:true, originalTarget:task.target };
+    const originalTarget = task.target;
+    const need = Math.max(0, originalTarget - task.progress);
+    if(!need) return { ...task, originalTarget, queued:false };
+    const allowed = allowedById.get(task.id) || 0;
+    const target = task.progress + allowed;
+    const queuedCount = need - allowed;
+    const queued = queuedCount > 0;
+    return {
+      ...task,
+      originalTarget,
+      target,
+      queued,
+      queuedCount,
+      done: target === 0 || task.progress >= target,
+      label: taskProgressLabel(task.progress, target, queued && target === 0 ? "Queued" : task.label)
+    };
+  });
+}
 function dailyContractFor(name=user){
-  const tasks = [scoreTaskStatus(name), spacedReviewTaskStatus(name), mistakeTaskStatus(name), weakLessonTaskStatus(name), fluencyTaskStatus(name), phase2TaskStatus(name)];
+  const tasks = capDailyBacklogTasks([scoreTaskStatus(name), spacedReviewTaskStatus(name), mistakeTaskStatus(name), weakLessonTaskStatus(name), fluencyTaskStatus(name), phase2TaskStatus(name)]);
   const required = tasks.filter((task)=>task.target > 0);
   const complete = required.every((task)=>task.done);
   const doneUnits = required.reduce((sum,task)=>sum+Math.min(task.progress, task.target),0);
@@ -1027,7 +1061,9 @@ function isoFromDateTimeInput(value){
   return Number.isNaN(date.getTime()) ? "" : date.toISOString();
 }
 function taskCardHtml(task, body, actionHtml=""){
-  return `<div class="coach-task ${task.done?"task-done":"task-open"}"><div class="task-head"><div><span>${escapeHtml(task.title)}</span><strong>${escapeHtml(task.label)}</strong></div><b>${task.done?"Done":"Due"}</b></div>${body}${actionHtml}</div>`;
+  const stateClass = task.queued && task.target === task.progress ? "task-queued" : task.done ? "task-done" : "task-open";
+  const status = task.queued && task.target === task.progress ? "Queued" : task.done ? "Done" : "Due";
+  return `<div class="coach-task ${stateClass}"><div class="task-head"><div><span>${escapeHtml(task.title)}</span><strong>${escapeHtml(task.label)}</strong></div><b>${status}</b></div>${body}${actionHtml}</div>`;
 }
 function whatsappProofText(contract){
   const taskText = contract.tasks.map((task)=>`${task.title}: ${task.label}`).join(" | ");
@@ -1052,7 +1088,8 @@ function coachChallengeHtml(task){
 function coachMistakesHtml(task){
   const phase1Count = activeMistakesFor(user, "phase1").length;
   const phase2Count = activeMistakesFor(user, "phase2").length;
-  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.active.length} active mistake word${task.active.length===1?"":"s"} left for spaced confirmation.` : `${task.active.length} active mistake words. Repair ${task.target} today. A mistake clears after typed recall on ${MISTAKE_REPAIR_DAY_TARGET} different days.`) : "No active mistake words right now."}</p>`;
+  const queueNote = task.queued ? ` ${task.queuedCount} repair${task.queuedCount===1?"":"s"} stay queued to keep today light.` : "";
+  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.active.length} active mistake word${task.active.length===1?"":"s"} left for spaced confirmation.` : `${task.active.length} active mistake words. Repair ${task.target} today. A mistake clears after typed recall on ${MISTAKE_REPAIR_DAY_TARGET} different days.${queueNote}`) : task.active.length ? `${task.active.length} active mistake words are queued for another day. The daily workload cap keeps the habit sustainable.` : "No active mistake words right now."}</p>`;
   const action = task.target
     ? `<div class="coach-actions"><button class="ghost" id="startCoachMistakes1" type="button" ${phase1Count?"":"disabled"}>Phase 1 mistakes (${phase1Count})</button><button class="ghost" id="startCoachMistakes2" type="button" ${phase2Count?"":"disabled"}>Phase 2 mistakes (${phase2Count})</button></div>`
     : "";
@@ -1061,11 +1098,14 @@ function coachMistakesHtml(task){
 function coachSpacedHtml(task){
   const phase1Count = task.active.filter((word)=>word.phaseKey==="phase1").length;
   const phase2Count = task.active.filter((word)=>word.phaseKey==="phase2").length;
+  const queueNote = task.queued ? ` ${task.queuedCount} extra due word${task.queuedCount===1?"":"s"} stay queued for later.` : "";
   const body = task.target
     ? task.done
       ? `<p>Daily spaced review complete. ${task.active.length} extra due word${task.active.length===1?"":"s"} stay queued for later.</p>`
-      : `<p>${task.active.length} due words from earlier days. Today: ${phase1Count} Phase 1, ${phase2Count} Phase 2. Typed recall controls long-term spacing.</p>`
-    : `<p>No spaced-review words due right now. Choice-only correct answers come back quickly until typed recall is strong.</p>`;
+      : `<p>${task.active.length} due words from earlier days. Today: ${phase1Count} Phase 1, ${phase2Count} Phase 2. Typed recall controls long-term spacing.${queueNote}</p>`
+    : task.active.length
+      ? `<p>${task.active.length} spaced-review word${task.active.length===1?" is":"s are"} queued for another day. Choice-only correct answers still come back quickly.</p>`
+      : `<p>No spaced-review words due right now. Choice-only correct answers come back quickly until typed recall is strong.</p>`;
   const action = task.target && !task.done
     ? `<button class="start-btn" id="startCoachSpaced" type="button">Start spaced review</button>`
     : "";
@@ -1073,11 +1113,14 @@ function coachSpacedHtml(task){
 }
 function coachWeakLessonHtml(task){
   const names = task.lessons?.length ? task.lessons.map((lesson)=>displayCategory(lesson.category)).join(", ") : "";
+  const queueNote = task.queued ? ` ${task.queuedCount} extra weak-lesson word${task.queuedCount===1?"":"s"} queued.` : "";
   const body = task.target
     ? task.done
       ? `<p>Weak lesson focus complete. The weakest categories will update as your answers change.</p>`
-      : `<p>Focused mix from ${escapeHtml(names)}. Practise ${task.target} words from the weakest lesson pattern.</p>`
-    : `<p>No weak lesson pattern yet. Keep answering and this will appear when a category starts lagging.</p>`;
+      : `<p>Focused mix from ${escapeHtml(names)}. Practise ${task.target} words from the weakest lesson pattern.${queueNote}</p>`
+    : task.active.length
+      ? `<p>Weak lesson focus is queued for another day so today stays realistic.</p>`
+      : `<p>No weak lesson pattern yet. Keep answering and this will appear when a category starts lagging.</p>`;
   const action = task.target && !task.done
     ? `<button class="start-btn" id="startCoachWeak" type="button">Start weak lesson focus</button>`
     : "";
@@ -1085,11 +1128,14 @@ function coachWeakLessonHtml(task){
 }
 function coachFluencyHtml(task){
   const slowCount = task.active.filter((word)=>word.fluency?.ms > FLUENCY_TARGET_MS).length;
+  const queueNote = task.queued ? ` ${task.queuedCount} extra fluency word${task.queuedCount===1?"":"s"} queued.` : "";
   const body = task.target
     ? task.done
       ? `<p>Fast recall complete. Correct-but-slow words will keep cycling back.</p>`
-      : `<p>${task.active.length} nearly-known word${task.active.length===1?"":"s"} need faster recall. ${slowCount} were slow last time.</p>`
-    : `<p>No slow-but-known words right now. New fragile correct answers will appear here.</p>`;
+      : `<p>${task.active.length} nearly-known word${task.active.length===1?"":"s"} need faster recall. ${slowCount} were slow last time.${queueNote}</p>`
+    : task.active.length
+      ? `<p>Fluency sprint is queued for another day. Slow-but-known words will keep cycling back.</p>`
+      : `<p>No slow-but-known words right now. New fragile correct answers will appear here.</p>`;
   const action = task.target && !task.done
     ? `<button class="start-btn" id="startCoachFluency" type="button">Start fluency sprint</button>`
     : "";
@@ -1140,31 +1186,38 @@ function renderCoach(){
   $("#coachSyncPhase2")?.addEventListener("click",()=>syncPhase2FromSheet($("#coachSyncStatus")));
   $("#saveLessonPrep")?.addEventListener("click",()=>{ state.maintenance = normalizeMaintenance(state.maintenance); state.maintenance.lessonPrep = { ...state.maintenance.lessonPrep, nextLessonAt: isoFromDateTimeInput($("#nextLessonAt").value), checkedAt: new Date().toISOString(), updatedAt: new Date().toISOString() }; save({ immediate:true }); renderCoach(); });
 }
+function coachTaskById(id){
+  return dailyContractFor(user).tasks.find((task)=>task.id===id);
+}
 function startCoachSpacedReview(){
-  const task = spacedReviewTaskStatus(user);
+  const task = coachTaskById("spaced") || spacedReviewTaskStatus(user);
   const count = Math.max(0, task.target - task.progress);
-  const words = task.active.slice(0, count || SPACED_REVIEW_TARGET);
+  if(!count) return renderCoach();
+  const words = task.active.slice(0, count);
   if(!words.length) return renderCoach();
   startWordSession(words, "coach-spaced");
 }
 function startCoachWeakLesson(){
-  const task = weakLessonTaskStatus(user);
+  const task = coachTaskById("weak") || weakLessonTaskStatus(user);
   const count = Math.max(0, task.target - task.progress);
-  const words = task.active.slice(0, count || DAILY_WEAK_LESSON_TARGET);
+  if(!count) return renderCoach();
+  const words = task.active.slice(0, count);
   if(!words.length) return renderCoach();
   startWordSession(words, "coach-weak");
 }
 function startCoachFluency(){
-  const task = fluencyTaskStatus(user);
+  const task = coachTaskById("fluency") || fluencyTaskStatus(user);
   const count = Math.max(0, task.target - task.progress);
-  const words = task.active.slice(0, count || DAILY_FLUENCY_TARGET);
+  if(!count) return renderCoach();
+  const words = task.active.slice(0, count);
   if(!words.length) return renderCoach();
   startWordSession(words, "coach-fluency");
 }
 function startPhase2Focus(){
   phase = "phase2";
-  const task = phase2TaskStatus(user);
-  const remaining = Math.max(1, (task.target || DAILY_PHASE2_TARGET) - task.progress);
+  const task = coachTaskById("phase2") || phase2TaskStatus(user);
+  const remaining = Math.max(0, task.target - task.progress);
+  if(!remaining) return renderCoach();
   const words = task.active.slice(0, remaining);
   selectedCategories = new Set((words.length ? words : phaseWordsFor("phase2")).map((word)=>word.category));
   if(!selectedCategories.size) selectedCategories = new Set(latestPhaseCategories("phase2", 3));
@@ -1178,8 +1231,9 @@ function startCoachMistakes(phaseKey){
   phase = phaseKey;
   selectedCategories = new Set(words.map((word)=>word.category));
   save();
-  const task = mistakeTaskStatus(user);
-  const remaining = Math.max(1, (task.target || DAILY_MISTAKE_TARGET) - task.progress);
+  const task = coachTaskById("mistakes") || mistakeTaskStatus(user);
+  const remaining = Math.max(0, task.target - task.progress);
+  if(!remaining) return renderCoach();
   startWordSession(words.slice(0, remaining), "coach-mistakes");
 }
 function renderQuizSetup(){
