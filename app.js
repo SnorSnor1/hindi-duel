@@ -1213,7 +1213,25 @@ function typeHtml(word){
   return `<div class="hindi-word">${word.hindi}</div><form id="answerForm" class="answer-form"><input id="answerInput" class="answer-input" autocomplete="off" placeholder="Type in English"><button class="check-btn" type="submit">Check</button></form>`;
 }
 function mcHtml(word){ const choices=makeChoices(word); return `<div class="english-word">${escapeHtml(formatPrimaryEnglish(word))}</div><div class="mc-options">${choices.map((choice)=>`<button class="mc-btn" type="button">${escapeHtml(choice.hindi)}</button>`).join("")}</div>`; }
-function makeChoices(word){ const others=phaseWordsFor(wordPhaseKey(word)).filter((candidate)=>normHindi(candidate.hindi)!==normHindi(word.hindi)); return shuffle([word,...shuffle(others).slice(0,3)]); }
+function choiceDistractorScore(word, candidate, latest){
+  const targetEnglish = normEnglish(formatPrimaryEnglish(word));
+  const candidateEnglish = normEnglish(formatPrimaryEnglish(candidate));
+  const categoryMatch = candidate.category === word.category ? 1000 : 0;
+  const currentLesson = latest.has(candidate.category) ? 120 : 0;
+  const lessonDistance = Math.abs(lessonRank(candidate.category) - lessonRank(word.category));
+  const answerLengthGap = Math.abs(candidateEnglish.length - targetEnglish.length);
+  return categoryMatch + currentLesson - lessonDistance * 12 - answerLengthGap * 0.5 + Math.random();
+}
+function makeChoices(word){
+  const phaseKey = wordPhaseKey(word);
+  const latest = new Set(latestPhaseCategories(phaseKey, 4));
+  const others = phaseWordsFor(phaseKey)
+    .filter((candidate)=>normHindi(candidate.hindi)!==normHindi(word.hindi))
+    .map((candidate)=>({ word:candidate, score:choiceDistractorScore(word, candidate, latest) }))
+    .sort((a,b)=>b.score-a.score)
+    .map((item)=>item.word);
+  return shuffle([word,...uniqueWords(others).slice(0,3)]);
+}
 function bindMc(word){ document.querySelectorAll(".mc-btn").forEach((button)=>button.addEventListener("click",()=>answerMc(word, button))); }
 function answerType(word){ const answer=$("#answerInput").value.trim(); const result=checkAnswer(answer, word.english); completeAnswer(word,result.correct,result.close,answer); }
 function answerMc(word, button){ const correct=normHindi(button.textContent)===normHindi(word.hindi); document.querySelectorAll(".mc-btn").forEach((btn)=>{btn.disabled=true; if(normHindi(btn.textContent)===normHindi(word.hindi)) btn.classList.add("correct"); else if(btn===button) btn.classList.add("wrong"); else btn.classList.add("dimmed");}); completeAnswer(word, correct, false, button.textContent); }
