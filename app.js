@@ -757,6 +757,9 @@ function attemptDate(attempt){
 function repairDayCount(word){
   return new Set(Array.isArray(word?.repairDays) ? word.repairDays.filter(Boolean) : []).size;
 }
+function repairedToday(word){
+  return Array.isArray(word?.repairDays) && word.repairDays.includes(today());
+}
 function reviewStatsForWord(name, phaseKey, word){
   const attempts = attemptsForWord(name, phaseKey, word);
   if(!attempts.length) return null;
@@ -1067,8 +1070,9 @@ function scoreTaskStatus(name){
   };
 }
 function mistakeTaskStatus(name){
-  const active = allActiveMistakes(name);
-  const progress = correctAttemptsToday(name, (attempt)=>attempt.source==="coach-mistakes");
+  const all = allActiveMistakes(name);
+  const active = all.filter((word)=>!repairedToday(word));
+  const progress = Math.min(DAILY_MISTAKE_TARGET, all.length - active.length);
   const target = Math.min(DAILY_MISTAKE_TARGET, progress + active.length);
   return {
     id: "mistakes",
@@ -1077,6 +1081,8 @@ function mistakeTaskStatus(name){
     progress,
     target,
     active,
+    totalActive: all.length,
+    repairedToday: all.length - active.length,
     label: taskProgressLabel(progress, target, "Clean")
   };
 }
@@ -1352,13 +1358,14 @@ function coachChallengeHtml(task){
   return taskCardHtml(task, body, action);
 }
 function coachMistakesHtml(task){
-  const phase1Count = activeMistakesFor(user, "phase1").length;
-  const phase2Count = activeMistakesFor(user, "phase2").length;
+  const phase1Count = task.active.filter((word)=>word.phaseKey==="phase1").length;
+  const phase2Count = task.active.filter((word)=>word.phaseKey==="phase2").length;
   const hardCount = task.active.filter(isHardWord).length;
   const queueNote = task.queued ? ` ${task.queuedCount} repair${task.queuedCount===1?"":"s"} stay queued to keep today light.` : "";
   const hardNote = hardCount ? ` ${hardCount} hard word${hardCount===1?" needs":"s need"} ${HARD_WORD_REPAIR_DAY_TARGET} repair days.` : "";
-  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.active.length} active mistake word${task.active.length===1?"":"s"} left for spaced confirmation.${hardNote}` : `${task.active.length} active mistake words. Repair ${task.target} today. Normal mistakes clear after typed recall on ${MISTAKE_REPAIR_DAY_TARGET} different days; hard words need ${HARD_WORD_REPAIR_DAY_TARGET}.${hardNote}${queueNote}`) : task.active.length ? `${task.active.length} active mistake words are queued for another day. The daily workload cap keeps the habit sustainable.${hardNote}` : "No active mistake words right now."}</p>`;
-  const action = task.target
+  const repairedLine = task.repairedToday ? ` ${task.repairedToday} already repaired today; next proof comes another day.` : "";
+  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.totalActive || 0} active mistake word${(task.totalActive || 0)===1?"":"s"} remain for cross-day confirmation.${hardNote}` : `${task.active.length} mistake word${task.active.length===1?"":"s"} still need today's typed repair. Normal mistakes clear after ${MISTAKE_REPAIR_DAY_TARGET} different repair days; hard words need ${HARD_WORD_REPAIR_DAY_TARGET}.${repairedLine}${hardNote}${queueNote}`) : (task.totalActive || 0) ? `${task.totalActive} active mistake word${task.totalActive===1?" is":"s are"} already repaired for today. Tomorrow will ask for another proof if needed.${hardNote}` : "No active mistake words right now."}</p>`;
+  const action = task.target && !task.done
     ? `<div class="coach-actions"><button class="ghost" id="startCoachMistakes1" type="button" ${phase1Count?"":"disabled"}>Phase 1 mistakes (${phase1Count})</button><button class="ghost" id="startCoachMistakes2" type="button" ${phase2Count?"":"disabled"}>Phase 2 mistakes (${phase2Count})</button></div>`
     : "";
   return taskCardHtml(task, body, action);
@@ -1496,12 +1503,12 @@ function startPhase2Focus(){
   else startSession("coach-phase2", remaining, "mixed");
 }
 function startCoachMistakes(phaseKey){
-  const words = activeMistakesFor(user, phaseKey);
+  const task = coachTaskById("mistakes") || mistakeTaskStatus(user);
+  const words = task.active.filter((word)=>word.phaseKey===phaseKey);
   if(!words.length) return renderCoach();
   phase = phaseKey;
   selectedCategories = new Set(words.map((word)=>word.category));
   save();
-  const task = coachTaskById("mistakes") || mistakeTaskStatus(user);
   const remaining = Math.max(0, task.target - task.progress);
   if(!remaining) return renderCoach();
   startWordSession(words.slice(0, remaining), "coach-mistakes");
