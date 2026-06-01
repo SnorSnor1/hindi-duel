@@ -32,6 +32,7 @@ const HARD_WORD_WRONG_THRESHOLD = 4;
 const HARD_WORD_REPAIR_DAY_TARGET = 3;
 const CHALLENGE_REVIEW_MS = 1400;
 const WRONG_REVIEW_MS = 900;
+const MC_THINK_MS = 900;
 const SUCCESSIVE_RELEARNING_TYPED_TARGET = 2;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
@@ -1166,7 +1167,7 @@ function phase2TaskStatus(name){
   const target = name === "maaike" ? Math.min(DAILY_PHASE2_TARGET, active.length + progress) : 0;
   return {
     id: "phase2",
-    title: "Phase 2 lesson prep",
+    title: "Phase 2 daily prep",
     done: target === 0 || progress >= target,
     progress,
     target,
@@ -1330,7 +1331,7 @@ function coachFocusLine(contract){
     spaced: "Primary focus: spaced retrieval. These words are due before they fade.",
     weak: "Primary focus: weak lesson pattern. The app is clustering the category that keeps slipping.",
     fluency: "Primary focus: speed. These words are correct but not automatic yet.",
-    phase2: "Primary focus: tomorrow's Phase 2 lesson prep. Keep it small and typed.",
+    phase2: "Primary focus: the latest Phase 2B lesson. Keep it small and typed.",
     challenge: "Primary focus: Phase 1 daily retrieval. One locked attempt keeps maintenance honest."
   };
   return lines[task.id] || "Primary focus: finish the next open retrieval task.";
@@ -1419,11 +1420,13 @@ function coachFluencyHtml(task){
 }
 function coachPhase2Html(task){
   const lessons = task.categories.length ? task.categories.map(displayCategory).join(", ") : "No Phase 2 words";
+  const rank = lessonRank(task.categories?.[0]);
+  const nextLesson = rank ? ` After ${escapeHtml(displayCategory(task.categories[0]))}, this keeps the words active before lesson ${Math.floor(rank) + 1}.` : "";
   const body = task.target
-    ? `<p>Small prep from ${escapeHtml(lessons)} before the next lesson. ${task.target} typed recalls, so this stays light next to Phase 1 maintenance.</p>`
-    : `<p>Current prep lesson: ${escapeHtml(lessons)}. All required words for today are done.</p>`;
+    ? `<p>Daily Phase 2 practice from ${escapeHtml(lessons)}. ${task.target} typed recalls only: enough to move forward without turning this into a second full challenge.${nextLesson}</p>`
+    : `<p>Current Phase 2 target: ${escapeHtml(lessons)}. All required words for today are done.${nextLesson}</p>`;
   const action = task.target
-    ? `<button class="start-btn" id="startCoachPhase2" type="button">Start lesson prep</button>`
+    ? `<button class="start-btn" id="startCoachPhase2" type="button">Start Phase 2 daily</button>`
     : "";
   return taskCardHtml(task, body, action);
 }
@@ -1618,7 +1621,7 @@ function renderQuestion(){
   const secondsLimit = questionTimeLimit(qMode);
   $("#quiz").innerHTML = `<div class="quiz-active">${secondsLimit?timerHtml():""}<div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><div class="score-display">${session.index+1}/${session.queue.length} · ${session.correct} correct</div><div class="quiz-card">${qMode==="mc"?mcHtml(word):qMode==="recall"?recallHtml(word):typeHtml(word, qMode)}<div id="feedback" class="feedback"></div><div id="feedbackButtons" class="feedback-buttons"></div></div></div>`;
   if(qMode==="type"){ $("#answerInput").focus(); $("#answerForm").addEventListener("submit",(event)=>{event.preventDefault(); answerType(word);}); }
-  else if(qMode==="mc") bindMc(word);
+  else if(qMode==="mc"){ bindMc(word); revealMcChoices(); }
   else bindRecall(word);
   if(secondsLimit) startTimer(secondsLimit);
 }
@@ -1634,7 +1637,7 @@ function timerHtml(){
 function typeHtml(word){
   return `<div class="hindi-word">${word.hindi}</div><form id="answerForm" class="answer-form"><input id="answerInput" class="answer-input" autocomplete="off" placeholder="Type in English"><button class="check-btn" type="submit">Check</button></form>`;
 }
-function mcHtml(word){ const choices=makeChoices(word); return `<div class="english-word">${escapeHtml(formatPrimaryEnglish(word))}</div><div class="mc-options">${choices.map((choice)=>`<button class="mc-btn" type="button">${escapeHtml(choice.hindi)}</button>`).join("")}</div>`; }
+function mcHtml(word){ const choices=makeChoices(word); return `<div class="english-word">${escapeHtml(formatPrimaryEnglish(word))}</div><div class="mc-think" id="mcThink">Think of the Hindi first</div><div class="mc-options thinking" id="mcOptions">${choices.map((choice)=>`<button class="mc-btn" type="button" disabled>${escapeHtml(choice.hindi)}</button>`).join("")}</div>`; }
 function recallHtml(word){
   return `<div class="english-word">${escapeHtml(formatPrimaryEnglish(word))}</div><div class="recall-actions"><button class="check-btn" id="showRecallAnswer" type="button">Show answer</button></div>`;
 }
@@ -1658,6 +1661,15 @@ function makeChoices(word){
   return shuffle([word,...uniqueWords(others).slice(0,3)]);
 }
 function bindMc(word){ document.querySelectorAll(".mc-btn").forEach((button)=>button.addEventListener("click",()=>answerMc(word, button))); }
+function revealMcChoices(){
+  const revealIndex = session?.index;
+  setTimeout(()=>{
+    if(!session || session.index !== revealIndex || session.currentMode !== "mc") return;
+    $("#mcOptions")?.classList.remove("thinking");
+    $("#mcThink")?.classList.add("hidden");
+    document.querySelectorAll(".mc-btn").forEach((button)=>button.disabled=false);
+  }, MC_THINK_MS);
+}
 function bindRecall(word){ $("#showRecallAnswer")?.addEventListener("click",()=>showRecallAnswer(word)); }
 function answerType(word){ const answer=$("#answerInput").value.trim(); const result=checkAnswer(answer, word.english); completeAnswer(word,result.correct,result.close,answer); }
 function answerMc(word, button){ const correct=normHindi(button.textContent)===normHindi(word.hindi); document.querySelectorAll(".mc-btn").forEach((btn)=>{btn.disabled=true; if(normHindi(btn.textContent)===normHindi(word.hindi)) btn.classList.add("correct"); else if(btn===button) btn.classList.add("wrong"); else btn.classList.add("dimmed");}); completeAnswer(word, correct, false, button.textContent); }
