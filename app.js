@@ -30,6 +30,7 @@ const MISTAKE_REPAIR_DAY_TARGET = 2;
 const HARD_WORD_WRONG_THRESHOLD = 4;
 const HARD_WORD_REPAIR_DAY_TARGET = 3;
 const CHALLENGE_REVIEW_MS = 1400;
+const SUCCESSIVE_RELEARNING_TYPED_TARGET = 2;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
 const CHALLENGE_RESETS = [
@@ -1528,6 +1529,15 @@ function showRecallAnswer(word){
 function autoRepeatSource(source){
   return source === "round-repair" || String(source || "").startsWith("coach-");
 }
+function successiveRelearningSource(source){
+  return source === "coach-phase2";
+}
+function needsSuccessiveRelearning(word, correct, isTyping){
+  if(!user || !correct || !isTyping || !successiveRelearningSource(session?.source)) return false;
+  const phaseKey = wordPhaseKey(word);
+  const typedCorrect = attemptsForWord(user, phaseKey, word).filter((attempt)=>attempt.correct && attempt.mode === "type").length;
+  return typedCorrect + 1 < SUCCESSIVE_RELEARNING_TYPED_TARGET;
+}
 function scheduleSameSessionRepeat(word, reason="miss"){
   if(!session || !autoRepeatSource(session.source)) return;
   const key = wordSessionKey(word);
@@ -1566,6 +1576,7 @@ function completeAnswer(word, correct, close, answer=""){
   const isFluency = session.source === "coach-fluency";
   const fastExact = correct && !close && elapsedMs > 0 && elapsedMs <= FLUENCY_TARGET_MS;
   const confusionWord = !correct && isTyping ? confusionWordForAnswer(word, answer) : null;
+  const criterionRepeat = needsSuccessiveRelearning(word, correct, isTyping);
   if(correct) {
     session.correct++;
     delete session.missed[missedKey];
@@ -1576,6 +1587,7 @@ function completeAnswer(word, correct, close, answer=""){
     if(confusionWord) scheduleSameSessionRepeat({ ...confusionWord, phaseKey:wordPhaseKey(word) }, "confusion");
   }
   if(isFluency && correct && !fastExact) scheduleSameSessionRepeat(word, "fluency");
+  if(criterionRepeat) scheduleSameSessionRepeat(word, "criterion");
   updateChallengeScore(false);
 
   const attemptId=recordAttempt(word, correct, close, answer, elapsedMs);
@@ -1585,6 +1597,9 @@ function completeAnswer(word, correct, close, answer=""){
     : "";
   const fluencyLine = isFluency && correct
     ? `<div class="typed-answer"><span>Fluency target</span><strong>${fastExact ? `Fast exact recall (${seconds(elapsedMs)})` : `Correct, repeat for speed (${seconds(elapsedMs)})`}</strong></div>`
+    : "";
+  const criterionLine = criterionRepeat
+    ? `<div class="typed-answer learning-answer"><span>One more retrieval</span><strong>New prep word: it will come back once.</strong></div>`
     : "";
   const answerLine = !correct
     ? (isTyping ? correctTypeAnswerHtml(word) : correctTranslationHtml(word))
@@ -1604,7 +1619,7 @@ function completeAnswer(word, correct, close, answer=""){
 
   fb.className=`feedback ${correct?(close?"close":"good"):"bad"}`;
   fb.innerHTML=correct
-    ? `${successLine || (close?`Accepted <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`:`Correct <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`)}${fluencyLine}`
+    ? `${successLine || (close?`Accepted <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`:`Correct <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`)}${fluencyLine}${criterionLine}`
     : `${answerLine}${typedLine}${confusionLine}${selectedLine}`;
   $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}${canMarkHard?'<button class="btn-hard" id="markHardBtn">Felt hard</button>':""}<button class="btn-next" id="nextBtn" ${requiresReview?"disabled":""}>Next →</button>`;
   const nextButton = $("#nextBtn");
