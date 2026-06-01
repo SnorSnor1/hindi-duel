@@ -948,13 +948,23 @@ function renderQuizSetup(){
 function randomMode(){
   return ["type","roman","mc"][Math.floor(Math.random() * 3)];
 }
+function challengeModes(total){
+  const mcCount = total >= 3 ? Math.floor(total * 0.2) : 0;
+  const typeCount = Math.ceil((total - mcCount) / 2);
+  const romanCount = Math.max(0, total - mcCount - typeCount);
+  return shuffle([
+    ...Array(typeCount).fill("type"),
+    ...Array(romanCount).fill("roman"),
+    ...Array(mcCount).fill("mc")
+  ]);
+}
 function startSession(source, count=20, forcedMode=mode){
   if(source==="challenge" && todaysChallengeScore()) return show("challenge");
   const pool = phaseWords().filter((word)=>selectedCategories.has(word.category));
   const queue = shuffle([...pool]).slice(0, Math.min(count, pool.length)).map((word)=>({ ...word, phaseKey:phase }));
   session = { source, phaseKey:phase, queue, index:0, correct:0, wrong:0, approved:0, mode:forcedMode, started:0, modes:[], missed:{} };
   if(source==="challenge"){
-    session.modes = queue.map(()=>randomMode());
+    session.modes = challengeModes(queue.length);
     session.score = createChallengeScore(queue.length);
     lockChallengeNavigation();
   }
@@ -1175,7 +1185,7 @@ function renderChallenge(){
   const doneLabel = done?.completed ? "Done today" : "Started today";
   const doneNote = done?.completed ? "score" : "locked score so far";
   const total = done?.total || 20;
-  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>20</strong><small>words</small></div><div><strong>20s</strong><small>typing</small></div><div><strong>12s</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">A fixed daily run with random Phase 1 words. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/20</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
+  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>20</strong><small>words</small></div><div><strong>16</strong><small>typed recall</small></div><div><strong>4</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">A fixed balanced run: 8 Hindi to English, 8 English to Roman Hindi, 4 choices. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/20</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
   $("#startChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); startSession("challenge",20,"mixed"); });
   $("#repairChallengeMistakes")?.addEventListener("click",()=>startRepairSession(missedWordsFromAttempts(todaysChallengeAttempts()), "coach"));
   $("#practiceAfterChallenge")?.addEventListener("click",()=>show("quiz"));
