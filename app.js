@@ -738,6 +738,25 @@ function spacedReviewTaskStatus(name){
     label: taskProgressLabel(progress, target, "Clear")
   };
 }
+function wordsForPhaseWithKey(phaseKey, words){
+  return (Array.isArray(words) ? words : []).map((word)=>({ ...word, phaseKey }));
+}
+function smartPracticeWords(phaseKey=phase, count=20){
+  const mistakeWords = wordsForPhaseWithKey(phaseKey, user ? activeMistakesFor(user, phaseKey) : []);
+  const dueWords = user ? spacedReviewWords(user).filter((word)=>word.phaseKey===phaseKey) : [];
+  const latest = new Set(latestPhaseCategories(phaseKey, 3));
+  const newestWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>latest.has(word.category))).slice(0, 10));
+  const selectedWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>selectedCategories.has(word.category))));
+  return uniqueWords([...mistakeWords, ...dueWords, ...newestWords, ...selectedWords]).slice(0, count);
+}
+function smartPracticeHtml(count=20){
+  if(!user) return "";
+  const words = smartPracticeWords(phase, count);
+  const dueCount = spacedReviewWords(user).filter((word)=>word.phaseKey===phase).length;
+  const mistakeCount = activeMistakesFor(user, phase).length;
+  const label = words.length ? `${Math.min(words.length, count)} prioritized words` : "No words available";
+  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · ${mistakeCount} mistakes · ${dueCount} spaced</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
+}
 function phase2TaskStatus(name){
   const available = (state.words.phase2 || []).filter((word)=>word.english?.length);
   const target = name === "maaike" ? Math.min(DAILY_PHASE2_TARGET, available.length) : 0;
@@ -902,9 +921,10 @@ function startCoachMistakes(phaseKey){
 }
 function renderQuizSetup(){
   if(!selectedCategories.size) selectedCategories = new Set(categories());
-  $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>${PHASE_DATA[phase].title}</h2><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi</button></div><label class="form-label">Categories</label>${renderCategoryChips()}<label class="form-label">Words</label><input id="wordCount" type="number" min="1" max="200" value="20"><button class="start-btn" id="startPractice">Start practice</button></div>`;
+  $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>${PHASE_DATA[phase].title}</h2><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi</button></div><label class="form-label">Categories</label>${renderCategoryChips()}<label class="form-label">Words</label><input id="wordCount" type="number" min="1" max="200" value="20">${smartPracticeHtml(20)}<button class="start-btn" id="startPractice">Start practice</button></div>`;
   bindPhaseButtons(); bindCategoryChips();
   document.querySelectorAll("[data-mode]").forEach((button)=>button.addEventListener("click",()=>{mode=button.dataset.mode; renderQuizSetup();}));
+  $("#startSmartPractice")?.addEventListener("click",()=>startWordSession(smartPracticeWords(phase, Number($("#wordCount").value||20)), "smart-practice"));
   $("#startPractice").addEventListener("click",()=>startSession("practice", Number($("#wordCount").value||20)));
 }
 function startSession(source, count=20, forcedMode=mode){
