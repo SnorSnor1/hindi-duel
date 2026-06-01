@@ -8732,6 +8732,214 @@ export const PHASE_DATA = {
           "be irritated"
         ],
         "category": "Lesson 5b"
+      },
+      {
+        "hindi": "बाकी सब",
+        "english": [
+          "everyone else",
+          "all the rest"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "जलन होना",
+        "english": [
+          "be jealous",
+          "feel envy",
+          "jealousy"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "घूरना",
+        "english": [
+          "stare",
+          "glare"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "दबाना",
+        "english": [
+          "press",
+          "suppress",
+          "push down"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "डांटना",
+        "english": [
+          "scold",
+          "tell off"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "गुर्राना",
+        "english": [
+          "growl",
+          "snarl"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "तलवार",
+        "english": [
+          "sword",
+          "blade"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "खतरनाक",
+        "english": [
+          "dangerous",
+          "risky"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "लड़ाई",
+        "english": [
+          "fight",
+          "battle"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "नाराज़ होना",
+        "english": [
+          "be upset",
+          "be angry",
+          "be annoyed"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "गाड़ना",
+        "english": [
+          "bury",
+          "plant",
+          "drive in"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "डंडी",
+        "english": [
+          "stick",
+          "small stick",
+          "stem"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "बताना",
+        "english": [
+          "tell",
+          "explain"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "हटाना",
+        "english": [
+          "remove",
+          "move aside"
+        ],
+        "category": "Lesson 6b"
+      },
+      {
+        "hindi": "मकड़ी का जाला",
+        "english": [
+          "spider web",
+          "cobweb"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "उदास",
+        "english": [
+          "sad",
+          "unhappy"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "पछताना",
+        "english": [
+          "regret",
+          "repent"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "आहट",
+        "english": [
+          "sound",
+          "footstep sound",
+          "rustle"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "चराना",
+        "english": [
+          "graze",
+          "herd animals"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "चरवाहा",
+        "english": [
+          "shepherd",
+          "herdsman"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "दड़बा",
+        "english": [
+          "coop",
+          "pen",
+          "enclosure"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "दाना",
+        "english": [
+          "grain",
+          "feed",
+          "seed"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "चुगना",
+        "english": [
+          "peck",
+          "eat grain"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "आवाज़ देना",
+        "english": [
+          "call out",
+          "call"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "झोंपड़ी",
+        "english": [
+          "hut",
+          "shack"
+        ],
+        "category": "Lesson 7b"
       }
     ]
   }

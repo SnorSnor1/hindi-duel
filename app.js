@@ -435,11 +435,14 @@ function parseCsv(text){
   if (cell || row.length) { row.push(cell); rows.push(row); }
   return rows;
 }
+function cacheBustedUrl(url){
+  return `${url}${url.includes("?") ? "&" : "?"}cb=${Date.now()}`;
+}
 function splitAnswers(...values){
   return values.flatMap((value)=>String(value || "").split(/[;,/]/)).map((item)=>item.trim()).filter(Boolean);
 }
 async function fetchPhase1WordsFromSheet(){
-  const response = await fetch(PHASE1_SHEET_URL, { cache: "no-store" });
+  const response = await fetch(cacheBustedUrl(PHASE1_SHEET_URL), { cache: "no-store" });
   if (!response.ok) throw new Error("Phase 1 Sheet is not accessible.");
   const rows = parseCsv(await response.text()).slice(1);
   return rows.map((cells,index)=>({
@@ -449,7 +452,7 @@ async function fetchPhase1WordsFromSheet(){
   })).filter((word)=>word.hindi && word.english.length);
 }
 async function fetchPhase2WordsFromSheet(){
-  const response = await fetch(PHASE2_SHEET_URL, { cache: "no-store" });
+  const response = await fetch(cacheBustedUrl(PHASE2_SHEET_URL), { cache: "no-store" });
   if (!response.ok) throw new Error("Phase 2 Sheet is not accessible.");
   const rows = parseCsv(await response.text());
   if(!rows.length) return [];
