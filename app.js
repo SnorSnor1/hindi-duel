@@ -655,6 +655,27 @@ function uniqueWords(words){
 function sessionMissedWords(value){
   return uniqueWords(Object.values(value?.missed || {}));
 }
+function interleaveWords(words){
+  const buckets = new Map();
+  uniqueWords(words).forEach((word)=>{
+    const key = `${word.phaseKey || phase}|${word.category}`;
+    if(!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(word);
+  });
+  buckets.forEach((items)=>shuffle(items));
+  const ordered = [];
+  let lastKey = "";
+  while(buckets.size){
+    const options = [...buckets.entries()]
+      .sort((a,b)=>b[1].length-a[1].length || a[0].localeCompare(b[0]));
+    const next = options.find(([key])=>key !== lastKey) || options[0];
+    const [key, items] = next;
+    ordered.push(items.shift());
+    lastKey = key;
+    if(!items.length) buckets.delete(key);
+  }
+  return ordered;
+}
 function dateValue(date){
   const [year, month, day] = String(date || "").slice(0,10).split("-").map(Number);
   if(!year || !month || !day) return 0;
@@ -1027,7 +1048,7 @@ function smartPracticeHtml(count=20){
   const prepCount = phase==="phase2" ? phase2LessonPrepWords(user, Math.min(DAILY_PHASE2_TARGET, count)).length : 0;
   const coverageCount = coverageWords(user, phase, Math.min(10, count)).length;
   const label = words.length ? `${Math.min(words.length, count)} prioritized words` : "No words available";
-  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · ${mistakeCount} mistakes · ${dueCount} spaced · ${weakCount} weak lesson${phase==="phase2"?` · ${prepCount} lesson prep`:""} · ${coverageCount} coverage</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
+  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · interleaved · ${mistakeCount} mistakes · ${dueCount} spaced · ${weakCount} weak lesson${phase==="phase2"?` · ${prepCount} lesson prep`:""} · ${coverageCount} coverage</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
 }
 function phase2TaskStatus(name){
   const categories = phase2PrepCategories(1);
@@ -1135,7 +1156,7 @@ function coachHeroHtml(contract){
   return `<div class="coach-hero"><div><div class="daily-badge">Daily contract</div><h2>Hindi Coach</h2><p>${contract.complete?"Today is complete. Send the receipt and keep the streak clean.":"Finish the contract before the rest of the app becomes useful."}</p></div><div class="contract-meter"><strong>${pct}%</strong><span>${contract.doneUnits}/${contract.targetUnits || 0} required answers</span></div></div>`;
 }
 function coachChallengeHtml(task){
-  const body = `<p>Adaptive Phase 1 maintenance: mistakes, due words and weak words first. One timed attempt per day, saved to the scoreboard.</p>`;
+  const body = `<p>Adaptive interleaved Phase 1 maintenance: mistakes, due words and weak words first. One timed attempt per day, saved to the scoreboard.</p>`;
   const action = task.done
     ? `<button class="retry-btn secondary-action" id="coachChallengeReview" type="button">Review result</button>`
     : task.started
@@ -1338,9 +1359,10 @@ function sessionModeForQuestion(value){
 function startSession(source, count=20, forcedMode=mode){
   if(source==="challenge" && todaysChallengeScore()) return show("challenge");
   const pool = phaseWords().filter((word)=>selectedCategories.has(word.category));
-  const queue = source === "challenge"
+  const selectedWords = source === "challenge"
     ? phase1MaintenanceChallengeWords(user, count)
     : shuffle([...pool]).slice(0, Math.min(count, pool.length)).map((word)=>({ ...word, phaseKey:phase }));
+  const queue = interleaveWords(selectedWords);
   session = { source, phaseKey:phase, queue, index:0, correct:0, wrong:0, approved:0, mode:forcedMode, started:0, modes:[], missed:{} };
   if(source==="challenge"){
     session.modes = challengeModes(queue.length);
@@ -1351,14 +1373,14 @@ function startSession(source, count=20, forcedMode=mode){
 }
 function startWordSession(words, source="practice"){
   if(!words.length) return;
-  session = { source, phaseKey:phase, queue:shuffle(uniqueWords(words)), index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{} };
+  session = { source, phaseKey:phase, queue:interleaveWords(words), index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{} };
   show("quiz");
   renderQuestion();
 }
 function startRepairSession(words, returnScreen="quiz"){
-  const queue = uniqueWords(words);
+  const queue = interleaveWords(words);
   if(!queue.length) return show(returnScreen);
-  session = { source:"round-repair", phaseKey:phase, returnScreen, queue:shuffle(queue), index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{}, repair:true, repeatCounts:{} };
+  session = { source:"round-repair", phaseKey:phase, returnScreen, queue, index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{}, repair:true, repeatCounts:{} };
   show("quiz");
   renderQuestion();
 }
