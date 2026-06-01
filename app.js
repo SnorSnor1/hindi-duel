@@ -19,7 +19,7 @@ const FLUENCY_TARGET_MS = 6000;
 const FLUENCY_TIMER_SECONDS = 8;
 const WEAK_LESSON_MIN_ATTEMPTS = 4;
 const WEAK_LESSON_RATE = 0.32;
-const COVERAGE_TYPED_TARGET = 2;
+const COVERAGE_DAY_TARGET = 2;
 const CHALLENGE_REVIEW_MS = 1400;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
@@ -701,16 +701,19 @@ function coverageWords(name, phaseKey, count=DAILY_PHASE2_TARGET){
     .filter((word)=>!mistakeKeys.has(keyFor(word)))
     .map((word)=>{
       const attempts = attemptsForWord(name, phaseKey, word);
-      const typedCorrect = attempts.filter((attempt)=>attempt.correct && attempt.mode === "type").length;
+      const typedCorrectAttempts = attempts.filter((attempt)=>attempt.correct && attempt.mode === "type");
+      const typedCorrect = typedCorrectAttempts.length;
+      const typedDays = new Set(typedCorrectAttempts.map((attempt)=>attempt.date || (attempt.createdAt || "").slice(0,10)).filter(Boolean));
       const totalCorrect = attempts.filter((attempt)=>attempt.correct).length;
       const last = attempts.at(-1);
-      const missing = Math.max(0, COVERAGE_TYPED_TARGET - typedCorrect);
-      const priority = missing * 160 + (latest.has(word.category) ? 90 : 0) + (!attempts.length ? 55 : 0) + (!last?.correct ? 35 : 0) + Math.max(0, 6 - totalCorrect);
-      return { ...word, phaseKey, coverage:{ typedCorrect, totalCorrect, attempts:attempts.length, missing, priority, latest:latest.has(word.category) } };
+      const missing = Math.max(0, COVERAGE_DAY_TARGET - typedDays.size);
+      const priority = missing * 180 + (latest.has(word.category) ? 90 : 0) + (!attempts.length ? 55 : 0) + (!last?.correct ? 35 : 0) + Math.max(0, 6 - totalCorrect);
+      return { ...word, phaseKey, coverage:{ typedCorrect, typedDays:typedDays.size, totalCorrect, attempts:attempts.length, missing, priority, latest:latest.has(word.category) } };
     })
     .filter((word)=>word.coverage.missing > 0)
     .sort((a,b)=>
       b.coverage.priority - a.coverage.priority ||
+      a.coverage.typedDays - b.coverage.typedDays ||
       a.coverage.typedCorrect - b.coverage.typedCorrect ||
       a.coverage.attempts - b.coverage.attempts
     )
@@ -1045,7 +1048,7 @@ function coachFluencyHtml(task){
 function coachPhase2Html(task){
   const lessons = task.categories.length ? task.categories.map(displayCategory).join(", ") : "No Phase 2 words";
   const body = task.target
-    ? `<p>Coverage from ${escapeHtml(lessons)}. Each new word needs ${COVERAGE_TYPED_TARGET} typed recalls before it is treated as introduced.</p>`
+    ? `<p>Coverage from ${escapeHtml(lessons)}. Each new word needs typed recall on ${COVERAGE_DAY_TARGET} different days before it is treated as introduced.</p>`
     : `<p>Newest lessons: ${escapeHtml(lessons)}.</p>`;
   const action = task.target
     ? `<button class="start-btn" id="startCoachPhase2" type="button">Start Phase 2 focus</button>`
@@ -1291,6 +1294,7 @@ function recordAttempt(word, correct, close, answer, elapsedMs=null){
   const attempt = {
     id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
     date: createdAt.slice(0,10),
+    createdAt,
     week: weekKey(createdAt),
     phase: phaseKey,
     source: session?.source || "practice",
