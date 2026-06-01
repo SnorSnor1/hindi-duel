@@ -946,6 +946,16 @@ function appendUniqueLimited(target, words, limit){
     added++;
   }
 }
+function masteryFillWeight(level){
+  return {
+    repair: 220,
+    due: 190,
+    new: 180,
+    fragile: 120,
+    building: 65,
+    mastered: -80
+  }[level] || 0;
+}
 function phase1ChallengeFillWords(name, count, excludeKeys=new Set()){
   if(count <= 0) return [];
   const phase1Words = wordsForPhaseWithKey("phase1", phaseWordsFor("phase1"));
@@ -960,10 +970,12 @@ function phase1ChallengeFillWords(name, count, excludeKeys=new Set()){
       const last = attempts.at(-1);
       const lastValue = dateValue(attemptDate(last));
       const daysSince = lastValue ? Math.max(0, Math.floor((todayValue - lastValue) / 86400000)) : 99;
-      const priority = (!attempts.length ? 240 : 0) + (last && !last.correct ? 120 : 0) + Math.min(daysSince, 45) + Math.max(0, COVERAGE_DAY_TARGET - typedDays.size) * 65 + Math.max(0, 5 - typedCorrectAttempts.length) * 8 + Math.random();
-      return { ...word, challengePriority:priority };
+      const mastery = masteryLevelForWord(name, "phase1", word);
+      const spacingBoost = mastery === "mastered" ? Math.min(daysSince, 90) * 1.3 : Math.min(daysSince, 45);
+      const priority = masteryFillWeight(mastery) + (last && !last.correct ? 120 : 0) + spacingBoost + Math.max(0, COVERAGE_DAY_TARGET - typedDays.size) * 65 + Math.max(0, 5 - typedCorrectAttempts.length) * 8 + Math.random();
+      return { ...word, challengePriority:priority, mastery };
     })
-    .sort((a,b)=>b.challengePriority-a.challengePriority || lessonRank(b.category)-lessonRank(a.category))
+    .sort((a,b)=>b.challengePriority-a.challengePriority || masteryFillWeight(b.mastery)-masteryFillWeight(a.mastery) || lessonRank(b.category)-lessonRank(a.category))
     .slice(0, count);
 }
 function phase1MaintenanceChallengeWords(name, count=DAILY_CHALLENGE_TARGET){
