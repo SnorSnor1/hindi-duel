@@ -322,7 +322,6 @@ function normEnglish(value){ return String(value||"").toLowerCase().normalize("N
 function normHindi(value){ return String(value||"").normalize("NFC").replace(/[़]/g,"").replace(/\s+/g," ").trim(); }
 function levenshtein(a,b){ const m=Array.from({length:b.length+1},(_,r)=>[r]); for(let c=0;c<=a.length;c++)m[0][c]=c; for(let r=1;r<=b.length;r++){for(let c=1;c<=a.length;c++){m[r][c]=b[r-1]===a[c-1]?m[r-1][c-1]:Math.min(m[r-1][c-1]+1,m[r][c-1]+1,m[r-1][c]+1)}} return m[b.length][a.length]; }
 function checkAnswer(answer, accepted){ const a=normEnglish(answer); if(!a)return {correct:false,close:false}; for(const value of accepted){ const b=normEnglish(value); if(a===b)return {correct:true,close:false}; const limit=Math.max(1,Math.ceil(b.length*.18)); if(levenshtein(a,b)<=limit || b.includes(a) || a.includes(b)) return {correct:true,close:true}; } return {correct:false,close:false}; }
-function normRoman(value){ return String(value||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim(); }
 const INDEPENDENT_VOWELS = { अ:"a", आ:"aa", इ:"i", ई:"ee", उ:"u", ऊ:"oo", ऋ:"ri", ए:"e", ऐ:"ai", ओ:"o", औ:"au", ऑ:"o", ऍ:"e" };
 const VOWEL_SIGNS = { "ा":"aa", "ि":"i", "ी":"ee", "ु":"u", "ू":"oo", "ृ":"ri", "े":"e", "ै":"ai", "ो":"o", "ौ":"au", "ॉ":"o", "ॅ":"e" };
 const CONSONANTS = { क:"k", ख:"kh", ग:"g", घ:"gh", ङ:"ng", च:"ch", छ:"chh", ज:"j", झ:"jh", ञ:"ny", ट:"t", ठ:"th", ड:"d", ढ:"dh", ण:"n", त:"t", थ:"th", द:"d", ध:"dh", न:"n", प:"p", फ:"ph", ब:"b", भ:"bh", म:"m", य:"y", र:"r", ल:"l", व:"v", श:"sh", ष:"sh", स:"s", ह:"h", ळ:"l" };
@@ -383,17 +382,6 @@ function formatPrimaryEnglish(word){ return formatEnglishAnswer(word, word.engli
 function romanizedHindiHtml(word){
   const roman = romanizeHindi(word?.hindi || "");
   return roman ? `<small class="romanized-hindi">${escapeHtml(roman)}</small>` : "";
-}
-function checkRomanAnswer(answer, word){
-  const a = normRoman(answer);
-  const b = normRoman(romanizeHindi(word?.hindi || ""));
-  if(!a || !b) return { correct:false, close:false };
-  const compactA = a.replace(/\s+/g, "");
-  const compactB = b.replace(/\s+/g, "");
-  if(a === b || compactA === compactB) return { correct:true, close:false };
-  const limit = Math.max(1, Math.ceil(compactB.length * .2));
-  const close = levenshtein(compactA, compactB) <= limit;
-  return { correct:close, close };
 }
 function today(value=new Date()){
   const date = value instanceof Date ? value : new Date(value);
@@ -942,34 +930,29 @@ function startCoachMistakes(phaseKey){
 }
 function renderQuizSetup(){
   if(!selectedCategories.size) selectedCategories = new Set(categories());
-  $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>${PHASE_DATA[phase].title}</h2><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="roman"?"selected":""}" data-mode="roman">English → Roman Hindi</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi choices</button></div><label class="form-label">Categories</label>${renderCategoryChips()}<label class="form-label">Words</label><input id="wordCount" type="number" min="1" max="200" value="20">${smartPracticeHtml(20)}<button class="start-btn" id="startPractice">Start practice</button></div>`;
+  $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>${PHASE_DATA[phase].title}</h2><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi choices</button></div><label class="form-label">Categories</label>${renderCategoryChips()}<label class="form-label">Words</label><input id="wordCount" type="number" min="1" max="200" value="20">${smartPracticeHtml(20)}<button class="start-btn" id="startPractice">Start practice</button></div>`;
   bindPhaseButtons(); bindCategoryChips();
   document.querySelectorAll("[data-mode]").forEach((button)=>button.addEventListener("click",()=>{mode=button.dataset.mode; renderQuizSetup();}));
   $("#startSmartPractice")?.addEventListener("click",()=>startWordSession(smartPracticeWords(phase, Number($("#wordCount").value||20)), "smart-practice"));
   $("#startPractice").addEventListener("click",()=>startSession("practice", Number($("#wordCount").value||20)));
 }
 function randomMode(){
-  return ["type","roman","mc"][Math.floor(Math.random() * 3)];
-}
-function activeRecallMode(){
-  return Math.random()>.5 ? "type" : "roman";
+  return Math.random() < .8 ? "type" : "mc";
 }
 function activeRecallOnlySource(source){
   return ["coach-spaced","coach-mistakes","round-repair","smart-practice","mistakes"].includes(source);
 }
 function challengeModes(total){
   const mcCount = total >= 3 ? Math.floor(total * 0.2) : 0;
-  const typeCount = Math.ceil((total - mcCount) / 2);
-  const romanCount = Math.max(0, total - mcCount - typeCount);
+  const typeCount = Math.max(0, total - mcCount);
   return shuffle([
     ...Array(typeCount).fill("type"),
-    ...Array(romanCount).fill("roman"),
     ...Array(mcCount).fill("mc")
   ]);
 }
 function sessionModeForQuestion(value){
   if(value.source==="challenge") return value.modes[value.index];
-  if(value.mode==="mixed") return activeRecallOnlySource(value.source) ? activeRecallMode() : randomMode();
+  if(value.mode==="mixed") return activeRecallOnlySource(value.source) ? "type" : randomMode();
   return value.mode;
 }
 function startSession(source, count=20, forcedMode=mode){
@@ -1008,21 +991,18 @@ function renderQuestion(){
   const progress = Math.round((session.index/session.queue.length)*100);
   $("#quiz").classList.remove("hidden"); screens.filter(id=>id!=="quiz").forEach(id=>$("#"+id).classList.add("hidden"));
   $("#quiz").innerHTML = `<div class="quiz-active">${session.source==="challenge"?timerHtml():""}<div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><div class="score-display">${session.index+1}/${session.queue.length} · ${session.correct} correct</div><div class="quiz-card">${qMode==="mc"?mcHtml(word):typeHtml(word, qMode)}<div id="feedback" class="feedback"></div><div id="feedbackButtons" class="feedback-buttons"></div></div></div>`;
-  if(qMode==="type" || qMode==="roman"){ $("#answerInput").focus(); $("#answerForm").addEventListener("submit",(event)=>{event.preventDefault(); qMode==="roman" ? answerRoman(word) : answerType(word);}); }
+  if(qMode==="type"){ $("#answerInput").focus(); $("#answerForm").addEventListener("submit",(event)=>{event.preventDefault(); answerType(word);}); }
   else bindMc(word);
   if(session.source==="challenge") startTimer(qMode==="mc"?12:20);
 }
 function timerHtml(){ return `<div class="timer"><div class="timer-row"><span>Daily timer</span><strong id="timerNum"></strong></div><div class="timer-bar"><div id="timerFill" class="timer-fill"></div></div></div>`; }
-function typeHtml(word, qMode="type"){
-  return qMode==="roman"
-    ? `<div class="english-word">${escapeHtml(formatPrimaryEnglish(word))}</div><form id="answerForm" class="answer-form"><input id="answerInput" class="answer-input" autocomplete="off" placeholder="Type Hindi in Roman letters"><button class="check-btn" type="submit">Check</button></form>`
-    : `<div class="hindi-word">${word.hindi}</div><form id="answerForm" class="answer-form"><input id="answerInput" class="answer-input" autocomplete="off" placeholder="Type in English"><button class="check-btn" type="submit">Check</button></form>`;
+function typeHtml(word){
+  return `<div class="hindi-word">${word.hindi}</div><form id="answerForm" class="answer-form"><input id="answerInput" class="answer-input" autocomplete="off" placeholder="Type in English"><button class="check-btn" type="submit">Check</button></form>`;
 }
 function mcHtml(word){ const choices=makeChoices(word); return `<div class="english-word">${escapeHtml(formatPrimaryEnglish(word))}</div><div class="mc-options">${choices.map((choice)=>`<button class="mc-btn" type="button">${escapeHtml(choice.hindi)}</button>`).join("")}</div>`; }
 function makeChoices(word){ const others=phaseWordsFor(wordPhaseKey(word)).filter((candidate)=>normHindi(candidate.hindi)!==normHindi(word.hindi)); return shuffle([word,...shuffle(others).slice(0,3)]); }
 function bindMc(word){ document.querySelectorAll(".mc-btn").forEach((button)=>button.addEventListener("click",()=>answerMc(word, button))); }
 function answerType(word){ const answer=$("#answerInput").value.trim(); const result=checkAnswer(answer, word.english); completeAnswer(word,result.correct,result.close,answer); }
-function answerRoman(word){ const answer=$("#answerInput").value.trim(); const result=checkRomanAnswer(answer, word); completeAnswer(word,result.correct,result.close,answer); }
 function answerMc(word, button){ const correct=normHindi(button.textContent)===normHindi(word.hindi); document.querySelectorAll(".mc-btn").forEach((btn)=>{btn.disabled=true; if(normHindi(btn.textContent)===normHindi(word.hindi)) btn.classList.add("correct"); else if(btn===button) btn.classList.add("wrong"); else btn.classList.add("dimmed");}); completeAnswer(word, correct, false, button.textContent); }
 function correctTypeAnswerHtml(word){
   return `<div class="answer-reveal answer-reveal-big answer-reveal-type"><span>Correct answer</span><strong>${escapeHtml(formatEnglishList(word))}</strong><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}</div>`;
@@ -1053,17 +1033,16 @@ function completeAnswer(word, correct, close, answer=""){
   const attemptId=recordAttempt(word, correct, close, answer);
   const fb=$("#feedback");
   const isTyping = session.currentMode === "type";
-  const isRoman = session.currentMode === "roman";
   const successLine = correct
     ? (isTyping ? correctTypeSuccessHtml(word, close) : correctTranslationSuccessHtml(word))
     : "";
   const answerLine = !correct
     ? (isTyping ? correctTypeAnswerHtml(word) : correctTranslationHtml(word))
     : "";
-  const typedLine = !correct&&(isTyping || isRoman)
+  const typedLine = !correct&&isTyping
     ? `<div class="typed-answer"><span>You typed</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
     : "";
-  const selectedLine = !correct&&!isTyping&&!isRoman
+  const selectedLine = !correct&&!isTyping
     ? `<div class="typed-answer"><span>You chose</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
     : "";
   const canApprove = !correct && session.source !== "challenge";
@@ -1199,7 +1178,7 @@ function renderChallenge(){
   const doneLabel = done?.completed ? "Done today" : "Started today";
   const doneNote = done?.completed ? "score" : "locked score so far";
   const total = done?.total || 20;
-  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>20</strong><small>words</small></div><div><strong>16</strong><small>typed recall</small></div><div><strong>4</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">A fixed balanced run: 8 Hindi to English, 8 English to Roman Hindi, 4 choices. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/20</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
+  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>20</strong><small>words</small></div><div><strong>16</strong><small>typed recall</small></div><div><strong>4</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">A fixed balanced run: 16 Hindi to English typed questions and 4 English to Hindi choices. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/20</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
   $("#startChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); startSession("challenge",20,"mixed"); });
   $("#repairChallengeMistakes")?.addEventListener("click",()=>startRepairSession(missedWordsFromAttempts(todaysChallengeAttempts()), "coach"));
   $("#practiceAfterChallenge")?.addEventListener("click",()=>show("quiz"));
@@ -1320,7 +1299,6 @@ function attemptWord(attempt){
 function correctAnswerForAttempt(attempt){
   const word = attemptWord(attempt);
   if(attempt.mode === "type") return formatEnglishList(word);
-  if(attempt.mode === "roman") return `${word.hindi} (${romanizeHindi(word.hindi)})`;
   return word.hindi;
 }
 function missedWordsFromAttempts(attempts){
