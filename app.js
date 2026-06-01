@@ -728,6 +728,24 @@ function confusionWordForAnswer(word, answer){
     candidate.english.some((value)=>normEnglish(value) === typed)
   ) || null;
 }
+function contrastWordForMistake(phaseKey, mistake){
+  const confused = mistake?.confusedWith;
+  if(!confused?.hindi || !confused?.english?.length) return null;
+  const candidate = phaseWordsFor(phaseKey).find((word)=>keyFor(word) === keyFor(confused)) ||
+    phaseWordsFor(phaseKey).find((word)=>normHindi(word.hindi) === normHindi(confused.hindi) && word.category === confused.category);
+  const word = candidate || confused;
+  return {
+    ...word,
+    phaseKey,
+    contrastFor: { hindi:mistake.hindi, english:[...(mistake.english || [])], category:mistake.category }
+  };
+}
+function contrastWordsForMistakes(name, phaseKey, mistakes=activeMistakesFor(name, phaseKey)){
+  const mistakeKeys = new Set(wordsForPhaseWithKey(phaseKey, mistakes).map(wordSessionKey));
+  return uniqueWords((Array.isArray(mistakes) ? mistakes : [])
+    .map((mistake)=>contrastWordForMistake(phaseKey, mistake))
+    .filter((word)=>word && !mistakeKeys.has(wordSessionKey(word))));
+}
 function attemptsForWord(name, phaseKey, word){
   return attemptsFor(name, phaseKey)
     .filter((attempt)=>attempt.hindi === word.hindi && attempt.category === word.category)
@@ -952,15 +970,17 @@ function phase1MaintenanceChallengeWords(name, count=DAILY_CHALLENGE_TARGET){
   const selected = [];
   const mistakes = wordsForPhaseWithKey("phase1", activeMistakesFor(name, "phase1"))
     .sort((a,b)=>Number(isHardWord(b)) - Number(isHardWord(a)) || (b.count || 0) - (a.count || 0) || (b.lastWrongAt || "").localeCompare(a.lastWrongAt || ""));
+  const contrasts = contrastWordsForMistakes(name, "phase1", mistakes);
   const mistakeKeys = new Set(mistakes.map(wordSessionKey));
   const due = spacedReviewWords(name).filter((word)=>word.phaseKey === "phase1" && !mistakeKeys.has(wordSessionKey(word)));
   const dueKeys = new Set(due.map(wordSessionKey));
   const weak = weakLessonWords(name, count).filter((word)=>word.phaseKey === "phase1" && !mistakeKeys.has(wordSessionKey(word)) && !dueKeys.has(wordSessionKey(word)));
   const weakKeys = new Set(weak.map(wordSessionKey));
   const fluency = fluencyWords(name).filter((word)=>word.phaseKey === "phase1" && !mistakeKeys.has(wordSessionKey(word)) && !dueKeys.has(wordSessionKey(word)) && !weakKeys.has(wordSessionKey(word)));
-  const priorityKeys = new Set([...mistakes, ...due, ...weak, ...fluency].map(wordSessionKey));
+  const priorityKeys = new Set([...mistakes, ...contrasts, ...due, ...weak, ...fluency].map(wordSessionKey));
 
   appendUniqueLimited(selected, mistakes, CHALLENGE_MISTAKE_LIMIT);
+  appendUniqueLimited(selected, contrasts, count - selected.length);
   appendUniqueLimited(selected, due, CHALLENGE_SPACED_LIMIT);
   appendUniqueLimited(selected, weak, CHALLENGE_WEAK_LIMIT);
   appendUniqueLimited(selected, fluency, CHALLENGE_FLUENCY_LIMIT);
@@ -1097,6 +1117,7 @@ function wordsForPhaseWithKey(phaseKey, words){
 }
 function smartPracticeWords(phaseKey=phase, count=20){
   const mistakeWords = wordsForPhaseWithKey(phaseKey, user ? activeMistakesFor(user, phaseKey) : []);
+  const contrastWords = user ? contrastWordsForMistakes(user, phaseKey, mistakeWords) : [];
   const dueWords = user ? spacedReviewWords(user).filter((word)=>word.phaseKey===phaseKey) : [];
   const weakWords = user ? weakLessonWords(user, count).filter((word)=>word.phaseKey===phaseKey) : [];
   const lessonPrep = user && phaseKey==="phase2" ? phase2LessonPrepWords(user, Math.min(DAILY_PHASE2_TARGET, count)) : [];
@@ -1104,18 +1125,19 @@ function smartPracticeWords(phaseKey=phase, count=20){
   const latest = new Set(phaseKey==="phase2" ? phase2PrepCategories(3) : latestPhaseCategories(phaseKey, 3));
   const newestWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>latest.has(word.category))).slice(0, 10));
   const selectedWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>selectedCategories.has(word.category))));
-  return uniqueWords([...mistakeWords, ...dueWords, ...weakWords, ...lessonPrep, ...coverage, ...newestWords, ...selectedWords]).slice(0, count);
+  return uniqueWords([...mistakeWords, ...contrastWords, ...dueWords, ...weakWords, ...lessonPrep, ...coverage, ...newestWords, ...selectedWords]).slice(0, count);
 }
 function smartPracticeHtml(count=20){
   if(!user) return "";
   const words = smartPracticeWords(phase, count);
   const dueCount = spacedReviewWords(user).filter((word)=>word.phaseKey===phase).length;
   const mistakeCount = activeMistakesFor(user, phase).length;
+  const contrastCount = contrastWordsForMistakes(user, phase).length;
   const weakCount = weakLessonWords(user, count).filter((word)=>word.phaseKey===phase).length;
   const prepCount = phase==="phase2" ? phase2LessonPrepWords(user, Math.min(DAILY_PHASE2_TARGET, count)).length : 0;
   const coverageCount = coverageWords(user, phase, Math.min(10, count)).length;
   const label = words.length ? `${Math.min(words.length, count)} prioritized words` : "No words available";
-  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · interleaved · ${mistakeCount} mistakes · ${dueCount} spaced · ${weakCount} weak lesson${phase==="phase2"?` · ${prepCount} lesson prep`:""} · ${coverageCount} coverage</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
+  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · interleaved · ${mistakeCount} mistakes · ${contrastCount} contrast · ${dueCount} spaced · ${weakCount} weak lesson${phase==="phase2"?` · ${prepCount} lesson prep`:""} · ${coverageCount} coverage</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
 }
 function phase2TaskStatus(name){
   const categories = phase2PrepCategories(1);
