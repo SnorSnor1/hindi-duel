@@ -738,25 +738,26 @@ function reviewStatsForWord(name, phaseKey, word){
   const typedCorrect = recentCorrect.filter((attempt)=>attempt.mode === "type");
   const correctStreak = typedCorrect.length;
   const lastTypedCorrect = typedCorrect.at(-1);
+  const typedDays = new Set(typedCorrect.map(attemptDate).filter(Boolean));
   const recognitionOnly = !lastTypedCorrect;
-  const fragile = recognitionOnly || Boolean(lastTypedCorrect.close || (lastTypedCorrect.ms || 0) > FRAGILE_TYPED_MS);
-  const interval = recognitionOnly ? 1 : fragile ? 1 : SPACED_REVIEW_INTERVALS[Math.min(correctStreak - 1, SPACED_REVIEW_INTERVALS.length - 1)];
+  const needsCrossDayProof = typedDays.size < 2;
+  const fragile = recognitionOnly || needsCrossDayProof || Boolean(lastTypedCorrect.close || (lastTypedCorrect.ms || 0) > FRAGILE_TYPED_MS);
+  const spacedLevel = Math.max(1, typedDays.size);
+  const interval = recognitionOnly ? 1 : fragile ? 1 : SPACED_REVIEW_INTERVALS[Math.min(spacedLevel - 1, SPACED_REVIEW_INTERVALS.length - 1)];
   const reviewedAt = attemptDate(lastTypedCorrect || lastCorrect);
   const dueAt = addDays(reviewedAt, interval);
-  return { correctStreak, wrongCount, reviewedAt, dueAt, fragile, recognitionOnly, overdueDays: Math.max(0, Math.floor((dateValue(today()) - dateValue(dueAt)) / 86400000)) };
+  return { correctStreak, typedDays:typedDays.size, spacedLevel, wrongCount, reviewedAt, dueAt, fragile, recognitionOnly, needsCrossDayProof, overdueDays: Math.max(0, Math.floor((dateValue(today()) - dateValue(dueAt)) / 86400000)) };
 }
 function masteryLevelForWord(name, phaseKey, word){
   const activeMistake = Boolean(state.mistakes[name]?.[phaseKey]?.[keyFor(word)]);
   if(activeMistake) return "repair";
   const attempts = attemptsForWord(name, phaseKey, word);
   if(!attempts.length) return "new";
-  const typedCorrectAttempts = attempts.filter((attempt)=>attempt.correct && attempt.mode === "type");
-  const typedDays = new Set(typedCorrectAttempts.map(attemptDate).filter(Boolean));
   const stats = reviewStatsForWord(name, phaseKey, word);
   if(!stats) return "repair";
   if(dateValue(stats.dueAt) <= dateValue(today())) return "due";
-  if(stats.recognitionOnly || stats.fragile || stats.correctStreak < 2 || typedDays.size < 2) return "fragile";
-  if(stats.correctStreak >= 3 && typedDays.size >= 2) return "mastered";
+  if(stats.recognitionOnly || stats.fragile || stats.correctStreak < 2 || stats.typedDays < 2) return "fragile";
+  if(stats.correctStreak >= 3 && stats.typedDays >= 2) return "mastered";
   return "building";
 }
 function masterySummary(name){
