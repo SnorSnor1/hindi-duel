@@ -7,11 +7,16 @@ const FIREBASE_STATE_PATH = "hindiDuel/sharedState";
 const CLOUD_SYNC_ENABLED = Boolean(FIREBASE_CONFIG);
 const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xTL5N_-A1YUIWmkjWMl9JWJIkq9RYs4/export?format=csv&gid=0";
 const PHASE2_SHEET_URL = "https://docs.google.com/spreadsheets/d/14BD6b5P1dCkUB9pouUzWuQsN6woZyNpPOkKihyngKHo/export?format=csv&gid=1937597985";
+const DAILY_CHALLENGE_TARGET = 20;
 const DAILY_PHASE2_TARGET = 8;
 const DAILY_MISTAKE_TARGET = 10;
 const DAILY_WEAK_LESSON_TARGET = 8;
 const DAILY_FLUENCY_TARGET = 5;
 const DAILY_BACKLOG_TARGET = 12;
+const CHALLENGE_MISTAKE_LIMIT = 5;
+const CHALLENGE_SPACED_LIMIT = 7;
+const CHALLENGE_WEAK_LIMIT = 4;
+const CHALLENGE_FLUENCY_LIMIT = 4;
 const SPACED_REVIEW_TARGET = 12;
 const SPACED_REVIEW_INTERVALS = [1, 3, 7, 14, 30];
 const FRAGILE_TYPED_MS = 8000;
@@ -822,6 +827,59 @@ function fluencyWords(name){
     a.fluency.correctStreak - b.fluency.correctStreak
   );
 }
+function appendUniqueLimited(target, words, limit){
+  const keys = new Set(target.map(wordSessionKey));
+  let added = 0;
+  for(const word of words){
+    if(added >= limit) break;
+    const normalized = { ...word, phaseKey:word.phaseKey || "phase1" };
+    const key = wordSessionKey(normalized);
+    if(keys.has(key)) continue;
+    target.push(normalized);
+    keys.add(key);
+    added++;
+  }
+}
+function phase1ChallengeFillWords(name, count, excludeKeys=new Set()){
+  if(count <= 0) return [];
+  const phase1Words = wordsForPhaseWithKey("phase1", phaseWordsFor("phase1"));
+  if(!name) return shuffle(phase1Words.filter((word)=>!excludeKeys.has(wordSessionKey(word)))).slice(0, count);
+  const todayValue = dateValue(today());
+  return phase1Words
+    .filter((word)=>!excludeKeys.has(wordSessionKey(word)))
+    .map((word)=>{
+      const attempts = attemptsForWord(name, "phase1", word);
+      const typedCorrectAttempts = attempts.filter((attempt)=>attempt.correct && attempt.mode === "type");
+      const typedDays = new Set(typedCorrectAttempts.map(attemptDate).filter(Boolean));
+      const last = attempts.at(-1);
+      const lastValue = dateValue(attemptDate(last));
+      const daysSince = lastValue ? Math.max(0, Math.floor((todayValue - lastValue) / 86400000)) : 99;
+      const priority = (!attempts.length ? 240 : 0) + (last && !last.correct ? 120 : 0) + Math.min(daysSince, 45) + Math.max(0, COVERAGE_DAY_TARGET - typedDays.size) * 65 + Math.max(0, 5 - typedCorrectAttempts.length) * 8 + Math.random();
+      return { ...word, challengePriority:priority };
+    })
+    .sort((a,b)=>b.challengePriority-a.challengePriority || lessonRank(b.category)-lessonRank(a.category))
+    .slice(0, count);
+}
+function phase1MaintenanceChallengeWords(name, count=DAILY_CHALLENGE_TARGET){
+  const selected = [];
+  const mistakes = wordsForPhaseWithKey("phase1", activeMistakesFor(name, "phase1"))
+    .sort((a,b)=>(b.count || 0) - (a.count || 0) || (b.lastWrongAt || "").localeCompare(a.lastWrongAt || ""));
+  const mistakeKeys = new Set(mistakes.map(wordSessionKey));
+  const due = spacedReviewWords(name).filter((word)=>word.phaseKey === "phase1" && !mistakeKeys.has(wordSessionKey(word)));
+  const dueKeys = new Set(due.map(wordSessionKey));
+  const weak = weakLessonWords(name, count).filter((word)=>word.phaseKey === "phase1" && !mistakeKeys.has(wordSessionKey(word)) && !dueKeys.has(wordSessionKey(word)));
+  const weakKeys = new Set(weak.map(wordSessionKey));
+  const fluency = fluencyWords(name).filter((word)=>word.phaseKey === "phase1" && !mistakeKeys.has(wordSessionKey(word)) && !dueKeys.has(wordSessionKey(word)) && !weakKeys.has(wordSessionKey(word)));
+  const priorityKeys = new Set([...mistakes, ...due, ...weak, ...fluency].map(wordSessionKey));
+
+  appendUniqueLimited(selected, mistakes, CHALLENGE_MISTAKE_LIMIT);
+  appendUniqueLimited(selected, due, CHALLENGE_SPACED_LIMIT);
+  appendUniqueLimited(selected, weak, CHALLENGE_WEAK_LIMIT);
+  appendUniqueLimited(selected, fluency, CHALLENGE_FLUENCY_LIMIT);
+  appendUniqueLimited(selected, phase1ChallengeFillWords(name, count - selected.length, new Set([...selected.map(wordSessionKey), ...priorityKeys])), count - selected.length);
+  appendUniqueLimited(selected, phase1ChallengeFillWords(name, count - selected.length, new Set(selected.map(wordSessionKey))), count - selected.length);
+  return uniqueWords(selected).slice(0, count);
+}
 function taskProgressLabel(done, target, fallback="Done"){
   if(!target) return fallback;
   return `${Math.min(done, target)}/${target}`;
@@ -877,7 +935,7 @@ function phase2LessonPrepWords(name, count=DAILY_PHASE2_TARGET){
 }
 function scoreTaskStatus(name){
   const score = todaysChallengeScore(name);
-  const target = score?.total || 20;
+  const target = score?.total || DAILY_CHALLENGE_TARGET;
   return {
     id: "challenge",
     title: "Phase 1 daily",
@@ -1077,7 +1135,7 @@ function coachHeroHtml(contract){
   return `<div class="coach-hero"><div><div class="daily-badge">Daily contract</div><h2>Hindi Coach</h2><p>${contract.complete?"Today is complete. Send the receipt and keep the streak clean.":"Finish the contract before the rest of the app becomes useful."}</p></div><div class="contract-meter"><strong>${pct}%</strong><span>${contract.doneUnits}/${contract.targetUnits || 0} required answers</span></div></div>`;
 }
 function coachChallengeHtml(task){
-  const body = `<p>Fixed Phase 1 maintenance run. One attempt per day, timed, saved to the scoreboard.</p>`;
+  const body = `<p>Adaptive Phase 1 maintenance: mistakes, due words and weak words first. One timed attempt per day, saved to the scoreboard.</p>`;
   const action = task.done
     ? `<button class="retry-btn secondary-action" id="coachChallengeReview" type="button">Review result</button>`
     : task.started
@@ -1173,7 +1231,7 @@ function renderCoach(){
   const notice = coachNotice ? `<div class="coach-notice">${escapeHtml(coachNotice)}</div>` : "";
   const tasks = Object.fromEntries(contract.tasks.map((task)=>[task.id, task]));
   $("#coach").innerHTML = `<div class="coach-shell">${notice}${coachHeroHtml(contract)}<div class="coach-grid">${coachChallengeHtml(tasks.challenge)}${coachSpacedHtml(tasks.spaced)}${coachMistakesHtml(tasks.mistakes)}${coachWeakLessonHtml(tasks.weak)}${coachFluencyHtml(tasks.fluency)}${coachPhase2Html(tasks.phase2)}</div>${coachProofHtml(contract)}${user==="maaike"?maintenanceHtml():""}</div>`;
-  $("#startCoachChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); phase="phase1"; selectedCategories=new Set(categories()); startSession("challenge",20,"mixed"); });
+  $("#startCoachChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); phase="phase1"; selectedCategories=new Set(categories()); startSession("challenge",DAILY_CHALLENGE_TARGET,"mixed"); });
   $("#coachChallengeReview")?.addEventListener("click",()=>show("challenge"));
   $("#startCoachSpaced")?.addEventListener("click",()=>startCoachSpacedReview());
   $("#startCoachWeak")?.addEventListener("click",()=>startCoachWeakLesson());
@@ -1259,9 +1317,12 @@ function recallBlendSource(source){
 function recallBlendMode(){
   return Math.random() < .78 ? "type" : "recall";
 }
+function challengeQuestionCounts(total){
+  const choices = total >= 3 ? Math.floor(total * 0.2) : 0;
+  return { typed:Math.max(0, total - choices), choices };
+}
 function challengeModes(total){
-  const mcCount = total >= 3 ? Math.floor(total * 0.2) : 0;
-  const typeCount = Math.max(0, total - mcCount);
+  const { typed:typeCount, choices:mcCount } = challengeQuestionCounts(total);
   return shuffle([
     ...Array(typeCount).fill("type"),
     ...Array(mcCount).fill("mc")
@@ -1277,7 +1338,9 @@ function sessionModeForQuestion(value){
 function startSession(source, count=20, forcedMode=mode){
   if(source==="challenge" && todaysChallengeScore()) return show("challenge");
   const pool = phaseWords().filter((word)=>selectedCategories.has(word.category));
-  const queue = shuffle([...pool]).slice(0, Math.min(count, pool.length)).map((word)=>({ ...word, phaseKey:phase }));
+  const queue = source === "challenge"
+    ? phase1MaintenanceChallengeWords(user, count)
+    : shuffle([...pool]).slice(0, Math.min(count, pool.length)).map((word)=>({ ...word, phaseKey:phase }));
   session = { source, phaseKey:phase, queue, index:0, correct:0, wrong:0, approved:0, mode:forcedMode, started:0, modes:[], missed:{} };
   if(source==="challenge"){
     session.modes = challengeModes(queue.length);
@@ -1553,9 +1616,10 @@ function renderChallenge(){
   const average=recent.length?Math.round(recent.reduce((sum,score)=>sum+(score.correct||0),0)/recent.length):0;
   const doneLabel = done?.completed ? "Done today" : "Started today";
   const doneNote = done?.completed ? "score" : "locked score so far";
-  const total = done?.total || 20;
-  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>20</strong><small>words</small></div><div><strong>16</strong><small>typed recall</small></div><div><strong>4</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">A fixed balanced run: 16 Hindi to English typed questions and 4 English to Hindi choices. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/20</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
-  $("#startChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); startSession("challenge",20,"mixed"); });
+  const total = done?.total || DAILY_CHALLENGE_TARGET;
+  const questionCounts = challengeQuestionCounts(total);
+  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>${total}</strong><small>words</small></div><div><strong>${questionCounts.typed}</strong><small>typed recall</small></div><div><strong>${questionCounts.choices}</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">An adaptive Phase 1 maintenance run: weak, due and recently missed words come first, then broad coverage. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/${DAILY_CHALLENGE_TARGET}</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
+  $("#startChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); startSession("challenge",DAILY_CHALLENGE_TARGET,"mixed"); });
   $("#repairChallengeMistakes")?.addEventListener("click",()=>startRepairSession(missedWordsFromAttempts(todaysChallengeAttempts()), "coach"));
   $("#practiceAfterChallenge")?.addEventListener("click",()=>show("quiz"));
   $("#goScoreboard")?.addEventListener("click",()=>show("scoreboard"));
