@@ -317,6 +317,43 @@ function normEnglish(value){ return String(value||"").toLowerCase().normalize("N
 function normHindi(value){ return String(value||"").normalize("NFC").replace(/[़]/g,"").replace(/\s+/g," ").trim(); }
 function levenshtein(a,b){ const m=Array.from({length:b.length+1},(_,r)=>[r]); for(let c=0;c<=a.length;c++)m[0][c]=c; for(let r=1;r<=b.length;r++){for(let c=1;c<=a.length;c++){m[r][c]=b[r-1]===a[c-1]?m[r-1][c-1]:Math.min(m[r-1][c-1]+1,m[r][c-1]+1,m[r-1][c]+1)}} return m[b.length][a.length]; }
 function checkAnswer(answer, accepted){ const a=normEnglish(answer); if(!a)return {correct:false,close:false}; for(const value of accepted){ const b=normEnglish(value); if(a===b)return {correct:true,close:false}; const limit=Math.max(1,Math.ceil(b.length*.18)); if(levenshtein(a,b)<=limit || b.includes(a) || a.includes(b)) return {correct:true,close:true}; } return {correct:false,close:false}; }
+const INDEPENDENT_VOWELS = { अ:"a", आ:"aa", इ:"i", ई:"ee", उ:"u", ऊ:"oo", ऋ:"ri", ए:"e", ऐ:"ai", ओ:"o", औ:"au", ऑ:"o", ऍ:"e" };
+const VOWEL_SIGNS = { "ा":"aa", "ि":"i", "ी":"ee", "ु":"u", "ू":"oo", "ृ":"ri", "े":"e", "ै":"ai", "ो":"o", "ौ":"au", "ॉ":"o", "ॅ":"e" };
+const CONSONANTS = { क:"k", ख:"kh", ग:"g", घ:"gh", ङ:"ng", च:"ch", छ:"chh", ज:"j", झ:"jh", ञ:"ny", ट:"t", ठ:"th", ड:"d", ढ:"dh", ण:"n", त:"t", थ:"th", द:"d", ध:"dh", न:"n", प:"p", फ:"ph", ब:"b", भ:"bh", म:"m", य:"y", र:"r", ल:"l", व:"v", श:"sh", ष:"sh", स:"s", ह:"h", ळ:"l" };
+const NUKTA_CONSONANTS = { क:"q", ख:"kh", ग:"gh", ज:"z", ड:"r", ढ:"rh", फ:"f", य:"y" };
+const DEVANAGARI_DIGITS = { "०":"0", "१":"1", "२":"2", "३":"3", "४":"4", "५":"5", "६":"6", "७":"7", "८":"8", "९":"9" };
+function romanizeWordEnd(value){
+  return value
+    .replace(/([bcdfghjklmnpqrstvwxyz])a\b/gi, "$1")
+    .replace(/aa\b/g, "aa");
+}
+function romanizeHindi(value){
+  const chars = [...String(value || "").normalize("NFC")];
+  let output = "";
+  for(let i=0;i<chars.length;i++){
+    const char = chars[i];
+    const next = chars[i + 1];
+    const afterNext = chars[i + 2];
+    if(CONSONANTS[char]){
+      const base = next === "़" && NUKTA_CONSONANTS[char] ? NUKTA_CONSONANTS[char] : CONSONANTS[char];
+      if(next === "़") i++;
+      const following = chars[i + 1];
+      output += base;
+      if(following === "्"){ i++; continue; }
+      if(VOWEL_SIGNS[following]){ output += VOWEL_SIGNS[following]; i++; continue; }
+      if(following === "़" && VOWEL_SIGNS[afterNext]){ output += VOWEL_SIGNS[afterNext]; i += 2; continue; }
+      output += "a";
+      continue;
+    }
+    if(INDEPENDENT_VOWELS[char]){ output += INDEPENDENT_VOWELS[char]; continue; }
+    if(VOWEL_SIGNS[char]){ output += VOWEL_SIGNS[char]; continue; }
+    if(char === "ं" || char === "ँ"){ output += "n"; continue; }
+    if(char === "ः"){ output += "h"; continue; }
+    if(char === "्" || char === "़"){ continue; }
+    output += DEVANAGARI_DIGITS[char] || char;
+  }
+  return output.split(/(\s+)/).map((part)=>/\s+/.test(part) ? part : romanizeWordEnd(part)).join("").replace(/\s+/g," ").trim();
+}
 function cleanCategoryName(value){
   const raw = String(value || "Imported").replace(/\s+/g," ").trim() || "Imported";
   const withoutSetPrefix = raw.replace(/^(set|groep|group)\s*\d+\s*[-–—:.)]?\s*/i, "").trim();
@@ -337,6 +374,10 @@ function formatEnglishAnswer(word, value){
 }
 function formatEnglishList(word){ return word.english.map((answer)=>formatEnglishAnswer(word, answer)).join("; "); }
 function formatPrimaryEnglish(word){ return formatEnglishAnswer(word, word.english[0] || ""); }
+function romanizedHindiHtml(word){
+  const roman = romanizeHindi(word?.hindi || "");
+  return roman ? `<small class="romanized-hindi">${escapeHtml(roman)}</small>` : "";
+}
 function today(value=new Date()){
   const date = value instanceof Date ? value : new Date(value);
   const year = date.getFullYear();
@@ -809,10 +850,13 @@ function bindMc(word){ document.querySelectorAll(".mc-btn").forEach((button)=>bu
 function answerType(word){ const answer=$("#answerInput").value.trim(); const result=checkAnswer(answer, word.english); completeAnswer(word,result.correct,result.close,answer); }
 function answerMc(word, button){ const correct=normHindi(button.textContent)===normHindi(word.hindi); document.querySelectorAll(".mc-btn").forEach((btn)=>{btn.disabled=true; if(normHindi(btn.textContent)===normHindi(word.hindi)) btn.classList.add("correct"); else if(btn===button) btn.classList.add("wrong"); else btn.classList.add("dimmed");}); completeAnswer(word, correct, false, button.textContent); }
 function correctTypeAnswerHtml(word){
-  return `<div class="answer-reveal answer-reveal-big answer-reveal-type"><span>Correct answer</span><strong>${escapeHtml(formatEnglishList(word))}</strong><small>${escapeHtml(word.hindi)}</small></div>`;
+  return `<div class="answer-reveal answer-reveal-big answer-reveal-type"><span>Correct answer</span><strong>${escapeHtml(formatEnglishList(word))}</strong><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}</div>`;
 }
 function correctTranslationHtml(word){
-  return `<div class="answer-reveal answer-reveal-big"><span>Correct translation</span><strong class="answer-pair"><b>${escapeHtml(word.hindi)}</b><em>${escapeHtml(formatEnglishList(word))}</em></strong></div>`;
+  return `<div class="answer-reveal answer-reveal-big"><span>Correct translation</span><strong class="answer-pair"><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}<em>${escapeHtml(formatEnglishList(word))}</em></strong></div>`;
+}
+function correctTypeSuccessHtml(word, close){
+  return `<div class="answer-reveal answer-reveal-big answer-reveal-type answer-reveal-success"><span>${close ? "Accepted answer" : "Correct answer"}</span><strong>${escapeHtml(formatEnglishList(word))}</strong><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}</div>`;
 }
 function completeAnswer(word, correct, close, answer=""){
   if(!session || session.awaitingNext) return;
@@ -828,6 +872,9 @@ function completeAnswer(word, correct, close, answer=""){
   const attemptId=recordAttempt(word, correct, close, answer);
   const fb=$("#feedback");
   const isTyping = session.currentMode === "type";
+  const successLine = correct&&isTyping
+    ? correctTypeSuccessHtml(word, close)
+    : "";
   const answerLine = !correct
     ? (isTyping ? correctTypeAnswerHtml(word) : correctTranslationHtml(word))
     : "";
@@ -842,7 +889,7 @@ function completeAnswer(word, correct, close, answer=""){
 
   fb.className=`feedback ${correct?(close?"close":"good"):"bad"}`;
   fb.innerHTML=correct
-    ? (close?`Accepted <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`:`Correct <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`)
+    ? (successLine || (close?`Accepted <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`:`Correct <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`))
     : `${answerLine}${typedLine}${selectedLine}`;
   $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}<button class="btn-next" id="nextBtn" ${requiresReview?"disabled":""}>Next →</button>`;
   const nextButton = $("#nextBtn");
