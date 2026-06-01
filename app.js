@@ -948,6 +948,12 @@ function renderQuizSetup(){
 function randomMode(){
   return ["type","roman","mc"][Math.floor(Math.random() * 3)];
 }
+function activeRecallMode(){
+  return Math.random()>.5 ? "type" : "roman";
+}
+function activeRecallOnlySource(source){
+  return ["coach-spaced","coach-mistakes","round-repair","smart-practice","mistakes"].includes(source);
+}
 function challengeModes(total){
   const mcCount = total >= 3 ? Math.floor(total * 0.2) : 0;
   const typeCount = Math.ceil((total - mcCount) / 2);
@@ -957,6 +963,11 @@ function challengeModes(total){
     ...Array(romanCount).fill("roman"),
     ...Array(mcCount).fill("mc")
   ]);
+}
+function sessionModeForQuestion(value){
+  if(value.source==="challenge") return value.modes[value.index];
+  if(value.mode==="mixed") return activeRecallOnlySource(value.source) ? activeRecallMode() : randomMode();
+  return value.mode;
 }
 function startSession(source, count=20, forcedMode=mode){
   if(source==="challenge" && todaysChallengeScore()) return show("challenge");
@@ -989,7 +1000,7 @@ function renderQuestion(){
   if(!session || session.index>=session.queue.length) return finishSession();
   session.awaitingNext = false;
   const word = session.queue[session.index];
-  const qMode = session.source==="challenge" ? session.modes[session.index] : (session.mode==="mixed" ? randomMode() : session.mode);
+  const qMode = sessionModeForQuestion(session);
   session.currentMode = qMode; session.started = performance.now();
   const progress = Math.round((session.index/session.queue.length)*100);
   $("#quiz").classList.remove("hidden"); screens.filter(id=>id!=="quiz").forEach(id=>$("#"+id).classList.add("hidden"));
