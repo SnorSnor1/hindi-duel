@@ -1184,17 +1184,26 @@ function startCoachMistakes(phaseKey){
 }
 function renderQuizSetup(){
   if(!selectedCategories.size) selectedCategories = new Set(categories());
-  $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>${PHASE_DATA[phase].title}</h2><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi choices</button></div><label class="form-label">Categories</label>${renderCategoryChips()}<label class="form-label">Words</label><input id="wordCount" type="number" min="1" max="200" value="20">${smartPracticeHtml(20)}<button class="start-btn" id="startPractice">Start practice</button></div>`;
+  $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>${PHASE_DATA[phase].title}</h2><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="recall"?"selected":""}" data-mode="recall">English → Hindi recall</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi choices</button></div><label class="form-label">Categories</label>${renderCategoryChips()}<label class="form-label">Words</label><input id="wordCount" type="number" min="1" max="200" value="20">${smartPracticeHtml(20)}<button class="start-btn" id="startPractice">Start practice</button></div>`;
   bindPhaseButtons(); bindCategoryChips();
   document.querySelectorAll("[data-mode]").forEach((button)=>button.addEventListener("click",()=>{mode=button.dataset.mode; renderQuizSetup();}));
   $("#startSmartPractice")?.addEventListener("click",()=>startWordSession(smartPracticeWords(phase, Number($("#wordCount").value||20)), "smart-practice"));
   $("#startPractice").addEventListener("click",()=>startSession("practice", Number($("#wordCount").value||20)));
 }
 function randomMode(){
-  return Math.random() < .8 ? "type" : "mc";
+  const roll = Math.random();
+  if(roll < .7) return "type";
+  if(roll < .9) return "recall";
+  return "mc";
 }
-function activeRecallOnlySource(source){
-  return ["coach-spaced","coach-mistakes","coach-weak","coach-fluency","coach-phase2","round-repair","smart-practice","mistakes"].includes(source);
+function typeOnlySource(source){
+  return ["coach-spaced","coach-mistakes","coach-fluency","coach-phase2","round-repair","mistakes"].includes(source);
+}
+function recallBlendSource(source){
+  return ["coach-weak","smart-practice"].includes(source);
+}
+function recallBlendMode(){
+  return Math.random() < .78 ? "type" : "recall";
 }
 function challengeModes(total){
   const mcCount = total >= 3 ? Math.floor(total * 0.2) : 0;
@@ -1206,7 +1215,9 @@ function challengeModes(total){
 }
 function sessionModeForQuestion(value){
   if(value.source==="challenge") return value.modes[value.index];
-  if(value.mode==="mixed") return activeRecallOnlySource(value.source) ? "type" : randomMode();
+  if(value.mode==="mixed" && typeOnlySource(value.source)) return "type";
+  if(value.mode==="mixed" && recallBlendSource(value.source)) return recallBlendMode();
+  if(value.mode==="mixed") return randomMode();
   return value.mode;
 }
 function startSession(source, count=20, forcedMode=mode){
@@ -1245,9 +1256,10 @@ function renderQuestion(){
   const progress = Math.round((session.index/session.queue.length)*100);
   $("#quiz").classList.remove("hidden"); screens.filter(id=>id!=="quiz").forEach(id=>$("#"+id).classList.add("hidden"));
   const secondsLimit = questionTimeLimit(qMode);
-  $("#quiz").innerHTML = `<div class="quiz-active">${secondsLimit?timerHtml():""}<div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><div class="score-display">${session.index+1}/${session.queue.length} · ${session.correct} correct</div><div class="quiz-card">${qMode==="mc"?mcHtml(word):typeHtml(word, qMode)}<div id="feedback" class="feedback"></div><div id="feedbackButtons" class="feedback-buttons"></div></div></div>`;
+  $("#quiz").innerHTML = `<div class="quiz-active">${secondsLimit?timerHtml():""}<div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><div class="score-display">${session.index+1}/${session.queue.length} · ${session.correct} correct</div><div class="quiz-card">${qMode==="mc"?mcHtml(word):qMode==="recall"?recallHtml(word):typeHtml(word, qMode)}<div id="feedback" class="feedback"></div><div id="feedbackButtons" class="feedback-buttons"></div></div></div>`;
   if(qMode==="type"){ $("#answerInput").focus(); $("#answerForm").addEventListener("submit",(event)=>{event.preventDefault(); answerType(word);}); }
-  else bindMc(word);
+  else if(qMode==="mc") bindMc(word);
+  else bindRecall(word);
   if(secondsLimit) startTimer(secondsLimit);
 }
 function questionTimeLimit(qMode){
@@ -1263,6 +1275,9 @@ function typeHtml(word){
   return `<div class="hindi-word">${word.hindi}</div><form id="answerForm" class="answer-form"><input id="answerInput" class="answer-input" autocomplete="off" placeholder="Type in English"><button class="check-btn" type="submit">Check</button></form>`;
 }
 function mcHtml(word){ const choices=makeChoices(word); return `<div class="english-word">${escapeHtml(formatPrimaryEnglish(word))}</div><div class="mc-options">${choices.map((choice)=>`<button class="mc-btn" type="button">${escapeHtml(choice.hindi)}</button>`).join("")}</div>`; }
+function recallHtml(word){
+  return `<div class="english-word">${escapeHtml(formatPrimaryEnglish(word))}</div><div class="recall-actions"><button class="check-btn" id="showRecallAnswer" type="button">Show answer</button></div>`;
+}
 function choiceDistractorScore(word, candidate, latest){
   const targetEnglish = normEnglish(formatPrimaryEnglish(word));
   const candidateEnglish = normEnglish(formatPrimaryEnglish(candidate));
@@ -1283,8 +1298,19 @@ function makeChoices(word){
   return shuffle([word,...uniqueWords(others).slice(0,3)]);
 }
 function bindMc(word){ document.querySelectorAll(".mc-btn").forEach((button)=>button.addEventListener("click",()=>answerMc(word, button))); }
+function bindRecall(word){ $("#showRecallAnswer")?.addEventListener("click",()=>showRecallAnswer(word)); }
 function answerType(word){ const answer=$("#answerInput").value.trim(); const result=checkAnswer(answer, word.english); completeAnswer(word,result.correct,result.close,answer); }
 function answerMc(word, button){ const correct=normHindi(button.textContent)===normHindi(word.hindi); document.querySelectorAll(".mc-btn").forEach((btn)=>{btn.disabled=true; if(normHindi(btn.textContent)===normHindi(word.hindi)) btn.classList.add("correct"); else if(btn===button) btn.classList.add("wrong"); else btn.classList.add("dimmed");}); completeAnswer(word, correct, false, button.textContent); }
+function showRecallAnswer(word){
+  $("#showRecallAnswer")?.setAttribute("disabled", "true");
+  const fb = $("#feedback");
+  fb.className = "feedback";
+  fb.innerHTML = correctTranslationHtml(word);
+  $("#feedbackButtons").innerHTML = `<button class="btn-missed" id="recallMissed" type="button">Missed it</button><button class="btn-known" id="recallKnown" type="button">I knew it</button>`;
+  $("#recallKnown")?.focus();
+  $("#recallKnown")?.addEventListener("click",()=>completeAnswer(word, true, false, "self-check known"));
+  $("#recallMissed")?.addEventListener("click",()=>completeAnswer(word, false, false, "self-check missed"));
+}
 function correctTypeAnswerHtml(word){
   return `<div class="answer-reveal answer-reveal-big answer-reveal-type"><span>Correct answer</span><strong>${escapeHtml(formatEnglishList(word))}</strong><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}</div>`;
 }
@@ -1315,6 +1341,7 @@ function completeAnswer(word, correct, close, answer=""){
   const attemptId=recordAttempt(word, correct, close, answer, elapsedMs);
   const fb=$("#feedback");
   const isTyping = session.currentMode === "type";
+  const isRecall = session.currentMode === "recall";
   const isFluency = session.source === "coach-fluency";
   const fastExact = correct && !close && elapsedMs > 0 && elapsedMs <= FLUENCY_TARGET_MS;
   const successLine = correct
@@ -1329,10 +1356,10 @@ function completeAnswer(word, correct, close, answer=""){
   const typedLine = !correct&&isTyping
     ? `<div class="typed-answer"><span>You typed</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
     : "";
-  const selectedLine = !correct&&!isTyping
+  const selectedLine = !correct&&!isTyping&&!isRecall
     ? `<div class="typed-answer"><span>You chose</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
     : "";
-  const canApprove = !correct && session.source !== "challenge";
+  const canApprove = !correct && session.source !== "challenge" && !isRecall;
   const requiresReview = !correct && session.source === "challenge";
 
   fb.className=`feedback ${correct?(close?"close":"good"):"bad"}`;
