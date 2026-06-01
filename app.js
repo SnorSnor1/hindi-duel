@@ -19,6 +19,7 @@ const FLUENCY_TARGET_MS = 6000;
 const FLUENCY_TIMER_SECONDS = 8;
 const WEAK_LESSON_MIN_ATTEMPTS = 4;
 const WEAK_LESSON_RATE = 0.32;
+const COVERAGE_TYPED_TARGET = 2;
 const CHALLENGE_REVIEW_MS = 1400;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
@@ -689,6 +690,29 @@ function spacedReviewWords(name){
     a.review.correctStreak - b.review.correctStreak
   );
 }
+function coverageWords(name, phaseKey, count=DAILY_PHASE2_TARGET){
+  if(!name) return [];
+  const latest = new Set(latestPhaseCategories(phaseKey, 4));
+  const mistakeKeys = new Set(activeMistakesFor(name, phaseKey).map(keyFor));
+  return phaseWordsFor(phaseKey)
+    .filter((word)=>!mistakeKeys.has(keyFor(word)))
+    .map((word)=>{
+      const attempts = attemptsForWord(name, phaseKey, word);
+      const typedCorrect = attempts.filter((attempt)=>attempt.correct && attempt.mode === "type").length;
+      const totalCorrect = attempts.filter((attempt)=>attempt.correct).length;
+      const last = attempts.at(-1);
+      const missing = Math.max(0, COVERAGE_TYPED_TARGET - typedCorrect);
+      const priority = missing * 160 + (latest.has(word.category) ? 90 : 0) + (!attempts.length ? 55 : 0) + (!last?.correct ? 35 : 0) + Math.max(0, 6 - totalCorrect);
+      return { ...word, phaseKey, coverage:{ typedCorrect, totalCorrect, attempts:attempts.length, missing, priority, latest:latest.has(word.category) } };
+    })
+    .filter((word)=>word.coverage.missing > 0)
+    .sort((a,b)=>
+      b.coverage.priority - a.coverage.priority ||
+      a.coverage.typedCorrect - b.coverage.typedCorrect ||
+      a.coverage.attempts - b.coverage.attempts
+    )
+    .slice(0, count);
+}
 function weakLessonStats(name){
   if(!name) return [];
   const activeCounts = new Map(allActiveMistakes(name).map((word)=>[`${word.phaseKey}|${word.category}`, 0]));
@@ -876,10 +900,11 @@ function smartPracticeWords(phaseKey=phase, count=20){
   const mistakeWords = wordsForPhaseWithKey(phaseKey, user ? activeMistakesFor(user, phaseKey) : []);
   const dueWords = user ? spacedReviewWords(user).filter((word)=>word.phaseKey===phaseKey) : [];
   const weakWords = user ? weakLessonWords(user, count).filter((word)=>word.phaseKey===phaseKey) : [];
+  const coverage = user ? coverageWords(user, phaseKey, Math.min(10, count)) : [];
   const latest = new Set(latestPhaseCategories(phaseKey, 3));
   const newestWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>latest.has(word.category))).slice(0, 10));
   const selectedWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>selectedCategories.has(word.category))));
-  return uniqueWords([...mistakeWords, ...dueWords, ...weakWords, ...newestWords, ...selectedWords]).slice(0, count);
+  return uniqueWords([...mistakeWords, ...dueWords, ...weakWords, ...coverage, ...newestWords, ...selectedWords]).slice(0, count);
 }
 function smartPracticeHtml(count=20){
   if(!user) return "";
@@ -887,20 +912,22 @@ function smartPracticeHtml(count=20){
   const dueCount = spacedReviewWords(user).filter((word)=>word.phaseKey===phase).length;
   const mistakeCount = activeMistakesFor(user, phase).length;
   const weakCount = weakLessonWords(user, count).filter((word)=>word.phaseKey===phase).length;
+  const coverageCount = coverageWords(user, phase, Math.min(10, count)).length;
   const label = words.length ? `${Math.min(words.length, count)} prioritized words` : "No words available";
-  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · ${mistakeCount} mistakes · ${dueCount} spaced · ${weakCount} weak lesson</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
+  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · ${mistakeCount} mistakes · ${dueCount} spaced · ${weakCount} weak lesson · ${coverageCount} coverage</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
 }
 function phase2TaskStatus(name){
-  const available = (state.words.phase2 || []).filter((word)=>word.english?.length);
-  const target = name === "maaike" ? Math.min(DAILY_PHASE2_TARGET, available.length) : 0;
-  const progress = correctAttemptsToday(name, (attempt)=>attempt.phaseKey==="phase2");
+  const active = name === "maaike" ? coverageWords(name, "phase2", DAILY_PHASE2_TARGET) : [];
+  const progress = correctAttemptsToday(name, (attempt)=>attempt.phaseKey==="phase2" && attempt.mode==="type");
+  const target = name === "maaike" ? Math.min(DAILY_PHASE2_TARGET, active.length + progress) : 0;
   return {
     id: "phase2",
     title: "Phase 2 focus",
     done: target === 0 || progress >= target,
     progress,
     target,
-    categories: latestPhaseCategories("phase2", 3),
+    active,
+    categories: active.length ? [...new Set(active.map((word)=>word.category))].slice(0, 3) : latestPhaseCategories("phase2", 3),
     label: taskProgressLabel(progress, target, "Not needed")
   };
 }
@@ -1014,7 +1041,9 @@ function coachFluencyHtml(task){
 }
 function coachPhase2Html(task){
   const lessons = task.categories.length ? task.categories.map(displayCategory).join(", ") : "No Phase 2 words";
-  const body = `<p>Newest lessons: ${escapeHtml(lessons)}.</p>`;
+  const body = task.target
+    ? `<p>Coverage from ${escapeHtml(lessons)}. Each new word needs ${COVERAGE_TYPED_TARGET} typed recalls before it is treated as introduced.</p>`
+    : `<p>Newest lessons: ${escapeHtml(lessons)}.</p>`;
   const action = task.target
     ? `<button class="start-btn" id="startCoachPhase2" type="button">Start Phase 2 focus</button>`
     : "";
@@ -1078,12 +1107,14 @@ function startCoachFluency(){
 }
 function startPhase2Focus(){
   phase = "phase2";
-  selectedCategories = new Set(latestPhaseCategories("phase2", 3));
-  if(!selectedCategories.size) selectedCategories = new Set(categories());
-  save();
   const task = phase2TaskStatus(user);
   const remaining = Math.max(1, (task.target || DAILY_PHASE2_TARGET) - task.progress);
-  startSession("coach-phase2", remaining, "mixed");
+  const words = task.active.slice(0, remaining);
+  selectedCategories = new Set((words.length ? words : phaseWordsFor("phase2")).map((word)=>word.category));
+  if(!selectedCategories.size) selectedCategories = new Set(latestPhaseCategories("phase2", 3));
+  save();
+  if(words.length) startWordSession(words, "coach-phase2");
+  else startSession("coach-phase2", remaining, "mixed");
 }
 function startCoachMistakes(phaseKey){
   const words = activeMistakesFor(user, phaseKey);
@@ -1107,7 +1138,7 @@ function randomMode(){
   return Math.random() < .8 ? "type" : "mc";
 }
 function activeRecallOnlySource(source){
-  return ["coach-spaced","coach-mistakes","coach-weak","coach-fluency","round-repair","smart-practice","mistakes"].includes(source);
+  return ["coach-spaced","coach-mistakes","coach-weak","coach-fluency","coach-phase2","round-repair","smart-practice","mistakes"].includes(source);
 }
 function challengeModes(total){
   const mcCount = total >= 3 ? Math.floor(total * 0.2) : 0;
