@@ -624,6 +624,9 @@ function attemptsToday(name, phaseKey){
 function allAttemptsToday(name){
   return ["phase1","phase2"].flatMap((phaseKey)=>attemptsToday(name, phaseKey).map((attempt)=>({ ...attempt, phaseKey })));
 }
+function correctAttemptsToday(name, predicate=()=>true){
+  return allAttemptsToday(name).filter((attempt)=>attempt.correct && predicate(attempt)).length;
+}
 function activeMistakesFor(name, phaseKey){
   return Object.values(state.mistakes[name]?.[phaseKey] || {}).filter((word)=>word.hindi && word.english?.length);
 }
@@ -724,8 +727,8 @@ function scoreTaskStatus(name){
 }
 function mistakeTaskStatus(name){
   const active = allActiveMistakes(name);
-  const target = Math.min(DAILY_MISTAKE_TARGET, active.length);
-  const progress = allAttemptsToday(name).filter((attempt)=>attempt.source==="coach-mistakes").length;
+  const progress = correctAttemptsToday(name, (attempt)=>attempt.source==="coach-mistakes");
+  const target = Math.min(DAILY_MISTAKE_TARGET, progress + active.length);
   return {
     id: "mistakes",
     title: "Mistake repair",
@@ -738,7 +741,7 @@ function mistakeTaskStatus(name){
 }
 function spacedReviewTaskStatus(name){
   const active = spacedReviewWords(name);
-  const progress = allAttemptsToday(name).filter((attempt)=>attempt.source==="coach-spaced").length;
+  const progress = correctAttemptsToday(name, (attempt)=>attempt.source==="coach-spaced");
   const target = Math.min(SPACED_REVIEW_TARGET, progress + active.length);
   return {
     id: "spaced",
@@ -772,7 +775,7 @@ function smartPracticeHtml(count=20){
 function phase2TaskStatus(name){
   const available = (state.words.phase2 || []).filter((word)=>word.english?.length);
   const target = name === "maaike" ? Math.min(DAILY_PHASE2_TARGET, available.length) : 0;
-  const progress = attemptsToday(name, "phase2").length;
+  const progress = correctAttemptsToday(name, (attempt)=>attempt.phaseKey==="phase2");
   return {
     id: "phase2",
     title: "Phase 2 focus",
@@ -848,7 +851,7 @@ function coachChallengeHtml(task){
 function coachMistakesHtml(task){
   const phase1Count = activeMistakesFor(user, "phase1").length;
   const phase2Count = activeMistakesFor(user, "phase2").length;
-  const body = `<p>${task.target ? `${task.active.length} active mistake words. Repair ${task.target} today.` : "No active mistake words right now."}</p>`;
+  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.active.length} active mistake word${task.active.length===1?"":"s"} left.` : `${task.active.length} active mistake words. Repair ${task.target} today.`) : "No active mistake words right now."}</p>`;
   const action = task.target
     ? `<div class="coach-actions"><button class="ghost" id="startCoachMistakes1" type="button" ${phase1Count?"":"disabled"}>Phase 1 mistakes (${phase1Count})</button><button class="ghost" id="startCoachMistakes2" type="button" ${phase2Count?"":"disabled"}>Phase 2 mistakes (${phase2Count})</button></div>`
     : "";
@@ -920,8 +923,9 @@ function startPhase2Focus(){
   selectedCategories = new Set(latestPhaseCategories("phase2", 3));
   if(!selectedCategories.size) selectedCategories = new Set(categories());
   save();
-  const target = phase2TaskStatus(user).target || DAILY_PHASE2_TARGET;
-  startSession("coach-phase2", target, "mixed");
+  const task = phase2TaskStatus(user);
+  const remaining = Math.max(1, (task.target || DAILY_PHASE2_TARGET) - task.progress);
+  startSession("coach-phase2", remaining, "mixed");
 }
 function startCoachMistakes(phaseKey){
   const words = activeMistakesFor(user, phaseKey);
@@ -929,7 +933,9 @@ function startCoachMistakes(phaseKey){
   phase = phaseKey;
   selectedCategories = new Set(words.map((word)=>word.category));
   save();
-  startWordSession(words.slice(0, DAILY_MISTAKE_TARGET), "coach-mistakes");
+  const task = mistakeTaskStatus(user);
+  const remaining = Math.max(1, (task.target || DAILY_MISTAKE_TARGET) - task.progress);
+  startWordSession(words.slice(0, remaining), "coach-mistakes");
 }
 function renderQuizSetup(){
   if(!selectedCategories.size) selectedCategories = new Set(categories());
