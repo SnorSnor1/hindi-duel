@@ -1530,15 +1530,37 @@ function recallBlendMode(){
   return Math.random() < .78 ? "type" : "recall";
 }
 function challengeQuestionCounts(total){
+  if(Array.isArray(total)){
+    const modes = challengeModesForWords(total);
+    const choices = modes.filter((item)=>item==="mc").length;
+    return { typed:modes.length - choices, choices };
+  }
   const choices = total >= 3 ? Math.floor(total * 0.2) : 0;
   return { typed:Math.max(0, total - choices), choices };
 }
-function challengeModes(total){
-  const { typed:typeCount, choices:mcCount } = challengeQuestionCounts(total);
-  return shuffle([
-    ...Array(typeCount).fill("type"),
-    ...Array(mcCount).fill("mc")
-  ]);
+function challengeChoiceScore(word, name=user){
+  const phaseKey = wordPhaseKey(word);
+  if(word.contrastFor) return -700;
+  if(state.mistakes[name]?.[phaseKey]?.[keyFor(word)]) return -900;
+  const stats = reviewStatsForWord(name, phaseKey, word);
+  const mastery = masteryLevelForWord(name, phaseKey, word);
+  if(mastery === "due" || mastery === "repair") return -800;
+  if(!stats || mastery === "new") return 320;
+  if(stats.recognitionOnly) return 260;
+  if(stats.fragile || mastery === "fragile") return 170;
+  if(mastery === "building") return 35;
+  return -120;
+}
+function challengeModesForWords(words, name=user){
+  const queue = Array.isArray(words) ? words : [];
+  const maxChoices = queue.length >= 3 ? Math.floor(queue.length * 0.2) : 0;
+  const choiceIndexes = new Set(queue
+    .map((word,index)=>({ index, score:challengeChoiceScore(word, name) }))
+    .filter((item)=>item.score > 0)
+    .sort((a,b)=>b.score-a.score || a.index-b.index)
+    .slice(0, maxChoices)
+    .map((item)=>item.index));
+  return queue.map((_,index)=>choiceIndexes.has(index) ? "mc" : "type");
 }
 function sessionModeForQuestion(value){
   if(value.source==="challenge") return value.modes[value.index];
@@ -1556,7 +1578,7 @@ function startSession(source, count=20, forcedMode=mode){
   const queue = interleaveWords(selectedWords);
   session = { source, phaseKey:phase, queue, index:0, correct:0, wrong:0, approved:0, mode:forcedMode, started:0, modes:[], missed:{} };
   if(source==="challenge"){
-    session.modes = challengeModes(queue.length);
+    session.modes = challengeModesForWords(queue, user);
     session.score = createChallengeScore(queue.length);
     lockChallengeNavigation();
   }
@@ -1892,7 +1914,8 @@ function renderChallenge(){
   const doneLabel = done?.completed ? "Done today" : "Started today";
   const doneNote = done?.completed ? "score" : "locked score so far";
   const total = done?.total || DAILY_CHALLENGE_TARGET;
-  const questionCounts = challengeQuestionCounts(total);
+  const previewWords = done ? [] : phase1MaintenanceChallengeWords(user, total);
+  const questionCounts = previewWords.length ? challengeQuestionCounts(previewWords) : challengeQuestionCounts(total);
   $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>${total}</strong><small>words</small></div><div><strong>${questionCounts.typed}</strong><small>typed recall</small></div><div><strong>${questionCounts.choices}</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">An adaptive Phase 1 maintenance run: weak, due and recently missed words come first, then broad coverage. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/${DAILY_CHALLENGE_TARGET}</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
   $("#startChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); startSession("challenge",DAILY_CHALLENGE_TARGET,"mixed"); });
   $("#repairChallengeMistakes")?.addEventListener("click",()=>startRepairSession(missedWordsFromAttempts(todaysChallengeAttempts()), "coach"));
