@@ -27,6 +27,8 @@ const WEAK_LESSON_MIN_ATTEMPTS = 4;
 const WEAK_LESSON_RATE = 0.32;
 const COVERAGE_DAY_TARGET = 2;
 const MISTAKE_REPAIR_DAY_TARGET = 2;
+const HARD_WORD_WRONG_THRESHOLD = 4;
+const HARD_WORD_REPAIR_DAY_TARGET = 3;
 const CHALLENGE_REVIEW_MS = 1400;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
@@ -640,10 +642,24 @@ function correctTypedWordKeysToday(name, phaseKey, predicate=()=>true){
     .map((attempt)=>`${attempt.hindi}|${attempt.category}`));
 }
 function activeMistakesFor(name, phaseKey){
-  return Object.values(state.mistakes[name]?.[phaseKey] || {}).filter((word)=>word.hindi && word.english?.length);
+  return sortMistakeWords(Object.values(state.mistakes[name]?.[phaseKey] || {}).filter((word)=>word.hindi && word.english?.length));
 }
 function allActiveMistakes(name){
   return ["phase1","phase2"].flatMap((phaseKey)=>activeMistakesFor(name, phaseKey).map((word)=>({ ...word, phaseKey })));
+}
+function isHardWord(word){
+  return (word?.count || 0) >= HARD_WORD_WRONG_THRESHOLD;
+}
+function repairTargetForMistake(word){
+  return isHardWord(word) ? HARD_WORD_REPAIR_DAY_TARGET : MISTAKE_REPAIR_DAY_TARGET;
+}
+function sortMistakeWords(words){
+  return [...(Array.isArray(words) ? words : [])].sort((a,b)=>
+    Number(isHardWord(b)) - Number(isHardWord(a)) ||
+    (b.count || 0) - (a.count || 0) ||
+    repairDayCount(a) - repairDayCount(b) ||
+    (b.lastWrongAt || "").localeCompare(a.lastWrongAt || "")
+  );
 }
 function uniqueWords(words){
   const map = new Map();
@@ -744,7 +760,8 @@ function masterySummary(name){
   });
   const unstable = counts.repair + counts.due + counts.fragile;
   const pct = counts.total ? Math.round((counts.mastered / counts.total) * 100) : 0;
-  return { ...counts, unstable, pct };
+  const hard = allActiveMistakes(name).filter(isHardWord).length;
+  return { ...counts, unstable, hard, pct };
 }
 function spacedReviewWords(name){
   if(!name) return [];
@@ -911,7 +928,7 @@ function phase1ChallengeFillWords(name, count, excludeKeys=new Set()){
 function phase1MaintenanceChallengeWords(name, count=DAILY_CHALLENGE_TARGET){
   const selected = [];
   const mistakes = wordsForPhaseWithKey("phase1", activeMistakesFor(name, "phase1"))
-    .sort((a,b)=>(b.count || 0) - (a.count || 0) || (b.lastWrongAt || "").localeCompare(a.lastWrongAt || ""));
+    .sort((a,b)=>Number(isHardWord(b)) - Number(isHardWord(a)) || (b.count || 0) - (a.count || 0) || (b.lastWrongAt || "").localeCompare(a.lastWrongAt || ""));
   const mistakeKeys = new Set(mistakes.map(wordSessionKey));
   const due = spacedReviewWords(name).filter((word)=>word.phaseKey === "phase1" && !mistakeKeys.has(wordSessionKey(word)));
   const dueKeys = new Set(due.map(wordSessionKey));
@@ -1194,7 +1211,8 @@ function coachFocusLine(contract){
 function coachMasteryHtml(contract){
   const summary = masterySummary(contract.name);
   const pct = summary.pct;
-  return `<div class="coach-mastery"><div><div class="daily-badge">Mastery map</div><h3>${pct}% sturdy recall</h3><p>${coachFocusLine(contract)}</p></div><div class="mastery-meter" aria-label="Mastery progress"><span style="width:${pct}%"></span></div><div class="mastery-grid"><div><strong>${summary.repair}</strong><small>repair</small></div><div><strong>${summary.due}</strong><small>due</small></div><div><strong>${summary.fragile}</strong><small>fragile</small></div><div><strong>${summary.building}</strong><small>building</small></div><div><strong>${summary.mastered}</strong><small>sturdy</small></div><div><strong>${summary.new}</strong><small>unproven</small></div></div></div>`;
+  const hardLine = summary.hard ? ` ${summary.hard} hard word${summary.hard===1?" needs":"s need"} extra repair days.` : "";
+  return `<div class="coach-mastery"><div><div class="daily-badge">Mastery map</div><h3>${pct}% sturdy recall</h3><p>${coachFocusLine(contract)}${hardLine}</p></div><div class="mastery-meter" aria-label="Mastery progress"><span style="width:${pct}%"></span></div><div class="mastery-grid"><div><strong>${summary.repair}</strong><small>repair</small></div><div><strong>${summary.due}</strong><small>due</small></div><div><strong>${summary.fragile}</strong><small>fragile</small></div><div><strong>${summary.building}</strong><small>building</small></div><div><strong>${summary.mastered}</strong><small>sturdy</small></div><div><strong>${summary.new}</strong><small>unproven</small></div></div></div>`;
 }
 function coachHeroHtml(contract){
   const pct = contract.targetUnits ? Math.round((contract.doneUnits / contract.targetUnits) * 100) : 100;
@@ -1212,8 +1230,10 @@ function coachChallengeHtml(task){
 function coachMistakesHtml(task){
   const phase1Count = activeMistakesFor(user, "phase1").length;
   const phase2Count = activeMistakesFor(user, "phase2").length;
+  const hardCount = task.active.filter(isHardWord).length;
   const queueNote = task.queued ? ` ${task.queuedCount} repair${task.queuedCount===1?"":"s"} stay queued to keep today light.` : "";
-  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.active.length} active mistake word${task.active.length===1?"":"s"} left for spaced confirmation.` : `${task.active.length} active mistake words. Repair ${task.target} today. A mistake clears after typed recall on ${MISTAKE_REPAIR_DAY_TARGET} different days.${queueNote}`) : task.active.length ? `${task.active.length} active mistake words are queued for another day. The daily workload cap keeps the habit sustainable.` : "No active mistake words right now."}</p>`;
+  const hardNote = hardCount ? ` ${hardCount} hard word${hardCount===1?" needs":"s need"} ${HARD_WORD_REPAIR_DAY_TARGET} repair days.` : "";
+  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.active.length} active mistake word${task.active.length===1?"":"s"} left for spaced confirmation.${hardNote}` : `${task.active.length} active mistake words. Repair ${task.target} today. Normal mistakes clear after typed recall on ${MISTAKE_REPAIR_DAY_TARGET} different days; hard words need ${HARD_WORD_REPAIR_DAY_TARGET}.${hardNote}${queueNote}`) : task.active.length ? `${task.active.length} active mistake words are queued for another day. The daily workload cap keeps the habit sustainable.${hardNote}` : "No active mistake words right now."}</p>`;
   const action = task.target
     ? `<div class="coach-actions"><button class="ghost" id="startCoachMistakes1" type="button" ${phase1Count?"":"disabled"}>Phase 1 mistakes (${phase1Count})</button><button class="ghost" id="startCoachMistakes2" type="button" ${phase2Count?"":"disabled"}>Phase 2 mistakes (${phase2Count})</button></div>`
     : "";
@@ -1626,7 +1646,7 @@ function updateMistakeStatus(word, correct, answer){
         repairDays.add(today());
         bucket[key].repairDays = [...repairDays].sort();
       }
-      if(repairDayCount(bucket[key]) >= MISTAKE_REPAIR_DAY_TARGET) delete bucket[key];
+      if(repairDayCount(bucket[key]) >= repairTargetForMistake(bucket[key])) delete bucket[key];
     }
     return;
   }
@@ -1711,7 +1731,7 @@ function renderChallenge(){
   $("#practiceAfterChallenge")?.addEventListener("click",()=>show("quiz"));
   $("#goScoreboard")?.addEventListener("click",()=>show("scoreboard"));
 }
-function renderMistakes(){ if(!user)return showLogin(); const list=Object.values(state.mistakes[user][phase]).sort((a,b)=>(b.count||0)-(a.count||0)); $("#mistakes").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Mistakes</h2>${list.length?`<div class="result-grid">${list.map((word)=>`<div class="word-row"><div><strong>${escapeHtml(word.hindi)}</strong><small>${escapeHtml(formatEnglishList(word))} · ${escapeHtml(displayCategory(word.category))} · wrong ${word.count||0} · repair days ${repairDayCount(word)}/${MISTAKE_REPAIR_DAY_TARGET}${word.lastAnswer?` · last typed: ${escapeHtml(word.lastAnswer)}`:""}</small></div><small>×${word.count||0}</small></div>`).join("")}</div><button class="retry-btn" id="practiceMistakes">Practise mistakes</button>`:"<p>No mistakes yet. Enjoy the peace.</p>"}</div>`; bindPhaseButtons(); $("#practiceMistakes")?.addEventListener("click",()=>startWordSession(list,"mistakes")); }
+function renderMistakes(){ if(!user)return showLogin(); const list=activeMistakesFor(user, phase); $("#mistakes").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Mistakes</h2>${list.length?`<div class="result-grid">${list.map((word)=>`<div class="word-row ${isHardWord(word)?"hard-word":""}"><div><strong>${escapeHtml(word.hindi)}</strong><small>${escapeHtml(formatEnglishList(word))} · ${escapeHtml(displayCategory(word.category))} · wrong ${word.count||0} · repair days ${repairDayCount(word)}/${repairTargetForMistake(word)}${isHardWord(word)?" · hard word":""}${word.lastAnswer?` · last typed: ${escapeHtml(word.lastAnswer)}`:""}</small></div><small>×${word.count||0}</small></div>`).join("")}</div><button class="retry-btn" id="practiceMistakes">Practise mistakes</button>`:"<p>No mistakes yet. Enjoy the peace.</p>"}</div>`; bindPhaseButtons(); $("#practiceMistakes")?.addEventListener("click",()=>startWordSession(list,"mistakes")); }
 function phaseAttempts(){ return user ? state.attempts[user][phase] || [] : []; }
 function percent(correct,total){ return total ? `${Math.round((correct/total)*100)}%` : "0%"; }
 function scoreSummary(name){
