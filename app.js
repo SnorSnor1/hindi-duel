@@ -20,6 +20,7 @@ const FLUENCY_TIMER_SECONDS = 8;
 const WEAK_LESSON_MIN_ATTEMPTS = 4;
 const WEAK_LESSON_RATE = 0.32;
 const COVERAGE_DAY_TARGET = 2;
+const MISTAKE_REPAIR_DAY_TARGET = 2;
 const CHALLENGE_REVIEW_MS = 1400;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
@@ -665,6 +666,9 @@ function attemptsForWord(name, phaseKey, word){
 function attemptDate(attempt){
   return attempt?.date || (attempt?.createdAt || "").slice(0,10);
 }
+function repairDayCount(word){
+  return new Set(Array.isArray(word?.repairDays) ? word.repairDays.filter(Boolean) : []).size;
+}
 function reviewStatsForWord(name, phaseKey, word){
   const attempts = attemptsForWord(name, phaseKey, word);
   if(!attempts.length) return null;
@@ -1006,7 +1010,7 @@ function coachChallengeHtml(task){
 function coachMistakesHtml(task){
   const phase1Count = activeMistakesFor(user, "phase1").length;
   const phase2Count = activeMistakesFor(user, "phase2").length;
-  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.active.length} active mistake word${task.active.length===1?"":"s"} left.` : `${task.active.length} active mistake words. Repair ${task.target} today.`) : "No active mistake words right now."}</p>`;
+  const body = `<p>${task.target ? (task.done ? `Daily mistake repair complete. ${task.active.length} active mistake word${task.active.length===1?"":"s"} left for spaced confirmation.` : `${task.active.length} active mistake words. Repair ${task.target} today. A mistake clears after typed recall on ${MISTAKE_REPAIR_DAY_TARGET} different days.`) : "No active mistake words right now."}</p>`;
   const action = task.target
     ? `<div class="coach-actions"><button class="ghost" id="startCoachMistakes1" type="button" ${phase1Count?"":"disabled"}>Phase 1 mistakes (${phase1Count})</button><button class="ghost" id="startCoachMistakes2" type="button" ${phase2Count?"":"disabled"}>Phase 2 mistakes (${phase2Count})</button></div>`
     : "";
@@ -1344,11 +1348,16 @@ function updateMistakeStatus(word, correct, answer){
     if(bucket[key]){
       bucket[key].streak=(bucket[key].streak||0)+1;
       bucket[key].lastCorrectAt=new Date().toISOString();
-      if(session?.repair || session?.source==="coach-mistakes" || session?.source==="mistakes") delete bucket[key];
+      if(session?.currentMode === "type"){
+        const repairDays = new Set(Array.isArray(bucket[key].repairDays) ? bucket[key].repairDays : []);
+        repairDays.add(today());
+        bucket[key].repairDays = [...repairDays].sort();
+      }
+      if(repairDayCount(bucket[key]) >= MISTAKE_REPAIR_DAY_TARGET) delete bucket[key];
     }
     return;
   }
-  bucket[key]={...word,count:(bucket[key]?.count||0)+1,streak:0,lastWrongAt:new Date().toISOString(),lastAnswer:String(answer||"").trim()};
+  bucket[key]={...word,count:(bucket[key]?.count||0)+1,streak:0,repairDays:[],lastWrongAt:new Date().toISOString(),lastAnswer:String(answer||"").trim()};
 }
 function approveAttempt(id, word){
   if(!user || !id) return;
@@ -1428,7 +1437,7 @@ function renderChallenge(){
   $("#practiceAfterChallenge")?.addEventListener("click",()=>show("quiz"));
   $("#goScoreboard")?.addEventListener("click",()=>show("scoreboard"));
 }
-function renderMistakes(){ if(!user)return showLogin(); const list=Object.values(state.mistakes[user][phase]).sort((a,b)=>(b.count||0)-(a.count||0)); $("#mistakes").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Mistakes</h2>${list.length?`<div class="result-grid">${list.map((word)=>`<div class="word-row"><div><strong>${escapeHtml(word.hindi)}</strong><small>${escapeHtml(formatEnglishList(word))} · ${escapeHtml(displayCategory(word.category))} · wrong ${word.count||0} · correct streak ${word.streak||0}${word.lastAnswer?` · last typed: ${escapeHtml(word.lastAnswer)}`:""}</small></div><small>×${word.count||0}</small></div>`).join("")}</div><button class="retry-btn" id="practiceMistakes">Practise mistakes</button>`:"<p>No mistakes yet. Enjoy the peace.</p>"}</div>`; bindPhaseButtons(); $("#practiceMistakes")?.addEventListener("click",()=>startWordSession(list,"mistakes")); }
+function renderMistakes(){ if(!user)return showLogin(); const list=Object.values(state.mistakes[user][phase]).sort((a,b)=>(b.count||0)-(a.count||0)); $("#mistakes").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Mistakes</h2>${list.length?`<div class="result-grid">${list.map((word)=>`<div class="word-row"><div><strong>${escapeHtml(word.hindi)}</strong><small>${escapeHtml(formatEnglishList(word))} · ${escapeHtml(displayCategory(word.category))} · wrong ${word.count||0} · repair days ${repairDayCount(word)}/${MISTAKE_REPAIR_DAY_TARGET}${word.lastAnswer?` · last typed: ${escapeHtml(word.lastAnswer)}`:""}</small></div><small>×${word.count||0}</small></div>`).join("")}</div><button class="retry-btn" id="practiceMistakes">Practise mistakes</button>`:"<p>No mistakes yet. Enjoy the peace.</p>"}</div>`; bindPhaseButtons(); $("#practiceMistakes")?.addEventListener("click",()=>startWordSession(list,"mistakes")); }
 function phaseAttempts(){ return user ? state.attempts[user][phase] || [] : []; }
 function percent(correct,total){ return total ? `${Math.round((correct/total)*100)}%` : "0%"; }
 function scoreSummary(name){
