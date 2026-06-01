@@ -614,6 +614,16 @@ function activeMistakesFor(name, phaseKey){
 function allActiveMistakes(name){
   return ["phase1","phase2"].flatMap((phaseKey)=>activeMistakesFor(name, phaseKey).map((word)=>({ ...word, phaseKey })));
 }
+function uniqueWords(words){
+  const map = new Map();
+  (Array.isArray(words) ? words : []).forEach((word)=>{
+    if(word?.hindi && word?.english?.length) map.set(keyFor(word), word);
+  });
+  return [...map.values()];
+}
+function sessionMissedWords(value){
+  return uniqueWords(Object.values(value?.missed || {}));
+}
 function taskProgressLabel(done, target, fallback="Done"){
   if(!target) return fallback;
   return `${Math.min(done, target)}/${target}`;
@@ -813,7 +823,7 @@ function startSession(source, count=20, forcedMode=mode){
   if(source==="challenge" && todaysChallengeScore()) return show("challenge");
   const pool = phaseWords().filter((word)=>selectedCategories.has(word.category));
   const queue = shuffle([...pool]).slice(0, Math.min(count, pool.length));
-  session = { source, queue, index:0, correct:0, wrong:0, approved:0, mode:forcedMode, started:0, modes:[] };
+  session = { source, phaseKey:phase, queue, index:0, correct:0, wrong:0, approved:0, mode:forcedMode, started:0, modes:[], missed:{} };
   if(source==="challenge"){
     session.modes = queue.map(()=>Math.random()>.5?"type":"mc");
     session.score = createChallengeScore(queue.length);
@@ -823,7 +833,14 @@ function startSession(source, count=20, forcedMode=mode){
 }
 function startWordSession(words, source="practice"){
   if(!words.length) return;
-  session = { source, queue:shuffle([...words]), index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[] };
+  session = { source, phaseKey:phase, queue:shuffle(uniqueWords(words)), index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{} };
+  show("quiz");
+  renderQuestion();
+}
+function startRepairSession(words, returnScreen="quiz"){
+  const queue = uniqueWords(words);
+  if(!queue.length) return show(returnScreen);
+  session = { source:"round-repair", phaseKey:phase, returnScreen, queue:shuffle(queue), index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{}, repair:true };
   show("quiz");
   renderQuestion();
 }
@@ -855,6 +872,9 @@ function correctTypeAnswerHtml(word){
 function correctTranslationHtml(word){
   return `<div class="answer-reveal answer-reveal-big"><span>Correct translation</span><strong class="answer-pair"><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}<em>${escapeHtml(formatEnglishList(word))}</em></strong></div>`;
 }
+function correctTranslationSuccessHtml(word){
+  return `<div class="answer-reveal answer-reveal-big answer-reveal-success"><span>Correct answer</span><strong class="answer-pair"><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}<em>${escapeHtml(formatEnglishList(word))}</em></strong></div>`;
+}
 function correctTypeSuccessHtml(word, close){
   return `<div class="answer-reveal answer-reveal-big answer-reveal-type answer-reveal-success"><span>${close ? "Accepted answer" : "Correct answer"}</span><strong>${escapeHtml(formatEnglishList(word))}</strong><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}</div>`;
 }
@@ -866,14 +886,17 @@ function completeAnswer(word, correct, close, answer=""){
   $("#answerForm button")?.setAttribute("disabled", "true");
   document.querySelectorAll(".mc-btn").forEach((button)=>button.disabled = true);
   if(correct) session.correct++;
-  else session.wrong++;
+  else {
+    session.wrong++;
+    session.missed[keyFor(word)] = word;
+  }
   updateChallengeScore(false);
 
   const attemptId=recordAttempt(word, correct, close, answer);
   const fb=$("#feedback");
   const isTyping = session.currentMode === "type";
-  const successLine = correct&&isTyping
-    ? correctTypeSuccessHtml(word, close)
+  const successLine = correct
+    ? (isTyping ? correctTypeSuccessHtml(word, close) : correctTranslationSuccessHtml(word))
     : "";
   const answerLine = !correct
     ? (isTyping ? correctTypeAnswerHtml(word) : correctTranslationHtml(word))
@@ -896,7 +919,7 @@ function completeAnswer(word, correct, close, answer=""){
   if(requiresReview) setTimeout(()=>{ if(nextButton){ nextButton.disabled = false; nextButton.focus(); } }, CHALLENGE_REVIEW_MS);
   else nextButton?.focus();
   nextButton?.addEventListener("click", nextQuestion);
-  $("#approveBtn")?.addEventListener("click",()=>{session.correct++; session.wrong--; session.approved++; approveAttempt(attemptId, word); $("#approveBtn").remove();});
+  $("#approveBtn")?.addEventListener("click",()=>{session.correct++; session.wrong--; session.approved++; delete session.missed[keyFor(word)]; approveAttempt(attemptId, word); $("#approveBtn").remove();});
   nextKeyHandler=(event)=>{if(event.key==="Enter" && nextButton && !nextButton.disabled){event.preventDefault(); nextQuestion();}};
   document.addEventListener("keydown",nextKeyHandler);
 }
@@ -939,6 +962,7 @@ function updateMistakeStatus(word, correct, answer){
     if(bucket[key]){
       bucket[key].streak=(bucket[key].streak||0)+1;
       bucket[key].lastCorrectAt=new Date().toISOString();
+      if(session?.repair || session?.source==="coach-mistakes" || session?.source==="mistakes") delete bucket[key];
     }
     return;
   }
@@ -958,27 +982,48 @@ function approveAttempt(id, word){
 }
 function clearTimer(){ if(timer){clearInterval(timer); timer=null;} }
 function startTimer(seconds){ let remaining=seconds; $("#timerNum").textContent=remaining+"s"; $("#timerFill").style.width="100%"; timer=setInterval(()=>{remaining--; $("#timerNum").textContent=remaining+"s"; $("#timerFill").style.width=Math.max(0,(remaining/seconds)*100)+"%"; if(remaining<=0){clearTimer(); completeAnswer(session.queue[session.index],false,false);}},1000); }
+function completionBackScreen(finished){
+  if(finished?.returnScreen) return finished.returnScreen;
+  if(finished?.source === "challenge" || String(finished?.source || "").startsWith("coach-")) return "coach";
+  return "quiz";
+}
+function completionTitle(finished, missed){
+  if(finished?.repair && missed.length) return "Repair round";
+  if(finished?.repair) return "All repaired";
+  if(finished?.source === "challenge") return "Daily complete";
+  return "Session complete";
+}
+function repairPanelHtml(missed, finished){
+  if(missed.length){
+    const intro = finished?.repair ? "Keep going with only the words still wrong." : "Practise only the words you missed in this round.";
+    return `<div class="repair-box"><strong>${missed.length} word${missed.length===1?"":"s"} to repair</strong><p>${intro}</p><div class="repair-list">${missed.slice(0,8).map((word)=>`<span>${escapeHtml(word.hindi)} · ${escapeHtml(formatPrimaryEnglish(word))}</span>`).join("")}${missed.length>8?`<span>+${missed.length-8} more</span>`:""}</div><button class="retry-btn" id="repairRoundMistakes" type="button">${finished?.repair?"Try remaining words again":"Repair missed words now"}</button></div>`;
+  }
+  if(finished?.repair) return `<div class="repair-box repair-done"><strong>Clean repair</strong><p>Every word in this repair round was correct.</p></div>`;
+  return "";
+}
+function renderSessionComplete(finished){
+  const missed = sessionMissedWords(finished);
+  const backScreen = completionBackScreen(finished);
+  const backLabel = backScreen === "coach" ? "Back to coach" : "Back to practice";
+  $("#quiz").innerHTML=`<div class="panel session-complete"><h2>${completionTitle(finished, missed)}</h2><div class="result-grid"><div class="stat-box"><strong>${finished.correct}/${finished.queue.length}</strong><br><small>correct</small></div><div class="stat-box"><strong>${Math.round((finished.correct/finished.queue.length)*100)}%</strong><br><small>score</small></div></div>${repairPanelHtml(missed, finished)}<button class="retry-btn secondary-action" id="backToPractice" type="button">${backLabel}</button></div>`;
+  session=null;
+  renderNav();
+  $("#repairRoundMistakes")?.addEventListener("click",()=>startRepairSession(missed, backScreen));
+  $("#backToPractice")?.addEventListener("click",()=>show(backScreen));
+}
 function finishSession(){
   clearTimer();
   const finished = session;
   if(finished.source==="challenge" && user){
     updateChallengeScore(true);
     pushCloudState();
-    session=null;
-    renderNav();
-    show("coach");
-    return;
   }
-  const returnsToCoach = String(finished.source || "").startsWith("coach-");
-  $("#quiz").innerHTML=`<div class="panel"><h2>Session complete</h2><div class="result-grid"><div class="stat-box"><strong>${finished.correct}/${finished.queue.length}</strong><br><small>correct</small></div><div class="stat-box"><strong>${Math.round((finished.correct/finished.queue.length)*100)}%</strong><br><small>score</small></div></div><button class="retry-btn" id="backToPractice" type="button">${returnsToCoach?"Back to coach":"Back to practice"}</button></div>`;
-  session=null;
-  renderNav();
-  $("#backToPractice")?.addEventListener("click",()=>show(returnsToCoach ? "coach" : "quiz"));
+  renderSessionComplete(finished);
 }
 function challengeReviewHtml(){
   const misses = todaysChallengeAttempts().filter((attempt)=>!attempt.correct);
   const title = misses.length ? `Words to review (${misses.length})` : "Words to review";
-  return `<div class="daily-review"><div class="daily-review-title">${escapeHtml(title)}</div>${misses.length?`<div class="miss-list">${misses.map(missedWordCard).join("")}</div>`:`<div class="chart-empty">No mistakes today. Annoying, but impressive.</div>`}</div>`;
+  return `<div class="daily-review"><div class="daily-review-title">${escapeHtml(title)}</div>${misses.length?`<div class="miss-list">${misses.map(missedWordCard).join("")}</div><button class="retry-btn" id="repairChallengeMistakes" type="button">Repair these words</button>`:`<div class="chart-empty">No mistakes today. Annoying, but impressive.</div>`}</div>`;
 }
 function renderChallenge(){
   if(!user)return showLogin();
@@ -994,6 +1039,7 @@ function renderChallenge(){
   const total = done?.total || 20;
   $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>20</strong><small>words</small></div><div><strong>20s</strong><small>typing</small></div><div><strong>12s</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">A fixed daily run with random Phase 1 words. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/20</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
   $("#startChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); startSession("challenge",20,"mixed"); });
+  $("#repairChallengeMistakes")?.addEventListener("click",()=>startRepairSession(missedWordsFromAttempts(todaysChallengeAttempts()), "coach"));
   $("#practiceAfterChallenge")?.addEventListener("click",()=>show("quiz"));
   $("#goScoreboard")?.addEventListener("click",()=>show("scoreboard"));
 }
@@ -1112,6 +1158,9 @@ function attemptWord(attempt){
 function correctAnswerForAttempt(attempt){
   const word = attemptWord(attempt);
   return attempt.mode === "type" ? formatEnglishList(word) : word.hindi;
+}
+function missedWordsFromAttempts(attempts){
+  return uniqueWords((Array.isArray(attempts) ? attempts : []).filter((attempt)=>!attempt.correct).map(attemptWord));
 }
 function todaysChallengeAttempts(name=user){
   const score = todaysChallengeScore(name);
