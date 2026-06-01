@@ -9,6 +9,7 @@ const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xT
 const PHASE2_SHEET_URL = "https://docs.google.com/spreadsheets/d/14BD6b5P1dCkUB9pouUzWuQsN6woZyNpPOkKihyngKHo/export?format=csv&gid=1937597985";
 const DAILY_PHASE2_TARGET = 15;
 const DAILY_MISTAKE_TARGET = 10;
+const DAILY_WEAK_LESSON_TARGET = 8;
 const DAILY_FLUENCY_TARGET = 5;
 const SPACED_REVIEW_TARGET = 12;
 const SPACED_REVIEW_INTERVALS = [1, 3, 7, 14, 30];
@@ -16,6 +17,8 @@ const FRAGILE_TYPED_MS = 8000;
 const FRAGILE_CHOICE_MS = 5000;
 const FLUENCY_TARGET_MS = 6000;
 const FLUENCY_TIMER_SECONDS = 8;
+const WEAK_LESSON_MIN_ATTEMPTS = 4;
+const WEAK_LESSON_RATE = 0.32;
 const CHALLENGE_REVIEW_MS = 1400;
 const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
@@ -686,6 +689,60 @@ function spacedReviewWords(name){
     a.review.correctStreak - b.review.correctStreak
   );
 }
+function weakLessonStats(name){
+  if(!name) return [];
+  const activeCounts = new Map(allActiveMistakes(name).map((word)=>[`${word.phaseKey}|${word.category}`, 0]));
+  allActiveMistakes(name).forEach((word)=>{
+    const key = `${word.phaseKey}|${word.category}`;
+    activeCounts.set(key, (activeCounts.get(key) || 0) + 1);
+  });
+  const groups = new Map();
+  ["phase1","phase2"].forEach((phaseKey)=>{
+    attemptsFor(name, phaseKey).forEach((attempt)=>{
+      const key = `${phaseKey}|${attempt.category}`;
+      if(!groups.has(key)) groups.set(key, { phaseKey, category:attempt.category, attempts:0, wrong:0, fragile:0, activeMistakes:activeCounts.get(key) || 0 });
+      const group = groups.get(key);
+      group.attempts++;
+      if(!attempt.correct) group.wrong++;
+      if(attempt.correct && (attempt.close || ((attempt.ms || 0) > (attempt.mode === "mc" ? FRAGILE_CHOICE_MS : FRAGILE_TYPED_MS)))) group.fragile++;
+    });
+  });
+  activeCounts.forEach((count, key)=>{
+    if(groups.has(key)) return;
+    const [phaseKey, category] = key.split("|");
+    groups.set(key, { phaseKey, category, attempts:0, wrong:0, fragile:0, activeMistakes:count });
+  });
+  return [...groups.values()]
+    .map((group)=>{
+      const weakLoad = group.wrong + group.fragile * 0.5 + group.activeMistakes * 1.25;
+      const rate = group.attempts ? weakLoad / group.attempts : group.activeMistakes ? 1 : 0;
+      return { ...group, weakLoad, rate, score:rate * 100 + group.activeMistakes * 18 + group.wrong * 6 + group.fragile * 3 };
+    })
+    .filter((group)=>group.activeMistakes >= 2 || (group.attempts >= WEAK_LESSON_MIN_ATTEMPTS && group.rate >= WEAK_LESSON_RATE))
+    .sort((a,b)=>b.score-a.score || b.weakLoad-a.weakLoad || b.attempts-a.attempts)
+    .slice(0, 2);
+}
+function weakLessonWords(name, count=DAILY_WEAK_LESSON_TARGET){
+  const lessons = weakLessonStats(name);
+  if(!lessons.length) return [];
+  const lessonKeys = new Set(lessons.map((lesson)=>`${lesson.phaseKey}|${lesson.category}`));
+  const doneToday = new Set(allAttemptsToday(name).filter((attempt)=>attempt.source==="coach-weak" && attempt.correct).map((attempt)=>`${attempt.phaseKey}|${attempt.hindi}|${attempt.category}`));
+  const activeKeys = new Set(allActiveMistakes(name).map((word)=>`${word.phaseKey}|${keyFor(word)}`));
+  const dueKeys = new Set(spacedReviewWords(name).map((word)=>`${word.phaseKey}|${keyFor(word)}`));
+  const words = ["phase1","phase2"].flatMap((phaseKey)=>
+    phaseWordsFor(phaseKey)
+      .filter((word)=>lessonKeys.has(`${phaseKey}|${word.category}`))
+      .filter((word)=>!doneToday.has(`${phaseKey}|${word.hindi}|${word.category}`))
+      .map((word)=>{
+        const key = `${phaseKey}|${keyFor(word)}`;
+        const attempts = attemptsForWord(name, phaseKey, word);
+        const last = attempts.at(-1);
+        const priority = (activeKeys.has(key) ? 300 : 0) + (dueKeys.has(key) ? 160 : 0) + (!last ? 120 : 0) + (!last?.correct ? 80 : 0) + (last?.close ? 45 : 0) + Math.max(0, 10 - attempts.length);
+        return { ...word, phaseKey, weakLesson:lessons.find((lesson)=>lesson.phaseKey===phaseKey && lesson.category===word.category), priority, jitter:Math.random() };
+      })
+  );
+  return uniqueWords(words.sort((a,b)=>b.priority-a.priority || b.jitter-a.jitter)).slice(0, count);
+}
 function fastFluencyAttemptsToday(name){
   return allAttemptsToday(name).filter((attempt)=>
     attempt.source === "coach-fluency" &&
@@ -782,6 +839,22 @@ function spacedReviewTaskStatus(name){
     label: taskProgressLabel(progress, target, "Clear")
   };
 }
+function weakLessonTaskStatus(name){
+  const lessons = weakLessonStats(name);
+  const active = weakLessonWords(name);
+  const progress = correctAttemptsToday(name, (attempt)=>attempt.source==="coach-weak");
+  const target = Math.min(DAILY_WEAK_LESSON_TARGET, progress + active.length);
+  return {
+    id: "weak",
+    title: "Weak lesson focus",
+    done: target === 0 || progress >= target,
+    progress,
+    target,
+    lessons,
+    active,
+    label: taskProgressLabel(progress, target, "Stable")
+  };
+}
 function fluencyTaskStatus(name){
   const active = fluencyWords(name);
   const progress = fastFluencyAttemptsToday(name).length;
@@ -802,18 +875,20 @@ function wordsForPhaseWithKey(phaseKey, words){
 function smartPracticeWords(phaseKey=phase, count=20){
   const mistakeWords = wordsForPhaseWithKey(phaseKey, user ? activeMistakesFor(user, phaseKey) : []);
   const dueWords = user ? spacedReviewWords(user).filter((word)=>word.phaseKey===phaseKey) : [];
+  const weakWords = user ? weakLessonWords(user, count).filter((word)=>word.phaseKey===phaseKey) : [];
   const latest = new Set(latestPhaseCategories(phaseKey, 3));
   const newestWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>latest.has(word.category))).slice(0, 10));
   const selectedWords = wordsForPhaseWithKey(phaseKey, shuffle(phaseWordsFor(phaseKey).filter((word)=>selectedCategories.has(word.category))));
-  return uniqueWords([...mistakeWords, ...dueWords, ...newestWords, ...selectedWords]).slice(0, count);
+  return uniqueWords([...mistakeWords, ...dueWords, ...weakWords, ...newestWords, ...selectedWords]).slice(0, count);
 }
 function smartPracticeHtml(count=20){
   if(!user) return "";
   const words = smartPracticeWords(phase, count);
   const dueCount = spacedReviewWords(user).filter((word)=>word.phaseKey===phase).length;
   const mistakeCount = activeMistakesFor(user, phase).length;
+  const weakCount = weakLessonWords(user, count).filter((word)=>word.phaseKey===phase).length;
   const label = words.length ? `${Math.min(words.length, count)} prioritized words` : "No words available";
-  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · ${mistakeCount} mistakes · ${dueCount} spaced</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
+  return `<div class="smart-practice"><div><strong>Smart practice</strong><small>${label} · ${mistakeCount} mistakes · ${dueCount} spaced · ${weakCount} weak lesson</small></div><button class="ghost" id="startSmartPractice" type="button" ${words.length?"":"disabled"}>Start smart practice</button></div>`;
 }
 function phase2TaskStatus(name){
   const available = (state.words.phase2 || []).filter((word)=>word.english?.length);
@@ -830,7 +905,7 @@ function phase2TaskStatus(name){
   };
 }
 function dailyContractFor(name=user){
-  const tasks = [scoreTaskStatus(name), spacedReviewTaskStatus(name), mistakeTaskStatus(name), fluencyTaskStatus(name), phase2TaskStatus(name)];
+  const tasks = [scoreTaskStatus(name), spacedReviewTaskStatus(name), mistakeTaskStatus(name), weakLessonTaskStatus(name), fluencyTaskStatus(name), phase2TaskStatus(name)];
   const required = tasks.filter((task)=>task.target > 0);
   const complete = required.every((task)=>task.done);
   const doneUnits = required.reduce((sum,task)=>sum+Math.min(task.progress, task.target),0);
@@ -913,6 +988,18 @@ function coachSpacedHtml(task){
     : "";
   return taskCardHtml(task, body, action);
 }
+function coachWeakLessonHtml(task){
+  const names = task.lessons?.length ? task.lessons.map((lesson)=>displayCategory(lesson.category)).join(", ") : "";
+  const body = task.target
+    ? task.done
+      ? `<p>Weak lesson focus complete. The weakest categories will update as your answers change.</p>`
+      : `<p>Focused mix from ${escapeHtml(names)}. Practise ${task.target} words from the weakest lesson pattern.</p>`
+    : `<p>No weak lesson pattern yet. Keep answering and this will appear when a category starts lagging.</p>`;
+  const action = task.target && !task.done
+    ? `<button class="start-btn" id="startCoachWeak" type="button">Start weak lesson focus</button>`
+    : "";
+  return taskCardHtml(task, body, action);
+}
 function coachFluencyHtml(task){
   const slowCount = task.active.filter((word)=>word.fluency?.ms > FLUENCY_TARGET_MS).length;
   const body = task.target
@@ -954,10 +1041,11 @@ function renderCoach(){
   const contract = dailyContractFor(user);
   const notice = coachNotice ? `<div class="coach-notice">${escapeHtml(coachNotice)}</div>` : "";
   const tasks = Object.fromEntries(contract.tasks.map((task)=>[task.id, task]));
-  $("#coach").innerHTML = `<div class="coach-shell">${notice}${coachHeroHtml(contract)}<div class="coach-grid">${coachChallengeHtml(tasks.challenge)}${coachSpacedHtml(tasks.spaced)}${coachMistakesHtml(tasks.mistakes)}${coachFluencyHtml(tasks.fluency)}${coachPhase2Html(tasks.phase2)}</div>${coachProofHtml(contract)}${user==="maaike"?maintenanceHtml():""}</div>`;
+  $("#coach").innerHTML = `<div class="coach-shell">${notice}${coachHeroHtml(contract)}<div class="coach-grid">${coachChallengeHtml(tasks.challenge)}${coachSpacedHtml(tasks.spaced)}${coachMistakesHtml(tasks.mistakes)}${coachWeakLessonHtml(tasks.weak)}${coachFluencyHtml(tasks.fluency)}${coachPhase2Html(tasks.phase2)}</div>${coachProofHtml(contract)}${user==="maaike"?maintenanceHtml():""}</div>`;
   $("#startCoachChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); phase="phase1"; selectedCategories=new Set(categories()); startSession("challenge",20,"mixed"); });
   $("#coachChallengeReview")?.addEventListener("click",()=>show("challenge"));
   $("#startCoachSpaced")?.addEventListener("click",()=>startCoachSpacedReview());
+  $("#startCoachWeak")?.addEventListener("click",()=>startCoachWeakLesson());
   $("#startCoachFluency")?.addEventListener("click",()=>startCoachFluency());
   $("#startCoachPhase2")?.addEventListener("click",()=>startPhase2Focus());
   $("#startCoachMistakes1")?.addEventListener("click",()=>startCoachMistakes("phase1"));
@@ -973,6 +1061,13 @@ function startCoachSpacedReview(){
   const words = task.active.slice(0, count || SPACED_REVIEW_TARGET);
   if(!words.length) return renderCoach();
   startWordSession(words, "coach-spaced");
+}
+function startCoachWeakLesson(){
+  const task = weakLessonTaskStatus(user);
+  const count = Math.max(0, task.target - task.progress);
+  const words = task.active.slice(0, count || DAILY_WEAK_LESSON_TARGET);
+  if(!words.length) return renderCoach();
+  startWordSession(words, "coach-weak");
 }
 function startCoachFluency(){
   const task = fluencyTaskStatus(user);
@@ -1012,7 +1107,7 @@ function randomMode(){
   return Math.random() < .8 ? "type" : "mc";
 }
 function activeRecallOnlySource(source){
-  return ["coach-spaced","coach-mistakes","coach-fluency","round-repair","smart-practice","mistakes"].includes(source);
+  return ["coach-spaced","coach-mistakes","coach-weak","coach-fluency","round-repair","smart-practice","mistakes"].includes(source);
 }
 function challengeModes(total){
   const mcCount = total >= 3 ? Math.floor(total * 0.2) : 0;
@@ -1219,6 +1314,7 @@ function completionTitle(finished, missed){
   if(finished?.repair && missed.length) return "Repair round";
   if(finished?.repair) return "All repaired";
   if(finished?.source === "challenge") return "Daily complete";
+  if(finished?.source === "coach-weak") return "Weak lesson focus complete";
   if(finished?.source === "coach-fluency") return "Fluency sprint complete";
   return "Session complete";
 }
