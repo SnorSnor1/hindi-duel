@@ -5,6 +5,7 @@ const STORE = "hindi.seekho.combined.v1";
 const FIREBASE_CONFIG = window.HINDI_DUEL_FIREBASE_CONFIG || null;
 const FIREBASE_STATE_PATH = "hindiDuel/sharedState";
 const CLOUD_SYNC_ENABLED = Boolean(FIREBASE_CONFIG);
+const PUBLIC_APP_URL = "https://snorsnor1.github.io/hindi-duel/";
 const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xTL5N_-A1YUIWmkjWMl9JWJIkq9RYs4/export?format=csv&gid=0";
 const PHASE2_SHEET_URL = "https://docs.google.com/spreadsheets/d/14BD6b5P1dCkUB9pouUzWuQsN6woZyNpPOkKihyngKHo/export?format=csv&gid=1937597985";
 const DAILY_CHALLENGE_TARGET = 20;
@@ -98,7 +99,8 @@ function loadState(){
             phase2: Array.isArray(parsed.attempts?.vincent?.phase2) ? parsed.attempts.vincent.phase2 : []
           }
         },
-        maintenance: normalizeMaintenance(parsed.maintenance || fresh.maintenance)
+        maintenance: normalizeMaintenance(parsed.maintenance || fresh.maintenance),
+        reminder: normalizeReminder(parsed.reminder || fresh.reminder)
       });
     } catch {}
   }
@@ -134,6 +136,7 @@ function freshState(){
     mistakes: { maaike: { phase1: {}, phase2: {} }, vincent: { phase1: {}, phase2: {} } },
     attempts: { maaike: { phase1: [], phase2: [] }, vincent: { phase1: [], phase2: [] } },
     maintenance: emptyMaintenance(),
+    reminder: defaultReminder(),
     challengeResets: []
   };
 }
@@ -143,6 +146,14 @@ function emptyMaintenance(){
     phase2: { lastSyncedAt: null, lastCount: PHASE_DATA.phase2.words.length },
     lessonPrep: { nextLessonAt: "", checkedAt: null, note: "" }
   };
+}
+function defaultReminder(){
+  return { time: "08:00", updatedAt: null };
+}
+function normalizeReminder(value={}){
+  const fresh = defaultReminder();
+  const time = /^([01]\d|2[0-3]):[0-5]\d$/.test(value.time || "") ? value.time : fresh.time;
+  return { ...fresh, ...value, time };
 }
 function normalizeMaintenance(value={}){
   const fresh = emptyMaintenance();
@@ -169,6 +180,7 @@ function mergeMaintenance(local={}, remote={}){
 function applyChallengeResetMigrations(nextState){
   nextState.challengeResets = Array.isArray(nextState.challengeResets) ? nextState.challengeResets : [];
   nextState.maintenance = normalizeMaintenance(nextState.maintenance);
+  nextState.reminder = normalizeReminder(nextState.reminder);
   CHALLENGE_RESETS.forEach((reset)=>{
     const id = typeof reset === "string" ? reset : reset.id;
     const date = typeof reset === "string" ? reset : reset.date;
@@ -1206,6 +1218,69 @@ function whatsappProofText(contract){
 function whatsappProofUrl(contract){
   return `https://wa.me/?text=${encodeURIComponent(whatsappProofText(contract))}`;
 }
+function appPracticeUrl(){
+  const location = window.location || {};
+  const host = location.hostname || "";
+  if(!host || host === "localhost" || host === "127.0.0.1") return PUBLIC_APP_URL;
+  return `${location.origin}${location.pathname}`;
+}
+function whatsappReminderUrl(){
+  return `https://wa.me/?text=${encodeURIComponent(`Hindi daily coach: ${appPracticeUrl()}`)}`;
+}
+function pad2(value){
+  return String(value).padStart(2, "0");
+}
+function icsLocalDateTime(date){
+  return `${date.getFullYear()}${pad2(date.getMonth()+1)}${pad2(date.getDate())}T${pad2(date.getHours())}${pad2(date.getMinutes())}00`;
+}
+function icsUtcDateTime(date){
+  return `${date.getUTCFullYear()}${pad2(date.getUTCMonth()+1)}${pad2(date.getUTCDate())}T${pad2(date.getUTCHours())}${pad2(date.getUTCMinutes())}${pad2(date.getUTCSeconds())}Z`;
+}
+function icsEscape(value){
+  return String(value || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+}
+function nextReminderDate(time){
+  const [hours, minutes] = normalizeReminder({ time }).time.split(":").map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+  if(date.getTime() <= Date.now()) date.setDate(date.getDate() + 1);
+  return date;
+}
+function dailyReminderIcsText(){
+  const reminder = normalizeReminder(state.reminder);
+  const url = appPracticeUrl();
+  const description = `Open Hindi Duel and finish the daily coach: ${url}`;
+  return [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Hindi Duel//Daily Coach//EN",
+    "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    `UID:hindi-duel-daily-${user || "user"}@snorsnor1.github.io`,
+    `DTSTAMP:${icsUtcDateTime(new Date())}`,
+    `DTSTART:${icsLocalDateTime(nextReminderDate(reminder.time))}`,
+    "RRULE:FREQ=DAILY",
+    "SUMMARY:Hindi Daily Coach",
+    `DESCRIPTION:${icsEscape(description)}`,
+    `URL:${url}`,
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].join("\r\n");
+}
+function downloadDailyReminder(){
+  const blob = new Blob([dailyReminderIcsText()], { type:"text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "hindi-daily-coach.ics";
+  link.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 0);
+}
+function saveDailyReminder(){
+  state.reminder = normalizeReminder({ ...state.reminder, time:$("#dailyReminderTime")?.value, updatedAt:new Date().toISOString() });
+  save({ sync:false });
+  renderCoach();
+}
 function coachFocusLine(contract){
   const task = contract.tasks.find((item)=>!item.done && item.target > 0 && item.id !== "challenge") || contract.tasks.find((item)=>!item.done && item.target > 0);
   if(!task) return "All required retrieval is done. Stop adding more today unless you want optional practice.";
@@ -1228,6 +1303,10 @@ function coachMasteryHtml(contract){
 function coachHeroHtml(contract){
   const pct = contract.targetUnits ? Math.round((contract.doneUnits / contract.targetUnits) * 100) : 100;
   return `<div class="coach-hero"><div><div class="daily-badge">Daily contract</div><h2>Hindi Coach</h2><p>${contract.complete?"Today is complete. Send the receipt and keep the streak clean.":"Finish the contract before the rest of the app becomes useful."}</p></div><div class="contract-meter"><strong>${pct}%</strong><span>${contract.doneUnits}/${contract.targetUnits || 0} required answers</span></div></div>`;
+}
+function coachReminderHtml(){
+  const reminder = normalizeReminder(state.reminder);
+  return `<div class="coach-reminder"><div><h3>Daily reminder</h3><p>Calendar alert at ${escapeHtml(reminder.time)} with the coach link.</p></div><div class="reminder-controls"><label class="form-label" for="dailyReminderTime">Time</label><input id="dailyReminderTime" type="time" value="${escapeAttr(reminder.time)}"><button class="ghost" id="saveDailyReminder" type="button">Save time</button><button class="retry-btn" id="downloadDailyReminder" type="button">Add to calendar</button><a class="ghost reminder-link" href="${whatsappReminderUrl()}" target="_blank" rel="noopener">WhatsApp link</a></div></div>`;
 }
 function coachChallengeHtml(task){
   const body = `<p>Adaptive interleaved Phase 1 maintenance: mistakes, due words and weak words first. One timed attempt per day, saved to the scoreboard.</p>`;
@@ -1327,9 +1406,11 @@ function renderCoach(){
   const contract = dailyContractFor(user);
   const notice = coachNotice ? `<div class="coach-notice">${escapeHtml(coachNotice)}</div>` : "";
   const tasks = Object.fromEntries(contract.tasks.map((task)=>[task.id, task]));
-  $("#coach").innerHTML = `<div class="coach-shell">${notice}${coachHeroHtml(contract)}${coachMasteryHtml(contract)}<div class="coach-grid">${coachChallengeHtml(tasks.challenge)}${coachSpacedHtml(tasks.spaced)}${coachMistakesHtml(tasks.mistakes)}${coachWeakLessonHtml(tasks.weak)}${coachFluencyHtml(tasks.fluency)}${coachPhase2Html(tasks.phase2)}</div>${coachProofHtml(contract)}${user==="maaike"?maintenanceHtml():""}</div>`;
+  $("#coach").innerHTML = `<div class="coach-shell">${notice}${coachHeroHtml(contract)}${coachMasteryHtml(contract)}${coachReminderHtml()}<div class="coach-grid">${coachChallengeHtml(tasks.challenge)}${coachSpacedHtml(tasks.spaced)}${coachMistakesHtml(tasks.mistakes)}${coachWeakLessonHtml(tasks.weak)}${coachFluencyHtml(tasks.fluency)}${coachPhase2Html(tasks.phase2)}</div>${coachProofHtml(contract)}${user==="maaike"?maintenanceHtml():""}</div>`;
   $("#startCoachChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); phase="phase1"; selectedCategories=new Set(categories()); startSession("challenge",DAILY_CHALLENGE_TARGET,"mixed"); });
   $("#coachChallengeReview")?.addEventListener("click",()=>show("challenge"));
+  $("#saveDailyReminder")?.addEventListener("click",saveDailyReminder);
+  $("#downloadDailyReminder")?.addEventListener("click",downloadDailyReminder);
   $("#startCoachSpaced")?.addEventListener("click",()=>startCoachSpacedReview());
   $("#startCoachWeak")?.addEventListener("click",()=>startCoachWeakLesson());
   $("#startCoachFluency")?.addEventListener("click",()=>startCoachFluency());
