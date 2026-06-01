@@ -1358,7 +1358,7 @@ function startWordSession(words, source="practice"){
 function startRepairSession(words, returnScreen="quiz"){
   const queue = uniqueWords(words);
   if(!queue.length) return show(returnScreen);
-  session = { source:"round-repair", phaseKey:phase, returnScreen, queue:shuffle(queue), index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{}, repair:true };
+  session = { source:"round-repair", phaseKey:phase, returnScreen, queue:shuffle(queue), index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{}, repair:true, repeatCounts:{} };
   show("quiz");
   renderQuestion();
 }
@@ -1428,6 +1428,21 @@ function showRecallAnswer(word){
   $("#recallKnown")?.addEventListener("click",()=>completeAnswer(word, true, false, "self-check known"));
   $("#recallMissed")?.addEventListener("click",()=>completeAnswer(word, false, false, "self-check missed"));
 }
+function autoRepeatSource(source){
+  return source === "round-repair" || String(source || "").startsWith("coach-");
+}
+function scheduleSameSessionRepeat(word, reason="miss"){
+  if(!session || !autoRepeatSource(session.source)) return;
+  const key = wordSessionKey(word);
+  const upcoming = session.queue.slice(session.index + 1).some((item)=>wordSessionKey(item) === key);
+  if(upcoming) return;
+  const repeats = session.repeatCounts?.[key] || 0;
+  const limit = reason === "fluency" ? 2 : 8;
+  if(repeats >= limit) return;
+  session.repeatCounts = session.repeatCounts || {};
+  session.repeatCounts[key] = repeats + 1;
+  session.queue.push({ ...word, phaseKey:wordPhaseKey(word) });
+}
 function correctTypeAnswerHtml(word){
   return `<div class="answer-reveal answer-reveal-big answer-reveal-type"><span>Correct answer</span><strong>${escapeHtml(formatEnglishList(word))}</strong><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}</div>`;
 }
@@ -1448,19 +1463,24 @@ function completeAnswer(word, correct, close, answer=""){
   $("#answerInput")?.setAttribute("disabled", "true");
   $("#answerForm button")?.setAttribute("disabled", "true");
   document.querySelectorAll(".mc-btn").forEach((button)=>button.disabled = true);
-  if(correct) session.correct++;
-  else {
-    session.wrong++;
-    session.missed[wordSessionKey(word)] = word;
-  }
-  updateChallengeScore(false);
-
-  const attemptId=recordAttempt(word, correct, close, answer, elapsedMs);
-  const fb=$("#feedback");
+  const missedKey = wordSessionKey(word);
   const isTyping = session.currentMode === "type";
   const isRecall = session.currentMode === "recall";
   const isFluency = session.source === "coach-fluency";
   const fastExact = correct && !close && elapsedMs > 0 && elapsedMs <= FLUENCY_TARGET_MS;
+  if(correct) {
+    session.correct++;
+    delete session.missed[missedKey];
+  } else {
+    session.wrong++;
+    session.missed[missedKey] = word;
+    scheduleSameSessionRepeat(word);
+  }
+  if(isFluency && correct && !fastExact) scheduleSameSessionRepeat(word, "fluency");
+  updateChallengeScore(false);
+
+  const attemptId=recordAttempt(word, correct, close, answer, elapsedMs);
+  const fb=$("#feedback");
   const successLine = correct
     ? (isTyping ? correctTypeSuccessHtml(word, close) : correctTranslationSuccessHtml(word))
     : "";
@@ -1575,7 +1595,7 @@ function completionTitle(finished, missed){
 }
 function repairPanelHtml(missed, finished){
   if(missed.length){
-    const intro = finished?.repair ? "Keep going with only the words still wrong." : "Practise only the words you missed in this round.";
+    const intro = finished?.repair ? "Keep going with only the words still wrong." : "Practise only the words you missed; repair rounds repeat misses until the round is clean.";
     return `<div class="repair-box"><strong>${missed.length} word${missed.length===1?"":"s"} to repair</strong><p>${intro}</p><div class="repair-list">${missed.slice(0,8).map((word)=>`<span>${escapeHtml(word.hindi)} · ${escapeHtml(formatPrimaryEnglish(word))}</span>`).join("")}${missed.length>8?`<span>+${missed.length-8} more</span>`:""}</div><button class="retry-btn" id="repairRoundMistakes" type="button">${finished?.repair?"Try remaining words again":"Repair missed words now"}</button></div>`;
   }
   if(finished?.repair) return `<div class="repair-box repair-done"><strong>Clean repair</strong><p>Every word in this repair round was correct.</p></div>`;
