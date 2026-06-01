@@ -1599,18 +1599,20 @@ function completeAnswer(word, correct, close, answer=""){
     ? `<div class="typed-answer"><span>You chose</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
     : "";
   const canApprove = !correct && session.source !== "challenge" && !isRecall;
+  const canMarkHard = correct && isTyping && !close;
   const requiresReview = !correct && session.source === "challenge";
 
   fb.className=`feedback ${correct?(close?"close":"good"):"bad"}`;
   fb.innerHTML=correct
     ? `${successLine || (close?`Accepted <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`:`Correct <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`)}${fluencyLine}`
     : `${answerLine}${typedLine}${confusionLine}${selectedLine}`;
-  $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}<button class="btn-next" id="nextBtn" ${requiresReview?"disabled":""}>Next →</button>`;
+  $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}${canMarkHard?'<button class="btn-hard" id="markHardBtn">Felt hard</button>':""}<button class="btn-next" id="nextBtn" ${requiresReview?"disabled":""}>Next →</button>`;
   const nextButton = $("#nextBtn");
   if(requiresReview) setTimeout(()=>{ if(nextButton){ nextButton.disabled = false; nextButton.focus(); } }, CHALLENGE_REVIEW_MS);
   else nextButton?.focus();
   nextButton?.addEventListener("click", nextQuestion);
   $("#approveBtn")?.addEventListener("click",()=>{session.correct++; session.wrong--; session.approved++; delete session.missed[wordSessionKey(word)]; approveAttempt(attemptId, word); $("#approveBtn").remove();});
+  $("#markHardBtn")?.addEventListener("click",()=>{ markAttemptHard(attemptId, word); $("#markHardBtn").textContent = "Marked hard"; $("#markHardBtn").disabled = true; });
   nextKeyHandler=(event)=>{if(event.key==="Enter" && nextButton && !nextButton.disabled){event.preventDefault(); nextQuestion();}};
   document.addEventListener("keydown",nextKeyHandler);
 }
@@ -1687,6 +1689,17 @@ function approveAttempt(id, word){
     bucket[key].count=Math.max(0,(bucket[key].count||1)-1);
     if(bucket[key].count===0) delete bucket[key];
   }
+  save();
+}
+function markAttemptHard(id, word){
+  if(!user || !id) return;
+  const phaseKey = wordPhaseKey(word);
+  const attempt=state.attempts[user][phaseKey].find((item)=>item.id===id);
+  if(!attempt || !attempt.correct) return;
+  attempt.close = true;
+  attempt.effort = "hard";
+  attempt.markedHardAt = new Date().toISOString();
+  scheduleSameSessionRepeat(word, "hard");
   save();
 }
 function clearTimer(){ if(timer){clearInterval(timer); timer=null;} }
