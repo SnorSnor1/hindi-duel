@@ -662,22 +662,26 @@ function attemptsForWord(name, phaseKey, word){
     .filter((attempt)=>attempt.hindi === word.hindi && attempt.category === word.category)
     .sort((a,b)=>(a.createdAt || a.date || "").localeCompare(b.createdAt || b.date || ""));
 }
+function attemptDate(attempt){
+  return attempt?.date || (attempt?.createdAt || "").slice(0,10);
+}
 function reviewStatsForWord(name, phaseKey, word){
   const attempts = attemptsForWord(name, phaseKey, word);
   if(!attempts.length) return null;
-  let correctStreak = 0;
-  let wrongCount = 0;
-  attempts.forEach((attempt)=>{
-    if(attempt.correct) correctStreak++;
-    else { correctStreak = 0; wrongCount++; }
-  });
-  const lastCorrect = [...attempts].reverse().find((attempt)=>attempt.correct);
-  if(!lastCorrect || !correctStreak) return null;
-  const fragile = Boolean(lastCorrect.close || (lastCorrect.ms || 0) > (lastCorrect.mode === "mc" ? FRAGILE_CHOICE_MS : FRAGILE_TYPED_MS));
-  const interval = fragile ? 1 : SPACED_REVIEW_INTERVALS[Math.min(correctStreak - 1, SPACED_REVIEW_INTERVALS.length - 1)];
-  const reviewedAt = lastCorrect.date || (lastCorrect.createdAt || "").slice(0,10);
+  const wrongCount = attempts.filter((attempt)=>!attempt.correct).length;
+  const lastWrongIndex = attempts.reduce((last, attempt, index)=>attempt.correct ? last : index, -1);
+  const recentCorrect = attempts.slice(lastWrongIndex + 1).filter((attempt)=>attempt.correct);
+  const lastCorrect = recentCorrect.at(-1);
+  if(!lastCorrect) return null;
+  const typedCorrect = recentCorrect.filter((attempt)=>attempt.mode === "type");
+  const correctStreak = typedCorrect.length;
+  const lastTypedCorrect = typedCorrect.at(-1);
+  const recognitionOnly = !lastTypedCorrect;
+  const fragile = recognitionOnly || Boolean(lastTypedCorrect.close || (lastTypedCorrect.ms || 0) > FRAGILE_TYPED_MS);
+  const interval = recognitionOnly ? 1 : fragile ? 1 : SPACED_REVIEW_INTERVALS[Math.min(correctStreak - 1, SPACED_REVIEW_INTERVALS.length - 1)];
+  const reviewedAt = attemptDate(lastTypedCorrect || lastCorrect);
   const dueAt = addDays(reviewedAt, interval);
-  return { correctStreak, wrongCount, reviewedAt, dueAt, fragile, overdueDays: Math.max(0, Math.floor((dateValue(today()) - dateValue(dueAt)) / 86400000)) };
+  return { correctStreak, wrongCount, reviewedAt, dueAt, fragile, recognitionOnly, overdueDays: Math.max(0, Math.floor((dateValue(today()) - dateValue(dueAt)) / 86400000)) };
 }
 function spacedReviewWords(name){
   if(!name) return [];
@@ -703,7 +707,7 @@ function coverageWords(name, phaseKey, count=DAILY_PHASE2_TARGET){
       const attempts = attemptsForWord(name, phaseKey, word);
       const typedCorrectAttempts = attempts.filter((attempt)=>attempt.correct && attempt.mode === "type");
       const typedCorrect = typedCorrectAttempts.length;
-      const typedDays = new Set(typedCorrectAttempts.map((attempt)=>attempt.date || (attempt.createdAt || "").slice(0,10)).filter(Boolean));
+      const typedDays = new Set(typedCorrectAttempts.map(attemptDate).filter(Boolean));
       const totalCorrect = attempts.filter((attempt)=>attempt.correct).length;
       const last = attempts.at(-1);
       const missing = Math.max(0, COVERAGE_DAY_TARGET - typedDays.size);
@@ -1014,8 +1018,8 @@ function coachSpacedHtml(task){
   const body = task.target
     ? task.done
       ? `<p>Daily spaced review complete. ${task.active.length} extra due word${task.active.length===1?"":"s"} stay queued for later.</p>`
-      : `<p>${task.active.length} due words from earlier days. Today: ${phase1Count} Phase 1, ${phase2Count} Phase 2.</p>`
-    : `<p>No spaced-review words due right now. New correct answers come back tomorrow.</p>`;
+      : `<p>${task.active.length} due words from earlier days. Today: ${phase1Count} Phase 1, ${phase2Count} Phase 2. Typed recall controls long-term spacing.</p>`
+    : `<p>No spaced-review words due right now. Choice-only correct answers come back quickly until typed recall is strong.</p>`;
   const action = task.target && !task.done
     ? `<button class="start-btn" id="startCoachSpaced" type="button">Start spaced review</button>`
     : "";
