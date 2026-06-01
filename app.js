@@ -706,6 +706,15 @@ function addDays(date, days){
 function wordPhaseKey(word){
   return word?.phaseKey || session?.phaseKey || phase;
 }
+function confusionWordForAnswer(word, answer){
+  const typed = normEnglish(answer);
+  if(!typed) return null;
+  const phaseKey = wordPhaseKey(word);
+  return phaseWordsFor(phaseKey).find((candidate)=>
+    keyFor(candidate) !== keyFor(word) &&
+    candidate.english.some((value)=>normEnglish(value) === typed)
+  ) || null;
+}
 function attemptsForWord(name, phaseKey, word){
   return attemptsFor(name, phaseKey)
     .filter((attempt)=>attempt.hindi === word.hindi && attempt.category === word.category)
@@ -1556,6 +1565,7 @@ function completeAnswer(word, correct, close, answer=""){
   const isRecall = session.currentMode === "recall";
   const isFluency = session.source === "coach-fluency";
   const fastExact = correct && !close && elapsedMs > 0 && elapsedMs <= FLUENCY_TARGET_MS;
+  const confusionWord = !correct && isTyping ? confusionWordForAnswer(word, answer) : null;
   if(correct) {
     session.correct++;
     delete session.missed[missedKey];
@@ -1563,6 +1573,7 @@ function completeAnswer(word, correct, close, answer=""){
     session.wrong++;
     session.missed[missedKey] = word;
     scheduleSameSessionRepeat(word);
+    if(confusionWord) scheduleSameSessionRepeat({ ...confusionWord, phaseKey:wordPhaseKey(word) }, "confusion");
   }
   if(isFluency && correct && !fastExact) scheduleSameSessionRepeat(word, "fluency");
   updateChallengeScore(false);
@@ -1581,6 +1592,9 @@ function completeAnswer(word, correct, close, answer=""){
   const typedLine = !correct&&isTyping
     ? `<div class="typed-answer"><span>You typed</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
     : "";
+  const confusionLine = confusionWord
+    ? `<div class="typed-answer contrast-answer"><span>Possible confusion</span><strong>${escapeHtml(confusionWord.hindi)} · ${escapeHtml(formatEnglishList(confusionWord))}</strong></div>`
+    : "";
   const selectedLine = !correct&&!isTyping&&!isRecall
     ? `<div class="typed-answer"><span>You chose</span><strong>${escapeHtml(answer || "(empty)")}</strong></div>`
     : "";
@@ -1590,7 +1604,7 @@ function completeAnswer(word, correct, close, answer=""){
   fb.className=`feedback ${correct?(close?"close":"good"):"bad"}`;
   fb.innerHTML=correct
     ? `${successLine || (close?`Accepted <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`:`Correct <small>${escapeHtml(formatPrimaryEnglish(word))}</small>`)}${fluencyLine}`
-    : `${answerLine}${typedLine}${selectedLine}`;
+    : `${answerLine}${typedLine}${confusionLine}${selectedLine}`;
   $("#feedbackButtons").innerHTML=`${canApprove?'<button class="btn-approve" id="approveBtn">Count as correct</button>':""}<button class="btn-next" id="nextBtn" ${requiresReview?"disabled":""}>Next →</button>`;
   const nextButton = $("#nextBtn");
   if(requiresReview) setTimeout(()=>{ if(nextButton){ nextButton.disabled = false; nextButton.focus(); } }, CHALLENGE_REVIEW_MS);
@@ -1651,7 +1665,16 @@ function updateMistakeStatus(word, correct, answer){
     }
     return;
   }
-  bucket[key]={...word,count:(bucket[key]?.count||0)+1,streak:0,repairDays:[],lastWrongAt:new Date().toISOString(),lastAnswer:String(answer||"").trim()};
+  const confusionWord = session?.currentMode === "type" ? confusionWordForAnswer(word, answer) : null;
+  bucket[key]={
+    ...word,
+    count:(bucket[key]?.count||0)+1,
+    streak:0,
+    repairDays:[],
+    lastWrongAt:new Date().toISOString(),
+    lastAnswer:String(answer||"").trim(),
+    confusedWith: confusionWord ? { hindi:confusionWord.hindi, english:[...confusionWord.english], category:confusionWord.category } : null
+  };
 }
 function approveAttempt(id, word){
   if(!user || !id) return;
@@ -1732,7 +1755,20 @@ function renderChallenge(){
   $("#practiceAfterChallenge")?.addEventListener("click",()=>show("quiz"));
   $("#goScoreboard")?.addEventListener("click",()=>show("scoreboard"));
 }
-function renderMistakes(){ if(!user)return showLogin(); const list=activeMistakesFor(user, phase); $("#mistakes").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Mistakes</h2>${list.length?`<div class="result-grid">${list.map((word)=>`<div class="word-row ${isHardWord(word)?"hard-word":""}"><div><strong>${escapeHtml(word.hindi)}</strong><small>${escapeHtml(formatEnglishList(word))} · ${escapeHtml(displayCategory(word.category))} · wrong ${word.count||0} · repair days ${repairDayCount(word)}/${repairTargetForMistake(word)}${isHardWord(word)?" · hard word":""}${word.lastAnswer?` · last typed: ${escapeHtml(word.lastAnswer)}`:""}</small></div><small>×${word.count||0}</small></div>`).join("")}</div><button class="retry-btn" id="practiceMistakes">Practise mistakes</button>`:"<p>No mistakes yet. Enjoy the peace.</p>"}</div>`; bindPhaseButtons(); $("#practiceMistakes")?.addEventListener("click",()=>startWordSession(list,"mistakes")); }
+function mistakeDetailHtml(word){
+  const confused = word.confusedWith
+    ? ` · confused with ${escapeHtml(word.confusedWith.hindi)} / ${escapeHtml(formatEnglishList(word.confusedWith))}`
+    : "";
+  return `${escapeHtml(formatEnglishList(word))} · ${escapeHtml(displayCategory(word.category))} · wrong ${word.count||0} · repair days ${repairDayCount(word)}/${repairTargetForMistake(word)}${isHardWord(word)?" · hard word":""}${word.lastAnswer?` · last typed: ${escapeHtml(word.lastAnswer)}`:""}${confused}`;
+}
+function renderMistakes(){
+  if(!user)return showLogin();
+  const list=activeMistakesFor(user, phase);
+  const rows = list.map((word)=>`<div class="word-row ${isHardWord(word)?"hard-word":""}"><div><strong>${escapeHtml(word.hindi)}</strong><small>${mistakeDetailHtml(word)}</small></div><small>×${word.count||0}</small></div>`).join("");
+  $("#mistakes").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Mistakes</h2>${list.length?`<div class="result-grid">${rows}</div><button class="retry-btn" id="practiceMistakes">Practise mistakes</button>`:"<p>No mistakes yet. Enjoy the peace.</p>"}</div>`;
+  bindPhaseButtons();
+  $("#practiceMistakes")?.addEventListener("click",()=>startWordSession(list,"mistakes"));
+}
 function phaseAttempts(){ return user ? state.attempts[user][phase] || [] : []; }
 function percent(correct,total){ return total ? `${Math.round((correct/total)*100)}%` : "0%"; }
 function scoreSummary(name){
