@@ -324,23 +324,7 @@ function shuffle(items){ for(let i=items.length-1;i>0;i--){const j=Math.floor(Ma
 function normEnglish(value){ return String(value||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\s]/g," ").replace(/\b(to|a|an|the)\b/g," ").replace(/\s+/g," ").trim(); }
 function normHindi(value){ return String(value||"").normalize("NFC").replace(/[़]/g,"").replace(/\s+/g," ").trim(); }
 function levenshtein(a,b){ const m=Array.from({length:b.length+1},(_,r)=>[r]); for(let c=0;c<=a.length;c++)m[0][c]=c; for(let r=1;r<=b.length;r++){for(let c=1;c<=a.length;c++){m[r][c]=b[r-1]===a[c-1]?m[r-1][c-1]:Math.min(m[r-1][c-1]+1,m[r][c-1]+1,m[r-1][c]+1)}} return m[b.length][a.length]; }
-function typoLimit(value){
-  const length = String(value || "").replace(/\s+/g, "").length;
-  if(length <= 3) return 0;
-  if(length <= 7) return 1;
-  return Math.max(1, Math.floor(length * .18));
-}
-function checkAnswer(answer, accepted){
-  const a=normEnglish(answer);
-  if(!a)return {correct:false,close:false};
-  for(const value of accepted){
-    const b=normEnglish(value);
-    if(!b) continue;
-    if(a===b)return {correct:true,close:false};
-    if(levenshtein(a,b)<=typoLimit(b)) return {correct:true,close:true};
-  }
-  return {correct:false,close:false};
-}
+function checkAnswer(answer, accepted){ const a=normEnglish(answer); if(!a)return {correct:false,close:false}; for(const value of accepted){ const b=normEnglish(value); if(a===b)return {correct:true,close:false}; const limit=Math.max(1,Math.ceil(b.length*.18)); if(levenshtein(a,b)<=limit || b.includes(a) || a.includes(b)) return {correct:true,close:true}; } return {correct:false,close:false}; }
 const INDEPENDENT_VOWELS = { अ:"a", आ:"aa", इ:"i", ई:"ee", उ:"u", ऊ:"oo", ऋ:"ri", ए:"e", ऐ:"ai", ओ:"o", औ:"au", ऑ:"o", ऍ:"e" };
 const VOWEL_SIGNS = { "ा":"aa", "ि":"i", "ी":"ee", "ु":"u", "ू":"oo", "ृ":"ri", "े":"e", "ै":"ai", "ो":"o", "ौ":"au", "ॉ":"o", "ॅ":"e" };
 const CONSONANTS = { क:"k", ख:"kh", ग:"g", घ:"gh", ङ:"ng", च:"ch", छ:"chh", ज:"j", झ:"jh", ञ:"ny", ट:"t", ठ:"th", ड:"d", ढ:"dh", ण:"n", त:"t", थ:"th", द:"d", ध:"dh", न:"n", प:"p", फ:"ph", ब:"b", भ:"bh", म:"m", य:"y", र:"r", ल:"l", व:"v", श:"sh", ष:"sh", स:"s", ह:"h", ळ:"l" };
