@@ -632,13 +632,7 @@ async function autoSyncPublishedSheets(){
 
 function show(screen){
   if(!canUsePhase2() && phase==="phase2") phase = "phase1";
-  const gatedScreens = ["mistakes","stats","scoreboard"];
-  if(user && gatedScreens.includes(screen) && !dailyContractFor(user).complete){
-    coachNotice = "Finish today's contract first. Stats, scoreboard and mistake browsing unlock after the daily work is done.";
-    screen = "coach";
-  } else {
-    coachNotice = "";
-  }
+  coachNotice = "";
   activeScreen = screen;
   screens.forEach((id)=>$("#"+id).classList.toggle("hidden", id!==screen));
   document.querySelectorAll("[data-screen]").forEach((button)=>button.classList.toggle("active", button.dataset.screen===screen));
