@@ -8940,6 +8940,113 @@ export const PHASE_DATA = {
           "shack"
         ],
         "category": "Lesson 7b"
+      },
+      {
+        "hindi": "बुज़ुर्ग",
+        "english": [
+          "elderly person",
+          "old person",
+          "elder"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "दुआ करना",
+        "english": [
+          "pray",
+          "give blessings",
+          "wish well"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "प्रार्थना करना",
+        "english": [
+          "pray",
+          "say a prayer"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "बुनना",
+        "english": [
+          "knit",
+          "weave"
+        ],
+        "category": "Lesson 7b"
+      },
+      {
+        "hindi": "स्टाइल मारना",
+        "english": [
+          "show off",
+          "act stylish",
+          "pose"
+        ],
+        "category": "Lesson 8b"
+      },
+      {
+        "hindi": "बेचना",
+        "english": [
+          "sell"
+        ],
+        "category": "Lesson 8b"
+      },
+      {
+        "hindi": "आंसू",
+        "english": [
+          "tear",
+          "tears"
+        ],
+        "category": "Lesson 8b"
+      },
+      {
+        "hindi": "शिकायत",
+        "english": [
+          "complaint"
+        ],
+        "category": "Lesson 8b"
+      },
+      {
+        "hindi": "हथकड़ी",
+        "english": [
+          "handcuff",
+          "handcuffs"
+        ],
+        "category": "Lesson 8b"
+      },
+      {
+        "hindi": "अदालत",
+        "english": [
+          "court",
+          "court of law"
+        ],
+        "category": "Lesson 8b"
+      },
+      {
+        "hindi": "घना",
+        "english": [
+          "dense",
+          "thick"
+        ],
+        "category": "Lesson 8b"
+      },
+      {
+        "hindi": "माफी मांगना",
+        "english": [
+          "apologize",
+          "ask forgiveness",
+          "say sorry"
+        ],
+        "category": "Lesson 8b"
+      },
+      {
+        "hindi": "बिखरना",
+        "english": [
+          "scatter",
+          "fall apart",
+          "spread out"
+        ],
+        "category": "Lesson 8b"
       }
     ]
   }

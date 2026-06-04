@@ -38,7 +38,8 @@ const PREP_WINDOW_HOURS = 48;
 const MAINTENANCE_STALE_DAYS = 7;
 const CHALLENGE_RESETS = [
   { id: "2026-05-15-initial-reset", date: "2026-05-15" },
-  { id: "2026-05-15-manual-reset-2", date: "2026-05-15" }
+  { id: "2026-05-15-manual-reset-2", date: "2026-05-15" },
+  { id: "2026-06-04-maaike-reset", date: "2026-06-04", users: ["maaike"] }
 ];
 let state = loadState();
 let phase = state.phase || "phase1";
@@ -70,12 +71,14 @@ function loadState(){
     try {
       const parsed = JSON.parse(stored);
       const fresh = freshState();
+      const wordOverrides = normalizeWordOverrides(parsed.wordOverrides);
       return applyChallengeResetMigrations({
         ...fresh,
         ...parsed,
+        wordOverrides,
         words: {
-          phase1: normalizeWordCategories(mergeSeedWords(fresh.words.phase1, parsed.words?.phase1)),
-          phase2: normalizeWordCategories(mergeSeedWords(fresh.words.phase2, parsed.words?.phase2))
+          phase1: applyWordOverrides(normalizeWordCategories(mergeSeedWords(fresh.words.phase1, parsed.words?.phase1)), "phase1", wordOverrides),
+          phase2: applyWordOverrides(normalizeWordCategories(mergeSeedWords(fresh.words.phase2, parsed.words?.phase2)), "phase2", wordOverrides)
         },
         scores: {
           maaike: Array.isArray(parsed.scores?.maaike) ? parsed.scores.maaike : [],
@@ -139,6 +142,7 @@ function freshState(){
     attempts: { maaike: { phase1: [], phase2: [] }, vincent: { phase1: [], phase2: [] } },
     maintenance: emptyMaintenance(),
     reminder: defaultReminder(),
+    wordOverrides: emptyWordOverrides(),
     challengeResets: []
   };
 }
@@ -179,15 +183,71 @@ function mergeMaintenance(local={}, remote={}){
     lessonPrep: newestByTime(base.lessonPrep, incoming.lessonPrep)
   };
 }
+function emptyWordOverrides(){
+  return { phase1: {}, phase2: {} };
+}
+function normalizeWordOverrides(value={}){
+  return {
+    phase1: normalizeWordOverrideBucket(value.phase1),
+    phase2: normalizeWordOverrideBucket(value.phase2)
+  };
+}
+function normalizeWordOverrideBucket(bucket={}){
+  const normalized = {};
+  Object.entries(bucket || {}).forEach(([key, value])=>{
+    if(!value || typeof value !== "object") return;
+    const english = splitAnswers(value.english || "");
+    if(!english.length && !value.hindi && !value.category) return;
+    normalized[key] = {
+      hindi: String(value.hindi || "").trim(),
+      english,
+      category: cleanCategoryName(value.category || ""),
+      updatedAt: value.updatedAt || ""
+    };
+  });
+  return normalized;
+}
+function wordOverrideKey(phaseKey, word){
+  return word.overrideKey || `${phaseKey}|${keyFor(word)}`;
+}
+function applyWordOverrides(words, phaseKey, overrides=state?.wordOverrides){
+  const normalizedOverrides = normalizeWordOverrides(overrides);
+  const bucket = normalizedOverrides[phaseKey] || {};
+  return (Array.isArray(words) ? words : []).map((word)=>{
+    const key = wordOverrideKey(phaseKey, word);
+    const override = bucket[key];
+    if(!override) return { ...word, overrideKey:key };
+    return {
+      ...word,
+      overrideKey:key,
+      hindi: override.hindi || word.hindi,
+      english: override.english.length ? [...override.english] : word.english,
+      category: override.category || word.category
+    };
+  });
+}
+function mergeWordOverrides(local={}, remote={}){
+  const merged = normalizeWordOverrides(local);
+  const incoming = normalizeWordOverrides(remote);
+  ["phase1","phase2"].forEach((phaseKey)=>{
+    Object.entries(incoming[phaseKey]).forEach(([key, value])=>{
+      const current = merged[phaseKey][key];
+      if(!current || (value.updatedAt || "") >= (current.updatedAt || "")) merged[phaseKey][key] = value;
+    });
+  });
+  return merged;
+}
 function applyChallengeResetMigrations(nextState){
   nextState.challengeResets = Array.isArray(nextState.challengeResets) ? nextState.challengeResets : [];
   nextState.maintenance = normalizeMaintenance(nextState.maintenance);
   nextState.reminder = normalizeReminder(nextState.reminder);
+  nextState.wordOverrides = normalizeWordOverrides(nextState.wordOverrides);
   CHALLENGE_RESETS.forEach((reset)=>{
     const id = typeof reset === "string" ? reset : reset.id;
     const date = typeof reset === "string" ? reset : reset.date;
+    const resetUsers = Array.isArray(reset.users) ? reset.users : ["maaike","vincent"];
     if(nextState.challengeResets.includes(id)) return;
-    ["maaike","vincent"].forEach((name)=>{
+    resetUsers.forEach((name)=>{
       if(!Array.isArray(nextState.scores?.[name])) return;
       nextState.scores[name] = nextState.scores[name].filter((score)=>!(score.date===date && score.phase==="phase1"));
     });
@@ -210,6 +270,7 @@ function sharedState(){
     mistakes: state.mistakes,
     attempts: state.attempts,
     maintenance: state.maintenance,
+    wordOverrides: state.wordOverrides,
     challengeResets: state.challengeResets
   };
 }
@@ -259,6 +320,8 @@ function mergeCloudState(remote){
   });
   state.challengeResets = [...new Set([...(state.challengeResets || []), ...(remote.challengeResets || [])])];
   state.maintenance = mergeMaintenance(state.maintenance, remote.maintenance);
+  state.wordOverrides = mergeWordOverrides(state.wordOverrides, remote.wordOverrides);
+  ["phase1","phase2"].forEach((phaseKey)=>{ state.words[phaseKey] = applyWordOverrides(state.words[phaseKey], phaseKey); });
   applyChallengeResetMigrations(state);
 }
 function rerenderCloudSensitiveScreen(){
@@ -502,7 +565,7 @@ async function syncPhase1FromSheet(status = $("#syncStatus")){
     if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible.";
     return;
   }
-  state.words.phase1 = words;
+  state.words.phase1 = applyWordOverrides(words, "phase1");
   state.maintenance = normalizeMaintenance(state.maintenance);
   state.maintenance.phase1 = { lastSyncedAt: new Date().toISOString(), lastCount: words.length, updatedAt: new Date().toISOString() };
   phase = "phase1";
@@ -521,7 +584,7 @@ async function syncPhase2FromSheet(status = $("#syncStatus")){
     if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible.";
     return;
   }
-  state.words.phase2 = mergeImportedWords(PHASE_DATA.phase2.words, words);
+  state.words.phase2 = applyWordOverrides(mergeImportedWords(PHASE_DATA.phase2.words, words), "phase2");
   state.maintenance = normalizeMaintenance(state.maintenance);
   state.maintenance.phase2 = { lastSyncedAt: new Date().toISOString(), lastCount: state.words.phase2.length, importedRows: words.length, updatedAt: new Date().toISOString() };
   phase = "phase2";
@@ -542,14 +605,14 @@ async function autoSyncPublishedSheets(){
   const now = new Date().toISOString();
 
   if(phase1Result.status === "fulfilled" && phase1Result.value.length){
-    state.words.phase1 = phase1Result.value;
+    state.words.phase1 = applyWordOverrides(phase1Result.value, "phase1");
     state.maintenance = normalizeMaintenance(state.maintenance);
     state.maintenance.phase1 = { lastSyncedAt: now, lastCount: phase1Result.value.length, updatedAt: now };
     changed = true;
   }
 
   if(phase2Result.status === "fulfilled" && phase2Result.value.length){
-    state.words.phase2 = mergeImportedWords(PHASE_DATA.phase2.words, phase2Result.value);
+    state.words.phase2 = applyWordOverrides(mergeImportedWords(PHASE_DATA.phase2.words, phase2Result.value), "phase2");
     state.maintenance = normalizeMaintenance(state.maintenance);
     state.maintenance.phase2 = { lastSyncedAt: now, lastCount: state.words.phase2.length, importedRows: phase2Result.value.length, updatedAt: now };
     changed = true;
@@ -637,6 +700,14 @@ function updateChallengeScore(completed=false){
   score.completed = Boolean(completed);
   score.updatedAt = new Date().toISOString();
   save();
+}
+function resetTodaysChallenge(){
+  if(!user) return;
+  const date = today();
+  state.scores[user] = (state.scores[user] || []).filter((score)=>!(score.date===date && score.phase==="phase1"));
+  if(session?.source === "challenge") session = null;
+  save({ immediate:true });
+  renderChallenge();
 }
 function attemptsFor(name, phaseKey){
   return state.attempts[name]?.[phaseKey] || [];
@@ -1936,9 +2007,10 @@ function renderChallenge(){
   const total = done?.total || DAILY_CHALLENGE_TARGET;
   const previewWords = done ? [] : phase1MaintenanceChallengeWords(user, total);
   const questionCounts = previewWords.length ? challengeQuestionCounts(previewWords) : challengeQuestionCounts(total);
-  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>${total}</strong><small>words</small></div><div><strong>${questionCounts.typed}</strong><small>typed recall</small></div><div><strong>${questionCounts.choices}</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">An adaptive Phase 1 maintenance run: weak, due and recently missed words come first, then broad coverage. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/${DAILY_CHALLENGE_TARGET}</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
+  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>${total}</strong><small>words</small></div><div><strong>${questionCounts.typed}</strong><small>typed recall</small></div><div><strong>${questionCounts.choices}</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">An adaptive Phase 1 maintenance run: weak, due and recently missed words come first, then broad coverage. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/${DAILY_CHALLENGE_TARGET}</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button><button class="ghost" id="resetChallengeToday" type="button">Reset today</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
   $("#startChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); startSession("challenge",DAILY_CHALLENGE_TARGET,"mixed"); });
   $("#repairChallengeMistakes")?.addEventListener("click",()=>startRepairSession(missedWordsFromAttempts(todaysChallengeAttempts()), "coach"));
+  $("#resetChallengeToday")?.addEventListener("click", resetTodaysChallenge);
   $("#practiceAfterChallenge")?.addEventListener("click",()=>show("quiz"));
   $("#goScoreboard")?.addEventListener("click",()=>show("scoreboard"));
 }
@@ -2221,7 +2293,42 @@ function renderScoreboard(){
   const totalAsked = rows.reduce((sum,row)=>sum+row.total,0);
   $("#scoreboard").innerHTML=`<div class="panel wide scoreboard-panel">${scoreboardTopHtml(rows,totalRuns,topScore,totalCorrect,totalAsked)}${podiumHtml(rows)}${quoteCardHtml(rows)}${last14ChartHtml(rows)}${scoreTableHtml(rows)}<div class="score-charts detail-charts"><div class="chart-card"><h3>Head-to-head</h3>${headToHeadHtml(rows)}</div><div class="chart-card wide-chart"><h3>Last 7 runs</h3><div class="trend-grid">${recentChartHtml(rows)}</div></div><div class="chart-card wide-chart"><h3>Damage report</h3>${damageReportHtml(rows)}</div>${speedStatsHtml()}${todaysChallengeMistakesHtml()}</div></div>`;
 }
-function renderManage(){ if(user!=="maaike")return show("quiz"); $("#manage").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Manage vocabulary</h2><div class="actions"><button class="ghost" id="syncPhase1" type="button">Sync Phase 1 from Google Sheet</button><button class="ghost" id="syncPhase2" type="button">Sync Phase 2 from Google Sheet</button><span id="syncStatus" style="color:var(--text-secondary);font-size:.85rem;align-self:center"></span></div><input id="search" type="search" placeholder="Search"><div style="overflow:auto"><table class="table"><thead><tr><th>Hindi</th><th>English</th><th>Category</th></tr></thead><tbody id="wordRows"></tbody></table></div></div>`; bindPhaseButtons(); $("#syncPhase1").addEventListener("click", syncPhase1FromSheet); $("#syncPhase2").addEventListener("click", syncPhase2FromSheet); const renderRows=()=>{const q=normEnglish($("#search").value); $("#wordRows").innerHTML=state.words[phase].map((word,index)=>({word,index})).filter(({word})=>!q||normEnglish(word.hindi+" "+word.english.join(" ")+word.category).includes(q)).map(({word,index})=>`<tr><td class="hindi-cell" contenteditable data-i="${index}" data-field="hindi">${word.hindi}</td><td contenteditable data-i="${index}" data-field="english">${word.english.join("; ")}</td><td contenteditable data-i="${index}" data-field="category">${word.category}</td></tr>`).join(""); document.querySelectorAll("[contenteditable]").forEach((cell)=>cell.addEventListener("blur",()=>{const word=state.words[phase][Number(cell.dataset.i)]; word[cell.dataset.field]=cell.dataset.field==="english"?cell.textContent.split(";").map(x=>x.trim()).filter(Boolean):cell.textContent.trim(); save();}));}; $("#search").addEventListener("input",renderRows); renderRows(); }
+function renderManage(){
+  if(user!=="maaike")return show("quiz");
+  $("#manage").innerHTML=`<div class="panel wide">${phaseToggleHtml()}<h2>Manage vocabulary</h2><div class="actions"><button class="ghost" id="syncPhase1" type="button">Sync Phase 1 from Google Sheet</button><button class="ghost" id="syncPhase2" type="button">Sync Phase 2 from Google Sheet</button><span id="syncStatus" style="color:var(--text-secondary);font-size:.85rem;align-self:center"></span></div><p class="panel-note">Edit meanings here. Manual changes are saved as overrides and survive later Sheet syncs.</p><input id="search" type="search" placeholder="Search"><div style="overflow:auto"><table class="table"><thead><tr><th>Hindi</th><th>English</th><th>Category</th></tr></thead><tbody id="wordRows"></tbody></table></div></div>`;
+  bindPhaseButtons();
+  $("#syncPhase1").addEventListener("click", syncPhase1FromSheet);
+  $("#syncPhase2").addEventListener("click", syncPhase2FromSheet);
+  const saveManagedWord=(input)=>{
+    const word=state.words[phase][Number(input.dataset.i)];
+    if(!word) return;
+    const key=input.dataset.key || wordOverrideKey(phase, word);
+    const field=input.dataset.field;
+    word.overrideKey=key;
+    word[field]=field==="english"?splitAnswers(input.value):input.value.trim();
+    state.wordOverrides=normalizeWordOverrides(state.wordOverrides);
+    state.wordOverrides[phase][key]={
+      hindi: word.hindi,
+      english: [...word.english],
+      category: word.category,
+      updatedAt: new Date().toISOString()
+    };
+    save({ immediate:true });
+    $("#syncStatus").textContent="Saved manual override.";
+  };
+  const renderRows=()=>{
+    const q=normEnglish($("#search").value);
+    $("#wordRows").innerHTML=state.words[phase].map((word,index)=>({word,index}))
+      .filter(({word})=>!q||normEnglish(word.hindi+" "+word.english.join(" ")+word.category).includes(q))
+      .map(({word,index})=>{
+        const key=wordOverrideKey(phase, word);
+        return `<tr><td><input class="inline-input hindi-cell" data-i="${index}" data-key="${escapeAttr(key)}" data-field="hindi" value="${escapeAttr(word.hindi)}"></td><td><input class="inline-input" data-i="${index}" data-key="${escapeAttr(key)}" data-field="english" value="${escapeAttr(word.english.join("; "))}"></td><td><input class="inline-input" data-i="${index}" data-key="${escapeAttr(key)}" data-field="category" value="${escapeAttr(word.category)}"></td></tr>`;
+      }).join("");
+    document.querySelectorAll("#wordRows input").forEach((input)=>input.addEventListener("change",()=>saveManagedWord(input)));
+  };
+  $("#search").addEventListener("input",renderRows);
+  renderRows();
+}
 function showLogin(){ renderLogin(); show("login"); }
 function renderLogin(){ $("#login").innerHTML=`<div class="login-card"><h2>Log in</h2><p>Daily Coach, scoreboard and personal mistakes.</p><input id="username" type="text" placeholder="Username"><input id="password" type="password" placeholder="Password"><button class="login-btn" id="doLogin">Log in</button><p id="loginError" style="color:var(--red);min-height:22px;margin-top:10px"></p></div>`; $("#doLogin").addEventListener("click",()=>{const name=$("#username").value.trim().toLowerCase(); const pass=$("#password").value; if(USERS[name] && USERS[name]===pass){user=name; if(user==="vincent") phase="phase1"; save(); renderNav(); show("coach");} else $("#loginError").textContent="Incorrect username or password.";}); }
 document.querySelectorAll("[data-screen]").forEach((button)=>button.addEventListener("click",()=>show(button.dataset.screen)));
