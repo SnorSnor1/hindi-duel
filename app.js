@@ -63,7 +63,7 @@ const $ = (selector) => document.querySelector(selector);
 const phaseWordsFor = (phaseKey) => (state.words[phaseKey] || []).filter((word) => word.english.length);
 const phaseWords = () => phaseWordsFor(phase);
 const categories = () => [...new Set(phaseWords().map((word) => word.category))];
-const canUsePhase2 = () => user !== "vincent";
+const canUsePhase2 = () => user === "maaike";
 
 function loadState(){
   const stored = localStorage.getItem(STORE);
@@ -1583,6 +1583,11 @@ function startCoachMistakes(phaseKey){
   startWordSession(words.slice(0, remaining), "coach-mistakes");
 }
 function renderQuizSetup(){
+  if(!canUsePhase2() && phase==="phase2"){
+    phase = "phase1";
+    selectedCategories = new Set();
+    save();
+  }
   if(!selectedCategories.size) selectedCategories = new Set(categories());
   $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>${PHASE_DATA[phase].title}</h2><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="recall"?"selected":""}" data-mode="recall">English → Hindi recall</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi choices</button></div><label class="form-label">Categories</label>${renderCategoryChips()}<label class="form-label">Words</label><input id="wordCount" type="number" min="1" max="200" value="20">${smartPracticeHtml(20)}<button class="start-btn" id="startPractice">Start practice</button></div>`;
   bindPhaseButtons(); bindCategoryChips();
