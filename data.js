@@ -9047,6 +9047,67 @@ export const PHASE_DATA = {
           "spread out"
         ],
         "category": "Lesson 8b"
+      },
+      {
+        "hindi": "बिलकुल",
+        "english": [
+          "absolutely",
+          "completely",
+          "exactly"
+        ],
+        "category": "Lesson 9b"
+      },
+      {
+        "hindi": "प्यारा सा",
+        "english": [
+          "cute little",
+          "sweet little",
+          "dear little"
+        ],
+        "category": "Lesson 9b"
+      },
+      {
+        "hindi": "छाता",
+        "english": [
+          "umbrella"
+        ],
+        "category": "Lesson 9b"
+      },
+      {
+        "hindi": "शर्माना",
+        "english": [
+          "feel shy",
+          "be shy",
+          "blush"
+        ],
+        "category": "Lesson 9b"
+      },
+      {
+        "hindi": "चौंकना",
+        "english": [
+          "be startled",
+          "be surprised",
+          "startle"
+        ],
+        "category": "Lesson 9b"
+      },
+      {
+        "hindi": "तिरछी नज़र से देखना",
+        "english": [
+          "look sideways",
+          "look askance",
+          "give a sidelong glance"
+        ],
+        "category": "Lesson 9b"
+      },
+      {
+        "hindi": "बड़बड़ाना",
+        "english": [
+          "mutter",
+          "mumble",
+          "grumble"
+        ],
+        "category": "Lesson 9b"
       }
     ]
   }
