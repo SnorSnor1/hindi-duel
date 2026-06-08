@@ -258,72 +258,63 @@ export const PHASE_DATA = {
         "english": [
           "to stand up"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0032.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "बैठना",
         "english": [
           "to sit"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0033.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "चलना",
         "english": [
           "to walk"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0034.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "कूदना",
         "english": [
           "to jump"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0035.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "भागना",
         "english": [
           "to run"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0036.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "लेटना",
         "english": [
           "to lie down"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0037.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "जाना",
         "english": [
           "to go"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0038.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "मुड़ना",
         "english": [
           "to turn"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0039.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "आना",
         "english": [
           "to come"
         ],
-        "category": "Movement verbs",
-        "image": "assets/phase1-images/phase1-0040.webp"
+        "category": "Movement verbs"
       },
       {
         "hindi": "रुकना",
@@ -626,8 +617,7 @@ export const PHASE_DATA = {
         "english": [
           "to hold"
         ],
-        "category": "Basic actions",
-        "image": "assets/phase1-images/phase1-0078.webp"
+        "category": "Basic actions"
       },
       {
         "hindi": "इशारा करना",
@@ -701,8 +691,7 @@ export const PHASE_DATA = {
         "english": [
           "corner"
         ],
-        "category": "Room and classroom items",
-        "image": "assets/phase1-images/phase1-0087.webp"
+        "category": "Room and classroom items"
       },
       {
         "hindi": "वाइट बोर्ड",
@@ -717,8 +706,7 @@ export const PHASE_DATA = {
         "english": [
           "fan"
         ],
-        "category": "Room and classroom items",
-        "image": "assets/phase1-images/phase1-0089.webp"
+        "category": "Room and classroom items"
       },
       {
         "hindi": "तस्वीर",
@@ -829,24 +817,21 @@ export const PHASE_DATA = {
         "english": [
           "air conditioner"
         ],
-        "category": "Room and classroom items",
-        "image": "assets/phase1-images/phase1-0103.webp"
+        "category": "Room and classroom items"
       },
       {
         "hindi": "हीटर",
         "english": [
           "heater"
         ],
-        "category": "Room and classroom items",
-        "image": "assets/phase1-images/phase1-0104.webp"
+        "category": "Room and classroom items"
       },
       {
         "hindi": "चटाई",
         "english": [
           "mat"
         ],
-        "category": "Room and classroom items",
-        "image": "assets/phase1-images/phase1-0105.webp"
+        "category": "Room and classroom items"
       },
       {
         "hindi": "खाने का डब्बा",
@@ -1063,8 +1048,7 @@ export const PHASE_DATA = {
         "english": [
           "matchstick"
         ],
-        "category": "Everyday objects",
-        "image": "assets/phase1-images/phase1-0132.webp"
+        "category": "Everyday objects"
       },
       {
         "hindi": "माचिस",
@@ -1087,8 +1071,7 @@ export const PHASE_DATA = {
         "english": [
           "comb"
         ],
-        "category": "Everyday objects",
-        "image": "assets/phase1-images/phase1-0135.webp"
+        "category": "Everyday objects"
       },
       {
         "hindi": "सेब",
@@ -1111,8 +1094,7 @@ export const PHASE_DATA = {
         "english": [
           "lion"
         ],
-        "category": "Everyday objects",
-        "image": "assets/phase1-images/phase1-0138.webp"
+        "category": "Everyday objects"
       },
       {
         "hindi": "हाथी",
@@ -1135,8 +1117,7 @@ export const PHASE_DATA = {
         "english": [
           "mirror"
         ],
-        "category": "Everyday objects",
-        "image": "assets/phase1-images/phase1-0141.webp"
+        "category": "Everyday objects"
       },
       {
         "hindi": "गाड़ी",
@@ -1160,8 +1141,7 @@ export const PHASE_DATA = {
         "english": [
           "airplane"
         ],
-        "category": "Everyday objects",
-        "image": "assets/phase1-images/phase1-0144.webp"
+        "category": "Everyday objects"
       },
       {
         "hindi": "इंग्लिश टॉयलेट",
@@ -1515,8 +1495,7 @@ export const PHASE_DATA = {
           "wing",
           "feather"
         ],
-        "category": "Body and animal parts",
-        "image": "assets/phase1-images/phase1-0188.webp"
+        "category": "Body and animal parts"
       },
       {
         "hindi": "खाल",
@@ -1556,16 +1535,14 @@ export const PHASE_DATA = {
         "english": [
           "husband"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0193.webp"
+        "category": "Family"
       },
       {
         "hindi": "पत्नी",
         "english": [
           "wife"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0194.webp"
+        "category": "Family"
       },
       {
         "hindi": "पापा",
@@ -1573,8 +1550,7 @@ export const PHASE_DATA = {
           "father",
           "dad"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0195.webp"
+        "category": "Family"
       },
       {
         "hindi": "मम्मी",
@@ -1582,200 +1558,175 @@ export const PHASE_DATA = {
           "mother",
           "mom"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0196.webp"
+        "category": "Family"
       },
       {
         "hindi": "बेटा",
         "english": [
           "son"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0197.webp"
+        "category": "Family"
       },
       {
         "hindi": "बेटी",
         "english": [
           "daughter"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0198.webp"
+        "category": "Family"
       },
       {
         "hindi": "बड़ा भाई",
         "english": [
           "older brother"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0199.webp"
+        "category": "Family"
       },
       {
         "hindi": "छोटा भाई",
         "english": [
           "younger brother"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0200.webp"
+        "category": "Family"
       },
       {
         "hindi": "बड़ी बहन",
         "english": [
           "older sister"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0201.webp"
+        "category": "Family"
       },
       {
         "hindi": "छोटी बहन",
         "english": [
           "younger sister"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0202.webp"
+        "category": "Family"
       },
       {
         "hindi": "दादा",
         "english": [
           "paternal grandfather"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0203.webp"
+        "category": "Family"
       },
       {
         "hindi": "दादी",
         "english": [
           "paternal grandmother"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0204.webp"
+        "category": "Family"
       },
       {
         "hindi": "पोता",
         "english": [
           "grandson (son's son)"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0205.webp"
+        "category": "Family"
       },
       {
         "hindi": "पोती",
         "english": [
           "granddaughter (son's daughter)"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0206.webp"
+        "category": "Family"
       },
       {
         "hindi": "बहू",
         "english": [
           "daughter-in-law"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0207.webp"
+        "category": "Family"
       },
       {
         "hindi": "सास",
         "english": [
           "mother-in-law"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0208.webp"
+        "category": "Family"
       },
       {
         "hindi": "ससुर",
         "english": [
           "father-in-law"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0209.webp"
+        "category": "Family"
       },
       {
         "hindi": "नाना",
         "english": [
           "maternal grandfather"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0210.webp"
+        "category": "Family"
       },
       {
         "hindi": "नानी",
         "english": [
           "maternal grandmother"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0211.webp"
+        "category": "Family"
       },
       {
         "hindi": "नवासा",
         "english": [
           "grandson (daughter's son)"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0212.webp"
+        "category": "Family"
       },
       {
         "hindi": "नवासी",
         "english": [
           "granddaughter (daughter's daughter)"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0213.webp"
+        "category": "Family"
       },
       {
         "hindi": "दामाद",
         "english": [
           "son-in-law"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0214.webp"
+        "category": "Family"
       },
       {
         "hindi": "सास",
         "english": [
           "mother-in-law"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0215.webp"
+        "category": "Family"
       },
       {
         "hindi": "ससुर",
         "english": [
           "father-in-law"
         ],
-        "category": "Family",
-        "image": "assets/phase1-images/phase1-0216.webp"
+        "category": "Family"
       },
       {
         "hindi": "मेरा सिर",
         "english": [
           "my head"
         ],
-        "category": "Possessives",
-        "image": "assets/phase1-images/phase1-0217.webp"
+        "category": "Possessives"
       },
       {
         "hindi": "तुम्हारा सिर",
         "english": [
           "your head"
         ],
-        "category": "Possessives",
-        "image": "assets/phase1-images/phase1-0218.webp"
+        "category": "Possessives"
       },
       {
         "hindi": "हमारे सिर",
         "english": [
           "our heads"
         ],
-        "category": "Possessives",
-        "image": "assets/phase1-images/phase1-0219.webp"
+        "category": "Possessives"
       },
       {
         "hindi": "तुम दोनों के सिर",
         "english": [
           "both of your heads"
         ],
-        "category": "Possessives",
-        "image": "assets/phase1-images/phase1-0220.webp"
+        "category": "Possessives"
       },
       {
         "hindi": "उसका सिर",
@@ -1783,40 +1734,35 @@ export const PHASE_DATA = {
           "his",
           "her head"
         ],
-        "category": "Possessives",
-        "image": "assets/phase1-images/phase1-0221.webp"
+        "category": "Possessives"
       },
       {
         "hindi": "उनके सिर",
         "english": [
           "their heads"
         ],
-        "category": "Possessives",
-        "image": "assets/phase1-images/phase1-0222.webp"
+        "category": "Possessives"
       },
       {
         "hindi": "आपका सिर",
         "english": [
           "your head (formal)"
         ],
-        "category": "Possessives",
-        "image": "assets/phase1-images/phase1-0223.webp"
+        "category": "Possessives"
       },
       {
         "hindi": "उनके सिर",
         "english": [
           "their heads"
         ],
-        "category": "Possessives",
-        "image": "assets/phase1-images/phase1-0224.webp"
+        "category": "Possessives"
       },
       {
         "hindi": "थपथपाना",
         "english": [
           "to pat"
         ],
-        "category": "Touch and washing",
-        "image": "assets/phase1-images/phase1-0225.webp"
+        "category": "Touch and washing"
       },
       {
         "hindi": "सहलाना",
@@ -1824,128 +1770,112 @@ export const PHASE_DATA = {
           "to stroke",
           "caress"
         ],
-        "category": "Touch and washing",
-        "image": "assets/phase1-images/phase1-0226.webp"
+        "category": "Touch and washing"
       },
       {
         "hindi": "धोना",
         "english": [
           "to wash"
         ],
-        "category": "Touch and washing",
-        "image": "assets/phase1-images/phase1-0227.webp"
+        "category": "Touch and washing"
       },
       {
         "hindi": "संतरी रंग",
         "english": [
           "orange (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0228.webp"
+        "category": "Colours"
       },
       {
         "hindi": "लाल रंग",
         "english": [
           "red (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0229.webp"
+        "category": "Colours"
       },
       {
         "hindi": "पीला रंग",
         "english": [
           "yellow (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0230.webp"
+        "category": "Colours"
       },
       {
         "hindi": "सफेद रंग",
         "english": [
           "white (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0231.webp"
+        "category": "Colours"
       },
       {
         "hindi": "नीला रंग",
         "english": [
           "blue (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0232.webp"
+        "category": "Colours"
       },
       {
         "hindi": "हरा रंग",
         "english": [
           "green (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0233.webp"
+        "category": "Colours"
       },
       {
         "hindi": "काला रंग",
         "english": [
           "black (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0234.webp"
+        "category": "Colours"
       },
       {
         "hindi": "कत्थई रंग",
         "english": [
           "brown (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0235.webp"
+        "category": "Colours"
       },
       {
         "hindi": "बैंगनी रंग",
         "english": [
           "purple (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0236.webp"
+        "category": "Colours"
       },
       {
         "hindi": "गुलाबी रंग",
         "english": [
           "pink (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0237.webp"
+        "category": "Colours"
       },
       {
         "hindi": "सुरमई रंग",
         "english": [
           "grey (color)"
         ],
-        "category": "Colours",
-        "image": "assets/phase1-images/phase1-0238.webp"
+        "category": "Colours"
       },
       {
         "hindi": "पानी",
         "english": [
           "water"
         ],
-        "category": "Drinks",
-        "image": "assets/phase1-images/phase1-0239.webp"
+        "category": "Drinks"
       },
       {
         "hindi": "कॉफी",
         "english": [
           "coffee"
         ],
-        "category": "Drinks",
-        "image": "assets/phase1-images/phase1-0240.webp"
+        "category": "Drinks"
       },
       {
         "hindi": "जूस",
         "english": [
           "juice"
         ],
-        "category": "Drinks",
-        "image": "assets/phase1-images/phase1-0241.webp"
+        "category": "Drinks"
       },
       {
         "hindi": "कोल्ड ड्रिंक",
@@ -1953,64 +1883,56 @@ export const PHASE_DATA = {
           "cold drink",
           "soda"
         ],
-        "category": "Drinks",
-        "image": "assets/phase1-images/phase1-0242.webp"
+        "category": "Drinks"
       },
       {
         "hindi": "चाय",
         "english": [
           "tea"
         ],
-        "category": "Drinks",
-        "image": "assets/phase1-images/phase1-0243.webp"
+        "category": "Drinks"
       },
       {
         "hindi": "दूध",
         "english": [
           "milk"
         ],
-        "category": "Drinks",
-        "image": "assets/phase1-images/phase1-0244.webp"
+        "category": "Drinks"
       },
       {
         "hindi": "पीना",
         "english": [
           "to drink"
         ],
-        "category": "Drinks",
-        "image": "assets/phase1-images/phase1-0245.webp"
+        "category": "Drinks"
       },
       {
         "hindi": "डालना",
         "english": [
           "to pour"
         ],
-        "category": "Drinks",
-        "image": "assets/phase1-images/phase1-0246.webp"
+        "category": "Drinks"
       },
       {
         "hindi": "खीरा",
         "english": [
           "cucumber"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0247.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "चावल",
         "english": [
           "rice"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0248.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "केला",
         "english": [
           "banana"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0249.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "बैंगन",
@@ -2018,120 +1940,105 @@ export const PHASE_DATA = {
           "eggplant",
           "brinjal"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0250.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "हरी मिर्च",
         "english": [
           "green chilli"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0251.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "खाने की चीज़ें",
         "english": [
           "food items"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0252.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "फल",
         "english": [
           "fruit"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0253.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "आलू",
         "english": [
           "potato"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0254.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "संतरा",
         "english": [
           "orange (fruit)"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0255.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "नमक",
         "english": [
           "salt"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0256.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "सब्ज़ी",
         "english": [
           "vegetable"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0257.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "गाजर",
         "english": [
           "carrot"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0258.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "नींबू",
         "english": [
           "lemon"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0259.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "गोश्त",
         "english": [
           "meat"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0260.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "पत्ता गोभी",
         "english": [
           "cabbage"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0261.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "काली मिर्च",
         "english": [
           "black pepper"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0262.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "अंडा",
         "english": [
           "egg"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0263.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "अंगूर",
         "english": [
           "grapes"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0264.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "भुट्टा",
@@ -2139,8 +2046,7 @@ export const PHASE_DATA = {
           "corn",
           "corn cob"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0265.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "रोटी",
@@ -2148,32 +2054,28 @@ export const PHASE_DATA = {
           "bread",
           "chapati"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0266.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "तैयार करना",
         "english": [
           "to prepare"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0267.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "चखना",
         "english": [
           "to taste"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0268.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "खाना",
         "english": [
           "to eat"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0269.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "लेकर जाना",
@@ -2181,8 +2083,7 @@ export const PHASE_DATA = {
           "to take",
           "carry"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0270.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "उठाना",
@@ -2190,64 +2091,56 @@ export const PHASE_DATA = {
           "to lift",
           "pick up"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0271.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "पकाना",
         "english": [
           "to cook"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0272.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "इंतज़ार करना",
         "english": [
           "to wait"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0273.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "इस्तेमाल करना",
         "english": [
           "to use"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0274.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "फेंकना",
         "english": [
           "to throw"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0275.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "काटना",
         "english": [
           "to cut"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0276.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "आम",
         "english": [
           "mango"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0277.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "तरबूज़",
         "english": [
           "watermelon"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0278.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "दाल",
@@ -2255,24 +2148,21 @@ export const PHASE_DATA = {
           "lentils",
           "dal"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0279.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "चीनी",
         "english": [
           "sugar"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0280.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "नमकीन",
         "english": [
           "salty snack"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0281.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "बिस्किट",
@@ -2280,48 +2170,42 @@ export const PHASE_DATA = {
           "biscuit",
           "cookie"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0282.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "लहसुन",
         "english": [
           "garlic"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0283.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "टमाटर",
         "english": [
           "tomato"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0284.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "प्याज़",
         "english": [
           "onion"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0285.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "अदरक",
         "english": [
           "ginger"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0286.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "धनिया",
         "english": [
           "coriander"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0287.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "कद्दू",
@@ -2329,8 +2213,7 @@ export const PHASE_DATA = {
           "pumpkin",
           "gourd"
         ],
-        "category": "Food and cooking",
-        "image": "assets/phase1-images/phase1-0288.webp"
+        "category": "Food and cooking"
       },
       {
         "hindi": "टोपी",
@@ -2338,8 +2221,7 @@ export const PHASE_DATA = {
           "hat",
           "cap"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0289.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "बनियान",
@@ -2347,24 +2229,21 @@ export const PHASE_DATA = {
           "vest",
           "undershirt"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0290.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "जूते",
         "english": [
           "shoes"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0291.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "हील",
         "english": [
           "heel (shoe)"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0292.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "चश्मा",
@@ -2372,24 +2251,21 @@ export const PHASE_DATA = {
           "glasses",
           "spectacles"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0293.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "मोज़े",
         "english": [
           "socks"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0294.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "छतरी",
         "english": [
           "umbrella"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0295.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "अंगूठी",
@@ -2397,8 +2273,7 @@ export const PHASE_DATA = {
           "ring",
           "finger ring"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0296.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "चप्पल",
@@ -2406,56 +2281,49 @@ export const PHASE_DATA = {
           "sandal",
           "flip-flop"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0297.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "नथनी",
         "english": [
           "nose ring"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0298.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "हार",
         "english": [
           "necklace"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0299.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "बूँदे",
         "english": [
           "drop earrings"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0300.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "पायल",
         "english": [
           "anklet"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0301.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "कंगन",
         "english": [
           "bracelet"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0302.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "कुर्ता पजामा",
         "english": [
           "kurta pajama"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0303.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "साड़ी",
@@ -2463,80 +2331,70 @@ export const PHASE_DATA = {
           "sari",
           "saree"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0304.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "छल्ली",
         "english": [
           "toe ring"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0305.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "चूड़ी",
         "english": [
           "bangle"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0306.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "लाँग कोट",
         "english": [
           "long coat"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0307.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "सूट सलवार दुपट्टा",
         "english": [
           "suit salwar dupatta"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0308.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "कुर्ती",
         "english": [
           "kurti (short kurta)"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0309.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "बेल्ट",
         "english": [
           "belt"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0310.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "जीन्स",
         "english": [
           "jeans"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0311.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "शर्ट",
         "english": [
           "shirt"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0312.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "वॉलेट",
         "english": [
           "wallet"
         ],
-        "category": "Clothes and accessories",
-        "image": "assets/phase1-images/phase1-0313.webp"
+        "category": "Clothes and accessories"
       },
       {
         "hindi": "सुनना",
@@ -2544,8 +2402,7 @@ export const PHASE_DATA = {
           "listen",
           "to listen"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0314.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "पढ़ना",
@@ -2553,8 +2410,7 @@ export const PHASE_DATA = {
           "read",
           "to read"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0315.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "झाड़ू लगाना",
@@ -2562,8 +2418,7 @@ export const PHASE_DATA = {
           "sweep",
           "to sweep"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0316.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "जागना",
@@ -2571,8 +2426,7 @@ export const PHASE_DATA = {
           "wake up",
           "to wake up"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0317.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "सोना",
@@ -2580,8 +2434,7 @@ export const PHASE_DATA = {
           "sleep",
           "to sleep"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0318.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "लिखना",
@@ -2589,8 +2442,7 @@ export const PHASE_DATA = {
           "write",
           "to write"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0319.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "तस्वीर बनाना",
@@ -2598,8 +2450,7 @@ export const PHASE_DATA = {
           "draw a picture",
           "to draw a picture"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0320.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "मिटाना",
@@ -2608,8 +2459,7 @@ export const PHASE_DATA = {
           "rub out",
           "to erase"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0321.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "काम करना",
@@ -2617,8 +2467,7 @@ export const PHASE_DATA = {
           "work",
           "to work"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0322.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "खेलना",
@@ -2626,8 +2475,7 @@ export const PHASE_DATA = {
           "play",
           "to play"
         ],
-        "category": "Daily actions",
-        "image": "assets/phase1-images/phase1-0323.webp"
+        "category": "Daily actions"
       },
       {
         "hindi": "खुश होना",
@@ -2635,8 +2483,7 @@ export const PHASE_DATA = {
           "be happy",
           "to be happy"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0324.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "दुखी होना",
@@ -2644,8 +2491,7 @@ export const PHASE_DATA = {
           "be sad",
           "to be sad"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0325.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "डर लगना",
@@ -2653,8 +2499,7 @@ export const PHASE_DATA = {
           "be afraid",
           "to feel scared"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0326.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "हैरान होना",
@@ -2662,8 +2507,7 @@ export const PHASE_DATA = {
           "be surprised",
           "to be surprised"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0327.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "परेशान होना",
@@ -2671,8 +2515,7 @@ export const PHASE_DATA = {
           "be worried",
           "be troubled"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0328.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "चोट लगना",
@@ -2680,40 +2523,35 @@ export const PHASE_DATA = {
           "get hurt",
           "be injured"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0329.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "बोर होना",
         "english": [
           "be bored"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0330.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "उलझन में होना",
         "english": [
           "be confused"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0331.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "गुस्सा होना",
         "english": [
           "be angry"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0332.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "गंदा होना",
         "english": [
           "be dirty"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0333.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "थकना",
@@ -2721,8 +2559,7 @@ export const PHASE_DATA = {
           "get tired",
           "be tired"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0334.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "शर्मिंदा होना",
@@ -2730,8 +2567,7 @@ export const PHASE_DATA = {
           "be embarrassed",
           "feel ashamed"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0335.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "प्यास लगना",
@@ -2739,8 +2575,7 @@ export const PHASE_DATA = {
           "be thirsty",
           "feel thirsty"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0336.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "भूख लगना",
@@ -2748,8 +2583,7 @@ export const PHASE_DATA = {
           "be hungry",
           "feel hungry"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0337.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "हँसना",
@@ -2757,8 +2591,7 @@ export const PHASE_DATA = {
           "laugh",
           "to laugh"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0338.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "रोना",
@@ -2766,8 +2599,7 @@ export const PHASE_DATA = {
           "cry",
           "to cry"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0339.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "नींद आना",
@@ -2775,24 +2607,21 @@ export const PHASE_DATA = {
           "feel sleepy",
           "be sleepy"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0340.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "ठंड लगना",
         "english": [
           "feel cold"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0341.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "गर्मी लगना",
         "english": [
           "feel hot"
         ],
-        "category": "Feelings and needs",
-        "image": "assets/phase1-images/phase1-0342.webp"
+        "category": "Feelings and needs"
       },
       {
         "hindi": "दोबारा बोलिए",
@@ -2800,8 +2629,7 @@ export const PHASE_DATA = {
           "please say it again",
           "say it again"
         ],
-        "category": "Speaking phrases",
-        "image": "assets/phase1-images/phase1-0343.webp"
+        "category": "Speaking phrases"
       },
       {
         "hindi": "थोड़ा साफ़ बोलिए",
@@ -2809,8 +2637,7 @@ export const PHASE_DATA = {
           "please speak a little clearly",
           "speak a little more clearly"
         ],
-        "category": "Speaking phrases",
-        "image": "assets/phase1-images/phase1-0344.webp"
+        "category": "Speaking phrases"
       },
       {
         "hindi": "थोड़ा धीरे बोलिए",
@@ -2818,8 +2645,7 @@ export const PHASE_DATA = {
           "please speak a little slowly",
           "speak a little slower"
         ],
-        "category": "Speaking phrases",
-        "image": "assets/phase1-images/phase1-0345.webp"
+        "category": "Speaking phrases"
       },
       {
         "hindi": "थोड़ा तेज बोलिए",
@@ -2827,56 +2653,49 @@ export const PHASE_DATA = {
           "please speak a little faster",
           "speak a little quickly"
         ],
-        "category": "Speaking phrases",
-        "image": "assets/phase1-images/phase1-0346.webp"
+        "category": "Speaking phrases"
       },
       {
         "hindi": "हथौड़ी",
         "english": [
           "hammer"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0347.webp"
+        "category": "Tools"
       },
       {
         "hindi": "पेचकस",
         "english": [
           "screwdriver"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0348.webp"
+        "category": "Tools"
       },
       {
         "hindi": "कुल्हाड़ी",
         "english": [
           "axe"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0349.webp"
+        "category": "Tools"
       },
       {
         "hindi": "सुई धागा",
         "english": [
           "needle and thread"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0350.webp"
+        "category": "Tools"
       },
       {
         "hindi": "आरी",
         "english": [
           "saw"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0351.webp"
+        "category": "Tools"
       },
       {
         "hindi": "कैंची",
         "english": [
           "scissors"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0352.webp"
+        "category": "Tools"
       },
       {
         "hindi": "नट की चाबी",
@@ -2884,32 +2703,28 @@ export const PHASE_DATA = {
           "spanner",
           "wrench"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0353.webp"
+        "category": "Tools"
       },
       {
         "hindi": "प्लास",
         "english": [
           "pliers"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0354.webp"
+        "category": "Tools"
       },
       {
         "hindi": "रस्सी",
         "english": [
           "rope"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0355.webp"
+        "category": "Tools"
       },
       {
         "hindi": "चाबी",
         "english": [
           "key"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0356.webp"
+        "category": "Tools"
       },
       {
         "hindi": "फावड़ा",
@@ -2917,24 +2732,21 @@ export const PHASE_DATA = {
           "shovel",
           "spade"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0357.webp"
+        "category": "Tools"
       },
       {
         "hindi": "ग्लू",
         "english": [
           "glue"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0358.webp"
+        "category": "Tools"
       },
       {
         "hindi": "टेप",
         "english": [
           "tape"
         ],
-        "category": "Tools",
-        "image": "assets/phase1-images/phase1-0359.webp"
+        "category": "Tools"
       },
       {
         "hindi": "मारना",
@@ -2943,8 +2755,7 @@ export const PHASE_DATA = {
           "beat",
           "to hit"
         ],
-        "category": "Hitting and feeding verbs",
-        "image": "assets/phase1-images/phase1-0360.webp"
+        "category": "Hitting and feeding verbs"
       },
       {
         "hindi": "जान से मारना",
@@ -2952,8 +2763,7 @@ export const PHASE_DATA = {
           "kill",
           "to kill"
         ],
-        "category": "Hitting and feeding verbs",
-        "image": "assets/phase1-images/phase1-0361.webp"
+        "category": "Hitting and feeding verbs"
       },
       {
         "hindi": "खिलाना",
@@ -2961,8 +2771,7 @@ export const PHASE_DATA = {
           "feed",
           "to feed"
         ],
-        "category": "Hitting and feeding verbs",
-        "image": "assets/phase1-images/phase1-0362.webp"
+        "category": "Hitting and feeding verbs"
       },
       {
         "hindi": "पिलाना",
@@ -2970,200 +2779,175 @@ export const PHASE_DATA = {
           "give to drink",
           "make someone drink"
         ],
-        "category": "Hitting and feeding verbs",
-        "image": "assets/phase1-images/phase1-0363.webp"
+        "category": "Hitting and feeding verbs"
       },
       {
         "hindi": "बिच्छु",
         "english": [
           "scorpion"
         ],
-        "category": "Small creatures",
-        "image": "assets/phase1-images/phase1-0364.webp"
+        "category": "Small creatures"
       },
       {
         "hindi": "कनखजूरा",
         "english": [
           "centipede"
         ],
-        "category": "Small creatures",
-        "image": "assets/phase1-images/phase1-0365.webp"
+        "category": "Small creatures"
       },
       {
         "hindi": "केंचुआ",
         "english": [
           "earthworm"
         ],
-        "category": "Small creatures",
-        "image": "assets/phase1-images/phase1-0366.webp"
+        "category": "Small creatures"
       },
       {
         "hindi": "कॉकरोच",
         "english": [
           "cockroach"
         ],
-        "category": "Small creatures",
-        "image": "assets/phase1-images/phase1-0367.webp"
+        "category": "Small creatures"
       },
       {
         "hindi": "टिड्डा",
         "english": [
           "grasshopper"
         ],
-        "category": "Small creatures",
-        "image": "assets/phase1-images/phase1-0368.webp"
+        "category": "Small creatures"
       },
       {
         "hindi": "एक",
         "english": [
           "one"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0369.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "दो",
         "english": [
           "two"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0370.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "तीन",
         "english": [
           "three"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0371.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "चार",
         "english": [
           "four"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0372.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "पाँच",
         "english": [
           "five"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0373.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "छह",
         "english": [
           "six"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0374.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "सात",
         "english": [
           "seven"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0375.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "आठ",
         "english": [
           "eight"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0376.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "नौ",
         "english": [
           "nine"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0377.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "दस",
         "english": [
           "ten"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0378.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "दस",
         "english": [
           "ten"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0379.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "बीस",
         "english": [
           "twenty"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0380.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "तीस",
         "english": [
           "thirty"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0381.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "चालीस",
         "english": [
           "forty"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0382.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "पचास",
         "english": [
           "fifty"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0383.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "साठ",
         "english": [
           "sixty"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0384.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "सत्तर",
         "english": [
           "seventy"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0385.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "अस्सी",
         "english": [
           "eighty"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0386.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "नब्बे",
         "english": [
           "ninety"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0387.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "सौ",
@@ -3171,112 +2955,98 @@ export const PHASE_DATA = {
           "one hundred",
           "hundred"
         ],
-        "category": "Numbers 1-100",
-        "image": "assets/phase1-images/phase1-0388.webp"
+        "category": "Numbers 1-100"
       },
       {
         "hindi": "पहला",
         "english": [
           "first"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0389.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "दूसरा",
         "english": [
           "second"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0390.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "तीसरा",
         "english": [
           "third"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0391.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "चौथा",
         "english": [
           "fourth"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0392.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "पांचवा",
         "english": [
           "fifth"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0393.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "छटा",
         "english": [
           "sixth"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0394.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "सातवा",
         "english": [
           "seventh"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0395.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "आठवा",
         "english": [
           "eighth"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0396.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "नोवाँ",
         "english": [
           "ninth"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0397.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "दसवा",
         "english": [
           "tenth"
         ],
-        "category": "Ordinal numbers",
-        "image": "assets/phase1-images/phase1-0398.webp"
+        "category": "Ordinal numbers"
       },
       {
         "hindi": "पासपोर्ट",
         "english": [
           "passport"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0399.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "दुनिया",
         "english": [
           "world"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0400.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "नक़्शा",
         "english": [
           "map"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0401.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "विदेशी",
@@ -3284,72 +3054,63 @@ export const PHASE_DATA = {
           "foreign",
           "foreigner"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0402.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "राष्ट्रीयता",
         "english": [
           "nationality"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0403.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "भाषा",
         "english": [
           "language"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0404.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "उत्तर",
         "english": [
           "north"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0405.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "पूर्व",
         "english": [
           "east"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0406.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "दक्षिण",
         "english": [
           "south"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0407.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "पश्चिम",
         "english": [
           "west"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0408.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "देश",
         "english": [
           "country"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0409.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "मिस्र",
         "english": [
           "Egypt"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0410.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "हिंदुस्तान",
@@ -3357,8 +3118,7 @@ export const PHASE_DATA = {
           "India",
           "Hindustan"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0411.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "समुंदर",
@@ -3366,136 +3126,119 @@ export const PHASE_DATA = {
           "sea",
           "ocean"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0412.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "महाद्वीप",
         "english": [
           "continent"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0413.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "दुनिया",
         "english": [
           "world"
         ],
-        "category": "World and directions",
-        "image": "assets/phase1-images/phase1-0414.webp"
+        "category": "World and directions"
       },
       {
         "hindi": "एक रुपए का सिक्का",
         "english": [
           "one rupee coin"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0415.webp"
+        "category": "Money"
       },
       {
         "hindi": "दो रुपए का सिक्का",
         "english": [
           "two rupee coin"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0416.webp"
+        "category": "Money"
       },
       {
         "hindi": "पाँच रूपे का सिक्का",
         "english": [
           "five rupee coin"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0417.webp"
+        "category": "Money"
       },
       {
         "hindi": "दस रुपए का सिक्का",
         "english": [
           "ten rupee coin"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0418.webp"
+        "category": "Money"
       },
       {
         "hindi": "बीस रुपए का सिक्का",
         "english": [
           "twenty rupee coin"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0419.webp"
+        "category": "Money"
       },
       {
         "hindi": "दस रुपए का नोट",
         "english": [
           "ten rupee note"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0420.webp"
+        "category": "Money"
       },
       {
         "hindi": "बीस रुपए का नोट",
         "english": [
           "twenty rupee note"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0421.webp"
+        "category": "Money"
       },
       {
         "hindi": "बीस रुपए का नोट",
         "english": [
           "twenty rupee note"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0422.webp"
+        "category": "Money"
       },
       {
         "hindi": "पचास रुपए का नोट",
         "english": [
           "fifty rupee note"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0423.webp"
+        "category": "Money"
       },
       {
         "hindi": "सौ रुपए का नोट",
         "english": [
           "one hundred rupee note"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0424.webp"
+        "category": "Money"
       },
       {
         "hindi": "दो सौ रुपए का नोट",
         "english": [
           "two hundred rupee note"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0425.webp"
+        "category": "Money"
       },
       {
         "hindi": "पाँच सो रुपए का नोट",
         "english": [
           "five hundred rupee note"
         ],
-        "category": "Money",
-        "image": "assets/phase1-images/phase1-0426.webp"
+        "category": "Money"
       },
       {
         "hindi": "बादल",
         "english": [
           "cloud"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0427.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "आसमान",
         "english": [
           "sky"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0428.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "बर्फ",
@@ -3503,24 +3246,21 @@ export const PHASE_DATA = {
           "snow",
           "ice"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0429.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "इंद्रधनुष",
         "english": [
           "rainbow"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0430.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "सूरज",
         "english": [
           "sun"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0431.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "समुंदर",
@@ -3528,32 +3268,28 @@ export const PHASE_DATA = {
           "sea",
           "ocean"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0432.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "पानी का जहाज़",
         "english": [
           "ship"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0433.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "पहाड़",
         "english": [
           "mountain"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0434.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "घाटी",
         "english": [
           "valley"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0435.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "मैदान",
@@ -3561,8 +3297,7 @@ export const PHASE_DATA = {
           "field",
           "plain"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0436.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "जंगल",
@@ -3570,72 +3305,63 @@ export const PHASE_DATA = {
           "forest",
           "jungle"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0437.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "नाव",
         "english": [
           "boat"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0438.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "द्वीप",
         "english": [
           "island"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0439.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "तालाब",
         "english": [
           "pond"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0440.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "पुल",
         "english": [
           "bridge"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0441.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "घास",
         "english": [
           "grass"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0442.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "नदी",
         "english": [
           "river"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0443.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "पहाड़ी",
         "english": [
           "hill"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0444.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "चट्टान",
         "english": [
           "rock"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0445.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "रास्ता",
@@ -3643,8 +3369,7 @@ export const PHASE_DATA = {
           "path",
           "way"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0446.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "सड़क",
@@ -3652,8 +3377,7 @@ export const PHASE_DATA = {
           "road",
           "street"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0447.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "पगडंडी",
@@ -3661,8 +3385,7 @@ export const PHASE_DATA = {
           "footpath",
           "trail"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0448.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "फुटपाथ",
@@ -3670,24 +3393,21 @@ export const PHASE_DATA = {
           "pavement",
           "footpath"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0449.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "धुआँ",
         "english": [
           "smoke"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0450.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "बगीचा",
         "english": [
           "garden"
         ],
-        "category": "Nature and travel",
-        "image": "assets/phase1-images/phase1-0451.webp"
+        "category": "Nature and travel"
       },
       {
         "hindi": "बाग",

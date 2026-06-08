@@ -1,0 +1,1894 @@
+[
+  {
+    "number": 1,
+    "hindi": "आदमी",
+    "english": [
+      "man"
+    ],
+    "category": "People",
+    "image": "assets/phase1-images/phase1-0001.webp",
+    "sourceFile": "1_man.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 2,
+    "hindi": "औरत",
+    "english": [
+      "woman"
+    ],
+    "category": "People",
+    "image": "assets/phase1-images/phase1-0002.webp",
+    "sourceFile": "2_woman.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 3,
+    "hindi": "बूढ़ी औरत",
+    "english": [
+      "old woman"
+    ],
+    "category": "People",
+    "image": "assets/phase1-images/phase1-0003.webp",
+    "sourceFile": "3_old_woman.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 4,
+    "hindi": "बूढ़ा आदमी",
+    "english": [
+      "old man"
+    ],
+    "category": "People",
+    "image": "assets/phase1-images/phase1-0004.webp",
+    "sourceFile": "4_old_man.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 5,
+    "hindi": "लड़का",
+    "english": [
+      "boy"
+    ],
+    "category": "People",
+    "image": "assets/phase1-images/phase1-0005.webp",
+    "sourceFile": "5_boy.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 6,
+    "hindi": "लड़की",
+    "english": [
+      "girl"
+    ],
+    "category": "People",
+    "image": "assets/phase1-images/phase1-0006.webp",
+    "sourceFile": "6_girl.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 7,
+    "hindi": "लोग",
+    "english": [
+      "people"
+    ],
+    "category": "People",
+    "image": "assets/phase1-images/phase1-0007.webp",
+    "sourceFile": "7_people.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 8,
+    "hindi": "बच्चा",
+    "english": [
+      "child"
+    ],
+    "category": "People",
+    "image": "assets/phase1-images/phase1-0008.webp",
+    "sourceFile": "8_child.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 9,
+    "hindi": "जानवर",
+    "english": [
+      "animal"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0009.webp",
+    "sourceFile": "9_animal.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 10,
+    "hindi": "भैंस",
+    "english": [
+      "buffalo"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0010.webp",
+    "sourceFile": "10_buffalo.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 11,
+    "hindi": "गाय",
+    "english": [
+      "cow"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0011.webp",
+    "sourceFile": "11_cow.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 12,
+    "hindi": "बैल",
+    "english": [
+      "ox"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0012.webp",
+    "sourceFile": "12_ox.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 13,
+    "hindi": "चिड़िया",
+    "english": [
+      "bird"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0013.webp",
+    "sourceFile": "13_bird.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 14,
+    "hindi": "मछ्ली",
+    "english": [
+      "fish"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0014.webp",
+    "sourceFile": "14_fish.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 15,
+    "hindi": "मुर्गी",
+    "english": [
+      "hen"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0015.webp",
+    "sourceFile": "15_hen.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 16,
+    "hindi": "बिल्ली",
+    "english": [
+      "cat"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0016.webp",
+    "sourceFile": "16_cat.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 17,
+    "hindi": "छिपकली",
+    "english": [
+      "lizard"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0017.webp",
+    "sourceFile": "17_lizard.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 18,
+    "hindi": "कुत्ता",
+    "english": [
+      "dog"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0018.webp",
+    "sourceFile": "18_dog.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 19,
+    "hindi": "चींटी",
+    "english": [
+      "ant"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0019.webp",
+    "sourceFile": "19_ant.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 20,
+    "hindi": "बकरा",
+    "english": [
+      "goat"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0020.webp",
+    "sourceFile": "20_goat.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 21,
+    "hindi": "घोड़ा",
+    "english": [
+      "horse"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0021.webp",
+    "sourceFile": "21_horse.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 22,
+    "hindi": "मच्छर",
+    "english": [
+      "mosquito"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0022.webp",
+    "sourceFile": "22_mosquito.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 23,
+    "hindi": "मक्खी",
+    "english": [
+      "fly"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0023.webp",
+    "sourceFile": "23_fly.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 24,
+    "hindi": "मकड़ी",
+    "english": [
+      "spider"
+    ],
+    "category": "Animals",
+    "image": "assets/phase1-images/phase1-0024.webp",
+    "sourceFile": "24_spider.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 25,
+    "hindi": "मैं",
+    "english": [
+      "I"
+    ],
+    "category": "Pronouns",
+    "image": "assets/phase1-images/phase1-0025.webp",
+    "sourceFile": "comp_pronouns_cell_1.png",
+    "note": "pronoun sheet, visually checked"
+  },
+  {
+    "number": 26,
+    "hindi": "तुम",
+    "english": [
+      "you"
+    ],
+    "category": "Pronouns",
+    "image": "assets/phase1-images/phase1-0026.webp",
+    "sourceFile": "comp_pronouns_cell_2.png",
+    "note": "pronoun sheet, visually checked"
+  },
+  {
+    "number": 27,
+    "hindi": "हम",
+    "english": [
+      "we"
+    ],
+    "category": "Pronouns",
+    "image": "assets/phase1-images/phase1-0027.webp",
+    "sourceFile": "comp_pronouns_cell_3.png",
+    "note": "pronoun sheet, visually checked"
+  },
+  {
+    "number": 28,
+    "hindi": "वो",
+    "english": [
+      "he",
+      "she",
+      "that"
+    ],
+    "category": "Pronouns",
+    "image": "assets/phase1-images/phase1-0028.webp",
+    "sourceFile": "comp_pronouns_cell_4.png",
+    "note": "pronoun sheet, visually checked"
+  },
+  {
+    "number": 29,
+    "hindi": "वो सब",
+    "english": [
+      "all of them"
+    ],
+    "category": "Pronouns",
+    "image": "assets/phase1-images/phase1-0029.webp",
+    "sourceFile": "comp_pronouns_cell_5.png",
+    "note": "pronoun sheet, visually checked"
+  },
+  {
+    "number": 30,
+    "hindi": "आप",
+    "english": [
+      "you (formal)"
+    ],
+    "category": "Pronouns",
+    "image": "assets/phase1-images/phase1-0030.webp",
+    "sourceFile": "comp_pronouns_cell_7.png",
+    "note": "pronoun sheet, visually checked"
+  },
+  {
+    "number": 31,
+    "hindi": "वो किताब",
+    "english": [
+      "that book"
+    ],
+    "category": "Pronouns",
+    "image": "assets/phase1-images/phase1-0031.webp",
+    "sourceFile": "comp_pronouns_cell_8.png",
+    "note": "pronoun sheet, visually checked"
+  },
+  {
+    "number": 41,
+    "hindi": "रुकना",
+    "english": [
+      "to stop"
+    ],
+    "category": "Movement verbs",
+    "image": "assets/phase1-images/phase1-0041.webp",
+    "sourceFile": "comp_image184_verb1_cell_10.png",
+    "note": "only visible movement-verb cell; stop gesture"
+  },
+  {
+    "number": 42,
+    "hindi": "कटोरा",
+    "english": [
+      "bowl"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0042.webp",
+    "sourceFile": "42_bowl.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 43,
+    "hindi": "चम्मच",
+    "english": [
+      "spoon"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0043.webp",
+    "sourceFile": "43_spoon.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 44,
+    "hindi": "चिमटा",
+    "english": [
+      "tongs"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0044.webp",
+    "sourceFile": "44_tongs.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 45,
+    "hindi": "कांटे वाली चम्मच",
+    "english": [
+      "fork"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0045.webp",
+    "sourceFile": "45_fork.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 46,
+    "hindi": "ग्लास",
+    "english": [
+      "glass"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0046.webp",
+    "sourceFile": "46_glass.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 47,
+    "hindi": "बड़ी प्लेट",
+    "english": [
+      "large plate"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0047.webp",
+    "sourceFile": "47_large_plate.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 48,
+    "hindi": "छोटी प्लेट",
+    "english": [
+      "small plate"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0048.webp",
+    "sourceFile": "48_small_plate.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 49,
+    "hindi": "कप",
+    "english": [
+      "cup"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0049.webp",
+    "sourceFile": "49_cup.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 50,
+    "hindi": "पतीला",
+    "english": [
+      "pot"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0050.webp",
+    "sourceFile": "50_pot.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 51,
+    "hindi": "केतली",
+    "english": [
+      "kettle"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0051.webp",
+    "sourceFile": "51_kettle.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 52,
+    "hindi": "ढक्कन",
+    "english": [
+      "lid"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0052.webp",
+    "sourceFile": "52_lid.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 53,
+    "hindi": "मेज़",
+    "english": [
+      "table"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0053.webp",
+    "sourceFile": "53_table.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 54,
+    "hindi": "कड़ाही",
+    "english": [
+      "wok"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0054.webp",
+    "sourceFile": "54_wok.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 55,
+    "hindi": "चाकू",
+    "english": [
+      "knife"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0055.webp",
+    "sourceFile": "55_knife.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 56,
+    "hindi": "अलमारी",
+    "english": [
+      "cupboard"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0056.webp",
+    "sourceFile": "56_cupboard.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 57,
+    "hindi": "पेंसिल",
+    "english": [
+      "pencil"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0057.webp",
+    "sourceFile": "57_pencil.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 58,
+    "hindi": "कुर्सी",
+    "english": [
+      "chair"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0058.webp",
+    "sourceFile": "58_chair.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 59,
+    "hindi": "कागज़",
+    "english": [
+      "paper"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0059.webp",
+    "sourceFile": "59_paper.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 60,
+    "hindi": "पेन",
+    "english": [
+      "pen"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0060.webp",
+    "sourceFile": "60_pen.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 61,
+    "hindi": "किताब",
+    "english": [
+      "book"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0061.webp",
+    "sourceFile": "61_book.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 62,
+    "hindi": "छोटा सोफा",
+    "english": [
+      "small sofa"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0062.webp",
+    "sourceFile": "62_small_sofa.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 63,
+    "hindi": "बड़ा सोफा",
+    "english": [
+      "big sofa"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0063.webp",
+    "sourceFile": "63_big_sofa.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 64,
+    "hindi": "पलंग",
+    "english": [
+      "bed"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0064.webp",
+    "sourceFile": "64_bed.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 65,
+    "hindi": "ड्रेसिंग टेबल",
+    "english": [
+      "dressing table"
+    ],
+    "category": "Kitchenware and furniture",
+    "image": "assets/phase1-images/phase1-0065.webp",
+    "sourceFile": "65_dressing_table.png",
+    "note": "direct numbered file"
+  },
+  {
+    "number": 66,
+    "hindi": "आगे",
+    "english": [
+      "in front"
+    ],
+    "category": "Positions",
+    "image": "assets/phase1-images/phase1-0066.webp",
+    "sourceFile": "comp_positions_cell_1.png",
+    "note": "position sheet, visually checked"
+  },
+  {
+    "number": 67,
+    "hindi": "ऊपर",
+    "english": [
+      "up"
+    ],
+    "category": "Positions",
+    "image": "assets/phase1-images/phase1-0067.webp",
+    "sourceFile": "comp_positions_cell_2.png",
+    "note": "position sheet, visually checked"
+  },
+  {
+    "number": 68,
+    "hindi": "अंदर",
+    "english": [
+      "inside"
+    ],
+    "category": "Positions",
+    "image": "assets/phase1-images/phase1-0068.webp",
+    "sourceFile": "comp_positions_cell_3.png",
+    "note": "position sheet, visually checked"
+  },
+  {
+    "number": 69,
+    "hindi": "नीचे",
+    "english": [
+      "down"
+    ],
+    "category": "Positions",
+    "image": "assets/phase1-images/phase1-0069.webp",
+    "sourceFile": "comp_positions_cell_4.png",
+    "note": "position sheet, visually checked"
+  },
+  {
+    "number": 70,
+    "hindi": "बीच में",
+    "english": [
+      "in the middle"
+    ],
+    "category": "Positions",
+    "image": "assets/phase1-images/phase1-0070.webp",
+    "sourceFile": "comp_positions_cell_5.png",
+    "note": "position sheet, visually checked"
+  },
+  {
+    "number": 71,
+    "hindi": "पास",
+    "english": [
+      "near"
+    ],
+    "category": "Positions",
+    "image": "assets/phase1-images/phase1-0071.webp",
+    "sourceFile": "comp_positions_cell_6.png",
+    "note": "position sheet, visually checked"
+  },
+  {
+    "number": 72,
+    "hindi": "पीछे",
+    "english": [
+      "behind"
+    ],
+    "category": "Positions",
+    "image": "assets/phase1-images/phase1-0072.webp",
+    "sourceFile": "comp_positions_cell_7.png",
+    "note": "position sheet, visually checked"
+  },
+  {
+    "number": 73,
+    "hindi": "दूर",
+    "english": [
+      "far"
+    ],
+    "category": "Positions",
+    "image": "assets/phase1-images/phase1-0073.webp",
+    "sourceFile": "comp_positions_cell_8.png",
+    "note": "position sheet, visually checked"
+  },
+  {
+    "number": 74,
+    "hindi": "डालना",
+    "english": [
+      "to put (in)"
+    ],
+    "category": "Basic actions",
+    "image": "assets/phase1-images/phase1-0074.webp",
+    "sourceFile": "comp_verbs2_cell_1.png",
+    "note": "basic-action sheet, visually checked"
+  },
+  {
+    "number": 75,
+    "hindi": "देना",
+    "english": [
+      "to give"
+    ],
+    "category": "Basic actions",
+    "image": "assets/phase1-images/phase1-0075.webp",
+    "sourceFile": "comp_verbs2_cell_2.png",
+    "note": "basic-action sheet, visually checked"
+  },
+  {
+    "number": 76,
+    "hindi": "लेना",
+    "english": [
+      "to take"
+    ],
+    "category": "Basic actions",
+    "image": "assets/phase1-images/phase1-0076.webp",
+    "sourceFile": "comp_verbs2_cell_3.png",
+    "note": "basic-action sheet, visually checked"
+  },
+  {
+    "number": 77,
+    "hindi": "छूना",
+    "english": [
+      "to touch"
+    ],
+    "category": "Basic actions",
+    "image": "assets/phase1-images/phase1-0077.webp",
+    "sourceFile": "comp_verbs2_cell_4.png",
+    "note": "basic-action sheet, visually checked"
+  },
+  {
+    "number": 79,
+    "hindi": "इशारा करना",
+    "english": [
+      "to point",
+      "gesture"
+    ],
+    "category": "Basic actions",
+    "image": "assets/phase1-images/phase1-0079.webp",
+    "sourceFile": "comp_verbs2_cell_6.png",
+    "note": "basic-action sheet, visually checked"
+  },
+  {
+    "number": 80,
+    "hindi": "रखना",
+    "english": [
+      "to keep",
+      "place"
+    ],
+    "category": "Basic actions",
+    "image": "assets/phase1-images/phase1-0080.webp",
+    "sourceFile": "comp_verbs2_cell_7.png",
+    "note": "basic-action sheet, visually checked"
+  },
+  {
+    "number": 81,
+    "hindi": "देखना",
+    "english": [
+      "to see",
+      "look"
+    ],
+    "category": "Basic actions",
+    "image": "assets/phase1-images/phase1-0081.webp",
+    "sourceFile": "comp_verbs2_cell_8.png",
+    "note": "basic-action sheet, visually checked"
+  },
+  {
+    "number": 82,
+    "hindi": "दरवाज़ा",
+    "english": [
+      "door"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0082.webp",
+    "sourceFile": "comp_image16_comp5_cell_1.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 83,
+    "hindi": "खिड़की",
+    "english": [
+      "window"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0083.webp",
+    "sourceFile": "comp_image16_comp5_cell_2.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 84,
+    "hindi": "दीवार",
+    "english": [
+      "wall"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0084.webp",
+    "sourceFile": "comp_image16_comp5_cell_3.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 85,
+    "hindi": "फर्श",
+    "english": [
+      "floor"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0085.webp",
+    "sourceFile": "comp_image16_comp5_cell_4.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 86,
+    "hindi": "छत",
+    "english": [
+      "ceiling"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0086.webp",
+    "sourceFile": "comp_image16_comp5_cell_5.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 88,
+    "hindi": "वाइट बोर्ड",
+    "english": [
+      "whiteboard"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0088.webp",
+    "sourceFile": "comp_image16_comp5_cell_7.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 90,
+    "hindi": "तस्वीर",
+    "english": [
+      "picture"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0090.webp",
+    "sourceFile": "comp_image16_comp5_cell_9.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 91,
+    "hindi": "कालीन",
+    "english": [
+      "carpet"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0091.webp",
+    "sourceFile": "comp_image16_comp5_cell_10.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 92,
+    "hindi": "घड़ी",
+    "english": [
+      "clock"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0092.webp",
+    "sourceFile": "comp_image16_comp5_cell_11.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 93,
+    "hindi": "पर्दा",
+    "english": [
+      "curtain"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0093.webp",
+    "sourceFile": "comp_image16_comp5_cell_12.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 94,
+    "hindi": "टोकरी",
+    "english": [
+      "basket"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0094.webp",
+    "sourceFile": "comp_image16_comp5_cell_13.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 95,
+    "hindi": "गमला",
+    "english": [
+      "flowerpot"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0095.webp",
+    "sourceFile": "comp_image16_comp5_cell_14.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 96,
+    "hindi": "कैलेंडर",
+    "english": [
+      "calendar"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0096.webp",
+    "sourceFile": "comp_image16_comp5_cell_15.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 97,
+    "hindi": "ट्यूब लाइट",
+    "english": [
+      "tube light"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0097.webp",
+    "sourceFile": "comp_image16_comp5_cell_16.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 98,
+    "hindi": "स्विच बोर्ड",
+    "english": [
+      "switchboard"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0098.webp",
+    "sourceFile": "comp_image16_comp5_cell_17.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 99,
+    "hindi": "बल्ब",
+    "english": [
+      "bulb"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0099.webp",
+    "sourceFile": "comp_image16_comp5_cell_18.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 100,
+    "hindi": "शेल्फ",
+    "english": [
+      "shelf"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0100.webp",
+    "sourceFile": "comp_image16_comp5_cell_19.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 101,
+    "hindi": "एक्सटेंशन बोर्ड",
+    "english": [
+      "extension board"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0101.webp",
+    "sourceFile": "comp_image16_comp5_cell_20.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 102,
+    "hindi": "फोन",
+    "english": [
+      "phone"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0102.webp",
+    "sourceFile": "comp_image16_comp5_cell_21.png",
+    "note": "room/classroom sheet, visually checked"
+  },
+  {
+    "number": 106,
+    "hindi": "खाने का डब्बा",
+    "english": [
+      "lunch box"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0106.webp",
+    "sourceFile": "comp_image39_comp6_cell_1.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 107,
+    "hindi": "गैस चूल्हा",
+    "english": [
+      "gas stove"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0107.webp",
+    "sourceFile": "comp_image39_comp6_cell_2.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 108,
+    "hindi": "चकला",
+    "english": [
+      "rolling board"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0108.webp",
+    "sourceFile": "comp_image39_comp6_cell_3.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 109,
+    "hindi": "बेलन",
+    "english": [
+      "rolling pin"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0109.webp",
+    "sourceFile": "comp_image39_comp6_cell_4.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 110,
+    "hindi": "ट्रे",
+    "english": [
+      "tray"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0110.webp",
+    "sourceFile": "comp_image39_comp6_cell_5.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 111,
+    "hindi": "डब्बा",
+    "english": [
+      "box",
+      "container"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0111.webp",
+    "sourceFile": "comp_image39_comp6_cell_6.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 112,
+    "hindi": "फ्राइंग पैन",
+    "english": [
+      "frying pan"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0112.webp",
+    "sourceFile": "comp_image39_comp6_cell_7.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 113,
+    "hindi": "कूकर",
+    "english": [
+      "pressure cooker"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0113.webp",
+    "sourceFile": "comp_image39_comp6_cell_8.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 114,
+    "hindi": "जग",
+    "english": [
+      "jug"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0114.webp",
+    "sourceFile": "comp_image39_comp6_cell_9.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 115,
+    "hindi": "केतली",
+    "english": [
+      "kettle"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0115.webp",
+    "sourceFile": "comp_image39_comp6_cell_10.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 116,
+    "hindi": "सिलेंडर",
+    "english": [
+      "gas cylinder"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0116.webp",
+    "sourceFile": "comp_image39_comp6_cell_11.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 117,
+    "hindi": "बर्तन",
+    "english": [
+      "utensils"
+    ],
+    "category": "Kitchen items",
+    "image": "assets/phase1-images/phase1-0117.webp",
+    "sourceFile": "comp_image39_comp6_cell_12.png",
+    "note": "kitchen sheet, visually checked"
+  },
+  {
+    "number": 118,
+    "hindi": "सांप",
+    "english": [
+      "snake"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0118.webp",
+    "sourceFile": "comp_image367_comp7_cell_1.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 119,
+    "hindi": "भेड़",
+    "english": [
+      "sheep"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0119.webp",
+    "sourceFile": "comp_image367_comp7_cell_2.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 120,
+    "hindi": "मधुमक्खी",
+    "english": [
+      "honeybee"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0120.webp",
+    "sourceFile": "comp_image367_comp7_cell_3.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 121,
+    "hindi": "कछुआ",
+    "english": [
+      "tortoise"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0121.webp",
+    "sourceFile": "comp_image367_comp7_cell_4.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 122,
+    "hindi": "चिंगादड़",
+    "english": [
+      "bat"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0122.webp",
+    "sourceFile": "comp_image367_comp7_cell_5.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 123,
+    "hindi": "चूहा",
+    "english": [
+      "mouse",
+      "rat"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0123.webp",
+    "sourceFile": "comp_image367_comp7_cell_6.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 124,
+    "hindi": "खरगोश",
+    "english": [
+      "rabbit"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0124.webp",
+    "sourceFile": "comp_image367_comp7_cell_7.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 125,
+    "hindi": "बत्तख",
+    "english": [
+      "duck"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0125.webp",
+    "sourceFile": "comp_image367_comp7_cell_8.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 126,
+    "hindi": "बाघ",
+    "english": [
+      "tiger"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0126.webp",
+    "sourceFile": "comp_image367_comp7_cell_9.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 127,
+    "hindi": "मेंढक",
+    "english": [
+      "frog"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0127.webp",
+    "sourceFile": "comp_image367_comp7_cell_10.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 128,
+    "hindi": "ऊंट",
+    "english": [
+      "camel"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0128.webp",
+    "sourceFile": "comp_image367_comp7_cell_11.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 129,
+    "hindi": "बंदर",
+    "english": [
+      "monkey"
+    ],
+    "category": "More animals",
+    "image": "assets/phase1-images/phase1-0129.webp",
+    "sourceFile": "comp_image367_comp7_cell_12.png",
+    "note": "animal sheet, visually checked"
+  },
+  {
+    "number": 130,
+    "hindi": "तकिया",
+    "english": [
+      "pillow"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0130.webp",
+    "sourceFile": "comp_image446_comp4_cell_1.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 131,
+    "hindi": "झाड़ू",
+    "english": [
+      "broom"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0131.webp",
+    "sourceFile": "comp_image446_comp4_cell_2.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 133,
+    "hindi": "माचिस",
+    "english": [
+      "matchbox"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0133.webp",
+    "sourceFile": "comp_image446_comp4_cell_3.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 134,
+    "hindi": "कंचे",
+    "english": [
+      "marbles"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0134.webp",
+    "sourceFile": "comp_image446_comp4_cell_4.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 136,
+    "hindi": "सेब",
+    "english": [
+      "apple"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0136.webp",
+    "sourceFile": "comp_image446_comp4_cell_5.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 137,
+    "hindi": "फूल",
+    "english": [
+      "flower"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0137.webp",
+    "sourceFile": "comp_image446_comp4_cell_6.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 139,
+    "hindi": "हाथी",
+    "english": [
+      "elephant"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0139.webp",
+    "sourceFile": "comp_image446_comp4_cell_7.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 140,
+    "hindi": "पेड़",
+    "english": [
+      "tree"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0140.webp",
+    "sourceFile": "comp_image446_comp4_cell_8.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 142,
+    "hindi": "गाड़ी",
+    "english": [
+      "car",
+      "vehicle"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0142.webp",
+    "sourceFile": "comp_image446_comp4_cell_9.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 143,
+    "hindi": "कूड़ेदान",
+    "english": [
+      "trash can"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0143.webp",
+    "sourceFile": "comp_image446_comp4_cell_10.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 145,
+    "hindi": "इंग्लिश टॉयलेट",
+    "english": [
+      "western toilet"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0145.webp",
+    "sourceFile": "comp_image446_comp4_cell_12.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 146,
+    "hindi": "इंडियन टॉयलेट",
+    "english": [
+      "Indian toilet"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0146.webp",
+    "sourceFile": "comp_image446_comp4_cell_11.png",
+    "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 147,
+    "hindi": "सर",
+    "english": [
+      "head"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0147.webp",
+    "sourceFile": "comp_bodyparts_cell_1.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 148,
+    "hindi": "गर्दन",
+    "english": [
+      "neck"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0148.webp",
+    "sourceFile": "comp_bodyparts_cell_2.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 149,
+    "hindi": "कंधा",
+    "english": [
+      "shoulder"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0149.webp",
+    "sourceFile": "comp_bodyparts_cell_3.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 150,
+    "hindi": "हाथ",
+    "english": [
+      "hand"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0150.webp",
+    "sourceFile": "comp_bodyparts_cell_4.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 151,
+    "hindi": "अंगूठा",
+    "english": [
+      "thumb"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0151.webp",
+    "sourceFile": "comp_bodyparts_cell_5.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 152,
+    "hindi": "बाल",
+    "english": [
+      "hair"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0152.webp",
+    "sourceFile": "comp_bodyparts_cell_6.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 153,
+    "hindi": "कान",
+    "english": [
+      "ear"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0153.webp",
+    "sourceFile": "comp_bodyparts_cell_7.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 154,
+    "hindi": "दाढ़ी",
+    "english": [
+      "beard"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0154.webp",
+    "sourceFile": "comp_bodyparts_cell_8.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 155,
+    "hindi": "पीठ",
+    "english": [
+      "back"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0155.webp",
+    "sourceFile": "comp_bodyparts_cell_9.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 156,
+    "hindi": "कमर",
+    "english": [
+      "waist"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0156.webp",
+    "sourceFile": "comp_bodyparts_cell_10.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 157,
+    "hindi": "कूल्हा",
+    "english": [
+      "hip"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0157.webp",
+    "sourceFile": "comp_bodyparts_cell_11.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 158,
+    "hindi": "चेहरा",
+    "english": [
+      "face"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0158.webp",
+    "sourceFile": "comp_bodyparts_cell_12.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 159,
+    "hindi": "गाल",
+    "english": [
+      "cheek"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0159.webp",
+    "sourceFile": "comp_bodyparts_cell_13.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 160,
+    "hindi": "जबड़ा",
+    "english": [
+      "jaw"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0160.webp",
+    "sourceFile": "comp_bodyparts_cell_14.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 161,
+    "hindi": "थोड़ी",
+    "english": [
+      "chin"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0161.webp",
+    "sourceFile": "comp_bodyparts_cell_15.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 162,
+    "hindi": "हाथ",
+    "english": [
+      "hand"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0162.webp",
+    "sourceFile": "comp_bodyparts_cell_16.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 163,
+    "hindi": "टांग",
+    "english": [
+      "leg"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0163.webp",
+    "sourceFile": "comp_bodyparts_cell_17.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 164,
+    "hindi": "घुटना",
+    "english": [
+      "knee"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0164.webp",
+    "sourceFile": "comp_bodyparts_cell_18.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 165,
+    "hindi": "पैर",
+    "english": [
+      "foot"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0165.webp",
+    "sourceFile": "comp_bodyparts_cell_19.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 166,
+    "hindi": "हाथ की उंगलियां",
+    "english": [
+      "fingers"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0166.webp",
+    "sourceFile": "comp_bodyparts_cell_20.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 167,
+    "hindi": "मुंह",
+    "english": [
+      "mouth"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0167.webp",
+    "sourceFile": "comp_bodyparts_cell_21.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 168,
+    "hindi": "होंठ",
+    "english": [
+      "lips"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0168.webp",
+    "sourceFile": "comp_bodyparts_cell_22.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 169,
+    "hindi": "दांत",
+    "english": [
+      "teeth"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0169.webp",
+    "sourceFile": "comp_bodyparts_cell_23.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 170,
+    "hindi": "जीभ",
+    "english": [
+      "tongue"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0170.webp",
+    "sourceFile": "comp_bodyparts_cell_24.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 171,
+    "hindi": "एड़ी",
+    "english": [
+      "heel"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0171.webp",
+    "sourceFile": "comp_bodyparts_cell_25.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 172,
+    "hindi": "पैर की उंगलियां",
+    "english": [
+      "toes"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0172.webp",
+    "sourceFile": "comp_bodyparts_cell_26.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 173,
+    "hindi": "कोहनी",
+    "english": [
+      "elbow"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0173.webp",
+    "sourceFile": "comp_bodyparts_cell_27.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 174,
+    "hindi": "सीना",
+    "english": [
+      "chest"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0174.webp",
+    "sourceFile": "comp_bodyparts_cell_28.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 175,
+    "hindi": "शरीर",
+    "english": [
+      "body"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0175.webp",
+    "sourceFile": "comp_bodyparts_cell_29.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 176,
+    "hindi": "पेट",
+    "english": [
+      "stomach",
+      "belly"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0176.webp",
+    "sourceFile": "comp_bodyparts_cell_30.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 177,
+    "hindi": "नाक",
+    "english": [
+      "nose"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0177.webp",
+    "sourceFile": "comp_bodyparts_cell_31.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 178,
+    "hindi": "आंख",
+    "english": [
+      "eye"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0178.webp",
+    "sourceFile": "comp_bodyparts_cell_32.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 179,
+    "hindi": "भवें",
+    "english": [
+      "eyebrows"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0179.webp",
+    "sourceFile": "comp_bodyparts_cell_33.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 180,
+    "hindi": "पलक",
+    "english": [
+      "eyelid"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0180.webp",
+    "sourceFile": "comp_bodyparts_cell_34.png",
+    "note": "body-part sheet, visually checked"
+  },
+  {
+    "number": 181,
+    "hindi": "चोंच",
+    "english": [
+      "beak"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0181.webp",
+    "sourceFile": "comp_animalparts_cell_1.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 182,
+    "hindi": "पंजा",
+    "english": [
+      "paw",
+      "claw"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0182.webp",
+    "sourceFile": "comp_animalparts_cell_2.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 183,
+    "hindi": "सींग",
+    "english": [
+      "horn"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0183.webp",
+    "sourceFile": "comp_animalparts_cell_3.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 184,
+    "hindi": "बाल",
+    "english": [
+      "hair"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0184.webp",
+    "sourceFile": "comp_animalparts_cell_4.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 185,
+    "hindi": "खुर",
+    "english": [
+      "hoof"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0185.webp",
+    "sourceFile": "comp_animalparts_cell_5.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 186,
+    "hindi": "सूंड",
+    "english": [
+      "trunk"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0186.webp",
+    "sourceFile": "comp_animalparts_cell_6.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 187,
+    "hindi": "पर",
+    "english": [
+      "feather"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0187.webp",
+    "sourceFile": "comp_animalparts_cell_8.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 189,
+    "hindi": "खाल",
+    "english": [
+      "hide",
+      "skin"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0189.webp",
+    "sourceFile": "comp_animalparts_cell_9.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 190,
+    "hindi": "पूँछ",
+    "english": [
+      "tail"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0190.webp",
+    "sourceFile": "comp_animalparts_cell_10.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 191,
+    "hindi": "मूँछ",
+    "english": [
+      "mustache"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0191.webp",
+    "sourceFile": "comp_animalparts_cell_11.png",
+    "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 192,
+    "hindi": "दाढ़ी",
+    "english": [
+      "beard"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0192.webp",
+    "sourceFile": "comp_animalparts_cell_12.png",
+    "note": "animal-part sheet, visually checked"
+  }
+]
