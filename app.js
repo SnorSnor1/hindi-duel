@@ -125,7 +125,10 @@ function mergeSeedWords(seedWords, savedWords){
       return;
     }
     const savedWord = merged.get(key);
-    merged.set(key, { ...seedWord, ...savedWord, image: seedWord.image || savedWord.image });
+    const mergedWord = { ...seedWord, ...savedWord };
+    if(seedWord.image) mergedWord.image = seedWord.image;
+    else delete mergedWord.image;
+    merged.set(key, mergedWord);
   });
   return [...merged.values()];
 }
@@ -133,7 +136,11 @@ function applySeedFields(words, phaseKey){
   const seedWords = PHASE_DATA[phaseKey]?.words || [];
   return normalizeWordCategories(words).map((word)=>{
     const seedWord = seedWords.find((candidate)=>keyFor(candidate) === keyFor(word));
-    return seedWord?.image ? { ...word, image: seedWord.image } : word;
+    if(!seedWord) return word;
+    const mergedWord = { ...word };
+    if(seedWord.image) mergedWord.image = seedWord.image;
+    else delete mergedWord.image;
+    return mergedWord;
   });
 }
 function mergeImportedWords(baseWords, importedWords){
