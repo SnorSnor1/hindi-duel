@@ -9108,6 +9108,94 @@ export const PHASE_DATA = {
           "grumble"
         ],
         "category": "Lesson 9b"
+      },
+      {
+        "hindi": "भूकम्प",
+        "english": [
+          "earthquake",
+          "quake"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "bhukamp"
+      },
+      {
+        "hindi": "डिग्गी",
+        "english": [
+          "trunk",
+          "car trunk",
+          "boot"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "diggi"
+      },
+      {
+        "hindi": "उत्सुक",
+        "english": [
+          "curious",
+          "eager",
+          "interested"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "utsuk"
+      },
+      {
+        "hindi": "कूड़ा",
+        "english": [
+          "garbage",
+          "rubbish",
+          "trash"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "kooda"
+      },
+      {
+        "hindi": "तार",
+        "english": [
+          "wire",
+          "cable",
+          "string"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "taar"
+      },
+      {
+        "hindi": "हिला डुला कर देखना",
+        "english": [
+          "shake and check",
+          "wiggle and see",
+          "move it around to check"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "hila dula kar dekhna"
+      },
+      {
+        "hindi": "उलटे सीधे",
+        "english": [
+          "haphazardly",
+          "all over the place",
+          "upside down and sideways"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "ulte sidhe"
+      },
+      {
+        "hindi": "हरकत करना",
+        "english": [
+          "move",
+          "make a move",
+          "misbehave"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "harkat karna"
+      },
+      {
+        "hindi": "सवाल",
+        "english": [
+          "question",
+          "query"
+        ],
+        "category": "Lesson 10b",
+        "transliteration": "savaal"
       }
     ]
   }
