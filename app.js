@@ -57,8 +57,10 @@ let firebaseRef = null;
 let applyingCloudState = false;
 let coachNotice = "";
 let nextKeyHandler = null;
+let imageSession = null;
+let imageSelectedCategories = new Set();
 
-const screens = ["coach","quiz","challenge","mistakes","stats","scoreboard","manage","login"];
+const screens = ["coach","quiz","images","challenge","mistakes","stats","scoreboard","manage","login"];
 const $ = (selector) => document.querySelector(selector);
 const phaseWordsFor = (phaseKey) => (state.words[phaseKey] || []).filter((word) => word.english.length);
 const phaseWords = () => phaseWordsFor(phase);
@@ -113,10 +115,26 @@ function loadState(){
 }
 function mergeSeedWords(seedWords, savedWords){
   const merged = new Map();
-  [...normalizeWordCategories(savedWords), ...normalizeWordCategories(seedWords)].forEach((word)=>{
+  normalizeWordCategories(savedWords).forEach((word)=>{
     if(!merged.has(keyFor(word))) merged.set(keyFor(word), word);
   });
+  normalizeWordCategories(seedWords).forEach((seedWord)=>{
+    const key = keyFor(seedWord);
+    if(!merged.has(key)){
+      merged.set(key, seedWord);
+      return;
+    }
+    const savedWord = merged.get(key);
+    merged.set(key, { ...seedWord, ...savedWord, image: seedWord.image || savedWord.image });
+  });
   return [...merged.values()];
+}
+function applySeedFields(words, phaseKey){
+  const seedWords = PHASE_DATA[phaseKey]?.words || [];
+  return normalizeWordCategories(words).map((word)=>{
+    const seedWord = seedWords.find((candidate)=>keyFor(candidate) === keyFor(word));
+    return seedWord?.image ? { ...word, image: seedWord.image } : word;
+  });
 }
 function mergeImportedWords(baseWords, importedWords){
   const merged = new Map((Array.isArray(baseWords) ? baseWords : []).map((word)=>[keyFor(word), word]));
@@ -565,7 +583,7 @@ async function syncPhase1FromSheet(status = $("#syncStatus")){
     if(status) status.textContent = "Sync failed. Check whether the Google Sheet is accessible.";
     return;
   }
-  state.words.phase1 = applyWordOverrides(words, "phase1");
+  state.words.phase1 = applyWordOverrides(applySeedFields(words, "phase1"), "phase1");
   state.maintenance = normalizeMaintenance(state.maintenance);
   state.maintenance.phase1 = { lastSyncedAt: new Date().toISOString(), lastCount: words.length, updatedAt: new Date().toISOString() };
   phase = "phase1";
@@ -605,7 +623,7 @@ async function autoSyncPublishedSheets(){
   const now = new Date().toISOString();
 
   if(phase1Result.status === "fulfilled" && phase1Result.value.length){
-    state.words.phase1 = applyWordOverrides(phase1Result.value, "phase1");
+    state.words.phase1 = applyWordOverrides(applySeedFields(phase1Result.value, "phase1"), "phase1");
     state.maintenance = normalizeMaintenance(state.maintenance);
     state.maintenance.phase1 = { lastSyncedAt: now, lastCount: phase1Result.value.length, updatedAt: now };
     changed = true;
@@ -624,6 +642,7 @@ async function autoSyncPublishedSheets(){
   if(session) return;
   if(activeScreen === "coach") renderCoach();
   if(activeScreen === "quiz") renderQuizSetup();
+  if(activeScreen === "images") renderImagePractice();
   if(activeScreen === "manage") renderManage();
   if(activeScreen === "mistakes") renderMistakes();
   if(activeScreen === "stats") renderStats();
@@ -638,6 +657,7 @@ function show(screen){
   document.querySelectorAll("[data-screen]").forEach((button)=>button.classList.toggle("active", button.dataset.screen===screen));
   if(screen==="coach") renderCoach();
   if(screen==="quiz") renderQuizSetup();
+  if(screen==="images") renderImagePractice();
   if(screen==="challenge") renderChallenge();
   if(screen==="mistakes") renderMistakes();
   if(screen==="stats") renderStats();
@@ -1582,6 +1602,114 @@ function startCoachMistakes(phaseKey){
   if(!remaining) return renderCoach();
   startWordSession(words.slice(0, remaining), "coach-mistakes");
 }
+function imagePracticeWords(){
+  return phaseWordsFor("phase1").filter((word)=>word.image);
+}
+function imagePracticeCategories(){
+  return [...new Set(imagePracticeWords().map((word)=>word.category))];
+}
+function renderImageCategoryChips(){
+  const words = imagePracticeWords();
+  const counts = Object.fromEntries(imagePracticeCategories().map((cat)=>[cat, words.filter((word)=>word.category===cat).length]));
+  return `<div class="category-chips">${imagePracticeCategories().map((cat)=>`<button type="button" class="cat-chip ${imageSelectedCategories.has(cat)?"selected":""}" data-image-cat="${escapeAttr(cat)}">${escapeHtml(displayCategory(cat))} <span class="count">${counts[cat]}</span></button>`).join("")}</div>`;
+}
+function bindImageCategoryChips(){
+  document.querySelectorAll("[data-image-cat]").forEach((button)=>{
+    button.addEventListener("click",()=>{
+      const cat = button.dataset.imageCat;
+      imageSelectedCategories.has(cat) ? imageSelectedCategories.delete(cat) : imageSelectedCategories.add(cat);
+      if(!imageSelectedCategories.size) imageSelectedCategories = new Set(imagePracticeCategories());
+      renderImagePractice();
+    });
+    button.addEventListener("dblclick",()=>{
+      imageSelectedCategories = new Set([button.dataset.imageCat]);
+      renderImagePractice();
+    });
+  });
+}
+function renderImagePractice(){
+  clearTimer();
+  clearNextKeyHandler();
+  if(imageSession && imageSession.index < imageSession.queue.length) return renderImageQuestion();
+  const cats = imagePracticeCategories();
+  if(!imageSelectedCategories.size) imageSelectedCategories = new Set(cats);
+  const selectedWords = imagePracticeWords().filter((word)=>imageSelectedCategories.has(word.category));
+  const total = imagePracticeWords().length;
+  const count = Math.min(20, selectedWords.length || total);
+  $("#images").innerHTML = `<div class="setup-card image-setup"><div class="daily-badge">Phase 1 images</div><h2>Image Practice</h2><p class="image-intro">Choose the Hindi word that matches the picture. No login needed.</p><label class="form-label">Image categories</label>${renderImageCategoryChips()}<label class="form-label">Images</label><input id="imageWordCount" type="number" min="1" max="100" value="${count}"><div class="image-count-note">${selectedWords.length} selected image words · ${total} total</div><button class="start-btn" id="startImagePractice" type="button" ${selectedWords.length?"":"disabled"}>Start image practice</button></div>`;
+  bindImageCategoryChips();
+  $("#startImagePractice")?.addEventListener("click",()=>startImagePractice(Number($("#imageWordCount").value || count)));
+}
+function startImagePractice(count=20, forcedWords=null){
+  const pool = forcedWords || imagePracticeWords().filter((word)=>imageSelectedCategories.has(word.category));
+  const queue = shuffle([...pool]).slice(0, Math.min(count, pool.length)).map((word)=>({ ...word, phaseKey:"phase1" }));
+  if(!queue.length) return renderImagePractice();
+  imageSession = { queue, index:0, correct:0, wrong:0, missed:{}, answered:false };
+  activeScreen = "images";
+  screens.forEach((id)=>$("#"+id).classList.toggle("hidden", id!=="images"));
+  document.querySelectorAll("[data-screen]").forEach((button)=>button.classList.toggle("active", button.dataset.screen==="images"));
+  renderImageQuestion();
+}
+function imageChoices(word){
+  const latest = new Set(latestPhaseCategories("phase1", 4));
+  const others = imagePracticeWords()
+    .filter((candidate)=>keyFor(candidate) !== keyFor(word))
+    .map((candidate)=>({ word:candidate, score:choiceDistractorScore(word, candidate, latest) }))
+    .sort((a,b)=>b.score-a.score)
+    .map((item)=>item.word);
+  return shuffle([word, ...uniqueWords(others).slice(0, 3)]);
+}
+function imageOptionHtml(choice){
+  return `<button class="image-option" type="button" data-hindi="${escapeAttr(choice.hindi)}"><strong>${escapeHtml(choice.hindi)}</strong><span>${escapeHtml(romanizeHindi(choice.hindi))}</span></button>`;
+}
+function imageAnswerHtml(word){
+  return `<div class="answer-reveal answer-reveal-big image-answer"><span>Correct answer</span><strong class="answer-pair"><b>${escapeHtml(word.hindi)}</b>${romanizedHindiHtml(word)}<em>${escapeHtml(formatEnglishList(word))}</em></strong></div>`;
+}
+function renderImageQuestion(){
+  if(!imageSession || imageSession.index >= imageSession.queue.length) return finishImagePractice();
+  const word = imageSession.queue[imageSession.index];
+  const progress = Math.round((imageSession.index / imageSession.queue.length) * 100);
+  imageSession.answered = false;
+  $("#images").innerHTML = `<div class="quiz-active image-active"><div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><div class="score-display">${imageSession.index + 1}/${imageSession.queue.length} · ${imageSession.correct} correct</div><div class="quiz-card image-card"><img class="image-question-img" src="${escapeAttr(word.image)}" alt=""><div class="mc-options image-options">${imageChoices(word).map(imageOptionHtml).join("")}</div><div id="imageFeedback" class="feedback"></div><div id="imageFeedbackButtons" class="feedback-buttons"></div></div></div>`;
+  document.querySelectorAll(".image-option").forEach((button)=>button.addEventListener("click",()=>answerImageChoice(word, button)));
+}
+function answerImageChoice(word, button){
+  if(!imageSession || imageSession.answered) return;
+  imageSession.answered = true;
+  const correct = normHindi(button.dataset.hindi) === normHindi(word.hindi);
+  document.querySelectorAll(".image-option").forEach((option)=>{
+    option.disabled = true;
+    if(normHindi(option.dataset.hindi) === normHindi(word.hindi)) option.classList.add("correct");
+    else if(option === button) option.classList.add("wrong");
+    else option.classList.add("dimmed");
+  });
+  if(correct){
+    imageSession.correct++;
+    delete imageSession.missed[wordSessionKey(word)];
+  } else {
+    imageSession.wrong++;
+    imageSession.missed[wordSessionKey(word)] = word;
+  }
+  $("#imageFeedback").className = `feedback ${correct ? "good" : "bad"}`;
+  $("#imageFeedback").innerHTML = imageAnswerHtml(word);
+  $("#imageFeedbackButtons").innerHTML = `<button class="btn-next" id="nextImageQuestion" type="button">Next →</button>`;
+  $("#nextImageQuestion")?.focus();
+  $("#nextImageQuestion")?.addEventListener("click",nextImageQuestion);
+}
+function nextImageQuestion(){
+  if(!imageSession) return renderImagePractice();
+  imageSession.index++;
+  renderImageQuestion();
+}
+function finishImagePractice(){
+  const finished = imageSession;
+  const missed = uniqueWords(Object.values(finished?.missed || {}));
+  $("#images").innerHTML = `<div class="panel session-complete"><h2>Image practice complete</h2><div class="result-grid"><div class="stat-box"><strong>${finished.correct}/${finished.queue.length}</strong><br><small>correct</small></div><div class="stat-box"><strong>${Math.round((finished.correct / finished.queue.length) * 100)}%</strong><br><small>score</small></div></div>${missed.length?`<div class="repair-box"><strong>${missed.length} image word${missed.length===1?"":"s"} to repeat</strong><p>Practise only the images you missed in this round.</p><div class="repair-list">${missed.slice(0,8).map((word)=>`<span>${escapeHtml(word.hindi)} · ${escapeHtml(formatPrimaryEnglish(word))}</span>`).join("")}${missed.length>8?`<span>+${missed.length-8} more</span>`:""}</div><button class="retry-btn" id="retryImageMisses" type="button">Repeat missed images</button></div>`:`<div class="repair-box repair-done"><strong>Clean image round</strong><p>Every image was matched correctly.</p></div>`}<button class="retry-btn secondary-action" id="backToImages" type="button">Back to image practice</button></div>`;
+  imageSession = null;
+  $("#retryImageMisses")?.addEventListener("click",()=>startImagePractice(missed.length, missed));
+  $("#backToImages")?.addEventListener("click",()=>renderImagePractice());
+}
+
 function renderQuizSetup(){
   if(!canUsePhase2() && phase==="phase2"){
     phase = "phase1";

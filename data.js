@@ -2629,154 +2629,176 @@ export const PHASE_DATA = {
         "english": [
           "earthworm"
         ],
-        "category": "Small creatures"
+        "category": "Small creatures",
+        "image": "assets/phase1-images/phase1-0366.webp"
       },
       {
         "hindi": "कॉकरोच",
         "english": [
           "cockroach"
         ],
-        "category": "Small creatures"
+        "category": "Small creatures",
+        "image": "assets/phase1-images/phase1-0367.webp"
       },
       {
         "hindi": "टिड्डा",
         "english": [
           "grasshopper"
         ],
-        "category": "Small creatures"
+        "category": "Small creatures",
+        "image": "assets/phase1-images/phase1-0368.webp"
       },
       {
         "hindi": "एक",
         "english": [
           "one"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0369.webp"
       },
       {
         "hindi": "दो",
         "english": [
           "two"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0370.webp"
       },
       {
         "hindi": "तीन",
         "english": [
           "three"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0371.webp"
       },
       {
         "hindi": "चार",
         "english": [
           "four"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0372.webp"
       },
       {
         "hindi": "पाँच",
         "english": [
           "five"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0373.webp"
       },
       {
         "hindi": "छह",
         "english": [
           "six"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0374.webp"
       },
       {
         "hindi": "सात",
         "english": [
           "seven"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0375.webp"
       },
       {
         "hindi": "आठ",
         "english": [
           "eight"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0376.webp"
       },
       {
         "hindi": "नौ",
         "english": [
           "nine"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0377.webp"
       },
       {
         "hindi": "दस",
         "english": [
           "ten"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0378.webp"
       },
       {
         "hindi": "दस",
         "english": [
           "ten"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0379.webp"
       },
       {
         "hindi": "बीस",
         "english": [
           "twenty"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0380.webp"
       },
       {
         "hindi": "तीस",
         "english": [
           "thirty"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0381.webp"
       },
       {
         "hindi": "चालीस",
         "english": [
           "forty"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0382.webp"
       },
       {
         "hindi": "पचास",
         "english": [
           "fifty"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0383.webp"
       },
       {
         "hindi": "साठ",
         "english": [
           "sixty"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0384.webp"
       },
       {
         "hindi": "सत्तर",
         "english": [
           "seventy"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0385.webp"
       },
       {
         "hindi": "अस्सी",
         "english": [
           "eighty"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0386.webp"
       },
       {
         "hindi": "नब्बे",
         "english": [
           "ninety"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0387.webp"
       },
       {
         "hindi": "सौ",
@@ -2784,98 +2806,112 @@ export const PHASE_DATA = {
           "one hundred",
           "hundred"
         ],
-        "category": "Numbers 1-100"
+        "category": "Numbers 1-100",
+        "image": "assets/phase1-images/phase1-0388.webp"
       },
       {
         "hindi": "पहला",
         "english": [
           "first"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0389.webp"
       },
       {
         "hindi": "दूसरा",
         "english": [
           "second"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0390.webp"
       },
       {
         "hindi": "तीसरा",
         "english": [
           "third"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0391.webp"
       },
       {
         "hindi": "चौथा",
         "english": [
           "fourth"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0392.webp"
       },
       {
         "hindi": "पांचवा",
         "english": [
           "fifth"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0393.webp"
       },
       {
         "hindi": "छटा",
         "english": [
           "sixth"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0394.webp"
       },
       {
         "hindi": "सातवा",
         "english": [
           "seventh"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0395.webp"
       },
       {
         "hindi": "आठवा",
         "english": [
           "eighth"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0396.webp"
       },
       {
         "hindi": "नोवाँ",
         "english": [
           "ninth"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0397.webp"
       },
       {
         "hindi": "दसवा",
         "english": [
           "tenth"
         ],
-        "category": "Ordinal numbers"
+        "category": "Ordinal numbers",
+        "image": "assets/phase1-images/phase1-0398.webp"
       },
       {
         "hindi": "पासपोर्ट",
         "english": [
           "passport"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0399.webp"
       },
       {
         "hindi": "दुनिया",
         "english": [
           "world"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0400.webp"
       },
       {
         "hindi": "नक़्शा",
         "english": [
           "map"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0401.webp"
       },
       {
         "hindi": "विदेशी",
@@ -2883,63 +2919,72 @@ export const PHASE_DATA = {
           "foreign",
           "foreigner"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0402.webp"
       },
       {
         "hindi": "राष्ट्रीयता",
         "english": [
           "nationality"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0403.webp"
       },
       {
         "hindi": "भाषा",
         "english": [
           "language"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0404.webp"
       },
       {
         "hindi": "उत्तर",
         "english": [
           "north"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0405.webp"
       },
       {
         "hindi": "पूर्व",
         "english": [
           "east"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0406.webp"
       },
       {
         "hindi": "दक्षिण",
         "english": [
           "south"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0407.webp"
       },
       {
         "hindi": "पश्चिम",
         "english": [
           "west"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0408.webp"
       },
       {
         "hindi": "देश",
         "english": [
           "country"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0409.webp"
       },
       {
         "hindi": "मिस्र",
         "english": [
           "Egypt"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0410.webp"
       },
       {
         "hindi": "हिंदुस्तान",
@@ -2947,7 +2992,8 @@ export const PHASE_DATA = {
           "India",
           "Hindustan"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0411.webp"
       },
       {
         "hindi": "समुंदर",
@@ -2955,119 +3001,136 @@ export const PHASE_DATA = {
           "sea",
           "ocean"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0412.webp"
       },
       {
         "hindi": "महाद्वीप",
         "english": [
           "continent"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0413.webp"
       },
       {
         "hindi": "दुनिया",
         "english": [
           "world"
         ],
-        "category": "World and directions"
+        "category": "World and directions",
+        "image": "assets/phase1-images/phase1-0414.webp"
       },
       {
         "hindi": "एक रुपए का सिक्का",
         "english": [
           "one rupee coin"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0415.webp"
       },
       {
         "hindi": "दो रुपए का सिक्का",
         "english": [
           "two rupee coin"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0416.webp"
       },
       {
         "hindi": "पाँच रूपे का सिक्का",
         "english": [
           "five rupee coin"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0417.webp"
       },
       {
         "hindi": "दस रुपए का सिक्का",
         "english": [
           "ten rupee coin"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0418.webp"
       },
       {
         "hindi": "बीस रुपए का सिक्का",
         "english": [
           "twenty rupee coin"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0419.webp"
       },
       {
         "hindi": "दस रुपए का नोट",
         "english": [
           "ten rupee note"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0420.webp"
       },
       {
         "hindi": "बीस रुपए का नोट",
         "english": [
           "twenty rupee note"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0421.webp"
       },
       {
         "hindi": "बीस रुपए का नोट",
         "english": [
           "twenty rupee note"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0422.webp"
       },
       {
         "hindi": "पचास रुपए का नोट",
         "english": [
           "fifty rupee note"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0423.webp"
       },
       {
         "hindi": "सौ रुपए का नोट",
         "english": [
           "one hundred rupee note"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0424.webp"
       },
       {
         "hindi": "दो सौ रुपए का नोट",
         "english": [
           "two hundred rupee note"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0425.webp"
       },
       {
         "hindi": "पाँच सो रुपए का नोट",
         "english": [
           "five hundred rupee note"
         ],
-        "category": "Money"
+        "category": "Money",
+        "image": "assets/phase1-images/phase1-0426.webp"
       },
       {
         "hindi": "बादल",
         "english": [
           "cloud"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0427.webp"
       },
       {
         "hindi": "आसमान",
         "english": [
           "sky"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0428.webp"
       },
       {
         "hindi": "बर्फ",
@@ -3075,21 +3138,24 @@ export const PHASE_DATA = {
           "snow",
           "ice"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0429.webp"
       },
       {
         "hindi": "इंद्रधनुष",
         "english": [
           "rainbow"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0430.webp"
       },
       {
         "hindi": "सूरज",
         "english": [
           "sun"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0431.webp"
       },
       {
         "hindi": "समुंदर",
@@ -3097,28 +3163,32 @@ export const PHASE_DATA = {
           "sea",
           "ocean"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0432.webp"
       },
       {
         "hindi": "पानी का जहाज़",
         "english": [
           "ship"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0433.webp"
       },
       {
         "hindi": "पहाड़",
         "english": [
           "mountain"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0434.webp"
       },
       {
         "hindi": "घाटी",
         "english": [
           "valley"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0435.webp"
       },
       {
         "hindi": "मैदान",
@@ -3126,7 +3196,8 @@ export const PHASE_DATA = {
           "field",
           "plain"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0436.webp"
       },
       {
         "hindi": "जंगल",
@@ -3134,63 +3205,72 @@ export const PHASE_DATA = {
           "forest",
           "jungle"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0437.webp"
       },
       {
         "hindi": "नाव",
         "english": [
           "boat"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0438.webp"
       },
       {
         "hindi": "द्वीप",
         "english": [
           "island"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0439.webp"
       },
       {
         "hindi": "तालाब",
         "english": [
           "pond"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0440.webp"
       },
       {
         "hindi": "पुल",
         "english": [
           "bridge"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0441.webp"
       },
       {
         "hindi": "घास",
         "english": [
           "grass"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0442.webp"
       },
       {
         "hindi": "नदी",
         "english": [
           "river"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0443.webp"
       },
       {
         "hindi": "पहाड़ी",
         "english": [
           "hill"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0444.webp"
       },
       {
         "hindi": "चट्टान",
         "english": [
           "rock"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0445.webp"
       },
       {
         "hindi": "रास्ता",
@@ -3198,7 +3278,8 @@ export const PHASE_DATA = {
           "path",
           "way"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0446.webp"
       },
       {
         "hindi": "सड़क",
@@ -3206,7 +3287,8 @@ export const PHASE_DATA = {
           "road",
           "street"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0447.webp"
       },
       {
         "hindi": "पगडंडी",
@@ -3214,7 +3296,8 @@ export const PHASE_DATA = {
           "footpath",
           "trail"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0448.webp"
       },
       {
         "hindi": "फुटपाथ",
@@ -3222,21 +3305,24 @@ export const PHASE_DATA = {
           "pavement",
           "footpath"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0449.webp"
       },
       {
         "hindi": "धुआँ",
         "english": [
           "smoke"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0450.webp"
       },
       {
         "hindi": "बगीचा",
         "english": [
           "garden"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0451.webp"
       },
       {
         "hindi": "बाग",
@@ -3244,7 +3330,8 @@ export const PHASE_DATA = {
           "garden",
           "orchard"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0452.webp"
       },
       {
         "hindi": "खेत",
@@ -3252,14 +3339,16 @@ export const PHASE_DATA = {
           "field",
           "farm"
         ],
-        "category": "Nature and travel"
+        "category": "Nature and travel",
+        "image": "assets/phase1-images/phase1-0453.webp"
       },
       {
         "hindi": "डस्ट पैन",
         "english": [
           "dustpan"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0454.webp"
       },
       {
         "hindi": "ईयर बड",
@@ -3267,21 +3356,24 @@ export const PHASE_DATA = {
           "earbud",
           "cotton bud"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0455.webp"
       },
       {
         "hindi": "बाल्टी",
         "english": [
           "bucket"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0456.webp"
       },
       {
         "hindi": "वाशिंग मशीन",
         "english": [
           "washing machine"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0457.webp"
       },
       {
         "hindi": "गोली",
@@ -3289,35 +3381,40 @@ export const PHASE_DATA = {
           "tablet",
           "pill"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0458.webp"
       },
       {
         "hindi": "रुमाल",
         "english": [
           "handkerchief"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0459.webp"
       },
       {
         "hindi": "ताला",
         "english": [
           "lock"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0460.webp"
       },
       {
         "hindi": "कंघा",
         "english": [
           "comb"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0461.webp"
       },
       {
         "hindi": "तौलिया",
         "english": [
           "towel"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0462.webp"
       },
       {
         "hindi": "चादर",
@@ -3325,63 +3422,72 @@ export const PHASE_DATA = {
           "sheet",
           "bedsheet"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0463.webp"
       },
       {
         "hindi": "दवाई",
         "english": [
           "medicine"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0464.webp"
       },
       {
         "hindi": "हेयर ड्रायर",
         "english": [
           "hair dryer"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0465.webp"
       },
       {
         "hindi": "कपड़े की चिमटी",
         "english": [
           "clothes peg"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0466.webp"
       },
       {
         "hindi": "पोंछा",
         "english": [
           "mop"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0467.webp"
       },
       {
         "hindi": "साबुन",
         "english": [
           "soap"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0468.webp"
       },
       {
         "hindi": "पाउडर",
         "english": [
           "powder"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0469.webp"
       },
       {
         "hindi": "टॉयलेट पेपर",
         "english": [
           "toilet paper"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0470.webp"
       },
       {
         "hindi": "टोकरी",
         "english": [
           "basket"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0471.webp"
       },
       {
         "hindi": "कपड़ा",
@@ -3389,42 +3495,48 @@ export const PHASE_DATA = {
           "cloth",
           "rag"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0472.webp"
       },
       {
         "hindi": "नेल कटर",
         "english": [
           "nail clippers"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0473.webp"
       },
       {
         "hindi": "रेज़र",
         "english": [
           "razor"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0474.webp"
       },
       {
         "hindi": "परफ्यूम",
         "english": [
           "perfume"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0475.webp"
       },
       {
         "hindi": "पिन",
         "english": [
           "pin"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0476.webp"
       },
       {
         "hindi": "बैंडेज",
         "english": [
           "bandage"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0477.webp"
       },
       {
         "hindi": "नेल पेंट",
@@ -3432,56 +3544,64 @@ export const PHASE_DATA = {
           "nail varnish",
           "nail polish"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0478.webp"
       },
       {
         "hindi": "शैम्पू",
         "english": [
           "shampoo"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0479.webp"
       },
       {
         "hindi": "हेंगर",
         "english": [
           "hanger"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0480.webp"
       },
       {
         "hindi": "स्पंज",
         "english": [
           "sponge"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0481.webp"
       },
       {
         "hindi": "टिश्यू पेपर",
         "english": [
           "tissue paper"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0482.webp"
       },
       {
         "hindi": "टूथपेस्ट और ब्रश",
         "english": [
           "toothpaste and brush"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0483.webp"
       },
       {
         "hindi": "लिपस्टिक",
         "english": [
           "lipstick"
         ],
-        "category": "Bathroom and cleaning"
+        "category": "Bathroom and cleaning",
+        "image": "assets/phase1-images/phase1-0484.webp"
       },
       {
         "hindi": "गाँव",
         "english": [
           "village"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0485.webp"
       },
       {
         "hindi": "शहर",
@@ -3489,21 +3609,24 @@ export const PHASE_DATA = {
           "city",
           "town"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0486.webp"
       },
       {
         "hindi": "मस्जिद",
         "english": [
           "mosque"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0487.webp"
       },
       {
         "hindi": "मछली",
         "english": [
           "fish"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0488.webp"
       },
       {
         "hindi": "चश्मे की दुकान",
@@ -3511,7 +3634,8 @@ export const PHASE_DATA = {
           "optician",
           "glasses shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0489.webp"
       },
       {
         "hindi": "पेट्रोल पम्प",
@@ -3519,14 +3643,16 @@ export const PHASE_DATA = {
           "petrol pump",
           "petrol station"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0490.webp"
       },
       {
         "hindi": "जिम",
         "english": [
           "gym"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0491.webp"
       },
       {
         "hindi": "फूल की दुकान",
@@ -3534,35 +3660,40 @@ export const PHASE_DATA = {
           "flower shop",
           "florist"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0492.webp"
       },
       {
         "hindi": "जूते की दुकान",
         "english": [
           "shoe shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0493.webp"
       },
       {
         "hindi": "रेस्टोएंट",
         "english": [
           "restaurant"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0494.webp"
       },
       {
         "hindi": "म्यूज़ियम",
         "english": [
           "museum"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0495.webp"
       },
       {
         "hindi": "डॉक्टर",
         "english": [
           "doctor"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0496.webp"
       },
       {
         "hindi": "केमिस्ट",
@@ -3570,49 +3701,56 @@ export const PHASE_DATA = {
           "chemist",
           "pharmacy"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0497.webp"
       },
       {
         "hindi": "होटल",
         "english": [
           "hotel"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0498.webp"
       },
       {
         "hindi": "डेंटिस्ट",
         "english": [
           "dentist"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0499.webp"
       },
       {
         "hindi": "रेडी मेड कपड़े की दुकान",
         "english": [
           "ready-made clothes shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0500.webp"
       },
       {
         "hindi": "नाई की दुकान",
         "english": [
           "barber shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0501.webp"
       },
       {
         "hindi": "पुलिस स्टेशन",
         "english": [
           "police station"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0502.webp"
       },
       {
         "hindi": "कपड़े की दुकान",
         "english": [
           "clothes shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0503.webp"
       },
       {
         "hindi": "सब्ज़ी वाला",
@@ -3620,7 +3758,8 @@ export const PHASE_DATA = {
           "vegetable seller",
           "greengrocer"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0504.webp"
       },
       {
         "hindi": "फलवाला",
@@ -3628,14 +3767,16 @@ export const PHASE_DATA = {
           "fruit seller",
           "fruiterer"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0505.webp"
       },
       {
         "hindi": "गिरजाघर",
         "english": [
           "church"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0506.webp"
       },
       {
         "hindi": "अख़बार की दुकान",
@@ -3643,21 +3784,24 @@ export const PHASE_DATA = {
           "newspaper shop",
           "newsagent"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0507.webp"
       },
       {
         "hindi": "पोस्ट ऑफिस",
         "english": [
           "post office"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0508.webp"
       },
       {
         "hindi": "खिलौने की दुकान",
         "english": [
           "toy shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0509.webp"
       },
       {
         "hindi": "खेत",
@@ -3665,28 +3809,32 @@ export const PHASE_DATA = {
           "field",
           "farm"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0510.webp"
       },
       {
         "hindi": "बिजली के समान की दुकान",
         "english": [
           "electrical goods shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0511.webp"
       },
       {
         "hindi": "स्टेडियम",
         "english": [
           "stadium"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0512.webp"
       },
       {
         "hindi": "मसाले की दुकान",
         "english": [
           "spice shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0513.webp"
       },
       {
         "hindi": "चाय वाला",
@@ -3694,7 +3842,8 @@ export const PHASE_DATA = {
           "tea seller",
           "chai seller"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0514.webp"
       },
       {
         "hindi": "चाय की दुकान",
@@ -3702,7 +3851,8 @@ export const PHASE_DATA = {
           "tea shop",
           "chai shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0515.webp"
       },
       {
         "hindi": "मॉल",
@@ -3710,14 +3860,16 @@ export const PHASE_DATA = {
           "mall",
           "shopping centre"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0516.webp"
       },
       {
         "hindi": "पार्किंग",
         "english": [
           "parking"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0517.webp"
       },
       {
         "hindi": "प्रेस वालाल",
@@ -3725,77 +3877,88 @@ export const PHASE_DATA = {
           "ironing man",
           "ironing shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0518.webp"
       },
       {
         "hindi": "टिकट काउंटर",
         "english": [
           "ticket counter"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0519.webp"
       },
       {
         "hindi": "ड्राई क्लीनिंग की दुकान",
         "english": [
           "dry cleaner's"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0520.webp"
       },
       {
         "hindi": "चिड़िया घर",
         "english": [
           "zoo"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0521.webp"
       },
       {
         "hindi": "बर्तन की दुकान",
         "english": [
           "utensil shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0522.webp"
       },
       {
         "hindi": "फोटोकॉपी की दुकान",
         "english": [
           "photocopy shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0523.webp"
       },
       {
         "hindi": "स्कूल",
         "english": [
           "school"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0524.webp"
       },
       {
         "hindi": "फर्नीचर की दुकान",
         "english": [
           "furniture shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0525.webp"
       },
       {
         "hindi": "बैंक",
         "english": [
           "bank"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0526.webp"
       },
       {
         "hindi": "मैकेनिक",
         "english": [
           "mechanic"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0527.webp"
       },
       {
         "hindi": "रेलवे स्टेशन",
         "english": [
           "railway station"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0528.webp"
       },
       {
         "hindi": "जेल",
@@ -3803,7 +3966,8 @@ export const PHASE_DATA = {
           "prison",
           "jail"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0529.webp"
       },
       {
         "hindi": "गोश्त की दुकान",
@@ -3811,7 +3975,8 @@ export const PHASE_DATA = {
           "meat shop",
           "butcher's"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0530.webp"
       },
       {
         "hindi": "समुंदर का किनारा",
@@ -3820,21 +3985,24 @@ export const PHASE_DATA = {
           "seaside",
           "beach"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0531.webp"
       },
       {
         "hindi": "मदर डेरी",
         "english": [
           "Mother Dairy"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0532.webp"
       },
       {
         "hindi": "मेट्रो स्टेशन",
         "english": [
           "metro station"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0533.webp"
       },
       {
         "hindi": "अदालत",
@@ -3842,28 +4010,32 @@ export const PHASE_DATA = {
           "court",
           "courthouse"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0534.webp"
       },
       {
         "hindi": "पार्क",
         "english": [
           "park"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0535.webp"
       },
       {
         "hindi": "मंदिर",
         "english": [
           "temple"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0536.webp"
       },
       {
         "hindi": "सुनार की दुकान",
         "english": [
           "jeweller's shop"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0537.webp"
       },
       {
         "hindi": "किताब की दुकान",
@@ -3871,28 +4043,32 @@ export const PHASE_DATA = {
           "bookshop",
           "bookstore"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0538.webp"
       },
       {
         "hindi": "हवाई अड्डा",
         "english": [
           "airport"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0539.webp"
       },
       {
         "hindi": "ऑफिस",
         "english": [
           "office"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0540.webp"
       },
       {
         "hindi": "फैक्ट्री",
         "english": [
           "factory"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0541.webp"
       },
       {
         "hindi": "कब्रिस्तान",
@@ -3900,21 +4076,24 @@ export const PHASE_DATA = {
           "cemetery",
           "graveyard"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0542.webp"
       },
       {
         "hindi": "अस्पताल",
         "english": [
           "hospital"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0543.webp"
       },
       {
         "hindi": "लाइब्रेरी",
         "english": [
           "library"
         ],
-        "category": "Places in town"
+        "category": "Places in town",
+        "image": "assets/phase1-images/phase1-0544.webp"
       },
       {
         "hindi": "खोलना",
@@ -3922,7 +4101,8 @@ export const PHASE_DATA = {
           "open",
           "to open"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0545.webp"
       },
       {
         "hindi": "बंद करना",
@@ -3931,7 +4111,8 @@ export const PHASE_DATA = {
           "shut",
           "to close"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0546.webp"
       },
       {
         "hindi": "लुड़कना",
@@ -3939,7 +4120,8 @@ export const PHASE_DATA = {
           "roll",
           "roll down"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0547.webp"
       },
       {
         "hindi": "लुड़काना",
@@ -3947,7 +4129,8 @@ export const PHASE_DATA = {
           "roll",
           "to roll something"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0548.webp"
       },
       {
         "hindi": "घूमना",
@@ -3956,7 +4139,8 @@ export const PHASE_DATA = {
           "rotate",
           "wander"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0549.webp"
       },
       {
         "hindi": "घुमाना",
@@ -3964,7 +4148,8 @@ export const PHASE_DATA = {
           "turn",
           "rotate something"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0550.webp"
       },
       {
         "hindi": "गिरना",
@@ -3972,7 +4157,8 @@ export const PHASE_DATA = {
           "fall",
           "to fall"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0551.webp"
       },
       {
         "hindi": "गिराना",
@@ -3980,7 +4166,8 @@ export const PHASE_DATA = {
           "drop",
           "make fall"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0552.webp"
       },
       {
         "hindi": "खींचना",
@@ -3988,7 +4175,8 @@ export const PHASE_DATA = {
           "pull",
           "to pull"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0553.webp"
       },
       {
         "hindi": "धकेलना",
@@ -3996,7 +4184,8 @@ export const PHASE_DATA = {
           "push",
           "to push"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0554.webp"
       },
       {
         "hindi": "मुड़ना",
@@ -4004,7 +4193,8 @@ export const PHASE_DATA = {
           "turn",
           "bend"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0555.webp"
       },
       {
         "hindi": "मोड़ना",
@@ -4012,7 +4202,8 @@ export const PHASE_DATA = {
           "turn",
           "bend something"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0556.webp"
       },
       {
         "hindi": "छीलना",
@@ -4020,7 +4211,8 @@ export const PHASE_DATA = {
           "peel",
           "to peel"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0557.webp"
       },
       {
         "hindi": "निचोड़ना",
@@ -4028,7 +4220,8 @@ export const PHASE_DATA = {
           "squeeze",
           "wring out"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0558.webp"
       },
       {
         "hindi": "जलाना",
@@ -4036,7 +4229,8 @@ export const PHASE_DATA = {
           "light",
           "switch on"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0559.webp"
       },
       {
         "hindi": "बंद करना",
@@ -4044,7 +4238,8 @@ export const PHASE_DATA = {
           "close",
           "switch off"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0560.webp"
       },
       {
         "hindi": "चलाना",
@@ -4053,7 +4248,8 @@ export const PHASE_DATA = {
           "operate",
           "switch on"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0561.webp"
       },
       {
         "hindi": "बंद करना",
@@ -4061,7 +4257,8 @@ export const PHASE_DATA = {
           "close",
           "switch off"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0562.webp"
       },
       {
         "hindi": "बंद करना",
@@ -4069,7 +4266,8 @@ export const PHASE_DATA = {
           "close",
           "switch off"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0563.webp"
       },
       {
         "hindi": "खोलना",
@@ -4077,28 +4275,32 @@ export const PHASE_DATA = {
           "open",
           "switch on"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0564.webp"
       },
       {
         "hindi": "फ़ोन चार्ज करना",
         "english": [
           "charge the phone"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0565.webp"
       },
       {
         "hindi": "लैपटॉप चार्ज करना",
         "english": [
           "charge the laptop"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0566.webp"
       },
       {
         "hindi": "फ़ोन पर बात करना",
         "english": [
           "talk on the phone"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0567.webp"
       },
       {
         "hindi": "तोलना",
@@ -4106,14 +4308,16 @@ export const PHASE_DATA = {
           "weigh",
           "to weigh"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0568.webp"
       },
       {
         "hindi": "टीवी देखना",
         "english": [
           "watch TV"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0569.webp"
       },
       {
         "hindi": "फ़ोन उठाना",
@@ -4121,7 +4325,8 @@ export const PHASE_DATA = {
           "pick up the phone",
           "answer the phone"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0570.webp"
       },
       {
         "hindi": "नापना",
@@ -4129,7 +4334,8 @@ export const PHASE_DATA = {
           "measure",
           "to measure"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0571.webp"
       },
       {
         "hindi": "बाँटना",
@@ -4137,7 +4343,8 @@ export const PHASE_DATA = {
           "divide",
           "share out"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0572.webp"
       },
       {
         "hindi": "चुराना",
@@ -4145,399 +4352,456 @@ export const PHASE_DATA = {
           "steal",
           "to steal"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0573.webp"
       },
       {
         "hindi": "फोटो खींचना",
         "english": [
           "take a photo"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0574.webp"
       },
       {
         "hindi": "रेडियो सुनना",
         "english": [
           "listen to the radio"
         ],
-        "category": "Action verbs and devices"
+        "category": "Action verbs and devices",
+        "image": "assets/phase1-images/phase1-0575.webp"
       },
       {
         "hindi": "ग्यारह",
         "english": [
           "eleven"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0576.webp"
       },
       {
         "hindi": "बारह",
         "english": [
           "twelve"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0577.webp"
       },
       {
         "hindi": "तेरह",
         "english": [
           "thirteen"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0578.webp"
       },
       {
         "hindi": "चौदह",
         "english": [
           "fourteen"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0579.webp"
       },
       {
         "hindi": "पंद्रह",
         "english": [
           "fifteen"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0580.webp"
       },
       {
         "hindi": "सोलह",
         "english": [
           "sixteen"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0581.webp"
       },
       {
         "hindi": "सत्रह",
         "english": [
           "seventeen"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0582.webp"
       },
       {
         "hindi": "अठारह",
         "english": [
           "eighteen"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0583.webp"
       },
       {
         "hindi": "उन्नीस",
         "english": [
           "nineteen"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0584.webp"
       },
       {
         "hindi": "बीस",
         "english": [
           "twenty"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0585.webp"
       },
       {
         "hindi": "इक्कीस",
         "english": [
           "twenty-one"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0586.webp"
       },
       {
         "hindi": "बाईस",
         "english": [
           "twenty-two"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0587.webp"
       },
       {
         "hindi": "तेइस",
         "english": [
           "twenty-three"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0588.webp"
       },
       {
         "hindi": "चौबीस",
         "english": [
           "twenty-four"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0589.webp"
       },
       {
         "hindi": "पच्चीस",
         "english": [
           "twenty-five"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0590.webp"
       },
       {
         "hindi": "छब्बीस",
         "english": [
           "twenty-six"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0591.webp"
       },
       {
         "hindi": "सत्ताईस",
         "english": [
           "twenty-seven"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0592.webp"
       },
       {
         "hindi": "अट्ठाईस",
         "english": [
           "twenty-eight"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0593.webp"
       },
       {
         "hindi": "उनतीस",
         "english": [
           "twenty-nine"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0594.webp"
       },
       {
         "hindi": "तीस",
         "english": [
           "thirty"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0595.webp"
       },
       {
         "hindi": "इकत्तीस",
         "english": [
           "thirty-one"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0596.webp"
       },
       {
         "hindi": "बत्तीस",
         "english": [
           "thirty-two"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0597.webp"
       },
       {
         "hindi": "तैतीस",
         "english": [
           "thirty-three"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0598.webp"
       },
       {
         "hindi": "चौतीस",
         "english": [
           "thirty-four"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0599.webp"
       },
       {
         "hindi": "पैंतीस",
         "english": [
           "thirty-five"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0600.webp"
       },
       {
         "hindi": "छत्तीस",
         "english": [
           "thirty-six"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0601.webp"
       },
       {
         "hindi": "सैतीस",
         "english": [
           "thirty-seven"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0602.webp"
       },
       {
         "hindi": "अड़तीस",
         "english": [
           "thirty-eight"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0603.webp"
       },
       {
         "hindi": "उनतालीस",
         "english": [
           "thirty-nine"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0604.webp"
       },
       {
         "hindi": "चालीस",
         "english": [
           "forty"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0605.webp"
       },
       {
         "hindi": "इकतालीस",
         "english": [
           "forty-one"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0606.webp"
       },
       {
         "hindi": "बयालीस",
         "english": [
           "forty-two"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0607.webp"
       },
       {
         "hindi": "तिरालीस",
         "english": [
           "forty-three"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0608.webp"
       },
       {
         "hindi": "चौवालिस",
         "english": [
           "forty-four"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0609.webp"
       },
       {
         "hindi": "पैंतालीस",
         "english": [
           "forty-five"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0610.webp"
       },
       {
         "hindi": "छियालीस",
         "english": [
           "forty-six"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0611.webp"
       },
       {
         "hindi": "सैंतालीस",
         "english": [
           "forty-seven"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0612.webp"
       },
       {
         "hindi": "अड़तालीस",
         "english": [
           "forty-eight"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0613.webp"
       },
       {
         "hindi": "उनचास",
         "english": [
           "forty-nine"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0614.webp"
       },
       {
         "hindi": "पचास",
         "english": [
           "fifty"
         ],
-        "category": "Numbers 11-50"
+        "category": "Numbers 11-50",
+        "image": "assets/phase1-images/phase1-0615.webp"
       },
       {
         "hindi": "कैसे ?",
         "english": [
           "how?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0616.webp"
       },
       {
         "hindi": "कौन सा?",
         "english": [
           "which one?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0617.webp"
       },
       {
         "hindi": "कहाँ ?",
         "english": [
           "where?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0618.webp"
       },
       {
         "hindi": "क्या ?",
         "english": [
           "what?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0619.webp"
       },
       {
         "hindi": "क्यों ?",
         "english": [
           "why?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0620.webp"
       },
       {
         "hindi": "कौन ?",
         "english": [
           "who?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0621.webp"
       },
       {
         "hindi": "कितने ?",
         "english": [
           "how many?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0622.webp"
       },
       {
         "hindi": "कौन सी?",
         "english": [
           "which one?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0623.webp"
       },
       {
         "hindi": "आप कितने साल के हैं ?",
         "english": [
           "how old are you?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0624.webp"
       },
       {
         "hindi": "कितना बड़ा?",
         "english": [
           "how big?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0625.webp"
       },
       {
         "hindi": "कब?",
         "english": [
           "when?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0626.webp"
       },
       {
         "hindi": "कितनी दूर?",
         "english": [
           "how far?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0627.webp"
       },
       {
         "hindi": "किसका?",
         "english": [
           "whose?"
         ],
-        "category": "Question words"
+        "category": "Question words",
+        "image": "assets/phase1-images/phase1-0628.webp"
       },
       {
         "hindi": "साइंस की किताब",
         "english": [
           "science book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0629.webp"
       },
       {
         "hindi": "खाना बनाने की किताब",
@@ -4545,140 +4809,160 @@ export const PHASE_DATA = {
           "cookery book",
           "cookbook"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0630.webp"
       },
       {
         "hindi": "अख़बार",
         "english": [
           "newspaper"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0631.webp"
       },
       {
         "hindi": "पुरानी किताब",
         "english": [
           "old book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0632.webp"
       },
       {
         "hindi": "नई किताब",
         "english": [
           "new book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0633.webp"
       },
       {
         "hindi": "मोटी किताब",
         "english": [
           "thick book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0634.webp"
       },
       {
         "hindi": "पतली",
         "english": [
           "thin"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0635.webp"
       },
       {
         "hindi": "मुश्किल किताब",
         "english": [
           "difficult book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0636.webp"
       },
       {
         "hindi": "आसान किताब",
         "english": [
           "easy book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0637.webp"
       },
       {
         "hindi": "चुटकुले की किताब",
         "english": [
           "joke book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0638.webp"
       },
       {
         "hindi": "कहानियों की किताब",
         "english": [
           "story book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0639.webp"
       },
       {
         "hindi": "डिक्शनरी",
         "english": [
           "dictionary"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0640.webp"
       },
       {
         "hindi": "मैगज़ीन",
         "english": [
           "magazine"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0641.webp"
       },
       {
         "hindi": "महंगी किताब",
         "english": [
           "expensive book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0642.webp"
       },
       {
         "hindi": "सस्ती किताब",
         "english": [
           "cheap book"
         ],
-        "category": "Books and reading"
+        "category": "Books and reading",
+        "image": "assets/phase1-images/phase1-0643.webp"
       },
       {
         "hindi": "गिलहरी",
         "english": [
           "squirrel"
         ],
-        "category": "Small animals and objects"
+        "category": "Small animals and objects",
+        "image": "assets/phase1-images/phase1-0644.webp"
       },
       {
         "hindi": "सीटी",
         "english": [
           "whistle"
         ],
-        "category": "Small animals and objects"
+        "category": "Small animals and objects",
+        "image": "assets/phase1-images/phase1-0645.webp"
       },
       {
         "hindi": "कबूतर",
         "english": [
           "pigeon"
         ],
-        "category": "Small animals and objects"
+        "category": "Small animals and objects",
+        "image": "assets/phase1-images/phase1-0646.webp"
       },
       {
         "hindi": "मोमबत्ती",
         "english": [
           "candle"
         ],
-        "category": "Small animals and objects"
+        "category": "Small animals and objects",
+        "image": "assets/phase1-images/phase1-0647.webp"
       },
       {
         "hindi": "पेड़ की चोटी",
         "english": [
           "top of the tree"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0648.webp"
       },
       {
         "hindi": "पेड़ के नीचे का हिस्सा",
         "english": [
           "bottom of the tree"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0649.webp"
       },
       {
         "hindi": "ऊँचा पेड़",
@@ -4686,7 +4970,8 @@ export const PHASE_DATA = {
           "tall tree",
           "high tree"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0650.webp"
       },
       {
         "hindi": "नीचा पेड़",
@@ -4694,14 +4979,16 @@ export const PHASE_DATA = {
           "short tree",
           "low tree"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0651.webp"
       },
       {
         "hindi": "लंबा आदमी",
         "english": [
           "tall man"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0652.webp"
       },
       {
         "hindi": "छोटी लड़की",
@@ -4709,14 +4996,16 @@ export const PHASE_DATA = {
           "small girl",
           "short girl"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0653.webp"
       },
       {
         "hindi": "ऊपर चढ़ना",
         "english": [
           "climb up"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0654.webp"
       },
       {
         "hindi": "नीचे उतरना",
@@ -4724,49 +5013,56 @@ export const PHASE_DATA = {
           "climb down",
           "go down"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0655.webp"
       },
       {
         "hindi": "पहाड़ के नीचे का हिस्सा",
         "english": [
           "bottom of the mountain"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0656.webp"
       },
       {
         "hindi": "पहाड़ की चोटी",
         "english": [
           "top of the mountain"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0657.webp"
       },
       {
         "hindi": "छोटी लाइन",
         "english": [
           "short line"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0658.webp"
       },
       {
         "hindi": "लंबी लाइन",
         "english": [
           "long line"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0659.webp"
       },
       {
         "hindi": "सुडौल रेखा",
         "english": [
           "curved line"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0660.webp"
       },
       {
         "hindi": "सीधी लाइन",
         "english": [
           "straight line"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0661.webp"
       },
       {
         "hindi": "टेढ़ी मेढ़ी लाइन",
@@ -4774,14 +5070,16 @@ export const PHASE_DATA = {
           "crooked line",
           "wavy line"
         ],
-        "category": "Heights and lines"
+        "category": "Heights and lines",
+        "image": "assets/phase1-images/phase1-0662.webp"
       },
       {
         "hindi": "दूर",
         "english": [
           "far"
         ],
-        "category": "Shapes and distance"
+        "category": "Shapes and distance",
+        "image": "assets/phase1-images/phase1-0663.webp"
       },
       {
         "hindi": "पास",
@@ -4789,14 +5087,16 @@ export const PHASE_DATA = {
           "near",
           "close"
         ],
-        "category": "Shapes and distance"
+        "category": "Shapes and distance",
+        "image": "assets/phase1-images/phase1-0664.webp"
       },
       {
         "hindi": "सितारा",
         "english": [
           "star"
         ],
-        "category": "Shapes and distance"
+        "category": "Shapes and distance",
+        "image": "assets/phase1-images/phase1-0665.webp"
       },
       {
         "hindi": "आधा गोला",
@@ -4804,7 +5104,8 @@ export const PHASE_DATA = {
           "semicircle",
           "half circle"
         ],
-        "category": "Shapes and distance"
+        "category": "Shapes and distance",
+        "image": "assets/phase1-images/phase1-0666.webp"
       },
       {
         "hindi": "गोल",
@@ -4812,7 +5113,8 @@ export const PHASE_DATA = {
           "round",
           "circle"
         ],
-        "category": "Shapes and distance"
+        "category": "Shapes and distance",
+        "image": "assets/phase1-images/phase1-0667.webp"
       },
       {
         "hindi": "तिकोना",
@@ -4820,21 +5122,24 @@ export const PHASE_DATA = {
           "triangular",
           "triangle"
         ],
-        "category": "Shapes and distance"
+        "category": "Shapes and distance",
+        "image": "assets/phase1-images/phase1-0668.webp"
       },
       {
         "hindi": "चौकोर",
         "english": [
           "square"
         ],
-        "category": "Shapes and distance"
+        "category": "Shapes and distance",
+        "image": "assets/phase1-images/phase1-0669.webp"
       },
       {
         "hindi": "कुछ",
         "english": [
           "some"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0670.webp"
       },
       {
         "hindi": "बहुत",
@@ -4843,7 +5148,8 @@ export const PHASE_DATA = {
           "many",
           "much"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0671.webp"
       },
       {
         "hindi": "ज़्यादातर",
@@ -4851,14 +5157,16 @@ export const PHASE_DATA = {
           "mostly",
           "most"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0672.webp"
       },
       {
         "hindi": "कुछ",
         "english": [
           "some"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0673.webp"
       },
       {
         "hindi": "सब",
@@ -4866,35 +5174,40 @@ export const PHASE_DATA = {
           "all",
           "everything"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0674.webp"
       },
       {
         "hindi": "से ज़्यादा",
         "english": [
           "more than"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0675.webp"
       },
       {
         "hindi": "से कम",
         "english": [
           "less than"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0676.webp"
       },
       {
         "hindi": "उनमे से एक",
         "english": [
           "one of them"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0677.webp"
       },
       {
         "hindi": "इसमें से थोड़ा",
         "english": [
           "a little of this"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0678.webp"
       },
       {
         "hindi": "इससे कुछ",
@@ -4902,21 +5215,24 @@ export const PHASE_DATA = {
           "some of this",
           "something from this"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0679.webp"
       },
       {
         "hindi": "सबसे ज़्यादा",
         "english": [
           "the most"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0680.webp"
       },
       {
         "hindi": "बराबर",
         "english": [
           "equal"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0681.webp"
       },
       {
         "hindi": "आखरी",
@@ -4924,7 +5240,8 @@ export const PHASE_DATA = {
           "last",
           "final"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0682.webp"
       },
       {
         "hindi": "कोई तो",
@@ -4932,7 +5249,8 @@ export const PHASE_DATA = {
           "someone",
           "somebody"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0683.webp"
       },
       {
         "hindi": "सब लोग",
@@ -4940,7 +5258,8 @@ export const PHASE_DATA = {
           "everyone",
           "all people"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0684.webp"
       },
       {
         "hindi": "कोई नहीं",
@@ -4948,14 +5267,16 @@ export const PHASE_DATA = {
           "no one",
           "nobody"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0685.webp"
       },
       {
         "hindi": "कुछ नहीं",
         "english": [
           "nothing"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0686.webp"
       },
       {
         "hindi": "कोई भी",
@@ -4963,7 +5284,8 @@ export const PHASE_DATA = {
           "anyone",
           "anybody"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0687.webp"
       },
       {
         "hindi": "ज़्यादा",
@@ -4971,14 +5293,16 @@ export const PHASE_DATA = {
           "more",
           "much"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0688.webp"
       },
       {
         "hindi": "अगला",
         "english": [
           "next"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0689.webp"
       },
       {
         "hindi": "पिछला",
@@ -4986,154 +5310,176 @@ export const PHASE_DATA = {
           "previous",
           "last"
         ],
-        "category": "Quantities and comparisons"
+        "category": "Quantities and comparisons",
+        "image": "assets/phase1-images/phase1-0690.webp"
       },
       {
         "hindi": "इकत्तर",
         "english": [
           "seventy-one"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0691.webp"
       },
       {
         "hindi": "बहत्तर",
         "english": [
           "seventy-two"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0692.webp"
       },
       {
         "hindi": "तेहत्तर",
         "english": [
           "seventy-three"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0693.webp"
       },
       {
         "hindi": "चौहत्तर",
         "english": [
           "seventy-four"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0694.webp"
       },
       {
         "hindi": "पिछत्तर",
         "english": [
           "seventy-five"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0695.webp"
       },
       {
         "hindi": "चिअत्तर",
         "english": [
           "seventy-six"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0696.webp"
       },
       {
         "hindi": "सतत्तर",
         "english": [
           "seventy-seven"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0697.webp"
       },
       {
         "hindi": "अढ़त्तर",
         "english": [
           "seventy-eight"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0698.webp"
       },
       {
         "hindi": "उनासी",
         "english": [
           "seventy-nine"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0699.webp"
       },
       {
         "hindi": "अस्सी",
         "english": [
           "eighty"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0700.webp"
       },
       {
         "hindi": "इक्यासी",
         "english": [
           "eighty-one"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0701.webp"
       },
       {
         "hindi": "बयासी",
         "english": [
           "eighty-two"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0702.webp"
       },
       {
         "hindi": "तिरासी",
         "english": [
           "eighty-three"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0703.webp"
       },
       {
         "hindi": "चौरासी",
         "english": [
           "eighty-four"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0704.webp"
       },
       {
         "hindi": "पिचयासी",
         "english": [
           "eighty-five"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0705.webp"
       },
       {
         "hindi": "छियासी",
         "english": [
           "eighty-six"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0706.webp"
       },
       {
         "hindi": "सत्तासी",
         "english": [
           "eighty-seven"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0707.webp"
       },
       {
         "hindi": "अट्ठासी",
         "english": [
           "eighty-eight"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0708.webp"
       },
       {
         "hindi": "नवासी",
         "english": [
           "eighty-nine"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0709.webp"
       },
       {
         "hindi": "नब्बे",
         "english": [
           "ninety"
         ],
-        "category": "Numbers 71-90"
+        "category": "Numbers 71-90",
+        "image": "assets/phase1-images/phase1-0710.webp"
       },
       {
         "hindi": "पैदा होना",
         "english": [
           "be born"
         ],
-        "category": "Life stages"
+        "category": "Life stages",
+        "image": "assets/phase1-images/phase1-0711.webp"
       },
       {
         "hindi": "बढ़ना",
@@ -5141,56 +5487,64 @@ export const PHASE_DATA = {
           "grow",
           "grow up"
         ],
-        "category": "Life stages"
+        "category": "Life stages",
+        "image": "assets/phase1-images/phase1-0712.webp"
       },
       {
         "hindi": "सोने का कमरा",
         "english": [
           "bedroom"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0713.webp"
       },
       {
         "hindi": "बालकनी",
         "english": [
           "balcony"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0714.webp"
       },
       {
         "hindi": "ऑफिस",
         "english": [
           "office"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0715.webp"
       },
       {
         "hindi": "पहली मंजिल",
         "english": [
           "first floor"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0716.webp"
       },
       {
         "hindi": "सीढ़ियाँ",
         "english": [
           "stairs"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0717.webp"
       },
       {
         "hindi": "दूसरी मंजिल",
         "english": [
           "second floor"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0718.webp"
       },
       {
         "hindi": "बाथरूम",
         "english": [
           "bathroom"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0719.webp"
       },
       {
         "hindi": "अंदर आना",
@@ -5198,7 +5552,8 @@ export const PHASE_DATA = {
           "come in",
           "enter"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0720.webp"
       },
       {
         "hindi": "बाहर जाना",
@@ -5206,14 +5561,16 @@ export const PHASE_DATA = {
           "go out",
           "leave"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0721.webp"
       },
       {
         "hindi": "रसोई",
         "english": [
           "kitchen"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0722.webp"
       },
       {
         "hindi": "बैठक",
@@ -5221,28 +5578,32 @@ export const PHASE_DATA = {
           "living room",
           "sitting room"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0723.webp"
       },
       {
         "hindi": "खाने की मेज़",
         "english": [
           "dining table"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0724.webp"
       },
       {
         "hindi": "आँगन",
         "english": [
           "courtyard"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0725.webp"
       },
       {
         "hindi": "डलिया",
         "english": [
           "basket"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0726.webp"
       },
       {
         "hindi": "दस्तरख़ान",
@@ -5250,14 +5611,16 @@ export const PHASE_DATA = {
           "tablecloth",
           "dining cloth"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0727.webp"
       },
       {
         "hindi": "कैरम बोर्ड",
         "english": [
           "carrom board"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0728.webp"
       },
       {
         "hindi": "बाथरूम स्प्रेयर",
@@ -5265,7 +5628,8 @@ export const PHASE_DATA = {
           "bathroom sprayer",
           "bidet sprayer"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0729.webp"
       },
       {
         "hindi": "चारपायी",
@@ -5273,14 +5637,16 @@ export const PHASE_DATA = {
           "charpoy",
           "woven bed"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0730.webp"
       },
       {
         "hindi": "मैगी",
         "english": [
           "Maggi noodles"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0731.webp"
       },
       {
         "hindi": "मेहंदी",
@@ -5288,14 +5654,16 @@ export const PHASE_DATA = {
           "henna",
           "mehndi"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0732.webp"
       },
       {
         "hindi": "अगरबत्ती",
         "english": [
           "incense stick"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0733.webp"
       },
       {
         "hindi": "जाली",
@@ -5303,7 +5671,8 @@ export const PHASE_DATA = {
           "mesh",
           "screen"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0734.webp"
       },
       {
         "hindi": "मग्गा",
@@ -5311,7 +5680,8 @@ export const PHASE_DATA = {
           "mug",
           "bathroom mug"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0735.webp"
       },
       {
         "hindi": "थाली",
@@ -5319,84 +5689,96 @@ export const PHASE_DATA = {
           "plate",
           "thali"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0736.webp"
       },
       {
         "hindi": "रस्क",
         "english": [
           "rusk"
         ],
-        "category": "Rooms and household items"
+        "category": "Rooms and household items",
+        "image": "assets/phase1-images/phase1-0737.webp"
       },
       {
         "hindi": "आपका जन्मदिन कब है?",
         "english": [
           "when is your birthday?"
         ],
-        "category": "Birthday phrase"
+        "category": "Birthday phrase",
+        "image": "assets/phase1-images/phase1-0738.webp"
       },
       {
         "hindi": "ख़ाली ग्लास",
         "english": [
           "empty glass"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0739.webp"
       },
       {
         "hindi": "पूरा ग्लास पानी",
         "english": [
           "full glass of water"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0740.webp"
       },
       {
         "hindi": "आधा ग्लास पानी",
         "english": [
           "half glass of water"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0741.webp"
       },
       {
         "hindi": "गीला",
         "english": [
           "wet"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0742.webp"
       },
       {
         "hindi": "सूखा",
         "english": [
           "dry"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0743.webp"
       },
       {
         "hindi": "पानी की बूंद",
         "english": [
           "drop of water"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0744.webp"
       },
       {
         "hindi": "ठंडा पानी",
         "english": [
           "cold water"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0745.webp"
       },
       {
         "hindi": "गुनगुना पानी",
         "english": [
           "lukewarm water"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0746.webp"
       },
       {
         "hindi": "गर्म पानी",
         "english": [
           "hot water"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0747.webp"
       },
       {
         "hindi": "बहना",
@@ -5404,7 +5786,8 @@ export const PHASE_DATA = {
           "flow",
           "to flow"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0748.webp"
       },
       {
         "hindi": "बिखरना",
@@ -5412,7 +5795,8 @@ export const PHASE_DATA = {
           "scatter",
           "spill"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0749.webp"
       },
       {
         "hindi": "टपकना",
@@ -5420,7 +5804,8 @@ export const PHASE_DATA = {
           "drip",
           "to drip"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0750.webp"
       },
       {
         "hindi": "पिघलना",
@@ -5428,7 +5813,8 @@ export const PHASE_DATA = {
           "melt",
           "to melt"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0751.webp"
       },
       {
         "hindi": "जमना",
@@ -5436,7 +5822,8 @@ export const PHASE_DATA = {
           "freeze",
           "to freeze"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0752.webp"
       },
       {
         "hindi": "छींटे उड़ाना",
@@ -5444,7 +5831,8 @@ export const PHASE_DATA = {
           "splash",
           "to splash"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0753.webp"
       },
       {
         "hindi": "छींट",
@@ -5452,7 +5840,8 @@ export const PHASE_DATA = {
           "splash",
           "splatter"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0754.webp"
       },
       {
         "hindi": "गढ्ढा",
@@ -5460,7 +5849,8 @@ export const PHASE_DATA = {
           "puddle",
           "pothole"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0755.webp"
       },
       {
         "hindi": "हवा",
@@ -5468,70 +5858,80 @@ export const PHASE_DATA = {
           "air",
           "wind"
         ],
-        "category": "Water and states"
+        "category": "Water and states",
+        "image": "assets/phase1-images/phase1-0756.webp"
       },
       {
         "hindi": "इक्यानवे",
         "english": [
           "ninety-one"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0757.webp"
       },
       {
         "hindi": "बयानवे",
         "english": [
           "ninety-two"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0758.webp"
       },
       {
         "hindi": "तिरानवे",
         "english": [
           "ninety-three"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0759.webp"
       },
       {
         "hindi": "चौरानवे",
         "english": [
           "ninety-four"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0760.webp"
       },
       {
         "hindi": "पिच्यान्वे",
         "english": [
           "ninety-five"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0761.webp"
       },
       {
         "hindi": "छियानवे",
         "english": [
           "ninety-six"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0762.webp"
       },
       {
         "hindi": "सत्तान्वे",
         "english": [
           "ninety-seven"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0763.webp"
       },
       {
         "hindi": "अट्ठानवे",
         "english": [
           "ninety-eight"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0764.webp"
       },
       {
         "hindi": "निन्यानवे",
         "english": [
           "ninety-nine"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0765.webp"
       },
       {
         "hindi": "सौ",
@@ -5539,266 +5939,304 @@ export const PHASE_DATA = {
           "one hundred",
           "hundred"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0766.webp"
       },
       {
         "hindi": "एक सौ एक",
         "english": [
           "one hundred and one"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0767.webp"
       },
       {
         "hindi": "दो सौ दो",
         "english": [
           "two hundred and two"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0768.webp"
       },
       {
         "hindi": "तीन सौ तीन",
         "english": [
           "three hundred and three"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0769.webp"
       },
       {
         "hindi": "चार सौ चार",
         "english": [
           "four hundred and four"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0770.webp"
       },
       {
         "hindi": "आठ सौ आठ",
         "english": [
           "eight hundred and eight"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0771.webp"
       },
       {
         "hindi": "नौ सौ नौ",
         "english": [
           "nine hundred and nine"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0772.webp"
       },
       {
         "hindi": "एक हज़ार एक",
         "english": [
           "one thousand and one"
         ],
-        "category": "Numbers 91-1000"
+        "category": "Numbers 91-1000",
+        "image": "assets/phase1-images/phase1-0773.webp"
       },
       {
         "hindi": "साल",
         "english": [
           "year"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0774.webp"
       },
       {
         "hindi": "हफ़्ता",
         "english": [
           "week"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0775.webp"
       },
       {
         "hindi": "आज",
         "english": [
           "today"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0776.webp"
       },
       {
         "hindi": "कल था",
         "english": [
           "yesterday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0777.webp"
       },
       {
         "hindi": "परसों था",
         "english": [
           "the day before yesterday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0778.webp"
       },
       {
         "hindi": "कल होगा",
         "english": [
           "tomorrow"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0779.webp"
       },
       {
         "hindi": "परसो होगा",
         "english": [
           "the day after tomorrow"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0780.webp"
       },
       {
         "hindi": "छुट्टी",
         "english": [
           "holiday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0781.webp"
       },
       {
         "hindi": "जन्मदिन",
         "english": [
           "birthday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0782.webp"
       },
       {
         "hindi": "महीना",
         "english": [
           "month"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0783.webp"
       },
       {
         "hindi": "शनिवार",
         "english": [
           "Saturday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0784.webp"
       },
       {
         "hindi": "रविवार",
         "english": [
           "Sunday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0785.webp"
       },
       {
         "hindi": "सोमवार",
         "english": [
           "Monday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0786.webp"
       },
       {
         "hindi": "मंगलवार",
         "english": [
           "Tuesday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0787.webp"
       },
       {
         "hindi": "बुधवार",
         "english": [
           "Wednesday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0788.webp"
       },
       {
         "hindi": "गुरुवार",
         "english": [
           "Thursday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0789.webp"
       },
       {
         "hindi": "शुक्रवार",
         "english": [
           "Friday"
         ],
-        "category": "Time and weekdays"
+        "category": "Time and weekdays",
+        "image": "assets/phase1-images/phase1-0790.webp"
       },
       {
         "hindi": "जनवरी",
         "english": [
           "January"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0791.webp"
       },
       {
         "hindi": "फ़रवरी",
         "english": [
           "February"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0792.webp"
       },
       {
         "hindi": "मार्च",
         "english": [
           "March"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0793.webp"
       },
       {
         "hindi": "अप्रैल",
         "english": [
           "April"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0794.webp"
       },
       {
         "hindi": "मई",
         "english": [
           "May"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0795.webp"
       },
       {
         "hindi": "जून",
         "english": [
           "June"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0796.webp"
       },
       {
         "hindi": "जुलाई",
         "english": [
           "July"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0797.webp"
       },
       {
         "hindi": "अगस्त",
         "english": [
           "August"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0798.webp"
       },
       {
         "hindi": "सितंबर",
         "english": [
           "September"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0799.webp"
       },
       {
         "hindi": "अक्टूबर",
         "english": [
           "October"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0800.webp"
       },
       {
         "hindi": "नवंबर",
         "english": [
           "November"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0801.webp"
       },
       {
         "hindi": "दिसंबर",
         "english": [
           "December"
         ],
-        "category": "Months"
+        "category": "Months",
+        "image": "assets/phase1-images/phase1-0802.webp"
       },
       {
         "hindi": "धूप",
         "english": [
           "sunshine"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0803.webp"
       },
       {
         "hindi": "घटा छाना",
@@ -5806,7 +6244,8 @@ export const PHASE_DATA = {
           "clouds gather",
           "become overcast"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0804.webp"
       },
       {
         "hindi": "आँधी",
@@ -5814,21 +6253,24 @@ export const PHASE_DATA = {
           "dust storm",
           "storm"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0805.webp"
       },
       {
         "hindi": "हल्की बारिश",
         "english": [
           "light rain"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0806.webp"
       },
       {
         "hindi": "तेज बारिश",
         "english": [
           "heavy rain"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0807.webp"
       },
       {
         "hindi": "सर्दी",
@@ -5836,35 +6278,40 @@ export const PHASE_DATA = {
           "cold",
           "winter"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0808.webp"
       },
       {
         "hindi": "ओले",
         "english": [
           "hail"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0809.webp"
       },
       {
         "hindi": "तूफ़ान",
         "english": [
           "storm"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0810.webp"
       },
       {
         "hindi": "रेतीला तूफान",
         "english": [
           "sandstorm"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0811.webp"
       },
       {
         "hindi": "कोहरा",
         "english": [
           "fog"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0812.webp"
       },
       {
         "hindi": "गर्मी",
@@ -5872,7 +6319,8 @@ export const PHASE_DATA = {
           "heat",
           "summer"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0813.webp"
       },
       {
         "hindi": "बर्फ पड़ना",
@@ -5880,7 +6328,8 @@ export const PHASE_DATA = {
           "snow",
           "to snow"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0814.webp"
       },
       {
         "hindi": "बिजली कड़कना",
@@ -5888,7 +6337,8 @@ export const PHASE_DATA = {
           "lightning strikes",
           "thunder and lightning"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0815.webp"
       },
       {
         "hindi": "बवंडर",
@@ -5896,7 +6346,8 @@ export const PHASE_DATA = {
           "tornado",
           "whirlwind"
         ],
-        "category": "Weather"
+        "category": "Weather",
+        "image": "assets/phase1-images/phase1-0816.webp"
       }
     ]
   },
