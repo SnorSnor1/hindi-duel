@@ -9367,6 +9367,74 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 10b",
         "transliteration": "savaal"
+      },
+      {
+        "hindi": "जाना पड़ेगा/करना पड़ेगा",
+        "english": [
+          "will have to go / will have to do",
+          "must go / must do",
+          "have to go / have to do"
+        ],
+        "category": "Lesson 11b",
+        "transliteration": "jana padega / karna padega"
+      },
+      {
+        "hindi": "घसीटना",
+        "english": [
+          "drag",
+          "pull along",
+          "haul"
+        ],
+        "category": "Lesson 11b",
+        "transliteration": "ghaseetna"
+      },
+      {
+        "hindi": "घूमना",
+        "english": [
+          "roam",
+          "walk around",
+          "wander",
+          "travel"
+        ],
+        "category": "Lesson 11b",
+        "transliteration": "ghoomna"
+      },
+      {
+        "hindi": "शुतुरमुर्ग",
+        "english": [
+          "ostrich"
+        ],
+        "category": "Lesson 11b",
+        "transliteration": "shuturmurg"
+      },
+      {
+        "hindi": "हिरण/हिरन",
+        "english": [
+          "deer"
+        ],
+        "category": "Lesson 11b",
+        "transliteration": "hiran"
+      },
+      {
+        "hindi": "निशान",
+        "english": [
+          "mark",
+          "sign",
+          "trace",
+          "footprint"
+        ],
+        "category": "Lesson 11b",
+        "transliteration": "nishan"
+      },
+      {
+        "hindi": "शिकार करना",
+        "english": [
+          "hunt",
+          "go hunting",
+          "hunt prey"
+        ],
+        "category": "Lesson 11b",
+        "transliteration": "shikar karna"
       }
     ]
   }
