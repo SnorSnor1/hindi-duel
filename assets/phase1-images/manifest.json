@@ -343,6 +343,83 @@
     "note": "pronoun sheet, visually checked"
   },
   {
+    "number": 32,
+    "hindi": "खड़े होना",
+    "english": [
+      "to stand up"
+    ],
+    "category": "Movement verbs",
+    "image": "assets/phase1-images/phase1-0032.webp",
+    "sourceFile": "image361.png#r1c3",
+    "note": "matched from Phase 1 Graphics doc: standing figure"
+  },
+  {
+    "number": 33,
+    "hindi": "बैठना",
+    "english": [
+      "to sit"
+    ],
+    "category": "Movement verbs",
+    "image": "assets/phase1-images/phase1-0033.webp",
+    "sourceFile": "image361.png#r2c2",
+    "note": "matched from Phase 1 Graphics doc: sitting figure"
+  },
+  {
+    "number": 34,
+    "hindi": "चलना",
+    "english": [
+      "to walk"
+    ],
+    "category": "Movement verbs",
+    "image": "assets/phase1-images/phase1-0034.webp",
+    "sourceFile": "image361.png#r3c3",
+    "note": "matched from Phase 1 Graphics doc: walking figure"
+  },
+  {
+    "number": 35,
+    "hindi": "कूदना",
+    "english": [
+      "to jump"
+    ],
+    "category": "Movement verbs",
+    "image": "assets/phase1-images/phase1-0035.webp",
+    "sourceFile": "image434.png",
+    "note": "matched from Phase 1 Graphics doc: jumping person"
+  },
+  {
+    "number": 36,
+    "hindi": "भागना",
+    "english": [
+      "to run"
+    ],
+    "category": "Movement verbs",
+    "image": "assets/phase1-images/phase1-0036.webp",
+    "sourceFile": "image361.png#r4c3",
+    "note": "matched from Phase 1 Graphics doc: running figure"
+  },
+  {
+    "number": 37,
+    "hindi": "लेटना",
+    "english": [
+      "to lie down"
+    ],
+    "category": "Movement verbs",
+    "image": "assets/phase1-images/phase1-0037.webp",
+    "sourceFile": "image361.png#r5c3",
+    "note": "matched from Phase 1 Graphics doc: lying down figure"
+  },
+  {
+    "number": 39,
+    "hindi": "मुड़ना",
+    "english": [
+      "to turn"
+    ],
+    "category": "Movement verbs",
+    "image": "assets/phase1-images/phase1-0039.webp",
+    "sourceFile": "image169.png",
+    "note": "matched from Phase 1 Graphics doc: turning/spinning person"
+  },
+  {
     "number": 41,
     "hindi": "रुकना",
     "english": [
@@ -995,6 +1072,39 @@
     "note": "room/classroom sheet, visually checked"
   },
   {
+    "number": 103,
+    "hindi": "एसी",
+    "english": [
+      "air conditioner"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0103.webp",
+    "sourceFile": "image387.png#r8c1",
+    "note": "matched from Phase 1 Graphics doc: air conditioner"
+  },
+  {
+    "number": 104,
+    "hindi": "हीटर",
+    "english": [
+      "heater"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0104.webp",
+    "sourceFile": "image387.png#r8c2",
+    "note": "matched from Phase 1 Graphics doc: heater"
+  },
+  {
+    "number": 105,
+    "hindi": "चटाई",
+    "english": [
+      "mat"
+    ],
+    "category": "Room and classroom items",
+    "image": "assets/phase1-images/phase1-0105.webp",
+    "sourceFile": "image387.png#r8c3",
+    "note": "matched from Phase 1 Graphics doc: mat"
+  },
+  {
     "number": 106,
     "hindi": "खाने का डब्बा",
     "english": [
@@ -1283,6 +1393,17 @@
     "note": "everyday-object sheet, visually checked"
   },
   {
+    "number": 132,
+    "hindi": "तिल्ली",
+    "english": [
+      "matchstick"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0132.webp",
+    "sourceFile": "image409.png#r1c3",
+    "note": "matched from Phase 1 Graphics doc: matchstick"
+  },
+  {
     "number": 133,
     "hindi": "माचिस",
     "english": [
@@ -1303,6 +1424,17 @@
     "image": "assets/phase1-images/phase1-0134.webp",
     "sourceFile": "comp_image446_comp4_cell_4.png",
     "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 135,
+    "hindi": "कंघा",
+    "english": [
+      "comb"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0135.webp",
+    "sourceFile": "doc-media/image51.png",
+    "note": "Phase 1 Graphics doc; visually matched: comb, single doc image"
   },
   {
     "number": 136,
@@ -1327,6 +1459,17 @@
     "note": "everyday-object sheet, visually checked"
   },
   {
+    "number": 138,
+    "hindi": "शेर",
+    "english": [
+      "lion"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0138.webp",
+    "sourceFile": "image409.png#r3c3",
+    "note": "matched from Phase 1 Graphics doc: lion"
+  },
+  {
     "number": 139,
     "hindi": "हाथी",
     "english": [
@@ -1347,6 +1490,17 @@
     "image": "assets/phase1-images/phase1-0140.webp",
     "sourceFile": "comp_image446_comp4_cell_8.png",
     "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 141,
+    "hindi": "शीशा",
+    "english": [
+      "mirror"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0141.webp",
+    "sourceFile": "image409.png#r4c3",
+    "note": "matched from Phase 1 Graphics doc: mirror"
   },
   {
     "number": 142,
@@ -1370,6 +1524,17 @@
     "image": "assets/phase1-images/phase1-0143.webp",
     "sourceFile": "comp_image446_comp4_cell_10.png",
     "note": "everyday-object sheet, visually checked"
+  },
+  {
+    "number": 144,
+    "hindi": "हवाई जहाज़",
+    "english": [
+      "airplane"
+    ],
+    "category": "Everyday objects",
+    "image": "assets/phase1-images/phase1-0144.webp",
+    "sourceFile": "doc-media/image400.png",
+    "note": "Phase 1 Graphics doc; visually matched: airplane, single doc image"
   },
   {
     "number": 145,
@@ -1847,6 +2012,18 @@
     "note": "animal-part sheet, visually checked"
   },
   {
+    "number": 188,
+    "hindi": "पंख",
+    "english": [
+      "wing",
+      "feather"
+    ],
+    "category": "Body and animal parts",
+    "image": "assets/phase1-images/phase1-0188.webp",
+    "sourceFile": "doc-media/image25.png",
+    "note": "Phase 1 Graphics doc; visually matched: wing, single doc image"
+  },
+  {
     "number": 189,
     "hindi": "खाल",
     "english": [
@@ -1890,5 +2067,4305 @@
     "image": "assets/phase1-images/phase1-0192.webp",
     "sourceFile": "comp_animalparts_cell_12.png",
     "note": "animal-part sheet, visually checked"
+  },
+  {
+    "number": 217,
+    "hindi": "मेरा सिर",
+    "english": [
+      "my head"
+    ],
+    "category": "Possessives",
+    "image": "assets/phase1-images/phase1-0217.webp",
+    "sourceFile": "image60.png#r1c1",
+    "note": "matched from Phase 1 Graphics doc: my head"
+  },
+  {
+    "number": 218,
+    "hindi": "तुम्हारा सिर",
+    "english": [
+      "your head"
+    ],
+    "category": "Possessives",
+    "image": "assets/phase1-images/phase1-0218.webp",
+    "sourceFile": "image60.png#r1c2",
+    "note": "matched from Phase 1 Graphics doc: your head"
+  },
+  {
+    "number": 219,
+    "hindi": "हमारे सिर",
+    "english": [
+      "our heads"
+    ],
+    "category": "Possessives",
+    "image": "assets/phase1-images/phase1-0219.webp",
+    "sourceFile": "image60.png#r1c3",
+    "note": "matched from Phase 1 Graphics doc: our heads"
+  },
+  {
+    "number": 220,
+    "hindi": "तुम दोनों के सिर",
+    "english": [
+      "both of your heads"
+    ],
+    "category": "Possessives",
+    "image": "assets/phase1-images/phase1-0220.webp",
+    "sourceFile": "image60.png#r2c1",
+    "note": "matched from Phase 1 Graphics doc: both of your heads"
+  },
+  {
+    "number": 221,
+    "hindi": "उसका सिर",
+    "english": [
+      "his",
+      "her head"
+    ],
+    "category": "Possessives",
+    "image": "assets/phase1-images/phase1-0221.webp",
+    "sourceFile": "image60.png#r2c2",
+    "note": "matched from Phase 1 Graphics doc: his head"
+  },
+  {
+    "number": 222,
+    "hindi": "उनके सिर",
+    "english": [
+      "their heads"
+    ],
+    "category": "Possessives",
+    "image": "assets/phase1-images/phase1-0222.webp",
+    "sourceFile": "image60.png#r2c3",
+    "note": "matched from Phase 1 Graphics doc: their heads"
+  },
+  {
+    "number": 223,
+    "hindi": "आपका सिर",
+    "english": [
+      "your head (formal)"
+    ],
+    "category": "Possessives",
+    "image": "assets/phase1-images/phase1-0223.webp",
+    "sourceFile": "image60.png#r3c1",
+    "note": "matched from Phase 1 Graphics doc: your head formal"
+  },
+  {
+    "number": 224,
+    "hindi": "उनके सिर",
+    "english": [
+      "their heads"
+    ],
+    "category": "Possessives",
+    "image": "assets/phase1-images/phase1-0224.webp",
+    "sourceFile": "image60.png#r3c2",
+    "note": "matched from Phase 1 Graphics doc: their heads formal"
+  },
+  {
+    "number": 225,
+    "hindi": "थपथपाना",
+    "english": [
+      "to pat"
+    ],
+    "category": "Touch and washing",
+    "image": "assets/phase1-images/phase1-0225.webp",
+    "sourceFile": "image60.png#r4c1",
+    "note": "matched from Phase 1 Graphics doc: to pat"
+  },
+  {
+    "number": 226,
+    "hindi": "सहलाना",
+    "english": [
+      "to stroke",
+      "caress"
+    ],
+    "category": "Touch and washing",
+    "image": "assets/phase1-images/phase1-0226.webp",
+    "sourceFile": "image60.png#r4c2",
+    "note": "matched from Phase 1 Graphics doc: to stroke"
+  },
+  {
+    "number": 227,
+    "hindi": "धोना",
+    "english": [
+      "to wash"
+    ],
+    "category": "Touch and washing",
+    "image": "assets/phase1-images/phase1-0227.webp",
+    "sourceFile": "doc-media/image175.png",
+    "note": "Phase 1 Graphics doc; visually matched: wash, corrected to washing-at-sink image"
+  },
+  {
+    "number": 228,
+    "hindi": "संतरी रंग",
+    "english": [
+      "orange (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0228.webp",
+    "sourceFile": "image299.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 229,
+    "hindi": "लाल रंग",
+    "english": [
+      "red (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0229.webp",
+    "sourceFile": "image299.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 230,
+    "hindi": "पीला रंग",
+    "english": [
+      "yellow (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0230.webp",
+    "sourceFile": "image299.png#r1c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 231,
+    "hindi": "सफेद रंग",
+    "english": [
+      "white (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0231.webp",
+    "sourceFile": "image299.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 232,
+    "hindi": "नीला रंग",
+    "english": [
+      "blue (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0232.webp",
+    "sourceFile": "image299.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 233,
+    "hindi": "हरा रंग",
+    "english": [
+      "green (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0233.webp",
+    "sourceFile": "image299.png#r2c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 234,
+    "hindi": "काला रंग",
+    "english": [
+      "black (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0234.webp",
+    "sourceFile": "image299.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 235,
+    "hindi": "कत्थई रंग",
+    "english": [
+      "brown (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0235.webp",
+    "sourceFile": "image299.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 236,
+    "hindi": "बैंगनी रंग",
+    "english": [
+      "purple (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0236.webp",
+    "sourceFile": "image299.png#r3c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 237,
+    "hindi": "गुलाबी रंग",
+    "english": [
+      "pink (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0237.webp",
+    "sourceFile": "image299.png#r4c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 238,
+    "hindi": "सुरमई रंग",
+    "english": [
+      "grey (color)"
+    ],
+    "category": "Colours",
+    "image": "assets/phase1-images/phase1-0238.webp",
+    "sourceFile": "image299.png#r4c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 239,
+    "hindi": "पानी",
+    "english": [
+      "water"
+    ],
+    "category": "Drinks",
+    "image": "assets/phase1-images/phase1-0239.webp",
+    "sourceFile": "image334.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 240,
+    "hindi": "कॉफी",
+    "english": [
+      "coffee"
+    ],
+    "category": "Drinks",
+    "image": "assets/phase1-images/phase1-0240.webp",
+    "sourceFile": "image334.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 241,
+    "hindi": "जूस",
+    "english": [
+      "juice"
+    ],
+    "category": "Drinks",
+    "image": "assets/phase1-images/phase1-0241.webp",
+    "sourceFile": "image334.png#r1c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 242,
+    "hindi": "कोल्ड ड्रिंक",
+    "english": [
+      "cold drink",
+      "soda"
+    ],
+    "category": "Drinks",
+    "image": "assets/phase1-images/phase1-0242.webp",
+    "sourceFile": "image334.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 243,
+    "hindi": "चाय",
+    "english": [
+      "tea"
+    ],
+    "category": "Drinks",
+    "image": "assets/phase1-images/phase1-0243.webp",
+    "sourceFile": "image334.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 244,
+    "hindi": "दूध",
+    "english": [
+      "milk"
+    ],
+    "category": "Drinks",
+    "image": "assets/phase1-images/phase1-0244.webp",
+    "sourceFile": "image334.png#r2c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 245,
+    "hindi": "पीना",
+    "english": [
+      "to drink"
+    ],
+    "category": "Drinks",
+    "image": "assets/phase1-images/phase1-0245.webp",
+    "sourceFile": "image334.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 246,
+    "hindi": "डालना",
+    "english": [
+      "to pour"
+    ],
+    "category": "Drinks",
+    "image": "assets/phase1-images/phase1-0246.webp",
+    "sourceFile": "image334.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 247,
+    "hindi": "खीरा",
+    "english": [
+      "cucumber"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0247.webp",
+    "sourceFile": "image229.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 248,
+    "hindi": "चावल",
+    "english": [
+      "rice"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0248.webp",
+    "sourceFile": "image229.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 249,
+    "hindi": "केला",
+    "english": [
+      "banana"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0249.webp",
+    "sourceFile": "image229.png#r1c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 250,
+    "hindi": "बैंगन",
+    "english": [
+      "eggplant",
+      "brinjal"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0250.webp",
+    "sourceFile": "image229.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 251,
+    "hindi": "हरी मिर्च",
+    "english": [
+      "green chilli"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0251.webp",
+    "sourceFile": "image229.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 252,
+    "hindi": "खाने की चीज़ें",
+    "english": [
+      "food items"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0252.webp",
+    "sourceFile": "image229.png#r2c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 253,
+    "hindi": "फल",
+    "english": [
+      "fruit"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0253.webp",
+    "sourceFile": "image229.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 254,
+    "hindi": "आलू",
+    "english": [
+      "potato"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0254.webp",
+    "sourceFile": "image229.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 255,
+    "hindi": "संतरा",
+    "english": [
+      "orange (fruit)"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0255.webp",
+    "sourceFile": "image229.png#r3c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 256,
+    "hindi": "नमक",
+    "english": [
+      "salt"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0256.webp",
+    "sourceFile": "image229.png#r4c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 257,
+    "hindi": "सब्ज़ी",
+    "english": [
+      "vegetable"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0257.webp",
+    "sourceFile": "image229.png#r4c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 258,
+    "hindi": "गाजर",
+    "english": [
+      "carrot"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0258.webp",
+    "sourceFile": "image229.png#r4c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 259,
+    "hindi": "नींबू",
+    "english": [
+      "lemon"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0259.webp",
+    "sourceFile": "image229.png#r5c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 260,
+    "hindi": "गोश्त",
+    "english": [
+      "meat"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0260.webp",
+    "sourceFile": "image229.png#r5c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 261,
+    "hindi": "पत्ता गोभी",
+    "english": [
+      "cabbage"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0261.webp",
+    "sourceFile": "image229.png#r5c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 262,
+    "hindi": "काली मिर्च",
+    "english": [
+      "black pepper"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0262.webp",
+    "sourceFile": "image229.png#r6c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 263,
+    "hindi": "अंडा",
+    "english": [
+      "egg"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0263.webp",
+    "sourceFile": "image229.png#r6c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 264,
+    "hindi": "अंगूर",
+    "english": [
+      "grapes"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0264.webp",
+    "sourceFile": "image229.png#r6c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 265,
+    "hindi": "भुट्टा",
+    "english": [
+      "corn",
+      "corn cob"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0265.webp",
+    "sourceFile": "image229.png#r7c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 266,
+    "hindi": "रोटी",
+    "english": [
+      "bread",
+      "chapati"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0266.webp",
+    "sourceFile": "image229.png#r7c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 267,
+    "hindi": "तैयार करना",
+    "english": [
+      "to prepare"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0267.webp",
+    "sourceFile": "image354.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 268,
+    "hindi": "चखना",
+    "english": [
+      "to taste"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0268.webp",
+    "sourceFile": "image354.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 269,
+    "hindi": "खाना",
+    "english": [
+      "to eat"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0269.webp",
+    "sourceFile": "image354.png#r1c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 270,
+    "hindi": "लेकर जाना",
+    "english": [
+      "to take",
+      "carry"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0270.webp",
+    "sourceFile": "image354.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 271,
+    "hindi": "उठाना",
+    "english": [
+      "to lift",
+      "pick up"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0271.webp",
+    "sourceFile": "image354.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 272,
+    "hindi": "पकाना",
+    "english": [
+      "to cook"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0272.webp",
+    "sourceFile": "image354.png#r2c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 273,
+    "hindi": "इंतज़ार करना",
+    "english": [
+      "to wait"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0273.webp",
+    "sourceFile": "image354.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 274,
+    "hindi": "इस्तेमाल करना",
+    "english": [
+      "to use"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0274.webp",
+    "sourceFile": "image354.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 275,
+    "hindi": "फेंकना",
+    "english": [
+      "to throw"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0275.webp",
+    "sourceFile": "image354.png#r3c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 276,
+    "hindi": "काटना",
+    "english": [
+      "to cut"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0276.webp",
+    "sourceFile": "image354.png#r4c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 277,
+    "hindi": "आम",
+    "english": [
+      "mango"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0277.webp",
+    "sourceFile": "image77.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 278,
+    "hindi": "तरबूज़",
+    "english": [
+      "watermelon"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0278.webp",
+    "sourceFile": "image77.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 279,
+    "hindi": "दाल",
+    "english": [
+      "lentils",
+      "dal"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0279.webp",
+    "sourceFile": "image77.png#r1c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 280,
+    "hindi": "चीनी",
+    "english": [
+      "sugar"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0280.webp",
+    "sourceFile": "image77.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 281,
+    "hindi": "नमकीन",
+    "english": [
+      "salty snack"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0281.webp",
+    "sourceFile": "image77.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 282,
+    "hindi": "बिस्किट",
+    "english": [
+      "biscuit",
+      "cookie"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0282.webp",
+    "sourceFile": "image77.png#r2c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 283,
+    "hindi": "लहसुन",
+    "english": [
+      "garlic"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0283.webp",
+    "sourceFile": "image77.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 284,
+    "hindi": "टमाटर",
+    "english": [
+      "tomato"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0284.webp",
+    "sourceFile": "image77.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 285,
+    "hindi": "प्याज़",
+    "english": [
+      "onion"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0285.webp",
+    "sourceFile": "image77.png#r3c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 286,
+    "hindi": "अदरक",
+    "english": [
+      "ginger"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0286.webp",
+    "sourceFile": "image77.png#r4c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 287,
+    "hindi": "धनिया",
+    "english": [
+      "coriander"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0287.webp",
+    "sourceFile": "image77.png#r4c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 288,
+    "hindi": "कद्दू",
+    "english": [
+      "pumpkin",
+      "gourd"
+    ],
+    "category": "Food and cooking",
+    "image": "assets/phase1-images/phase1-0288.webp",
+    "sourceFile": "image77.png#r4c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 289,
+    "hindi": "टोपी",
+    "english": [
+      "hat",
+      "cap"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0289.webp",
+    "sourceFile": "image20.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 290,
+    "hindi": "बनियान",
+    "english": [
+      "vest",
+      "undershirt"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0290.webp",
+    "sourceFile": "image20.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 291,
+    "hindi": "जूते",
+    "english": [
+      "shoes"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0291.webp",
+    "sourceFile": "image20.png#r1c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 292,
+    "hindi": "हील",
+    "english": [
+      "heel (shoe)"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0292.webp",
+    "sourceFile": "image20.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 293,
+    "hindi": "चश्मा",
+    "english": [
+      "glasses",
+      "spectacles"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0293.webp",
+    "sourceFile": "image20.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 294,
+    "hindi": "मोज़े",
+    "english": [
+      "socks"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0294.webp",
+    "sourceFile": "image20.png#r2c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 295,
+    "hindi": "छतरी",
+    "english": [
+      "umbrella"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0295.webp",
+    "sourceFile": "image20.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 296,
+    "hindi": "अंगूठी",
+    "english": [
+      "ring",
+      "finger ring"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0296.webp",
+    "sourceFile": "image20.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 297,
+    "hindi": "चप्पल",
+    "english": [
+      "sandal",
+      "flip-flop"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0297.webp",
+    "sourceFile": "image20.png#r3c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 298,
+    "hindi": "नथनी",
+    "english": [
+      "nose ring"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0298.webp",
+    "sourceFile": "image20.png#r4c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 299,
+    "hindi": "हार",
+    "english": [
+      "necklace"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0299.webp",
+    "sourceFile": "image20.png#r4c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 300,
+    "hindi": "बूँदे",
+    "english": [
+      "drop earrings"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0300.webp",
+    "sourceFile": "image20.png#r4c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 301,
+    "hindi": "पायल",
+    "english": [
+      "anklet"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0301.webp",
+    "sourceFile": "image20.png#r5c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 302,
+    "hindi": "कंगन",
+    "english": [
+      "bracelet"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0302.webp",
+    "sourceFile": "image20.png#r5c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 303,
+    "hindi": "कुर्ता पजामा",
+    "english": [
+      "kurta pajama"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0303.webp",
+    "sourceFile": "image20.png#r5c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 304,
+    "hindi": "साड़ी",
+    "english": [
+      "sari",
+      "saree"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0304.webp",
+    "sourceFile": "image20.png#r6c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 305,
+    "hindi": "छल्ली",
+    "english": [
+      "toe ring"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0305.webp",
+    "sourceFile": "image20.png#r6c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 306,
+    "hindi": "चूड़ी",
+    "english": [
+      "bangle"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0306.webp",
+    "sourceFile": "image20.png#r6c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 307,
+    "hindi": "लाँग कोट",
+    "english": [
+      "long coat"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0307.webp",
+    "sourceFile": "image20.png#r7c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 308,
+    "hindi": "सूट सलवार दुपट्टा",
+    "english": [
+      "suit salwar dupatta"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0308.webp",
+    "sourceFile": "image20.png#r7c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 309,
+    "hindi": "कुर्ती",
+    "english": [
+      "kurti (short kurta)"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0309.webp",
+    "sourceFile": "image20.png#r7c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 310,
+    "hindi": "बेल्ट",
+    "english": [
+      "belt"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0310.webp",
+    "sourceFile": "image20.png#r8c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 311,
+    "hindi": "जीन्स",
+    "english": [
+      "jeans"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0311.webp",
+    "sourceFile": "image20.png#r8c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 312,
+    "hindi": "शर्ट",
+    "english": [
+      "shirt"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0312.webp",
+    "sourceFile": "image20.png#r8c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 313,
+    "hindi": "वॉलेट",
+    "english": [
+      "wallet"
+    ],
+    "category": "Clothes and accessories",
+    "image": "assets/phase1-images/phase1-0313.webp",
+    "sourceFile": "image20.png#r9c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 314,
+    "hindi": "सुनना",
+    "english": [
+      "listen",
+      "to listen"
+    ],
+    "category": "Daily actions",
+    "image": "assets/phase1-images/phase1-0314.webp",
+    "sourceFile": "image309.png",
+    "note": "matched from Phase 1 Graphics doc: listening cue"
+  },
+  {
+    "number": 315,
+    "hindi": "पढ़ना",
+    "english": [
+      "read",
+      "to read"
+    ],
+    "category": "Daily actions",
+    "image": "assets/phase1-images/phase1-0315.webp",
+    "sourceFile": "image166.png",
+    "note": "matched from Phase 1 Graphics doc: open book used as read cue"
+  },
+  {
+    "number": 316,
+    "hindi": "झाड़ू लगाना",
+    "english": [
+      "sweep",
+      "to sweep"
+    ],
+    "category": "Daily actions",
+    "image": "assets/phase1-images/phase1-0316.webp",
+    "sourceFile": "image409.png#r1c2",
+    "note": "matched from Phase 1 Graphics doc: broom used as sweep cue"
+  },
+  {
+    "number": 321,
+    "hindi": "मिटाना",
+    "english": [
+      "erase",
+      "rub out",
+      "to erase"
+    ],
+    "category": "Daily actions",
+    "image": "assets/phase1-images/phase1-0321.webp",
+    "sourceFile": "image367.png",
+    "note": "matched from Phase 1 Graphics doc: erasing cue"
+  },
+  {
+    "number": 322,
+    "hindi": "काम करना",
+    "english": [
+      "work",
+      "to work"
+    ],
+    "category": "Daily actions",
+    "image": "assets/phase1-images/phase1-0322.webp",
+    "sourceFile": "image118.png",
+    "note": "matched from Phase 1 Graphics doc: office work"
+  },
+  {
+    "number": 323,
+    "hindi": "खेलना",
+    "english": [
+      "play",
+      "to play"
+    ],
+    "category": "Daily actions",
+    "image": "assets/phase1-images/phase1-0323.webp",
+    "sourceFile": "image165.png",
+    "note": "matched from Phase 1 Graphics doc: children playing"
+  },
+  {
+    "number": 324,
+    "hindi": "खुश होना",
+    "english": [
+      "be happy",
+      "to be happy"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0324.webp",
+    "sourceFile": "image123.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 325,
+    "hindi": "दुखी होना",
+    "english": [
+      "be sad",
+      "to be sad"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0325.webp",
+    "sourceFile": "image123.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 326,
+    "hindi": "डर लगना",
+    "english": [
+      "be afraid",
+      "to feel scared"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0326.webp",
+    "sourceFile": "image123.png#r1c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 327,
+    "hindi": "हैरान होना",
+    "english": [
+      "be surprised",
+      "to be surprised"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0327.webp",
+    "sourceFile": "image123.png#r1c4",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 328,
+    "hindi": "परेशान होना",
+    "english": [
+      "be worried",
+      "be troubled"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0328.webp",
+    "sourceFile": "image123.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 329,
+    "hindi": "चोट लगना",
+    "english": [
+      "get hurt",
+      "be injured"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0329.webp",
+    "sourceFile": "image123.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 330,
+    "hindi": "बोर होना",
+    "english": [
+      "be bored"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0330.webp",
+    "sourceFile": "image123.png#r2c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 331,
+    "hindi": "उलझन में होना",
+    "english": [
+      "be confused"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0331.webp",
+    "sourceFile": "image123.png#r2c4",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 332,
+    "hindi": "गुस्सा होना",
+    "english": [
+      "be angry"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0332.webp",
+    "sourceFile": "image123.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 333,
+    "hindi": "गंदा होना",
+    "english": [
+      "be dirty"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0333.webp",
+    "sourceFile": "image123.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 334,
+    "hindi": "थकना",
+    "english": [
+      "get tired",
+      "be tired"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0334.webp",
+    "sourceFile": "image123.png#r3c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 335,
+    "hindi": "शर्मिंदा होना",
+    "english": [
+      "be embarrassed",
+      "feel ashamed"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0335.webp",
+    "sourceFile": "image123.png#r3c4",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 336,
+    "hindi": "प्यास लगना",
+    "english": [
+      "be thirsty",
+      "feel thirsty"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0336.webp",
+    "sourceFile": "image123.png#r4c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 337,
+    "hindi": "भूख लगना",
+    "english": [
+      "be hungry",
+      "feel hungry"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0337.webp",
+    "sourceFile": "image123.png#r4c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 338,
+    "hindi": "हँसना",
+    "english": [
+      "laugh",
+      "to laugh"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0338.webp",
+    "sourceFile": "image123.png#r4c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 339,
+    "hindi": "रोना",
+    "english": [
+      "cry",
+      "to cry"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0339.webp",
+    "sourceFile": "image123.png#r4c4",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 340,
+    "hindi": "नींद आना",
+    "english": [
+      "feel sleepy",
+      "be sleepy"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0340.webp",
+    "sourceFile": "image123.png#r5c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 341,
+    "hindi": "ठंड लगना",
+    "english": [
+      "feel cold"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0341.webp",
+    "sourceFile": "image123.png#r5c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 342,
+    "hindi": "गर्मी लगना",
+    "english": [
+      "feel hot"
+    ],
+    "category": "Feelings and needs",
+    "image": "assets/phase1-images/phase1-0342.webp",
+    "sourceFile": "image123.png#r5c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 343,
+    "hindi": "दोबारा बोलिए",
+    "english": [
+      "please say it again",
+      "say it again"
+    ],
+    "category": "Speaking phrases",
+    "image": "assets/phase1-images/phase1-0343.webp",
+    "sourceFile": "image67.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 344,
+    "hindi": "थोड़ा साफ़ बोलिए",
+    "english": [
+      "please speak a little clearly",
+      "speak a little more clearly"
+    ],
+    "category": "Speaking phrases",
+    "image": "assets/phase1-images/phase1-0344.webp",
+    "sourceFile": "image67.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 345,
+    "hindi": "थोड़ा धीरे बोलिए",
+    "english": [
+      "please speak a little slowly",
+      "speak a little slower"
+    ],
+    "category": "Speaking phrases",
+    "image": "assets/phase1-images/phase1-0345.webp",
+    "sourceFile": "image67.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 346,
+    "hindi": "थोड़ा तेज बोलिए",
+    "english": [
+      "please speak a little faster",
+      "speak a little quickly"
+    ],
+    "category": "Speaking phrases",
+    "image": "assets/phase1-images/phase1-0346.webp",
+    "sourceFile": "image67.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 347,
+    "hindi": "हथौड़ी",
+    "english": [
+      "hammer"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0347.webp",
+    "sourceFile": "image64.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 348,
+    "hindi": "पेचकस",
+    "english": [
+      "screwdriver"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0348.webp",
+    "sourceFile": "image64.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 349,
+    "hindi": "कुल्हाड़ी",
+    "english": [
+      "axe"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0349.webp",
+    "sourceFile": "image64.png#r1c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 350,
+    "hindi": "सुई धागा",
+    "english": [
+      "needle and thread"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0350.webp",
+    "sourceFile": "image64.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 351,
+    "hindi": "आरी",
+    "english": [
+      "saw"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0351.webp",
+    "sourceFile": "image64.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 352,
+    "hindi": "कैंची",
+    "english": [
+      "scissors"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0352.webp",
+    "sourceFile": "image64.png#r2c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 353,
+    "hindi": "नट की चाबी",
+    "english": [
+      "spanner",
+      "wrench"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0353.webp",
+    "sourceFile": "image64.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 354,
+    "hindi": "प्लास",
+    "english": [
+      "pliers"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0354.webp",
+    "sourceFile": "image64.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 355,
+    "hindi": "रस्सी",
+    "english": [
+      "rope"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0355.webp",
+    "sourceFile": "image64.png#r3c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 356,
+    "hindi": "चाबी",
+    "english": [
+      "key"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0356.webp",
+    "sourceFile": "image64.png#r4c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 357,
+    "hindi": "फावड़ा",
+    "english": [
+      "shovel",
+      "spade"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0357.webp",
+    "sourceFile": "image64.png#r4c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 358,
+    "hindi": "ग्लू",
+    "english": [
+      "glue"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0358.webp",
+    "sourceFile": "image64.png#r4c3",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 359,
+    "hindi": "टेप",
+    "english": [
+      "tape"
+    ],
+    "category": "Tools",
+    "image": "assets/phase1-images/phase1-0359.webp",
+    "sourceFile": "image64.png#r5c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 360,
+    "hindi": "मारना",
+    "english": [
+      "hit",
+      "beat",
+      "to hit"
+    ],
+    "category": "Hitting and feeding verbs",
+    "image": "assets/phase1-images/phase1-0360.webp",
+    "sourceFile": "image413.png#r1c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 361,
+    "hindi": "जान से मारना",
+    "english": [
+      "kill",
+      "to kill"
+    ],
+    "category": "Hitting and feeding verbs",
+    "image": "assets/phase1-images/phase1-0361.webp",
+    "sourceFile": "image413.png#r1c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 362,
+    "hindi": "खिलाना",
+    "english": [
+      "feed",
+      "to feed"
+    ],
+    "category": "Hitting and feeding verbs",
+    "image": "assets/phase1-images/phase1-0362.webp",
+    "sourceFile": "image413.png#r2c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 363,
+    "hindi": "पिलाना",
+    "english": [
+      "give to drink",
+      "make someone drink"
+    ],
+    "category": "Hitting and feeding verbs",
+    "image": "assets/phase1-images/phase1-0363.webp",
+    "sourceFile": "image413.png#r2c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 364,
+    "hindi": "बिच्छु",
+    "english": [
+      "scorpion"
+    ],
+    "category": "Small creatures",
+    "image": "assets/phase1-images/phase1-0364.webp",
+    "sourceFile": "image413.png#r3c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 365,
+    "hindi": "कनखजूरा",
+    "english": [
+      "centipede"
+    ],
+    "category": "Small creatures",
+    "image": "assets/phase1-images/phase1-0365.webp",
+    "sourceFile": "image413.png#r3c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 366,
+    "hindi": "केंचुआ",
+    "english": [
+      "earthworm"
+    ],
+    "category": "Small creatures",
+    "image": "assets/phase1-images/phase1-0366.webp",
+    "sourceFile": "image413.png#r4c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 367,
+    "hindi": "कॉकरोच",
+    "english": [
+      "cockroach"
+    ],
+    "category": "Small creatures",
+    "image": "assets/phase1-images/phase1-0367.webp",
+    "sourceFile": "image413.png#r4c2",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 368,
+    "hindi": "टिड्डा",
+    "english": [
+      "grasshopper"
+    ],
+    "category": "Small creatures",
+    "image": "assets/phase1-images/phase1-0368.webp",
+    "sourceFile": "image413.png#r5c1",
+    "note": "cropped from Phase 1 Graphics doc grid"
+  },
+  {
+    "number": 399,
+    "hindi": "पासपोर्ट",
+    "english": [
+      "passport"
+    ],
+    "category": "World and directions",
+    "image": "assets/phase1-images/phase1-0399.webp",
+    "sourceFile": "image11.png#r1c1",
+    "note": "matched from Phase 1 Graphics doc: passport"
+  },
+  {
+    "number": 400,
+    "hindi": "दुनिया",
+    "english": [
+      "world"
+    ],
+    "category": "World and directions",
+    "image": "assets/phase1-images/phase1-0400.webp",
+    "sourceFile": "image11.png#r1c2",
+    "note": "matched from Phase 1 Graphics doc: world"
+  },
+  {
+    "number": 401,
+    "hindi": "नक़्शा",
+    "english": [
+      "map"
+    ],
+    "category": "World and directions",
+    "image": "assets/phase1-images/phase1-0401.webp",
+    "sourceFile": "image11.png#r1c3",
+    "note": "matched from Phase 1 Graphics doc: map"
+  },
+  {
+    "number": 402,
+    "hindi": "विदेशी",
+    "english": [
+      "foreign",
+      "foreigner"
+    ],
+    "category": "World and directions",
+    "image": "assets/phase1-images/phase1-0402.webp",
+    "sourceFile": "image11.png#r2c1",
+    "note": "matched from Phase 1 Graphics doc: foreign"
+  },
+  {
+    "number": 403,
+    "hindi": "राष्ट्रीयता",
+    "english": [
+      "nationality"
+    ],
+    "category": "World and directions",
+    "image": "assets/phase1-images/phase1-0403.webp",
+    "sourceFile": "image11.png#r2c2",
+    "note": "matched from Phase 1 Graphics doc: nationality"
+  },
+  {
+    "number": 404,
+    "hindi": "भाषा",
+    "english": [
+      "language"
+    ],
+    "category": "World and directions",
+    "image": "assets/phase1-images/phase1-0404.webp",
+    "sourceFile": "image11.png#r2c3",
+    "note": "matched from Phase 1 Graphics doc: language"
+  },
+  {
+    "number": 415,
+    "hindi": "एक रुपए का सिक्का",
+    "english": [
+      "one rupee coin"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0415.webp",
+    "sourceFile": "image342.png#r1c1",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 416,
+    "hindi": "दो रुपए का सिक्का",
+    "english": [
+      "two rupee coin"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0416.webp",
+    "sourceFile": "image342.png#r1c2",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 417,
+    "hindi": "पाँच रूपे का सिक्का",
+    "english": [
+      "five rupee coin"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0417.webp",
+    "sourceFile": "image342.png#r1c3",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 418,
+    "hindi": "दस रुपए का सिक्का",
+    "english": [
+      "ten rupee coin"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0418.webp",
+    "sourceFile": "image342.png#r2c1",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 419,
+    "hindi": "बीस रुपए का सिक्का",
+    "english": [
+      "twenty rupee coin"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0419.webp",
+    "sourceFile": "image342.png#r2c2",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 420,
+    "hindi": "दस रुपए का नोट",
+    "english": [
+      "ten rupee note"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0420.webp",
+    "sourceFile": "image342.png#r2c3",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 421,
+    "hindi": "बीस रुपए का नोट",
+    "english": [
+      "twenty rupee note"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0421.webp",
+    "sourceFile": "image342.png#r3c1",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 422,
+    "hindi": "बीस रुपए का नोट",
+    "english": [
+      "twenty rupee note"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0422.webp",
+    "sourceFile": "image342.png#r3c2",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 423,
+    "hindi": "पचास रुपए का नोट",
+    "english": [
+      "fifty rupee note"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0423.webp",
+    "sourceFile": "image342.png#r3c3",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 424,
+    "hindi": "सौ रुपए का नोट",
+    "english": [
+      "one hundred rupee note"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0424.webp",
+    "sourceFile": "image342.png#r4c1",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 425,
+    "hindi": "दो सौ रुपए का नोट",
+    "english": [
+      "two hundred rupee note"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0425.webp",
+    "sourceFile": "image342.png#r4c2",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 426,
+    "hindi": "पाँच सो रुपए का नोट",
+    "english": [
+      "five hundred rupee note"
+    ],
+    "category": "Money",
+    "image": "assets/phase1-images/phase1-0426.webp",
+    "sourceFile": "image342.png#r4c3",
+    "note": "matched from Phase 1 Graphics doc: money item"
+  },
+  {
+    "number": 427,
+    "hindi": "बादल",
+    "english": [
+      "cloud"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0427.webp",
+    "sourceFile": "image120.png#r1c1",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 428,
+    "hindi": "आसमान",
+    "english": [
+      "sky"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0428.webp",
+    "sourceFile": "image120.png#r1c2",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 429,
+    "hindi": "बर्फ",
+    "english": [
+      "snow",
+      "ice"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0429.webp",
+    "sourceFile": "image120.png#r1c3",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 430,
+    "hindi": "इंद्रधनुष",
+    "english": [
+      "rainbow"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0430.webp",
+    "sourceFile": "image120.png#r1c4",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 431,
+    "hindi": "सूरज",
+    "english": [
+      "sun"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0431.webp",
+    "sourceFile": "image120.png#r2c1",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 432,
+    "hindi": "समुंदर",
+    "english": [
+      "sea",
+      "ocean"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0432.webp",
+    "sourceFile": "image120.png#r2c2",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 433,
+    "hindi": "पानी का जहाज़",
+    "english": [
+      "ship"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0433.webp",
+    "sourceFile": "image120.png#r2c3",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 434,
+    "hindi": "पहाड़",
+    "english": [
+      "mountain"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0434.webp",
+    "sourceFile": "image120.png#r2c4",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 435,
+    "hindi": "घाटी",
+    "english": [
+      "valley"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0435.webp",
+    "sourceFile": "image120.png#r3c1",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 436,
+    "hindi": "मैदान",
+    "english": [
+      "field",
+      "plain"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0436.webp",
+    "sourceFile": "image120.png#r3c2",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 437,
+    "hindi": "जंगल",
+    "english": [
+      "forest",
+      "jungle"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0437.webp",
+    "sourceFile": "image120.png#r3c3",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 438,
+    "hindi": "नाव",
+    "english": [
+      "boat"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0438.webp",
+    "sourceFile": "image120.png#r3c4",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 439,
+    "hindi": "द्वीप",
+    "english": [
+      "island"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0439.webp",
+    "sourceFile": "image120.png#r4c1",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 440,
+    "hindi": "तालाब",
+    "english": [
+      "pond"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0440.webp",
+    "sourceFile": "image120.png#r4c2",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 441,
+    "hindi": "पुल",
+    "english": [
+      "bridge"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0441.webp",
+    "sourceFile": "image120.png#r4c3",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 442,
+    "hindi": "घास",
+    "english": [
+      "grass"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0442.webp",
+    "sourceFile": "image120.png#r4c4",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 443,
+    "hindi": "नदी",
+    "english": [
+      "river"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0443.webp",
+    "sourceFile": "image120.png#r5c1",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 444,
+    "hindi": "पहाड़ी",
+    "english": [
+      "hill"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0444.webp",
+    "sourceFile": "image120.png#r5c2",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 445,
+    "hindi": "चट्टान",
+    "english": [
+      "rock"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0445.webp",
+    "sourceFile": "image120.png#r5c3",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 446,
+    "hindi": "रास्ता",
+    "english": [
+      "path",
+      "way"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0446.webp",
+    "sourceFile": "image120.png#r5c4",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 447,
+    "hindi": "सड़क",
+    "english": [
+      "road",
+      "street"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0447.webp",
+    "sourceFile": "image120.png#r6c1",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 448,
+    "hindi": "पगडंडी",
+    "english": [
+      "footpath",
+      "trail"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0448.webp",
+    "sourceFile": "image120.png#r6c2",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 449,
+    "hindi": "फुटपाथ",
+    "english": [
+      "pavement",
+      "footpath"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0449.webp",
+    "sourceFile": "image120.png#r6c3",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 450,
+    "hindi": "धुआँ",
+    "english": [
+      "smoke"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0450.webp",
+    "sourceFile": "image120.png#r6c4",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 451,
+    "hindi": "बगीचा",
+    "english": [
+      "garden"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0451.webp",
+    "sourceFile": "image120.png#r7c1",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 452,
+    "hindi": "बाग",
+    "english": [
+      "garden",
+      "orchard"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0452.webp",
+    "sourceFile": "image120.png#r7c2",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 453,
+    "hindi": "खेत",
+    "english": [
+      "field",
+      "farm"
+    ],
+    "category": "Nature and travel",
+    "image": "assets/phase1-images/phase1-0453.webp",
+    "sourceFile": "image120.png#r7c3",
+    "note": "matched from Phase 1 Graphics doc: nature/travel item"
+  },
+  {
+    "number": 454,
+    "hindi": "डस्ट पैन",
+    "english": [
+      "dustpan"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0454.webp",
+    "sourceFile": "doc-media/image128.png",
+    "note": "Phase 1 Graphics doc; visually matched: dustpan, single doc image"
+  },
+  {
+    "number": 455,
+    "hindi": "ईयर बड",
+    "english": [
+      "earbud",
+      "cotton bud"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0455.webp",
+    "sourceFile": "doc-media/image158.png",
+    "note": "Phase 1 Graphics doc; visually matched: earbud, single doc image"
+  },
+  {
+    "number": 456,
+    "hindi": "बाल्टी",
+    "english": [
+      "bucket"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0456.webp",
+    "sourceFile": "doc-media/image438.png",
+    "note": "Phase 1 Graphics doc; visually matched: bucket, single doc image"
+  },
+  {
+    "number": 457,
+    "hindi": "वाशिंग मशीन",
+    "english": [
+      "washing machine"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0457.webp",
+    "sourceFile": "doc-media/image368.png",
+    "note": "Phase 1 Graphics doc; visually matched: washing machine, single doc image"
+  },
+  {
+    "number": 458,
+    "hindi": "गोली",
+    "english": [
+      "tablet",
+      "pill"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0458.webp",
+    "sourceFile": "doc-media/image440.png",
+    "note": "Phase 1 Graphics doc; visually matched: tablet/pill, single doc image"
+  },
+  {
+    "number": 459,
+    "hindi": "रुमाल",
+    "english": [
+      "handkerchief"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0459.webp",
+    "sourceFile": "doc-media/image447.png",
+    "note": "Phase 1 Graphics doc; visually matched: handkerchief, single doc image"
+  },
+  {
+    "number": 460,
+    "hindi": "ताला",
+    "english": [
+      "lock"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0460.webp",
+    "sourceFile": "doc-media/image44.png",
+    "note": "Phase 1 Graphics doc; visually matched: lock, single doc image"
+  },
+  {
+    "number": 461,
+    "hindi": "कंघा",
+    "english": [
+      "comb"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0461.webp",
+    "sourceFile": "doc-media/image51.png",
+    "note": "Phase 1 Graphics doc; visually matched: comb, single doc image"
+  },
+  {
+    "number": 462,
+    "hindi": "तौलिया",
+    "english": [
+      "towel"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0462.webp",
+    "sourceFile": "doc-media/image170.png",
+    "note": "Phase 1 Graphics doc; visually matched: towel, single doc image"
+  },
+  {
+    "number": 463,
+    "hindi": "चादर",
+    "english": [
+      "sheet",
+      "bedsheet"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0463.webp",
+    "sourceFile": "doc-media/image254.png",
+    "note": "Phase 1 Graphics doc; visually matched: bedsheet, single doc image"
+  },
+  {
+    "number": 464,
+    "hindi": "दवाई",
+    "english": [
+      "medicine"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0464.webp",
+    "sourceFile": "doc-media/image234.png",
+    "note": "Phase 1 Graphics doc; visually matched: medicine, single doc image"
+  },
+  {
+    "number": 465,
+    "hindi": "हेयर ड्रायर",
+    "english": [
+      "hair dryer"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0465.webp",
+    "sourceFile": "doc-media/image6.png",
+    "note": "Phase 1 Graphics doc; visually matched: hair dryer, single doc image"
+  },
+  {
+    "number": 466,
+    "hindi": "कपड़े की चिमटी",
+    "english": [
+      "clothes peg"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0466.webp",
+    "sourceFile": "doc-media/image230.png",
+    "note": "Phase 1 Graphics doc; visually matched: clothes peg, single doc image"
+  },
+  {
+    "number": 467,
+    "hindi": "पोंछा",
+    "english": [
+      "mop"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0467.webp",
+    "sourceFile": "doc-media/image258.png",
+    "note": "Phase 1 Graphics doc; visually matched: mop, single doc image"
+  },
+  {
+    "number": 468,
+    "hindi": "साबुन",
+    "english": [
+      "soap"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0468.webp",
+    "sourceFile": "doc-media/image232.png",
+    "note": "Phase 1 Graphics doc; visually matched: soap, single doc image"
+  },
+  {
+    "number": 469,
+    "hindi": "पाउडर",
+    "english": [
+      "powder"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0469.webp",
+    "sourceFile": "doc-media/image355.png",
+    "note": "Phase 1 Graphics doc; visually matched: powder, single doc image"
+  },
+  {
+    "number": 470,
+    "hindi": "टॉयलेट पेपर",
+    "english": [
+      "toilet paper"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0470.webp",
+    "sourceFile": "doc-media/image388.png",
+    "note": "Phase 1 Graphics doc; visually matched: toilet paper, single doc image"
+  },
+  {
+    "number": 471,
+    "hindi": "टोकरी",
+    "english": [
+      "basket"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0471.webp",
+    "sourceFile": "doc-media/image320.png",
+    "note": "Phase 1 Graphics doc; visually matched: basket, single doc image"
+  },
+  {
+    "number": 472,
+    "hindi": "कपड़ा",
+    "english": [
+      "cloth",
+      "rag"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0472.webp",
+    "sourceFile": "doc-media/image34.png",
+    "note": "Phase 1 Graphics doc; visually matched: cloth/rag, single doc image"
+  },
+  {
+    "number": 473,
+    "hindi": "नेल कटर",
+    "english": [
+      "nail clippers"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0473.webp",
+    "sourceFile": "doc-media/image412.png",
+    "note": "Phase 1 Graphics doc; visually matched: nail clippers, single doc image"
+  },
+  {
+    "number": 474,
+    "hindi": "रेज़र",
+    "english": [
+      "razor"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0474.webp",
+    "sourceFile": "doc-media/image372.png",
+    "note": "Phase 1 Graphics doc; visually matched: razor, single doc image"
+  },
+  {
+    "number": 475,
+    "hindi": "परफ्यूम",
+    "english": [
+      "perfume"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0475.webp",
+    "sourceFile": "doc-media/image8.png",
+    "note": "Phase 1 Graphics doc; visually matched: perfume, single doc image"
+  },
+  {
+    "number": 476,
+    "hindi": "पिन",
+    "english": [
+      "pin"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0476.webp",
+    "sourceFile": "doc-media/image209.png",
+    "note": "Phase 1 Graphics doc; visually matched: pin, single doc image"
+  },
+  {
+    "number": 477,
+    "hindi": "बैंडेज",
+    "english": [
+      "bandage"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0477.webp",
+    "sourceFile": "doc-media/image135.png",
+    "note": "Phase 1 Graphics doc; visually matched: bandage, single doc image"
+  },
+  {
+    "number": 478,
+    "hindi": "नेल पेंट",
+    "english": [
+      "nail varnish",
+      "nail polish"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0478.webp",
+    "sourceFile": "doc-media/image330.png",
+    "note": "Phase 1 Graphics doc; visually matched: nail polish, single doc image"
+  },
+  {
+    "number": 479,
+    "hindi": "शैम्पू",
+    "english": [
+      "shampoo"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0479.webp",
+    "sourceFile": "doc-media/image201.png",
+    "note": "Phase 1 Graphics doc; visually matched: shampoo, single doc image"
+  },
+  {
+    "number": 480,
+    "hindi": "हेंगर",
+    "english": [
+      "hanger"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0480.webp",
+    "sourceFile": "doc-media/image56.png",
+    "note": "Phase 1 Graphics doc; visually matched: hanger, single doc image"
+  },
+  {
+    "number": 481,
+    "hindi": "स्पंज",
+    "english": [
+      "sponge"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0481.webp",
+    "sourceFile": "doc-media/image61.png",
+    "note": "Phase 1 Graphics doc; visually matched: sponge, single doc image"
+  },
+  {
+    "number": 482,
+    "hindi": "टिश्यू पेपर",
+    "english": [
+      "tissue paper"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0482.webp",
+    "sourceFile": "doc-media/image430.png",
+    "note": "Phase 1 Graphics doc; visually matched: tissue paper, single doc image"
+  },
+  {
+    "number": 483,
+    "hindi": "टूथपेस्ट और ब्रश",
+    "english": [
+      "toothpaste and brush"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0483.webp",
+    "sourceFile": "doc-media/image340.png",
+    "note": "Phase 1 Graphics doc; visually matched: toothpaste and brush, single doc image"
+  },
+  {
+    "number": 484,
+    "hindi": "लिपस्टिक",
+    "english": [
+      "lipstick"
+    ],
+    "category": "Bathroom and cleaning",
+    "image": "assets/phase1-images/phase1-0484.webp",
+    "sourceFile": "doc-media/image321.png",
+    "note": "Phase 1 Graphics doc; visually matched: lipstick, single doc image"
+  },
+  {
+    "number": 485,
+    "hindi": "गाँव",
+    "english": [
+      "village"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0485.webp",
+    "sourceFile": "doc-media/image101.png",
+    "note": "Phase 1 Graphics doc; visually matched: village, single doc image"
+  },
+  {
+    "number": 486,
+    "hindi": "शहर",
+    "english": [
+      "city",
+      "town"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0486.webp",
+    "sourceFile": "doc-media/image385.png",
+    "note": "Phase 1 Graphics doc; visually matched: city, single doc image"
+  },
+  {
+    "number": 487,
+    "hindi": "मस्जिद",
+    "english": [
+      "mosque"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0487.webp",
+    "sourceFile": "doc-media/image152.png",
+    "note": "Phase 1 Graphics doc; visually matched: mosque, single doc image"
+  },
+  {
+    "number": 488,
+    "hindi": "मछली",
+    "english": [
+      "fish"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0488.webp",
+    "sourceFile": "doc-media/image419.png",
+    "note": "Phase 1 Graphics doc; visually matched: fish seller, single doc image"
+  },
+  {
+    "number": 489,
+    "hindi": "चश्मे की दुकान",
+    "english": [
+      "optician",
+      "glasses shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0489.webp",
+    "sourceFile": "doc-media/image182.png",
+    "note": "Phase 1 Graphics doc; visually matched: optician, single doc image"
+  },
+  {
+    "number": 490,
+    "hindi": "पेट्रोल पम्प",
+    "english": [
+      "petrol pump",
+      "petrol station"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0490.webp",
+    "sourceFile": "doc-media/image96.png",
+    "note": "Phase 1 Graphics doc; visually matched: petrol pump, single doc image"
+  },
+  {
+    "number": 491,
+    "hindi": "जिम",
+    "english": [
+      "gym"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0491.webp",
+    "sourceFile": "doc-media/image148.png",
+    "note": "Phase 1 Graphics doc; visually matched: gym, single doc image"
+  },
+  {
+    "number": 492,
+    "hindi": "फूल की दुकान",
+    "english": [
+      "flower shop",
+      "florist"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0492.webp",
+    "sourceFile": "doc-media/image268.png",
+    "note": "Phase 1 Graphics doc; visually matched: flower shop, single doc image"
+  },
+  {
+    "number": 493,
+    "hindi": "जूते की दुकान",
+    "english": [
+      "shoe shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0493.webp",
+    "sourceFile": "doc-media/image378.png",
+    "note": "Phase 1 Graphics doc; visually matched: shoe shop, single doc image"
+  },
+  {
+    "number": 494,
+    "hindi": "रेस्टोएंट",
+    "english": [
+      "restaurant"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0494.webp",
+    "sourceFile": "doc-media/image66.png",
+    "note": "Phase 1 Graphics doc; visually matched: restaurant, single doc image"
+  },
+  {
+    "number": 495,
+    "hindi": "म्यूज़ियम",
+    "english": [
+      "museum"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0495.webp",
+    "sourceFile": "doc-media/image217.png",
+    "note": "Phase 1 Graphics doc; visually matched: museum, single doc image"
+  },
+  {
+    "number": 496,
+    "hindi": "डॉक्टर",
+    "english": [
+      "doctor"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0496.webp",
+    "sourceFile": "doc-media/image48.png",
+    "note": "Phase 1 Graphics doc; visually matched: doctor, single doc image"
+  },
+  {
+    "number": 497,
+    "hindi": "केमिस्ट",
+    "english": [
+      "chemist",
+      "pharmacy"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0497.webp",
+    "sourceFile": "doc-media/image301.png",
+    "note": "Phase 1 Graphics doc; visually matched: chemist, single doc image"
+  },
+  {
+    "number": 498,
+    "hindi": "होटल",
+    "english": [
+      "hotel"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0498.webp",
+    "sourceFile": "doc-media/image255.png",
+    "note": "Phase 1 Graphics doc; visually matched: hotel, single doc image"
+  },
+  {
+    "number": 499,
+    "hindi": "डेंटिस्ट",
+    "english": [
+      "dentist"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0499.webp",
+    "sourceFile": "doc-media/image186.png",
+    "note": "Phase 1 Graphics doc; visually matched: dentist, single doc image"
+  },
+  {
+    "number": 500,
+    "hindi": "रेडी मेड कपड़े की दुकान",
+    "english": [
+      "ready-made clothes shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0500.webp",
+    "sourceFile": "doc-media/image162.png",
+    "note": "Phase 1 Graphics doc; visually matched: ready-made clothes shop, single doc image"
+  },
+  {
+    "number": 501,
+    "hindi": "नाई की दुकान",
+    "english": [
+      "barber shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0501.webp",
+    "sourceFile": "doc-media/image14.png",
+    "note": "Phase 1 Graphics doc; visually matched: barber shop, single doc image"
+  },
+  {
+    "number": 502,
+    "hindi": "पुलिस स्टेशन",
+    "english": [
+      "police station"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0502.webp",
+    "sourceFile": "doc-media/image401.png",
+    "note": "Phase 1 Graphics doc; visually matched: police station, single doc image"
+  },
+  {
+    "number": 503,
+    "hindi": "कपड़े की दुकान",
+    "english": [
+      "clothes shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0503.webp",
+    "sourceFile": "doc-media/image131.png",
+    "note": "Phase 1 Graphics doc; visually matched: clothes shop, single doc image"
+  },
+  {
+    "number": 504,
+    "hindi": "सब्ज़ी वाला",
+    "english": [
+      "vegetable seller",
+      "greengrocer"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0504.webp",
+    "sourceFile": "doc-media/image442.png",
+    "note": "Phase 1 Graphics doc; visually matched: vegetable seller, single doc image"
+  },
+  {
+    "number": 505,
+    "hindi": "फलवाला",
+    "english": [
+      "fruit seller",
+      "fruiterer"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0505.webp",
+    "sourceFile": "doc-media/image227.png",
+    "note": "Phase 1 Graphics doc; visually matched: fruit seller, single doc image"
+  },
+  {
+    "number": 506,
+    "hindi": "गिरजाघर",
+    "english": [
+      "church"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0506.webp",
+    "sourceFile": "doc-media/image200.png",
+    "note": "Phase 1 Graphics doc; visually matched: church, single doc image"
+  },
+  {
+    "number": 507,
+    "hindi": "अख़बार की दुकान",
+    "english": [
+      "newspaper shop",
+      "newsagent"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0507.webp",
+    "sourceFile": "doc-media/image298.png",
+    "note": "Phase 1 Graphics doc; visually matched: newspaper shop, single doc image"
+  },
+  {
+    "number": 508,
+    "hindi": "पोस्ट ऑफिस",
+    "english": [
+      "post office"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0508.webp",
+    "sourceFile": "doc-media/image369.png",
+    "note": "Phase 1 Graphics doc; visually matched: post office, single doc image"
+  },
+  {
+    "number": 509,
+    "hindi": "खिलौने की दुकान",
+    "english": [
+      "toy shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0509.webp",
+    "sourceFile": "doc-media/image264.png",
+    "note": "Phase 1 Graphics doc; visually matched: toy shop, single doc image"
+  },
+  {
+    "number": 510,
+    "hindi": "खेत",
+    "english": [
+      "field",
+      "farm"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0510.webp",
+    "sourceFile": "doc-media/image392.png",
+    "note": "Phase 1 Graphics doc; visually matched: field/farm, single doc image"
+  },
+  {
+    "number": 511,
+    "hindi": "बिजली के समान की दुकान",
+    "english": [
+      "electrical goods shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0511.webp",
+    "sourceFile": "doc-media/image204.png",
+    "note": "Phase 1 Graphics doc; visually matched: electrical goods shop, single doc image"
+  },
+  {
+    "number": 512,
+    "hindi": "स्टेडियम",
+    "english": [
+      "stadium"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0512.webp",
+    "sourceFile": "doc-media/image211.png",
+    "note": "Phase 1 Graphics doc; visually matched: stadium, single doc image"
+  },
+  {
+    "number": 513,
+    "hindi": "मसाले की दुकान",
+    "english": [
+      "spice shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0513.webp",
+    "sourceFile": "doc-media/image423.png",
+    "note": "Phase 1 Graphics doc; visually matched: spice shop, single doc image"
+  },
+  {
+    "number": 514,
+    "hindi": "चाय वाला",
+    "english": [
+      "tea seller",
+      "chai seller"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0514.webp",
+    "sourceFile": "doc-media/image335.png",
+    "note": "Phase 1 Graphics doc; visually matched: tea seller, single doc image"
+  },
+  {
+    "number": 515,
+    "hindi": "चाय की दुकान",
+    "english": [
+      "tea shop",
+      "chai shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0515.webp",
+    "sourceFile": "doc-media/image125.png",
+    "note": "Phase 1 Graphics doc; visually matched: tea shop, single doc image"
+  },
+  {
+    "number": 516,
+    "hindi": "मॉल",
+    "english": [
+      "mall",
+      "shopping centre"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0516.webp",
+    "sourceFile": "doc-media/image197.png",
+    "note": "Phase 1 Graphics doc; visually matched: mall, single doc image"
+  },
+  {
+    "number": 517,
+    "hindi": "पार्किंग",
+    "english": [
+      "parking"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0517.webp",
+    "sourceFile": "doc-media/image362.png",
+    "note": "Phase 1 Graphics doc; visually matched: parking, single doc image"
+  },
+  {
+    "number": 518,
+    "hindi": "प्रेस वालाल",
+    "english": [
+      "ironing man",
+      "ironing shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0518.webp",
+    "sourceFile": "doc-media/image140.png",
+    "note": "Phase 1 Graphics doc; visually matched: ironing shop, single doc image"
+  },
+  {
+    "number": 519,
+    "hindi": "टिकट काउंटर",
+    "english": [
+      "ticket counter"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0519.webp",
+    "sourceFile": "doc-media/image417.png",
+    "note": "Phase 1 Graphics doc; visually matched: ticket counter, single doc image"
+  },
+  {
+    "number": 520,
+    "hindi": "ड्राई क्लीनिंग की दुकान",
+    "english": [
+      "dry cleaner's"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0520.webp",
+    "sourceFile": "doc-media/image29.png",
+    "note": "Phase 1 Graphics doc; visually matched: dry cleaner, single doc image"
+  },
+  {
+    "number": 521,
+    "hindi": "चिड़िया घर",
+    "english": [
+      "zoo"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0521.webp",
+    "sourceFile": "doc-media/image281.png",
+    "note": "Phase 1 Graphics doc; visually matched: zoo, single doc image"
+  },
+  {
+    "number": 522,
+    "hindi": "बर्तन की दुकान",
+    "english": [
+      "utensil shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0522.webp",
+    "sourceFile": "doc-media/image246.png",
+    "note": "Phase 1 Graphics doc; visually matched: utensil shop, single doc image"
+  },
+  {
+    "number": 523,
+    "hindi": "फोटोकॉपी की दुकान",
+    "english": [
+      "photocopy shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0523.webp",
+    "sourceFile": "doc-media/image411.png",
+    "note": "Phase 1 Graphics doc; visually matched: photocopy shop, single doc image"
+  },
+  {
+    "number": 524,
+    "hindi": "स्कूल",
+    "english": [
+      "school"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0524.webp",
+    "sourceFile": "doc-media/image443.png",
+    "note": "Phase 1 Graphics doc; visually matched: school, single doc image"
+  },
+  {
+    "number": 525,
+    "hindi": "फर्नीचर की दुकान",
+    "english": [
+      "furniture shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0525.webp",
+    "sourceFile": "doc-media/image353.png",
+    "note": "Phase 1 Graphics doc; visually matched: furniture shop, single doc image"
+  },
+  {
+    "number": 526,
+    "hindi": "बैंक",
+    "english": [
+      "bank"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0526.webp",
+    "sourceFile": "doc-media/image79.png",
+    "note": "Phase 1 Graphics doc; visually matched: bank, single doc image"
+  },
+  {
+    "number": 527,
+    "hindi": "मैकेनिक",
+    "english": [
+      "mechanic"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0527.webp",
+    "sourceFile": "doc-media/image54.png",
+    "note": "Phase 1 Graphics doc; visually matched: mechanic, single doc image"
+  },
+  {
+    "number": 528,
+    "hindi": "रेलवे स्टेशन",
+    "english": [
+      "railway station"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0528.webp",
+    "sourceFile": "doc-media/image138.png",
+    "note": "Phase 1 Graphics doc; visually matched: railway station, single doc image"
+  },
+  {
+    "number": 529,
+    "hindi": "जेल",
+    "english": [
+      "prison",
+      "jail"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0529.webp",
+    "sourceFile": "doc-media/image5.png",
+    "note": "Phase 1 Graphics doc; visually matched: prison, single doc image"
+  },
+  {
+    "number": 530,
+    "hindi": "गोश्त की दुकान",
+    "english": [
+      "meat shop",
+      "butcher's"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0530.webp",
+    "sourceFile": "doc-media/image183.png",
+    "note": "Phase 1 Graphics doc; visually matched: meat shop, single doc image"
+  },
+  {
+    "number": 531,
+    "hindi": "समुंदर का किनारा",
+    "english": [
+      "seashore",
+      "seaside",
+      "beach"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0531.webp",
+    "sourceFile": "doc-media/image399.png",
+    "note": "Phase 1 Graphics doc; visually matched: seashore, single doc image"
+  },
+  {
+    "number": 532,
+    "hindi": "मदर डेरी",
+    "english": [
+      "Mother Dairy"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0532.webp",
+    "sourceFile": "doc-media/image429.png",
+    "note": "Phase 1 Graphics doc; visually matched: Mother Dairy, single doc image"
+  },
+  {
+    "number": 533,
+    "hindi": "मेट्रो स्टेशन",
+    "english": [
+      "metro station"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0533.webp",
+    "sourceFile": "doc-media/image414.png",
+    "note": "Phase 1 Graphics doc; visually matched: metro station, single doc image"
+  },
+  {
+    "number": 534,
+    "hindi": "अदालत",
+    "english": [
+      "court",
+      "courthouse"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0534.webp",
+    "sourceFile": "doc-media/image97.png",
+    "note": "Phase 1 Graphics doc; visually matched: court, single doc image"
+  },
+  {
+    "number": 535,
+    "hindi": "पार्क",
+    "english": [
+      "park"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0535.webp",
+    "sourceFile": "doc-media/image235.png",
+    "note": "Phase 1 Graphics doc; visually matched: park, single doc image"
+  },
+  {
+    "number": 536,
+    "hindi": "मंदिर",
+    "english": [
+      "temple"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0536.webp",
+    "sourceFile": "doc-media/image151.png",
+    "note": "Phase 1 Graphics doc; visually matched: temple, single doc image"
+  },
+  {
+    "number": 537,
+    "hindi": "सुनार की दुकान",
+    "english": [
+      "jeweller's shop"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0537.webp",
+    "sourceFile": "doc-media/image446.png",
+    "note": "Phase 1 Graphics doc; visually matched: jeweller, single doc image"
+  },
+  {
+    "number": 538,
+    "hindi": "किताब की दुकान",
+    "english": [
+      "bookshop",
+      "bookstore"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0538.webp",
+    "sourceFile": "doc-media/image145.png",
+    "note": "Phase 1 Graphics doc; visually matched: bookshop, single doc image"
+  },
+  {
+    "number": 539,
+    "hindi": "हवाई अड्डा",
+    "english": [
+      "airport"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0539.webp",
+    "sourceFile": "doc-media/image43.png",
+    "note": "Phase 1 Graphics doc; visually matched: airport, single doc image"
+  },
+  {
+    "number": 540,
+    "hindi": "ऑफिस",
+    "english": [
+      "office"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0540.webp",
+    "sourceFile": "doc-media/image118.png",
+    "note": "Phase 1 Graphics doc; visually matched: office, single doc image"
+  },
+  {
+    "number": 542,
+    "hindi": "कब्रिस्तान",
+    "english": [
+      "cemetery",
+      "graveyard"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0542.webp",
+    "sourceFile": "doc-media/image285.png",
+    "note": "Phase 1 Graphics doc; visually matched: cemetery, single doc image"
+  },
+  {
+    "number": 543,
+    "hindi": "अस्पताल",
+    "english": [
+      "hospital"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0543.webp",
+    "sourceFile": "doc-media/image252.png",
+    "note": "Phase 1 Graphics doc; visually matched: hospital, single doc image"
+  },
+  {
+    "number": 544,
+    "hindi": "लाइब्रेरी",
+    "english": [
+      "library"
+    ],
+    "category": "Places in town",
+    "image": "assets/phase1-images/phase1-0544.webp",
+    "sourceFile": "doc-media/image233.png",
+    "note": "Phase 1 Graphics doc; visually matched: library, single doc image"
+  },
+  {
+    "number": 545,
+    "hindi": "खोलना",
+    "english": [
+      "open",
+      "to open"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0545.webp",
+    "sourceFile": "doc-media/image336.png",
+    "note": "Phase 1 Graphics doc; visually matched: open, single doc image"
+  },
+  {
+    "number": 547,
+    "hindi": "लुड़कना",
+    "english": [
+      "roll",
+      "roll down"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0547.webp",
+    "sourceFile": "doc-media/image384.png",
+    "note": "Phase 1 Graphics doc; visually matched: roll down, single doc image"
+  },
+  {
+    "number": 548,
+    "hindi": "लुड़काना",
+    "english": [
+      "roll",
+      "to roll something"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0548.webp",
+    "sourceFile": "image36.png",
+    "note": "matched from Phase 1 Graphics doc: rolling ball"
+  },
+  {
+    "number": 549,
+    "hindi": "घूमना",
+    "english": [
+      "turn",
+      "rotate",
+      "wander"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0549.webp",
+    "sourceFile": "doc-media/image169.png",
+    "note": "Phase 1 Graphics doc; visually matched: turn/rotate, single doc image"
+  },
+  {
+    "number": 550,
+    "hindi": "घुमाना",
+    "english": [
+      "turn",
+      "rotate something"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0550.webp",
+    "sourceFile": "doc-media/image207.png",
+    "note": "Phase 1 Graphics doc; visually matched: rotate something, single doc image"
+  },
+  {
+    "number": 551,
+    "hindi": "गिरना",
+    "english": [
+      "fall",
+      "to fall"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0551.webp",
+    "sourceFile": "doc-media/image57.png",
+    "note": "Phase 1 Graphics doc; visually matched: fall, single doc image"
+  },
+  {
+    "number": 552,
+    "hindi": "गिराना",
+    "english": [
+      "drop",
+      "make fall"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0552.webp",
+    "sourceFile": "doc-media/image208.png",
+    "note": "Phase 1 Graphics doc; visually matched: drop, single doc image"
+  },
+  {
+    "number": 553,
+    "hindi": "खींचना",
+    "english": [
+      "pull",
+      "to pull"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0553.webp",
+    "sourceFile": "doc-media/image346.png",
+    "note": "Phase 1 Graphics doc; visually matched: pull, single doc image"
+  },
+  {
+    "number": 554,
+    "hindi": "धकेलना",
+    "english": [
+      "push",
+      "to push"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0554.webp",
+    "sourceFile": "doc-media/image428.png",
+    "note": "Phase 1 Graphics doc; visually matched: push, single doc image"
+  },
+  {
+    "number": 555,
+    "hindi": "मुड़ना",
+    "english": [
+      "turn",
+      "bend"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0555.webp",
+    "sourceFile": "image310.png",
+    "note": "matched from Phase 1 Graphics doc: turning objects"
+  },
+  {
+    "number": 556,
+    "hindi": "मोड़ना",
+    "english": [
+      "turn",
+      "bend something"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0556.webp",
+    "sourceFile": "doc-media/image310.png",
+    "note": "Phase 1 Graphics doc; visually matched: turn object, single doc image"
+  },
+  {
+    "number": 557,
+    "hindi": "छीलना",
+    "english": [
+      "peel",
+      "to peel"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0557.webp",
+    "sourceFile": "image177.png",
+    "note": "matched from Phase 1 Graphics doc: peeling fruit"
+  },
+  {
+    "number": 558,
+    "hindi": "निचोड़ना",
+    "english": [
+      "squeeze",
+      "wring out"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0558.webp",
+    "sourceFile": "doc-media/image134.png",
+    "note": "Phase 1 Graphics doc; visually matched: squeeze, single doc image"
+  },
+  {
+    "number": 559,
+    "hindi": "जलाना",
+    "english": [
+      "light",
+      "switch on"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0559.webp",
+    "sourceFile": "image293.png",
+    "note": "matched from Phase 1 Graphics doc: light cue"
+  },
+  {
+    "number": 561,
+    "hindi": "चलाना",
+    "english": [
+      "run",
+      "operate",
+      "switch on"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0561.webp",
+    "sourceFile": "image146.png",
+    "note": "matched from Phase 1 Graphics doc: driving/running vehicle"
+  },
+  {
+    "number": 564,
+    "hindi": "खोलना",
+    "english": [
+      "open",
+      "switch on"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0564.webp",
+    "sourceFile": "image126.png",
+    "note": "matched from Phase 1 Graphics doc: open lock"
+  },
+  {
+    "number": 565,
+    "hindi": "फ़ोन चार्ज करना",
+    "english": [
+      "charge the phone"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0565.webp",
+    "sourceFile": "doc-media/image171.png",
+    "note": "Phase 1 Graphics doc; visually matched: charge phone, single doc image"
+  },
+  {
+    "number": 566,
+    "hindi": "लैपटॉप चार्ज करना",
+    "english": [
+      "charge the laptop"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0566.webp",
+    "sourceFile": "doc-media/image374.png",
+    "note": "Phase 1 Graphics doc; visually matched: charge laptop, single doc image"
+  },
+  {
+    "number": 567,
+    "hindi": "फ़ोन पर बात करना",
+    "english": [
+      "talk on the phone"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0567.webp",
+    "sourceFile": "image72.png",
+    "note": "matched from Phase 1 Graphics doc: talk on the phone"
+  },
+  {
+    "number": 568,
+    "hindi": "तोलना",
+    "english": [
+      "weigh",
+      "to weigh"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0568.webp",
+    "sourceFile": "doc-media/image82.png",
+    "note": "Phase 1 Graphics doc; visually matched: weigh, single doc image"
+  },
+  {
+    "number": 569,
+    "hindi": "टीवी देखना",
+    "english": [
+      "watch TV"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0569.webp",
+    "sourceFile": "doc-media/image172.png",
+    "note": "Phase 1 Graphics doc; visually matched: watch TV, single doc image"
+  },
+  {
+    "number": 570,
+    "hindi": "फ़ोन उठाना",
+    "english": [
+      "pick up the phone",
+      "answer the phone"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0570.webp",
+    "sourceFile": "doc-media/image144.png",
+    "note": "Phase 1 Graphics doc; visually matched: answer phone, single doc image"
+  },
+  {
+    "number": 571,
+    "hindi": "नापना",
+    "english": [
+      "measure",
+      "to measure"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0571.webp",
+    "sourceFile": "doc-media/image391.png",
+    "note": "Phase 1 Graphics doc; visually matched: measure, single doc image"
+  },
+  {
+    "number": 573,
+    "hindi": "चुराना",
+    "english": [
+      "steal",
+      "to steal"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0573.webp",
+    "sourceFile": "doc-media/image147.png",
+    "note": "Phase 1 Graphics doc; visually matched: steal, single doc image"
+  },
+  {
+    "number": 574,
+    "hindi": "फोटो खींचना",
+    "english": [
+      "take a photo"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0574.webp",
+    "sourceFile": "doc-media/image42.png",
+    "note": "Phase 1 Graphics doc; visually matched: take photo, single doc image"
+  },
+  {
+    "number": 575,
+    "hindi": "रेडियो सुनना",
+    "english": [
+      "listen to the radio"
+    ],
+    "category": "Action verbs and devices",
+    "image": "assets/phase1-images/phase1-0575.webp",
+    "sourceFile": "doc-media/image351.png",
+    "note": "Phase 1 Graphics doc; visually matched: listen to radio, single doc image"
+  },
+  {
+    "number": 629,
+    "hindi": "साइंस की किताब",
+    "english": [
+      "science book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0629.webp",
+    "sourceFile": "doc-media/image242.png",
+    "note": "Phase 1 Graphics doc; visually matched: science book, single doc image"
+  },
+  {
+    "number": 630,
+    "hindi": "खाना बनाने की किताब",
+    "english": [
+      "cookery book",
+      "cookbook"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0630.webp",
+    "sourceFile": "doc-media/image226.png",
+    "note": "Phase 1 Graphics doc; visually matched: cookery book, single doc image"
+  },
+  {
+    "number": 631,
+    "hindi": "अख़बार",
+    "english": [
+      "newspaper"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0631.webp",
+    "sourceFile": "doc-media/image132.png",
+    "note": "Phase 1 Graphics doc; visually matched: newspaper, single doc image"
+  },
+  {
+    "number": 632,
+    "hindi": "पुरानी किताब",
+    "english": [
+      "old book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0632.webp",
+    "sourceFile": "doc-media/image316.png",
+    "note": "Phase 1 Graphics doc; visually matched: old book, single doc image"
+  },
+  {
+    "number": 633,
+    "hindi": "नई किताब",
+    "english": [
+      "new book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0633.webp",
+    "sourceFile": "doc-media/image318.png",
+    "note": "Phase 1 Graphics doc; visually matched: new book, single doc image"
+  },
+  {
+    "number": 634,
+    "hindi": "मोटी किताब",
+    "english": [
+      "thick book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0634.webp",
+    "sourceFile": "doc-media/image99.png",
+    "note": "Phase 1 Graphics doc; visually matched: thick book, single doc image"
+  },
+  {
+    "number": 635,
+    "hindi": "पतली",
+    "english": [
+      "thin"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0635.webp",
+    "sourceFile": "doc-media/image273.png",
+    "note": "Phase 1 Graphics doc; visually matched: thin book, single doc image"
+  },
+  {
+    "number": 636,
+    "hindi": "मुश्किल किताब",
+    "english": [
+      "difficult book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0636.webp",
+    "sourceFile": "doc-media/image71.png",
+    "note": "Phase 1 Graphics doc; visually matched: difficult book, single doc image"
+  },
+  {
+    "number": 637,
+    "hindi": "आसान किताब",
+    "english": [
+      "easy book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0637.webp",
+    "sourceFile": "doc-media/image319.png",
+    "note": "Phase 1 Graphics doc; visually matched: easy book, single doc image"
+  },
+  {
+    "number": 638,
+    "hindi": "चुटकुले की किताब",
+    "english": [
+      "joke book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0638.webp",
+    "sourceFile": "doc-media/image294.png",
+    "note": "Phase 1 Graphics doc; visually matched: joke book, single doc image"
+  },
+  {
+    "number": 639,
+    "hindi": "कहानियों की किताब",
+    "english": [
+      "story book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0639.webp",
+    "sourceFile": "doc-media/image76.png",
+    "note": "Phase 1 Graphics doc; visually matched: story book, single doc image"
+  },
+  {
+    "number": 640,
+    "hindi": "डिक्शनरी",
+    "english": [
+      "dictionary"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0640.webp",
+    "sourceFile": "doc-media/image161.png",
+    "note": "Phase 1 Graphics doc; visually matched: dictionary, single doc image"
+  },
+  {
+    "number": 641,
+    "hindi": "मैगज़ीन",
+    "english": [
+      "magazine"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0641.webp",
+    "sourceFile": "doc-media/image390.png",
+    "note": "Phase 1 Graphics doc; visually matched: magazine, single doc image"
+  },
+  {
+    "number": 642,
+    "hindi": "महंगी किताब",
+    "english": [
+      "expensive book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0642.webp",
+    "sourceFile": "doc-media/image317.png",
+    "note": "Phase 1 Graphics doc; visually matched: expensive book, single doc image"
+  },
+  {
+    "number": 643,
+    "hindi": "सस्ती किताब",
+    "english": [
+      "cheap book"
+    ],
+    "category": "Books and reading",
+    "image": "assets/phase1-images/phase1-0643.webp",
+    "sourceFile": "doc-media/image198.png",
+    "note": "Phase 1 Graphics doc; visually matched: cheap book, single doc image"
+  },
+  {
+    "number": 644,
+    "hindi": "गिलहरी",
+    "english": [
+      "squirrel"
+    ],
+    "category": "Small animals and objects",
+    "image": "assets/phase1-images/phase1-0644.webp",
+    "sourceFile": "doc-media/image325.png",
+    "note": "Phase 1 Graphics doc; visually matched: squirrel, single doc image"
+  },
+  {
+    "number": 645,
+    "hindi": "सीटी",
+    "english": [
+      "whistle"
+    ],
+    "category": "Small animals and objects",
+    "image": "assets/phase1-images/phase1-0645.webp",
+    "sourceFile": "doc-media/image21.png",
+    "note": "Phase 1 Graphics doc; visually matched: whistle, single doc image"
+  },
+  {
+    "number": 646,
+    "hindi": "कबूतर",
+    "english": [
+      "pigeon"
+    ],
+    "category": "Small animals and objects",
+    "image": "assets/phase1-images/phase1-0646.webp",
+    "sourceFile": "doc-media/image278.png",
+    "note": "Phase 1 Graphics doc; visually matched: pigeon, single doc image"
+  },
+  {
+    "number": 647,
+    "hindi": "मोमबत्ती",
+    "english": [
+      "candle"
+    ],
+    "category": "Small animals and objects",
+    "image": "assets/phase1-images/phase1-0647.webp",
+    "sourceFile": "doc-media/image196.png",
+    "note": "Phase 1 Graphics doc; visually matched: candle, single doc image"
+  },
+  {
+    "number": 713,
+    "hindi": "सोने का कमरा",
+    "english": [
+      "bedroom"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0713.webp",
+    "sourceFile": "doc-media/image418.png",
+    "note": "Phase 1 Graphics doc; visually matched: bedroom, single doc image"
+  },
+  {
+    "number": 714,
+    "hindi": "बालकनी",
+    "english": [
+      "balcony"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0714.webp",
+    "sourceFile": "doc-media/image163.png",
+    "note": "Phase 1 Graphics doc; visually matched: balcony, single doc image"
+  },
+  {
+    "number": 715,
+    "hindi": "ऑफिस",
+    "english": [
+      "office"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0715.webp",
+    "sourceFile": "doc-media/image436.png",
+    "note": "Phase 1 Graphics doc; visually matched: office room, single doc image"
+  },
+  {
+    "number": 717,
+    "hindi": "सीढ़ियाँ",
+    "english": [
+      "stairs"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0717.webp",
+    "sourceFile": "doc-media/image58.png",
+    "note": "Phase 1 Graphics doc; visually matched: stairs, single doc image"
+  },
+  {
+    "number": 719,
+    "hindi": "बाथरूम",
+    "english": [
+      "bathroom"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0719.webp",
+    "sourceFile": "doc-media/image18.png",
+    "note": "Phase 1 Graphics doc; visually matched: bathroom, single doc image"
+  },
+  {
+    "number": 720,
+    "hindi": "अंदर आना",
+    "english": [
+      "come in",
+      "enter"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0720.webp",
+    "sourceFile": "doc-media/image344.png",
+    "note": "Phase 1 Graphics doc; visually matched: come in, single doc image"
+  },
+  {
+    "number": 722,
+    "hindi": "रसोई",
+    "english": [
+      "kitchen"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0722.webp",
+    "sourceFile": "doc-media/image89.png",
+    "note": "Phase 1 Graphics doc; visually matched: kitchen, single doc image"
+  },
+  {
+    "number": 723,
+    "hindi": "बैठक",
+    "english": [
+      "living room",
+      "sitting room"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0723.webp",
+    "sourceFile": "doc-media/image223.png",
+    "note": "Phase 1 Graphics doc; visually matched: living room, single doc image"
+  },
+  {
+    "number": 724,
+    "hindi": "खाने की मेज़",
+    "english": [
+      "dining table"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0724.webp",
+    "sourceFile": "doc-media/image84.png",
+    "note": "Phase 1 Graphics doc; visually matched: dining table, single doc image"
+  },
+  {
+    "number": 727,
+    "hindi": "दस्तरख़ान",
+    "english": [
+      "tablecloth",
+      "dining cloth"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0727.webp",
+    "sourceFile": "doc-media/image110.png",
+    "note": "Phase 1 Graphics doc; visually matched: dining cloth, single doc image"
+  },
+  {
+    "number": 728,
+    "hindi": "कैरम बोर्ड",
+    "english": [
+      "carrom board"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0728.webp",
+    "sourceFile": "doc-media/image32.png",
+    "note": "Phase 1 Graphics doc; visually matched: carrom board, single doc image"
+  },
+  {
+    "number": 729,
+    "hindi": "बाथरूम स्प्रेयर",
+    "english": [
+      "bathroom sprayer",
+      "bidet sprayer"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0729.webp",
+    "sourceFile": "doc-media/image106.png",
+    "note": "Phase 1 Graphics doc; visually matched: bathroom sprayer, single doc image"
+  },
+  {
+    "number": 730,
+    "hindi": "चारपायी",
+    "english": [
+      "charpoy",
+      "woven bed"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0730.webp",
+    "sourceFile": "doc-media/image78.png",
+    "note": "Phase 1 Graphics doc; visually matched: charpoy, single doc image"
+  },
+  {
+    "number": 731,
+    "hindi": "मैगी",
+    "english": [
+      "Maggi noodles"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0731.webp",
+    "sourceFile": "doc-media/image63.png",
+    "note": "Phase 1 Graphics doc; visually matched: Maggi noodles, single doc image"
+  },
+  {
+    "number": 732,
+    "hindi": "मेहंदी",
+    "english": [
+      "henna",
+      "mehndi"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0732.webp",
+    "sourceFile": "doc-media/image35.png",
+    "note": "Phase 1 Graphics doc; visually matched: henna, single doc image"
+  },
+  {
+    "number": 733,
+    "hindi": "अगरबत्ती",
+    "english": [
+      "incense stick"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0733.webp",
+    "sourceFile": "doc-media/image98.png",
+    "note": "Phase 1 Graphics doc; visually matched: incense, single doc image"
+  },
+  {
+    "number": 734,
+    "hindi": "जाली",
+    "english": [
+      "mesh",
+      "screen"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0734.webp",
+    "sourceFile": "doc-media/image398.png",
+    "note": "Phase 1 Graphics doc; visually matched: mesh/screen, single doc image"
+  },
+  {
+    "number": 735,
+    "hindi": "मग्गा",
+    "english": [
+      "mug",
+      "bathroom mug"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0735.webp",
+    "sourceFile": "doc-media/image291.png",
+    "note": "Phase 1 Graphics doc; visually matched: mug, single doc image"
+  },
+  {
+    "number": 736,
+    "hindi": "थाली",
+    "english": [
+      "plate",
+      "thali"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0736.webp",
+    "sourceFile": "doc-media/image380.png",
+    "note": "Phase 1 Graphics doc; visually matched: thali, single doc image"
+  },
+  {
+    "number": 737,
+    "hindi": "रस्क",
+    "english": [
+      "rusk"
+    ],
+    "category": "Rooms and household items",
+    "image": "assets/phase1-images/phase1-0737.webp",
+    "sourceFile": "doc-media/image421.png",
+    "note": "Phase 1 Graphics doc; visually matched: rusk, single doc image"
+  },
+  {
+    "number": 738,
+    "hindi": "आपका जन्मदिन कब है?",
+    "english": [
+      "when is your birthday?"
+    ],
+    "category": "Birthday phrase",
+    "image": "assets/phase1-images/phase1-0738.webp",
+    "sourceFile": "doc-media/image377.png",
+    "note": "Phase 1 Graphics doc; visually matched: birthday, single doc image"
+  },
+  {
+    "number": 739,
+    "hindi": "ख़ाली ग्लास",
+    "english": [
+      "empty glass"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0739.webp",
+    "sourceFile": "doc-media/image55.png",
+    "note": "Phase 1 Graphics doc; visually matched: empty glass, single doc image"
+  },
+  {
+    "number": 740,
+    "hindi": "पूरा ग्लास पानी",
+    "english": [
+      "full glass of water"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0740.webp",
+    "sourceFile": "doc-media/image410.png",
+    "note": "Phase 1 Graphics doc; visually matched: full glass, single doc image"
+  },
+  {
+    "number": 741,
+    "hindi": "आधा ग्लास पानी",
+    "english": [
+      "half glass of water"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0741.webp",
+    "sourceFile": "doc-media/image133.png",
+    "note": "Phase 1 Graphics doc; visually matched: half glass, single doc image"
+  },
+  {
+    "number": 742,
+    "hindi": "गीला",
+    "english": [
+      "wet"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0742.webp",
+    "sourceFile": "doc-media/image345.png",
+    "note": "Phase 1 Graphics doc; visually matched: wet, corrected to wet clothes image"
+  },
+  {
+    "number": 743,
+    "hindi": "सूखा",
+    "english": [
+      "dry"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0743.webp",
+    "sourceFile": "doc-media/image195.png",
+    "note": "Phase 1 Graphics doc; visually matched: dry clothes, single doc image"
+  },
+  {
+    "number": 744,
+    "hindi": "पानी की बूंद",
+    "english": [
+      "drop of water"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0744.webp",
+    "sourceFile": "doc-media/image94.png",
+    "note": "Phase 1 Graphics doc; visually matched: drop of water, single doc image"
+  },
+  {
+    "number": 745,
+    "hindi": "ठंडा पानी",
+    "english": [
+      "cold water"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0745.webp",
+    "sourceFile": "doc-media/image300.png",
+    "note": "Phase 1 Graphics doc; visually matched: cold water, single doc image"
+  },
+  {
+    "number": 747,
+    "hindi": "गर्म पानी",
+    "english": [
+      "hot water"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0747.webp",
+    "sourceFile": "doc-media/image218.png",
+    "note": "Phase 1 Graphics doc; visually matched: hot water, single doc image"
+  },
+  {
+    "number": 748,
+    "hindi": "बहना",
+    "english": [
+      "flow",
+      "to flow"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0748.webp",
+    "sourceFile": "doc-media/image30.png",
+    "note": "Phase 1 Graphics doc; visually matched: flow, single doc image"
+  },
+  {
+    "number": 749,
+    "hindi": "बिखरना",
+    "english": [
+      "scatter",
+      "spill"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0749.webp",
+    "sourceFile": "doc-media/image50.png",
+    "note": "Phase 1 Graphics doc; visually matched: spill, single doc image"
+  },
+  {
+    "number": 750,
+    "hindi": "टपकना",
+    "english": [
+      "drip",
+      "to drip"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0750.webp",
+    "sourceFile": "doc-media/image364.png",
+    "note": "Phase 1 Graphics doc; visually matched: drip, single doc image"
+  },
+  {
+    "number": 752,
+    "hindi": "जमना",
+    "english": [
+      "freeze",
+      "to freeze"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0752.webp",
+    "sourceFile": "doc-media/image127.png",
+    "note": "Phase 1 Graphics doc; visually matched: freeze/ice, single doc image"
+  },
+  {
+    "number": 753,
+    "hindi": "छींटे उड़ाना",
+    "english": [
+      "splash",
+      "to splash"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0753.webp",
+    "sourceFile": "doc-media/image19.png",
+    "note": "Phase 1 Graphics doc; visually matched: splash, single doc image"
+  },
+  {
+    "number": 754,
+    "hindi": "छींट",
+    "english": [
+      "splash",
+      "splatter"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0754.webp",
+    "sourceFile": "doc-media/image305.png",
+    "note": "Phase 1 Graphics doc; visually matched: splash/splatter, single doc image"
+  },
+  {
+    "number": 755,
+    "hindi": "गढ्ढा",
+    "english": [
+      "puddle",
+      "pothole"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0755.webp",
+    "sourceFile": "doc-media/image280.png",
+    "note": "Phase 1 Graphics doc; visually matched: puddle, single doc image"
+  },
+  {
+    "number": 756,
+    "hindi": "हवा",
+    "english": [
+      "air",
+      "wind"
+    ],
+    "category": "Water and states",
+    "image": "assets/phase1-images/phase1-0756.webp",
+    "sourceFile": "doc-media/image220.png",
+    "note": "Phase 1 Graphics doc; visually matched: air/wind, single doc image"
+  },
+  {
+    "number": 803,
+    "hindi": "धूप",
+    "english": [
+      "sunshine"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0803.webp",
+    "sourceFile": "doc-media/image282.png",
+    "note": "Phase 1 Graphics doc; visually matched: sunshine, single doc image"
+  },
+  {
+    "number": 804,
+    "hindi": "घटा छाना",
+    "english": [
+      "clouds gather",
+      "become overcast"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0804.webp",
+    "sourceFile": "doc-media/image10.png",
+    "note": "Phase 1 Graphics doc; visually matched: clouds, single doc image"
+  },
+  {
+    "number": 805,
+    "hindi": "आँधी",
+    "english": [
+      "dust storm",
+      "storm"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0805.webp",
+    "sourceFile": "doc-media/image105.png",
+    "note": "Phase 1 Graphics doc; visually matched: dust storm, single doc image"
+  },
+  {
+    "number": 806,
+    "hindi": "हल्की बारिश",
+    "english": [
+      "light rain"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0806.webp",
+    "sourceFile": "doc-media/image83.png",
+    "note": "Phase 1 Graphics doc; visually matched: light rain, single doc image"
+  },
+  {
+    "number": 807,
+    "hindi": "तेज बारिश",
+    "english": [
+      "heavy rain"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0807.webp",
+    "sourceFile": "doc-media/image327.png",
+    "note": "Phase 1 Graphics doc; visually matched: heavy rain, single doc image"
+  },
+  {
+    "number": 808,
+    "hindi": "सर्दी",
+    "english": [
+      "cold",
+      "winter"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0808.webp",
+    "sourceFile": "doc-media/image81.png",
+    "note": "Phase 1 Graphics doc; visually matched: cold/winter, single doc image"
+  },
+  {
+    "number": 809,
+    "hindi": "ओले",
+    "english": [
+      "hail"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0809.webp",
+    "sourceFile": "doc-media/image124.png",
+    "note": "Phase 1 Graphics doc; visually matched: hail, single doc image"
+  },
+  {
+    "number": 810,
+    "hindi": "तूफ़ान",
+    "english": [
+      "storm"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0810.webp",
+    "sourceFile": "doc-media/image445.png",
+    "note": "Phase 1 Graphics doc; visually matched: storm, single doc image"
+  },
+  {
+    "number": 811,
+    "hindi": "रेतीला तूफान",
+    "english": [
+      "sandstorm"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0811.webp",
+    "sourceFile": "image105.png",
+    "note": "matched from Phase 1 Graphics doc: sandstorm"
+  },
+  {
+    "number": 812,
+    "hindi": "कोहरा",
+    "english": [
+      "fog"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0812.webp",
+    "sourceFile": "doc-media/image75.png",
+    "note": "Phase 1 Graphics doc; visually matched: fog, single doc image"
+  },
+  {
+    "number": 813,
+    "hindi": "गर्मी",
+    "english": [
+      "heat",
+      "summer"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0813.webp",
+    "sourceFile": "doc-media/image350.png",
+    "note": "Phase 1 Graphics doc; visually matched: heat, single doc image"
+  },
+  {
+    "number": 814,
+    "hindi": "बर्फ पड़ना",
+    "english": [
+      "snow",
+      "to snow"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0814.webp",
+    "sourceFile": "doc-media/image405.png",
+    "note": "Phase 1 Graphics doc; visually matched: snow, single doc image"
+  },
+  {
+    "number": 815,
+    "hindi": "बिजली कड़कना",
+    "english": [
+      "lightning strikes",
+      "thunder and lightning"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0815.webp",
+    "sourceFile": "doc-media/image403.png",
+    "note": "Phase 1 Graphics doc; visually matched: thunder/lightning, single doc image"
+  },
+  {
+    "number": 816,
+    "hindi": "बवंडर",
+    "english": [
+      "tornado",
+      "whirlwind"
+    ],
+    "category": "Weather",
+    "image": "assets/phase1-images/phase1-0816.webp",
+    "sourceFile": "doc-media/image70.png",
+    "note": "Phase 1 Graphics doc; visually matched: tornado, single doc image"
   }
 ]
