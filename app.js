@@ -10,6 +10,7 @@ const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xT
 const PHASE2_SHEET_URL = "https://docs.google.com/spreadsheets/d/14BD6b5P1dCkUB9pouUzWuQsN6woZyNpPOkKihyngKHo/export?format=csv&gid=1937597985";
 const DAILY_CHALLENGE_TARGET = 20;
 const DAILY_PHASE2_TARGET = 8;
+const CURRENT_PHASE2_PREP_CATEGORY = "Lesson 12b";
 const DAILY_MISTAKE_TARGET = 10;
 const DAILY_WEAK_LESSON_TARGET = 8;
 const DAILY_FLUENCY_TARGET = 5;
@@ -1122,8 +1123,11 @@ function phase2PrepCategories(limit=1){
   phaseWordsFor("phase2").forEach((word)=>{
     if(word.english?.length && !seen.includes(word.category)) seen.push(word.category);
   });
-  const bTrack = seen.filter((category)=>/\d+\s*b\b/i.test(category));
-  return (bTrack.length ? bTrack : seen)
+  const currentRank = lessonRank(CURRENT_PHASE2_PREP_CATEGORY);
+  const candidates = seen.includes(CURRENT_PHASE2_PREP_CATEGORY)
+    ? seen.filter((category)=>lessonRank(category) <= currentRank)
+    : seen;
+  return candidates
     .map((category,index)=>({ category, index }))
     .sort((a,b)=>lessonRank(b.category)-lessonRank(a.category) || b.index-a.index)
     .map((item)=>item.category)
@@ -1423,7 +1427,7 @@ function coachFocusLine(contract){
     spaced: "Primary focus: spaced retrieval. These words are due before they fade.",
     weak: "Primary focus: weak lesson pattern. The app is clustering the category that keeps slipping.",
     fluency: "Primary focus: speed. These words are correct but not automatic yet.",
-    phase2: "Primary focus: the latest Phase 2B lesson. Keep it small and typed.",
+    phase2: "Primary focus: the current Phase 2 lesson. Keep it small and typed.",
     challenge: "Primary focus: Phase 1 daily retrieval. One locked attempt keeps maintenance honest."
   };
   return lines[task.id] || "Primary focus: finish the next open retrieval task.";
@@ -1637,7 +1641,7 @@ function bindImageCategoryChips(){
 function renderImagePractice(){
   clearTimer();
   clearNextKeyHandler();
-  if(imageSession && imageSession.index < imageSession.queue.length) return renderImageQuestion();
+  imageSession = null;
   const cats = imagePracticeCategories();
   if(!imageSelectedCategories.size) imageSelectedCategories = new Set(cats);
   const selectedWords = imagePracticeWords().filter((word)=>imageSelectedCategories.has(word.category));
@@ -1656,6 +1660,10 @@ function startImagePractice(count=20, forcedWords=null){
   screens.forEach((id)=>$("#"+id).classList.toggle("hidden", id!=="images"));
   document.querySelectorAll("[data-screen]").forEach((button)=>button.classList.toggle("active", button.dataset.screen==="images"));
   renderImageQuestion();
+}
+function exitImagePractice(){
+  imageSession = null;
+  show("images");
 }
 function imageChoices(word){
   const latest = new Set(latestPhaseCategories("phase1", 4));
@@ -1677,7 +1685,8 @@ function renderImageQuestion(){
   const word = imageSession.queue[imageSession.index];
   const progress = Math.round((imageSession.index / imageSession.queue.length) * 100);
   imageSession.answered = false;
-  $("#images").innerHTML = `<div class="quiz-active image-active"><div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><div class="score-display">${imageSession.index + 1}/${imageSession.queue.length} · ${imageSession.correct} correct</div><div class="quiz-card image-card"><img class="image-question-img" src="${escapeAttr(word.image)}" alt=""><div class="mc-options image-options">${imageChoices(word).map(imageOptionHtml).join("")}</div><div id="imageFeedback" class="feedback"></div><div id="imageFeedbackButtons" class="feedback-buttons"></div></div></div>`;
+  $("#images").innerHTML = `<div class="quiz-active image-active"><div class="image-session-nav"><button class="ghost" id="exitImagePractice" type="button">Back to image setup</button></div><div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><div class="score-display">${imageSession.index + 1}/${imageSession.queue.length} · ${imageSession.correct} correct</div><div class="quiz-card image-card"><img class="image-question-img" src="${escapeAttr(word.image)}" alt=""><div class="mc-options image-options">${imageChoices(word).map(imageOptionHtml).join("")}</div><div id="imageFeedback" class="feedback"></div><div id="imageFeedbackButtons" class="feedback-buttons"></div></div></div>`;
+  $("#exitImagePractice")?.addEventListener("click", exitImagePractice);
   document.querySelectorAll(".image-option").forEach((button)=>button.addEventListener("click",()=>answerImageChoice(word, button)));
 }
 function answerImageChoice(word, button){

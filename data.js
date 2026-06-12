@@ -9830,6 +9830,134 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 11b",
         "transliteration": "shikar karna"
+      },
+      {
+        "hindi": "खास",
+        "english": [
+          "special",
+          "particular"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "khaas"
+      },
+      {
+        "hindi": "पक्षी",
+        "english": [
+          "bird"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "pakshi"
+      },
+      {
+        "hindi": "तितली",
+        "english": [
+          "butterfly"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "titli"
+      },
+      {
+        "hindi": "रहम करना",
+        "english": [
+          "show mercy",
+          "have mercy",
+          "take pity"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "raham karna"
+      },
+      {
+        "hindi": "दया आना",
+        "english": [
+          "feel pity",
+          "have compassion",
+          "feel compassion"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "daya aana"
+      },
+      {
+        "hindi": "दहाड़ना",
+        "english": [
+          "roar"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "dahadna"
+      },
+      {
+        "hindi": "शिकारी",
+        "english": [
+          "hunter",
+          "predator"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "shikari"
+      },
+      {
+        "hindi": "जाल बिछाना",
+        "english": [
+          "set a trap",
+          "lay a trap",
+          "spread a net"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "jaal bichhana"
+      },
+      {
+        "hindi": "टहनी",
+        "english": [
+          "twig",
+          "small branch"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "tahni"
+      },
+      {
+        "hindi": "कुतरना",
+        "english": [
+          "gnaw",
+          "nibble"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "kutarna"
+      },
+      {
+        "hindi": "आज़ाद करना",
+        "english": [
+          "free",
+          "set free",
+          "release"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "azad karna"
+      },
+      {
+        "hindi": "बदलना/बदला",
+        "english": [
+          "change",
+          "changed",
+          "revenge"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "badalna / badla"
+      },
+      {
+        "hindi": "हमेशा",
+        "english": [
+          "always"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "hamesha"
+      },
+      {
+        "hindi": "होता है",
+        "english": [
+          "happens",
+          "is",
+          "occurs"
+        ],
+        "category": "Lesson 12b",
+        "transliteration": "hota hai"
       }
     ]
   }
