@@ -9958,6 +9958,69 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 12b",
         "transliteration": "hota hai"
+      },
+      {
+        "hindi": "बछड़ा",
+        "english": [
+          "calf"
+        ],
+        "category": "Lesson 13b",
+        "transliteration": "bachhda"
+      },
+      {
+        "hindi": "गोबर",
+        "english": [
+          "cow dung",
+          "dung"
+        ],
+        "category": "Lesson 13b",
+        "transliteration": "gobar"
+      },
+      {
+        "hindi": "तस्ला",
+        "english": [
+          "metal pan",
+          "basin",
+          "mixing pan"
+        ],
+        "category": "Lesson 13b",
+        "transliteration": "tasla"
+      },
+      {
+        "hindi": "उपले",
+        "english": [
+          "cow dung cakes",
+          "dung cakes"
+        ],
+        "category": "Lesson 13b",
+        "transliteration": "uple"
+      },
+      {
+        "hindi": "मजदूर",
+        "english": [
+          "laborer",
+          "worker"
+        ],
+        "category": "Lesson 13b",
+        "transliteration": "mazdoor"
+      },
+      {
+        "hindi": "चिपकाना",
+        "english": [
+          "stick",
+          "paste",
+          "attach"
+        ],
+        "category": "Lesson 13b",
+        "transliteration": "chipkana"
+      },
+      {
+        "hindi": "शलगम",
+        "english": [
+          "turnip"
+        ],
+        "category": "Lesson 13b",
+        "transliteration": "shalgam"
       }
     ]
   }
