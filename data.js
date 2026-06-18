@@ -10021,6 +10021,217 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 13b",
         "transliteration": "shalgam"
+      },
+      {
+        "hindi": "गला",
+        "english": [
+          "throat",
+          "neck"
+        ],
+        "category": "Lesson 14b",
+        "transliteration": "gala"
+      },
+      {
+        "hindi": "जैसी",
+        "english": [
+          "like",
+          "as",
+          "similar to"
+        ],
+        "category": "Lesson 14b",
+        "transliteration": "jaisi"
+      },
+      {
+        "hindi": "परिंदे",
+        "english": [
+          "birds",
+          "winged creatures"
+        ],
+        "category": "Lesson 14b",
+        "transliteration": "parinde"
+      },
+      {
+        "hindi": "खरीदना",
+        "english": [
+          "buy",
+          "purchase"
+        ],
+        "category": "Lesson 14b",
+        "transliteration": "kharidna"
+      },
+      {
+        "hindi": "बटुआ",
+        "english": [
+          "wallet",
+          "purse"
+        ],
+        "category": "Lesson 14b",
+        "transliteration": "batua"
+      },
+      {
+        "hindi": "पुतला",
+        "english": [
+          "puppet",
+          "mannequin",
+          "effigy"
+        ],
+        "category": "Lesson 14b",
+        "transliteration": "putla"
+      },
+      {
+        "hindi": "तकरीबन",
+        "english": [
+          "approximately",
+          "about"
+        ],
+        "category": "Lesson 14b",
+        "transliteration": "takriban"
+      },
+      {
+        "hindi": "बारी",
+        "english": [
+          "turn",
+          "chance"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "baari"
+      },
+      {
+        "hindi": "लोहा",
+        "english": [
+          "iron"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "loha"
+      },
+      {
+        "hindi": "सुरक्षा",
+        "english": [
+          "safety",
+          "protection",
+          "security"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "suraksha"
+      },
+      {
+        "hindi": "कवच",
+        "english": [
+          "armor",
+          "shield",
+          "protective shell"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "kavach"
+      },
+      {
+        "hindi": "मशाल",
+        "english": [
+          "torch",
+          "flame torch"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "mashal"
+      },
+      {
+        "hindi": "चक्के",
+        "english": [
+          "wheels",
+          "tires"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "chakke"
+      },
+      {
+        "hindi": "अक्लमंद",
+        "english": [
+          "wise",
+          "intelligent",
+          "clever"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "akalmand"
+      },
+      {
+        "hindi": "तहखाना",
+        "english": [
+          "basement",
+          "cellar"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "tahkhana"
+      },
+      {
+        "hindi": "भूसा",
+        "english": [
+          "straw",
+          "chaff"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "bhusa"
+      },
+      {
+        "hindi": "ढेर",
+        "english": [
+          "pile",
+          "heap",
+          "lots"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "dher"
+      },
+      {
+        "hindi": "मिट्टी",
+        "english": [
+          "soil",
+          "earth",
+          "clay"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "mitti"
+      },
+      {
+        "hindi": "नुकीले",
+        "english": [
+          "pointy",
+          "sharp"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "nukile"
+      },
+      {
+        "hindi": "नाखून",
+        "english": [
+          "nails",
+          "fingernails"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "nakhun"
+      },
+      {
+        "hindi": "धुंआ",
+        "english": [
+          "smoke"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "dhuan"
+      },
+      {
+        "hindi": "टंगी हुई",
+        "english": [
+          "hanging",
+          "suspended"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "tangi hui"
+      },
+      {
+        "hindi": "झूमर",
+        "english": [
+          "chandelier"
+        ],
+        "category": "Lesson 15b",
+        "transliteration": "jhoomar"
       }
     ]
   }
