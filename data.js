@@ -10232,6 +10232,55 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 15b",
         "transliteration": "jhoomar"
+      },
+      {
+        "hindi": "भरोसा करना",
+        "english": [
+          "trust",
+          "rely on",
+          "have faith in"
+        ],
+        "category": "Lesson 16b",
+        "transliteration": "bharosa karna"
+      },
+      {
+        "hindi": "यकीन करना",
+        "english": [
+          "believe",
+          "trust",
+          "be sure"
+        ],
+        "category": "Lesson 16b",
+        "transliteration": "yakeen karna"
+      },
+      {
+        "hindi": "मजाक उड़ाना",
+        "english": [
+          "make fun of",
+          "mock",
+          "ridicule"
+        ],
+        "category": "Lesson 16b",
+        "transliteration": "mazak udana"
+      },
+      {
+        "hindi": "मज़ाक करना",
+        "english": [
+          "joke",
+          "make a joke",
+          "tease"
+        ],
+        "category": "Lesson 16b",
+        "transliteration": "mazak karna"
+      },
+      {
+        "hindi": "झूठ बोलना",
+        "english": [
+          "lie",
+          "tell a lie"
+        ],
+        "category": "Lesson 16b",
+        "transliteration": "jhooth bolna"
       }
     ]
   }
