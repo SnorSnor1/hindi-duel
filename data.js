@@ -10281,6 +10281,126 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 16b",
         "transliteration": "jhooth bolna"
+      },
+      {
+        "hindi": "बचपन",
+        "english": [
+          "childhood"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "bachpan"
+      },
+      {
+        "hindi": "रोज़ाना",
+        "english": [
+          "daily",
+          "every day"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "rozana"
+      },
+      {
+        "hindi": "बिताना",
+        "english": [
+          "spend",
+          "pass time"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "bitana"
+      },
+      {
+        "hindi": "ज़ाहिर सी बात है।",
+        "english": [
+          "it is obvious",
+          "obviously"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "zahir si baat hai"
+      },
+      {
+        "hindi": "बीमारी",
+        "english": [
+          "illness",
+          "disease",
+          "sickness"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "bimari"
+      },
+      {
+        "hindi": "तबियत खराब होना",
+        "english": [
+          "be unwell",
+          "feel sick",
+          "fall ill"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "tabiyat kharab hona"
+      },
+      {
+        "hindi": "ध्यान रखना",
+        "english": [
+          "take care",
+          "look after",
+          "pay attention"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "dhyan rakhna"
+      },
+      {
+        "hindi": "गुज़र गए।",
+        "english": [
+          "passed",
+          "went by",
+          "passed away"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "guzar gaye"
+      },
+      {
+        "hindi": "की मृत्यु हो गई।",
+        "english": [
+          "died",
+          "passed away"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "ki mrityu ho gayi"
+      },
+      {
+        "hindi": "का निधन हो गया।",
+        "english": [
+          "passed away",
+          "died"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "ka nidhan ho gaya"
+      },
+      {
+        "hindi": "मज़ा आ रहा था/ मज़ा नहीं आ रहा था",
+        "english": [
+          "was enjoying",
+          "was not enjoying",
+          "was having fun"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "maza aa raha tha maza nahin aa raha tha"
+      },
+      {
+        "hindi": "उम्र",
+        "english": [
+          "age"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "umr"
+      },
+      {
+        "hindi": "अक्सर",
+        "english": [
+          "often",
+          "frequently"
+        ],
+        "category": "Lesson 1",
+        "transliteration": "aksar"
       }
     ]
   }
