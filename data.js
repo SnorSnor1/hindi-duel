@@ -10401,6 +10401,94 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 1",
         "transliteration": "aksar"
+      },
+      {
+        "hindi": "कमज़ोर",
+        "english": [
+          "weak",
+          "frail"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "kamzor"
+      },
+      {
+        "hindi": "पतली दुबली",
+        "english": [
+          "thin and skinny",
+          "slender",
+          "skinny"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "patli dubli"
+      },
+      {
+        "hindi": "कहना",
+        "english": [
+          "say",
+          "tell"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "kehna"
+      },
+      {
+        "hindi": "नस",
+        "english": [
+          "vein",
+          "nerve"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "nas"
+      },
+      {
+        "hindi": "खून",
+        "english": [
+          "blood"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "khoon"
+      },
+      {
+        "hindi": "दिल",
+        "english": [
+          "heart"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "dil"
+      },
+      {
+        "hindi": "तो",
+        "english": [
+          "then",
+          "so"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "to"
+      },
+      {
+        "hindi": "ज़िन्दा",
+        "english": [
+          "alive",
+          "living"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "zinda"
+      },
+      {
+        "hindi": "जिंदगी",
+        "english": [
+          "life"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "zindagi"
+      },
+      {
+        "hindi": "करिश्मा",
+        "english": [
+          "miracle",
+          "wonder"
+        ],
+        "category": "Lesson 2",
+        "transliteration": "karishma"
       }
     ]
   }
