@@ -10489,6 +10489,84 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 2",
         "transliteration": "karishma"
+      },
+      {
+        "hindi": "मुकाबला",
+        "english": [
+          "competition",
+          "contest",
+          "match"
+        ],
+        "category": "Lesson 3",
+        "transliteration": "muqabla"
+      },
+      {
+        "hindi": "साथी",
+        "english": [
+          "companion",
+          "partner",
+          "teammate"
+        ],
+        "category": "Lesson 3",
+        "transliteration": "saathi"
+      },
+      {
+        "hindi": "हिस्सा लेना",
+        "english": [
+          "participate",
+          "take part"
+        ],
+        "category": "Lesson 3",
+        "transliteration": "hissa lena"
+      },
+      {
+        "hindi": "फूप्पो/बुआ",
+        "english": [
+          "aunt",
+          "paternal aunt",
+          "father's sister"
+        ],
+        "category": "Lesson 3",
+        "transliteration": "fuppo bua"
+      },
+      {
+        "hindi": "पता चलना",
+        "english": [
+          "find out",
+          "come to know",
+          "learn"
+        ],
+        "category": "Lesson 3",
+        "transliteration": "pata chalna"
+      },
+      {
+        "hindi": "बेहोश होना",
+        "english": [
+          "faint",
+          "become unconscious",
+          "lose consciousness"
+        ],
+        "category": "Lesson 3",
+        "transliteration": "behosh hona"
+      },
+      {
+        "hindi": "अंदरूनी चोट",
+        "english": [
+          "internal injury",
+          "inner injury"
+        ],
+        "category": "Lesson 3",
+        "transliteration": "androoni chot"
+      },
+      {
+        "hindi": "गुम चोट",
+        "english": [
+          "hidden injury",
+          "internal bruise",
+          "closed injury"
+        ],
+        "category": "Lesson 3",
+        "transliteration": "gum chot"
       }
     ]
   }
