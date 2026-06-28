@@ -10567,6 +10567,102 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 3",
         "transliteration": "gum chot"
+      },
+      {
+        "hindi": "सुभई सुबह",
+        "english": [
+          "early morning",
+          "early in the morning"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "subahi subah"
+      },
+      {
+        "hindi": "आम तौर पर",
+        "english": [
+          "generally",
+          "usually",
+          "in general"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "aam taur par"
+      },
+      {
+        "hindi": "फुर्ती होना",
+        "english": [
+          "be energetic",
+          "have agility",
+          "be quick"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "phurti hona"
+      },
+      {
+        "hindi": "फुर्तीली",
+        "english": [
+          "energetic",
+          "agile",
+          "quick"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "phurtili"
+      },
+      {
+        "hindi": "चिंता होना",
+        "english": [
+          "be worried",
+          "worry",
+          "be concerned"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "chinta hona"
+      },
+      {
+        "hindi": "हालत",
+        "english": [
+          "condition",
+          "state",
+          "situation"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "haalat"
+      },
+      {
+        "hindi": "भर्ती करना / भर्ती होना",
+        "english": [
+          "admit",
+          "be admitted",
+          "enroll"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "bharti karna bharti hona"
+      },
+      {
+        "hindi": "महसूस करना",
+        "english": [
+          "feel",
+          "sense"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "mahsus karna"
+      },
+      {
+        "hindi": "तसल्ली होना",
+        "english": [
+          "be reassured",
+          "feel reassured",
+          "feel comforted"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "tasalli hona"
+      },
+      {
+        "hindi": "आलसी",
+        "english": [
+          "lazy"
+        ],
+        "category": "Lesson 4",
+        "transliteration": "aalsi"
       }
     ]
   }
