@@ -10287,7 +10287,7 @@ export const PHASE_DATA = {
         "english": [
           "childhood"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "bachpan"
       },
       {
@@ -10296,7 +10296,7 @@ export const PHASE_DATA = {
           "daily",
           "every day"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "rozana"
       },
       {
@@ -10305,7 +10305,7 @@ export const PHASE_DATA = {
           "spend",
           "pass time"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "bitana"
       },
       {
@@ -10314,7 +10314,7 @@ export const PHASE_DATA = {
           "it is obvious",
           "obviously"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "zahir si baat hai"
       },
       {
@@ -10324,7 +10324,7 @@ export const PHASE_DATA = {
           "disease",
           "sickness"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "bimari"
       },
       {
@@ -10334,7 +10334,7 @@ export const PHASE_DATA = {
           "feel sick",
           "fall ill"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "tabiyat kharab hona"
       },
       {
@@ -10344,7 +10344,7 @@ export const PHASE_DATA = {
           "look after",
           "pay attention"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "dhyan rakhna"
       },
       {
@@ -10354,7 +10354,7 @@ export const PHASE_DATA = {
           "went by",
           "passed away"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "guzar gaye"
       },
       {
@@ -10363,7 +10363,7 @@ export const PHASE_DATA = {
           "died",
           "passed away"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "ki mrityu ho gayi"
       },
       {
@@ -10372,7 +10372,7 @@ export const PHASE_DATA = {
           "passed away",
           "died"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "ka nidhan ho gaya"
       },
       {
@@ -10382,7 +10382,7 @@ export const PHASE_DATA = {
           "was not enjoying",
           "was having fun"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "maza aa raha tha maza nahin aa raha tha"
       },
       {
@@ -10390,7 +10390,7 @@ export const PHASE_DATA = {
         "english": [
           "age"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "umr"
       },
       {
@@ -10399,7 +10399,7 @@ export const PHASE_DATA = {
           "often",
           "frequently"
         ],
-        "category": "Lesson 1",
+        "category": "Lesson 1c",
         "transliteration": "aksar"
       },
       {
@@ -10408,7 +10408,7 @@ export const PHASE_DATA = {
           "weak",
           "frail"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "kamzor"
       },
       {
@@ -10418,7 +10418,7 @@ export const PHASE_DATA = {
           "slender",
           "skinny"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "patli dubli"
       },
       {
@@ -10427,7 +10427,7 @@ export const PHASE_DATA = {
           "say",
           "tell"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "kehna"
       },
       {
@@ -10436,7 +10436,7 @@ export const PHASE_DATA = {
           "vein",
           "nerve"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "nas"
       },
       {
@@ -10444,7 +10444,7 @@ export const PHASE_DATA = {
         "english": [
           "blood"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "khoon"
       },
       {
@@ -10452,7 +10452,7 @@ export const PHASE_DATA = {
         "english": [
           "heart"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "dil"
       },
       {
@@ -10461,7 +10461,7 @@ export const PHASE_DATA = {
           "then",
           "so"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "to"
       },
       {
@@ -10470,7 +10470,7 @@ export const PHASE_DATA = {
           "alive",
           "living"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "zinda"
       },
       {
@@ -10478,7 +10478,7 @@ export const PHASE_DATA = {
         "english": [
           "life"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "zindagi"
       },
       {
@@ -10487,7 +10487,7 @@ export const PHASE_DATA = {
           "miracle",
           "wonder"
         ],
-        "category": "Lesson 2",
+        "category": "Lesson 2c",
         "transliteration": "karishma"
       },
       {
@@ -10497,7 +10497,7 @@ export const PHASE_DATA = {
           "contest",
           "match"
         ],
-        "category": "Lesson 3",
+        "category": "Lesson 3c",
         "transliteration": "muqabla"
       },
       {
@@ -10507,7 +10507,7 @@ export const PHASE_DATA = {
           "partner",
           "teammate"
         ],
-        "category": "Lesson 3",
+        "category": "Lesson 3c",
         "transliteration": "saathi"
       },
       {
@@ -10516,7 +10516,7 @@ export const PHASE_DATA = {
           "participate",
           "take part"
         ],
-        "category": "Lesson 3",
+        "category": "Lesson 3c",
         "transliteration": "hissa lena"
       },
       {
@@ -10526,7 +10526,7 @@ export const PHASE_DATA = {
           "paternal aunt",
           "father's sister"
         ],
-        "category": "Lesson 3",
+        "category": "Lesson 3c",
         "transliteration": "fuppo bua"
       },
       {
@@ -10536,7 +10536,7 @@ export const PHASE_DATA = {
           "come to know",
           "learn"
         ],
-        "category": "Lesson 3",
+        "category": "Lesson 3c",
         "transliteration": "pata chalna"
       },
       {
@@ -10546,7 +10546,7 @@ export const PHASE_DATA = {
           "become unconscious",
           "lose consciousness"
         ],
-        "category": "Lesson 3",
+        "category": "Lesson 3c",
         "transliteration": "behosh hona"
       },
       {
@@ -10555,7 +10555,7 @@ export const PHASE_DATA = {
           "internal injury",
           "inner injury"
         ],
-        "category": "Lesson 3",
+        "category": "Lesson 3c",
         "transliteration": "androoni chot"
       },
       {
@@ -10565,7 +10565,7 @@ export const PHASE_DATA = {
           "internal bruise",
           "closed injury"
         ],
-        "category": "Lesson 3",
+        "category": "Lesson 3c",
         "transliteration": "gum chot"
       },
       {
@@ -10574,7 +10574,7 @@ export const PHASE_DATA = {
           "early morning",
           "early in the morning"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "subahi subah"
       },
       {
@@ -10584,7 +10584,7 @@ export const PHASE_DATA = {
           "usually",
           "in general"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "aam taur par"
       },
       {
@@ -10594,7 +10594,7 @@ export const PHASE_DATA = {
           "have agility",
           "be quick"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "phurti hona"
       },
       {
@@ -10604,7 +10604,7 @@ export const PHASE_DATA = {
           "agile",
           "quick"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "phurtili"
       },
       {
@@ -10614,7 +10614,7 @@ export const PHASE_DATA = {
           "worry",
           "be concerned"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "chinta hona"
       },
       {
@@ -10624,7 +10624,7 @@ export const PHASE_DATA = {
           "state",
           "situation"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "haalat"
       },
       {
@@ -10634,7 +10634,7 @@ export const PHASE_DATA = {
           "be admitted",
           "enroll"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "bharti karna bharti hona"
       },
       {
@@ -10643,7 +10643,7 @@ export const PHASE_DATA = {
           "feel",
           "sense"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "mahsus karna"
       },
       {
@@ -10653,7 +10653,7 @@ export const PHASE_DATA = {
           "feel reassured",
           "feel comforted"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "tasalli hona"
       },
       {
@@ -10661,7 +10661,7 @@ export const PHASE_DATA = {
         "english": [
           "lazy"
         ],
-        "category": "Lesson 4",
+        "category": "Lesson 4c",
         "transliteration": "aalsi"
       }
     ]
