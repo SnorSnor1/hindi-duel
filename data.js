@@ -10663,6 +10663,44 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 4c",
         "transliteration": "aalsi"
+      },
+      {
+        "hindi": "स्वास्त",
+        "english": [
+          "healthy",
+          "well"
+        ],
+        "category": "Lesson 5c",
+        "transliteration": "swaast"
+      },
+      {
+        "hindi": "स्वस्त",
+        "english": [
+          "healthy",
+          "well"
+        ],
+        "category": "Lesson 5c",
+        "transliteration": "swast"
+      },
+      {
+        "hindi": "कहना",
+        "english": [
+          "say",
+          "tell"
+        ],
+        "category": "Lesson 5c",
+        "transliteration": "kehna"
+      },
+      {
+        "hindi": "इसे / उसे",
+        "english": [
+          "this",
+          "that",
+          "him",
+          "her"
+        ],
+        "category": "Lesson 5c",
+        "transliteration": "ise use"
       }
     ]
   }
