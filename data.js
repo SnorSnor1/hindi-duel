@@ -10701,6 +10701,118 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 5c",
         "transliteration": "ise use"
+      },
+      {
+        "hindi": "लाना",
+        "english": [
+          "bring"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "lana"
+      },
+      {
+        "hindi": "ले जाना",
+        "english": [
+          "take away",
+          "take along",
+          "carry away"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "le jana"
+      },
+      {
+        "hindi": "मानना",
+        "english": [
+          "accept",
+          "believe",
+          "agree"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "manna"
+      },
+      {
+        "hindi": "मनाना",
+        "english": [
+          "persuade",
+          "convince",
+          "appease"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "manana"
+      },
+      {
+        "hindi": "भरना",
+        "english": [
+          "fill",
+          "fill up"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "bharna"
+      },
+      {
+        "hindi": "चाचा",
+        "english": [
+          "paternal uncle",
+          "uncle"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "chacha"
+      },
+      {
+        "hindi": "इकट्ठे होना",
+        "english": [
+          "gather",
+          "come together",
+          "assemble"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "ikatthe hona"
+      },
+      {
+        "hindi": "पोछना",
+        "english": [
+          "wipe",
+          "mop"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "pochna"
+      },
+      {
+        "hindi": "ख़ून",
+        "english": [
+          "blood"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "khoon"
+      },
+      {
+        "hindi": "टाँके लगना",
+        "english": [
+          "get stitches",
+          "need stitches",
+          "have stitches"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "taanke lagna"
+      },
+      {
+        "hindi": "पट्टी बांधना",
+        "english": [
+          "bandage",
+          "tie a bandage",
+          "dress a wound"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "patti bandhna"
+      },
+      {
+        "hindi": "तुतलाना",
+        "english": [
+          "lisp",
+          "speak with a lisp"
+        ],
+        "category": "Lesson 6c",
+        "transliteration": "tutlana"
       }
     ]
   }
