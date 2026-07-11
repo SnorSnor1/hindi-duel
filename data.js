@@ -10813,6 +10813,43 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 6c",
         "transliteration": "tutlana"
+      },
+      {
+        "hindi": "रास्ता भूलना",
+        "english": [
+          "lose the way",
+          "forget the way",
+          "get lost"
+        ],
+        "category": "Lesson 7c",
+        "transliteration": "rasta bhulna"
+      },
+      {
+        "hindi": "खोना",
+        "english": [
+          "lose",
+          "misplace"
+        ],
+        "category": "Lesson 7c",
+        "transliteration": "khona"
+      },
+      {
+        "hindi": "खतरनाक",
+        "english": [
+          "dangerous"
+        ],
+        "category": "Lesson 7c",
+        "transliteration": "khatarnak"
+      },
+      {
+        "hindi": "माइने रखता है",
+        "english": [
+          "matters",
+          "is important",
+          "has meaning"
+        ],
+        "category": "Lesson 7c",
+        "transliteration": "maine rakhta hai"
       }
     ]
   }
