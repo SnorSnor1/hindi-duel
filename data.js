@@ -10850,6 +10850,110 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 7c",
         "transliteration": "maine rakhta hai"
+      },
+      {
+        "hindi": "सफ़र",
+        "english": [
+          "journey",
+          "travel",
+          "trip"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "safar"
+      },
+      {
+        "hindi": "कोहरा",
+        "english": [
+          "fog",
+          "mist"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "kohra"
+      },
+      {
+        "hindi": "मालिक / मालकिन",
+        "english": [
+          "owner",
+          "male owner / female owner",
+          "master / mistress"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "malik / malkin"
+      },
+      {
+        "hindi": "प्रकृति",
+        "english": [
+          "nature"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "prakriti"
+      },
+      {
+        "hindi": "कुदरत",
+        "english": [
+          "nature",
+          "natural world"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "kudrat"
+      },
+      {
+        "hindi": "गाँव के प्रधान जी",
+        "english": [
+          "village head",
+          "village chief",
+          "headman"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "gaanv ke pradhan ji"
+      },
+      {
+        "hindi": "पगडंडी",
+        "english": [
+          "footpath",
+          "narrow path",
+          "trail"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "pagdandi"
+      },
+      {
+        "hindi": "समझदार",
+        "english": [
+          "sensible",
+          "wise",
+          "understanding"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "samajhdar"
+      },
+      {
+        "hindi": "तरकीब",
+        "english": [
+          "trick",
+          "strategy",
+          "method"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "tarkeeb"
+      },
+      {
+        "hindi": "वगेरह वगेरह",
+        "english": [
+          "etcetera",
+          "and so on"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "vagairah vagairah"
+      },
+      {
+        "hindi": "दुर्भाग्य",
+        "english": [
+          "bad luck",
+          "misfortune"
+        ],
+        "category": "Lesson 8c",
+        "transliteration": "durbhagya"
       }
     ]
   }
