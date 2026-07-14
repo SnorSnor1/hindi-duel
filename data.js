@@ -10954,6 +10954,34 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 8c",
         "transliteration": "durbhagya"
+      },
+      {
+        "hindi": "उम्र",
+        "english": [
+          "age"
+        ],
+        "category": "Lesson 9c",
+        "transliteration": "umr"
+      },
+      {
+        "hindi": "गिल्ली डंडा",
+        "english": [
+          "gilli danda",
+          "stick game",
+          "traditional bat-and-stick game"
+        ],
+        "category": "Lesson 9c",
+        "transliteration": "gilli danda"
+      },
+      {
+        "hindi": "गरम पिट्टू",
+        "english": [
+          "garam pittu",
+          "seven stones",
+          "traditional ball-and-stones game"
+        ],
+        "category": "Lesson 9c",
+        "transliteration": "garam pittu"
       }
     ]
   }

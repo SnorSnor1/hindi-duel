@@ -9,7 +9,7 @@ const PUBLIC_APP_URL = "https://snorsnor1.github.io/hindi-duel/";
 const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xTL5N_-A1YUIWmkjWMl9JWJIkq9RYs4/export?format=csv&gid=0";
 const PHASE2_SHEET_URL = "https://docs.google.com/spreadsheets/d/14BD6b5P1dCkUB9pouUzWuQsN6woZyNpPOkKihyngKHo/export?format=csv&gid=1937597985";
 const DAILY_CHALLENGE_TARGET = 20;
-const CURRENT_PHASE2_PREP_CATEGORY = "Lesson 8c";
+const CURRENT_PHASE2_PREP_CATEGORY = "Lesson 9c";
 const DAILY_MISTAKE_TARGET = 10;
 const DAILY_WEAK_LESSON_TARGET = 8;
 const DAILY_BACKLOG_TARGET = 12;
