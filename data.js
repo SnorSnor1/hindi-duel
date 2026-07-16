@@ -10982,6 +10982,91 @@ export const PHASE_DATA = {
         ],
         "category": "Lesson 9c",
         "transliteration": "garam pittu"
+      },
+      {
+        "hindi": "ऐसा होता है।",
+        "english": [
+          "it happens",
+          "that happens",
+          "that is how it is"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "aisa hota hai"
+      },
+      {
+        "hindi": "पागल",
+        "english": [
+          "crazy",
+          "mad"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "pagal"
+      },
+      {
+        "hindi": "सच में",
+        "english": [
+          "really",
+          "truly",
+          "for real"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "sach mein"
+      },
+      {
+        "hindi": "खड़ूस",
+        "english": [
+          "grumpy",
+          "mean",
+          "cranky"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "khadoos"
+      },
+      {
+        "hindi": "बढ़िया",
+        "english": [
+          "great",
+          "excellent",
+          "good"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "badhiya"
+      },
+      {
+        "hindi": "क्या हाल है?",
+        "english": [
+          "how are you?",
+          "how is it going?"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "kya haal hai"
+      },
+      {
+        "hindi": "फाँदना",
+        "english": [
+          "jump over",
+          "leap over"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "faandna"
+      },
+      {
+        "hindi": "आसानी से",
+        "english": [
+          "easily",
+          "with ease"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "aasani se"
+      },
+      {
+        "hindi": "आग बुझाना",
+        "english": [
+          "extinguish a fire",
+          "put out a fire"
+        ],
+        "category": "Lesson 10c",
+        "transliteration": "aag bujhana"
       }
     ]
   }
