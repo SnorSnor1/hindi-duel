@@ -57,10 +57,13 @@ let imageSelectedCategories = new Set();
 
 const screens = ["coach","quiz","images","challenge","mistakes","stats","scoreboard","manage","login"];
 const $ = (selector) => document.querySelector(selector);
+const PHASE_KEYS = ["phase1", "phase2", "phase3"];
 const phaseWordsFor = (phaseKey) => (state.words[phaseKey] || []).filter((word) => word.english.length);
 const phaseWords = () => phaseWordsFor(phase);
 const categories = () => [...new Set(phaseWords().map((word) => word.category))];
 const canUsePhase2 = () => user === "maaike";
+const canUsePhase3 = () => user === "maaike";
+const availablePhaseKeys = () => canUsePhase3() ? PHASE_KEYS : canUsePhase2() ? ["phase1", "phase2"] : ["phase1"];
 
 function loadState(){
   const stored = localStorage.getItem(STORE);
@@ -75,7 +78,8 @@ function loadState(){
         wordOverrides,
         words: {
           phase1: applyWordOverrides(normalizeWordCategories(mergeSeedWords(fresh.words.phase1, parsed.words?.phase1)), "phase1", wordOverrides),
-          phase2: applyWordOverrides(normalizeWordCategories(mergeSeedWords(fresh.words.phase2, parsed.words?.phase2)), "phase2", wordOverrides)
+          phase2: applyWordOverrides(normalizeWordCategories(mergeSeedWords(fresh.words.phase2, parsed.words?.phase2)), "phase2", wordOverrides),
+          phase3: applyWordOverrides(normalizeWordCategories(mergeSeedWords(fresh.words.phase3, parsed.words?.phase3)), "phase3", wordOverrides)
         },
         scores: {
           maaike: Array.isArray(parsed.scores?.maaike) ? parsed.scores.maaike : [],
@@ -84,21 +88,25 @@ function loadState(){
         mistakes: {
           maaike: {
             phase1: parsed.mistakes?.maaike?.phase1 || {},
-            phase2: parsed.mistakes?.maaike?.phase2 || {}
+            phase2: parsed.mistakes?.maaike?.phase2 || {},
+            phase3: parsed.mistakes?.maaike?.phase3 || {}
           },
           vincent: {
             phase1: parsed.mistakes?.vincent?.phase1 || {},
-            phase2: parsed.mistakes?.vincent?.phase2 || {}
+            phase2: parsed.mistakes?.vincent?.phase2 || {},
+            phase3: parsed.mistakes?.vincent?.phase3 || {}
           }
         },
         attempts: {
           maaike: {
             phase1: Array.isArray(parsed.attempts?.maaike?.phase1) ? parsed.attempts.maaike.phase1 : [],
-            phase2: Array.isArray(parsed.attempts?.maaike?.phase2) ? parsed.attempts.maaike.phase2 : []
+            phase2: Array.isArray(parsed.attempts?.maaike?.phase2) ? parsed.attempts.maaike.phase2 : [],
+            phase3: Array.isArray(parsed.attempts?.maaike?.phase3) ? parsed.attempts.maaike.phase3 : []
           },
           vincent: {
             phase1: Array.isArray(parsed.attempts?.vincent?.phase1) ? parsed.attempts.vincent.phase1 : [],
-            phase2: Array.isArray(parsed.attempts?.vincent?.phase2) ? parsed.attempts.vincent.phase2 : []
+            phase2: Array.isArray(parsed.attempts?.vincent?.phase2) ? parsed.attempts.vincent.phase2 : [],
+            phase3: Array.isArray(parsed.attempts?.vincent?.phase3) ? parsed.attempts.vincent.phase3 : []
           }
         },
         maintenance: normalizeMaintenance(parsed.maintenance || fresh.maintenance),
@@ -156,10 +164,10 @@ function freshState(){
   return {
     phase: "phase1",
     user: null,
-    words: { phase1: PHASE_DATA.phase1.words, phase2: PHASE_DATA.phase2.words },
+    words: { phase1: PHASE_DATA.phase1.words, phase2: PHASE_DATA.phase2.words, phase3: PHASE_DATA.phase3.words },
     scores: { maaike: [], vincent: [] },
-    mistakes: { maaike: { phase1: {}, phase2: {} }, vincent: { phase1: {}, phase2: {} } },
-    attempts: { maaike: { phase1: [], phase2: [] }, vincent: { phase1: [], phase2: [] } },
+    mistakes: { maaike: { phase1: {}, phase2: {}, phase3: {} }, vincent: { phase1: {}, phase2: {}, phase3: {} } },
+    attempts: { maaike: { phase1: [], phase2: [], phase3: [] }, vincent: { phase1: [], phase2: [], phase3: [] } },
     maintenance: emptyMaintenance(),
     reminder: defaultReminder(),
     wordOverrides: emptyWordOverrides(),
@@ -170,6 +178,7 @@ function emptyMaintenance(){
   return {
     phase1: { lastSyncedAt: null, lastCount: PHASE_DATA.phase1.words.length },
     phase2: { lastSyncedAt: null, lastCount: PHASE_DATA.phase2.words.length },
+    phase3: { lastSyncedAt: null, lastCount: PHASE_DATA.phase3.words.length },
     lessonPrep: { nextLessonAt: "", checkedAt: null, note: "" }
   };
 }
@@ -186,6 +195,7 @@ function normalizeMaintenance(value={}){
   return {
     phase1: { ...fresh.phase1, ...(value.phase1 || {}) },
     phase2: { ...fresh.phase2, ...(value.phase2 || {}) },
+    phase3: { ...fresh.phase3, ...(value.phase3 || {}) },
     lessonPrep: { ...fresh.lessonPrep, ...(value.lessonPrep || {}) }
   };
 }
@@ -200,16 +210,18 @@ function mergeMaintenance(local={}, remote={}){
   return {
     phase1: newestByTime(base.phase1, incoming.phase1),
     phase2: newestByTime(base.phase2, incoming.phase2),
+    phase3: newestByTime(base.phase3, incoming.phase3),
     lessonPrep: newestByTime(base.lessonPrep, incoming.lessonPrep)
   };
 }
 function emptyWordOverrides(){
-  return { phase1: {}, phase2: {} };
+  return { phase1: {}, phase2: {}, phase3: {} };
 }
 function normalizeWordOverrides(value={}){
   return {
     phase1: normalizeWordOverrideBucket(value.phase1),
-    phase2: normalizeWordOverrideBucket(value.phase2)
+    phase2: normalizeWordOverrideBucket(value.phase2),
+    phase3: normalizeWordOverrideBucket(value.phase3)
   };
 }
 function normalizeWordOverrideBucket(bucket={}){
@@ -249,7 +261,7 @@ function applyWordOverrides(words, phaseKey, overrides=state?.wordOverrides){
 function mergeWordOverrides(local={}, remote={}){
   const merged = normalizeWordOverrides(local);
   const incoming = normalizeWordOverrides(remote);
-  ["phase1","phase2"].forEach((phaseKey)=>{
+  PHASE_KEYS.forEach((phaseKey)=>{
     Object.entries(incoming[phaseKey]).forEach(([key, value])=>{
       const current = merged[phaseKey][key];
       if(!current || (value.updatedAt || "") >= (current.updatedAt || "")) merged[phaseKey][key] = value;
@@ -333,7 +345,7 @@ function mergeCloudState(remote){
   if(!remote || typeof remote !== "object") return;
   ["maaike","vincent"].forEach((name)=>{
     state.scores[name] = mergeScores(state.scores[name], remote.scores?.[name]);
-    ["phase1","phase2"].forEach((phaseKey)=>{
+    PHASE_KEYS.forEach((phaseKey)=>{
       state.attempts[name][phaseKey] = mergeAttempts(state.attempts[name][phaseKey], remote.attempts?.[name]?.[phaseKey]);
       state.mistakes[name][phaseKey] = mergeMistakeBucket(state.mistakes[name][phaseKey], remote.mistakes?.[name]?.[phaseKey]);
     });
@@ -341,7 +353,7 @@ function mergeCloudState(remote){
   state.challengeResets = [...new Set([...(state.challengeResets || []), ...(remote.challengeResets || [])])];
   state.maintenance = mergeMaintenance(state.maintenance, remote.maintenance);
   state.wordOverrides = mergeWordOverrides(state.wordOverrides, remote.wordOverrides);
-  ["phase1","phase2"].forEach((phaseKey)=>{ state.words[phaseKey] = applyWordOverrides(state.words[phaseKey], phaseKey); });
+  PHASE_KEYS.forEach((phaseKey)=>{ state.words[phaseKey] = applyWordOverrides(state.words[phaseKey], phaseKey); });
   applyChallengeResetMigrations(state);
 }
 function rerenderCloudSensitiveScreen(){
@@ -653,6 +665,7 @@ async function autoSyncPublishedSheets(){
 
 function show(screen){
   if(!canUsePhase2() && phase==="phase2") phase = "phase1";
+  if(!canUsePhase3() && phase==="phase3") phase = "phase1";
   coachNotice = "";
   activeScreen = screen;
   screens.forEach((id)=>$("#"+id).classList.toggle("hidden", id!==screen));
@@ -675,10 +688,9 @@ function renderNav(){
   $("#logoutBtn").classList.toggle("hidden", !logged);
 }
 function phaseToggleHtml(){
-  if (!canUsePhase2()) return `<div class="phase-toggle"><button class="selected" data-phase="phase1">Phase 1</button></div>`;
-  return `<div class="phase-toggle"><button class="${phase==="phase1"?"selected":""}" data-phase="phase1">Phase 1</button><button class="${phase==="phase2"?"selected":""}" data-phase="phase2">Phase 2</button></div>`;
+  return `<div class="phase-toggle">${availablePhaseKeys().map((phaseKey)=>`<button class="${phase===phaseKey?"selected":""}" data-phase="${phaseKey}">Phase ${phaseKey.slice(-1)}</button>`).join("")}</div>`;
 }
-function bindPhaseButtons(){ document.querySelectorAll("[data-phase]").forEach((button)=>button.addEventListener("click",()=>{phase=button.dataset.phase; if(!canUsePhase2() && phase==="phase2") phase="phase1"; selectedCategories=new Set(categories()); save(); show(activeScreen);})); }
+function bindPhaseButtons(){ document.querySelectorAll("[data-phase]").forEach((button)=>button.addEventListener("click",()=>{phase=button.dataset.phase; if(!availablePhaseKeys().includes(phase)) phase="phase1"; selectedCategories=new Set(categories()); save(); show(activeScreen);})); }
 function renderCategoryChips(){
   const counts = Object.fromEntries(categories().map((cat)=>[cat, phaseWords().filter((word)=>word.category===cat).length]));
   return `<div class="category-chips">${categories().map((cat)=>`<button type="button" class="cat-chip ${selectedCategories.has(cat)?"selected":""}" data-cat="${escapeAttr(cat)}">${escapeHtml(displayCategory(cat))} <span class="count">${counts[cat]}</span></button>`).join("")}</div>`;
@@ -733,7 +745,7 @@ function attemptsToday(name, phaseKey){
   return attemptsFor(name, phaseKey).filter((attempt)=>attempt.date===date);
 }
 function allAttemptsToday(name){
-  return ["phase1","phase2"].flatMap((phaseKey)=>attemptsToday(name, phaseKey).map((attempt)=>({ ...attempt, phaseKey })));
+  return availablePhaseKeys().flatMap((phaseKey)=>attemptsToday(name, phaseKey).map((attempt)=>({ ...attempt, phaseKey })));
 }
 function correctAttemptsToday(name, predicate=()=>true){
   return allAttemptsToday(name).filter((attempt)=>attempt.correct && predicate(attempt)).length;
@@ -747,7 +759,7 @@ function activeMistakesFor(name, phaseKey){
   return sortMistakeWords(Object.values(state.mistakes[name]?.[phaseKey] || {}).filter((word)=>word.hindi && word.english?.length));
 }
 function allActiveMistakes(name){
-  return ["phase1","phase2"].flatMap((phaseKey)=>activeMistakesFor(name, phaseKey).map((word)=>({ ...word, phaseKey })));
+  return availablePhaseKeys().flatMap((phaseKey)=>activeMistakesFor(name, phaseKey).map((word)=>({ ...word, phaseKey })));
 }
 function isHardWord(word){
   return (word?.count || 0) >= HARD_WORD_WRONG_THRESHOLD;
@@ -884,7 +896,7 @@ function masteryLevelForWord(name, phaseKey, word){
   return "building";
 }
 function masterySummary(name){
-  const phases = canUsePhase2() ? ["phase1","phase2"] : ["phase1"];
+  const phases = availablePhaseKeys();
   const counts = { total:0, mastered:0, building:0, fragile:0, due:0, repair:0, new:0 };
   phases.forEach((phaseKey)=>{
     phaseWordsFor(phaseKey).forEach((word)=>{
@@ -899,7 +911,7 @@ function masterySummary(name){
 }
 function spacedReviewWords(name){
   if(!name) return [];
-  return ["phase1","phase2"].flatMap((phaseKey)=>{
+  return availablePhaseKeys().flatMap((phaseKey)=>{
     const mistakeKeys = new Set(activeMistakesFor(name, phaseKey).map(keyFor));
     return phaseWordsFor(phaseKey)
       .filter((word)=>!mistakeKeys.has(keyFor(word)))
@@ -945,7 +957,7 @@ function weakLessonStats(name){
     activeCounts.set(key, (activeCounts.get(key) || 0) + 1);
   });
   const groups = new Map();
-  ["phase1","phase2"].forEach((phaseKey)=>{
+  availablePhaseKeys().forEach((phaseKey)=>{
     attemptsFor(name, phaseKey).forEach((attempt)=>{
       const key = `${phaseKey}|${attempt.category}`;
       if(!groups.has(key)) groups.set(key, { phaseKey, category:attempt.category, attempts:0, wrong:0, fragile:0, activeMistakes:activeCounts.get(key) || 0 });
@@ -977,7 +989,7 @@ function weakLessonWords(name, count=DAILY_WEAK_LESSON_TARGET){
   const doneToday = new Set(allAttemptsToday(name).filter((attempt)=>attempt.source==="coach-weak" && attempt.correct).map((attempt)=>`${attempt.phaseKey}|${attempt.hindi}|${attempt.category}`));
   const activeKeys = new Set(allActiveMistakes(name).map((word)=>`${word.phaseKey}|${keyFor(word)}`));
   const dueKeys = new Set(spacedReviewWords(name).map((word)=>`${word.phaseKey}|${keyFor(word)}`));
-  const words = ["phase1","phase2"].flatMap((phaseKey)=>
+  const words = availablePhaseKeys().flatMap((phaseKey)=>
     phaseWordsFor(phaseKey)
       .filter((word)=>lessonKeys.has(`${phaseKey}|${word.category}`))
       .filter((word)=>!doneToday.has(`${phaseKey}|${word.hindi}|${word.category}`))
@@ -1589,6 +1601,11 @@ function finishImagePractice(){
 
 function renderQuizSetup(){
   if(!canUsePhase2() && phase==="phase2"){
+    phase = "phase1";
+    selectedCategories = new Set();
+    save();
+  }
+  if(!canUsePhase3() && phase==="phase3"){
     phase = "phase1";
     selectedCategories = new Set();
     save();

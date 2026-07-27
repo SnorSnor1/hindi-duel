@@ -1,3 +1,5 @@
+import { PHASE3_WORDS } from "./phase3-data.js";
+
 export const PHASE_DATA = {
   "phase1": {
     "title": "Hindi Phase 1",
@@ -11069,5 +11071,10 @@ export const PHASE_DATA = {
         "transliteration": "aag bujhana"
       }
     ]
+  },
+  "phase3": {
+    "title": "Hindi Phase 3",
+    "subtitle": "Story vocabulary",
+    "words": PHASE3_WORDS
   }
 };
