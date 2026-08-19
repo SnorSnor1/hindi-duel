@@ -62,8 +62,8 @@ const phaseWordsFor = (phaseKey) => (state.words[phaseKey] || []).filter((word) 
 const phaseWords = () => phaseWordsFor(phase);
 const categories = () => [...new Set(phaseWords().map((word) => word.category))];
 const canUsePhase2 = () => user === "maaike";
-const canUsePhase3 = () => user === "maaike";
-const availablePhaseKeys = () => canUsePhase3() ? PHASE_KEYS : canUsePhase2() ? ["phase1", "phase2"] : ["phase1"];
+const canUsePhase3 = () => true;
+const availablePhaseKeys = () => canUsePhase2() ? PHASE_KEYS : ["phase1", "phase3"];
 
 function loadState(){
   const stored = localStorage.getItem(STORE);
