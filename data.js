@@ -1,4 +1,4 @@
-import { PHASE3_WORDS } from "./phase3-data.js";
+import { PHASE3_WORDS } from "./phase3-data.js?v=20260819-2";
 
 export const PHASE_DATA = {
   "phase1": {

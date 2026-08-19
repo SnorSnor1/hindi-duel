@@ -1,4 +1,4 @@
-import { PHASE_DATA } from "./data.js";
+import { PHASE_DATA } from "./data.js?v=20260819-2";
 
 const USERS = { maaike: "Maaike10!", vincent: "chailavie" };
 const STORE = "hindi.seekho.combined.v1";
