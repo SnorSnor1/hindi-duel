@@ -1,5 +1,6 @@
 import { PHASE_DATA } from "./data.js?v=20261023-1";
-import { createDailyPractice, mergeDailyPractice } from "./daily-practice.js?v=20261023-2";
+import { createDailyPractice, mergeDailyPractice, learningHistory, DAILY_PLAN_VERSION } from "./daily-practice.js?v=20261023-3";
+import { importantWords, learningKey } from "./core-vocabulary.js?v=20261023-3";
 
 const USERS = { maaike: "Maaike10!", vincent: "chailavie" };
 const STORE = "hindi.seekho.combined.v1";
@@ -111,6 +112,11 @@ function loadState(){
             phase1: Array.isArray(parsed.attempts?.vincent?.phase1) ? parsed.attempts.vincent.phase1 : [],
             phase2: Array.isArray(parsed.attempts?.vincent?.phase2) ? parsed.attempts.vincent.phase2 : [],
             phase3: Array.isArray(parsed.attempts?.vincent?.phase3) ? parsed.attempts.vincent.phase3 : []
+          },
+          guest: {
+            phase1: Array.isArray(parsed.attempts?.guest?.phase1) ? parsed.attempts.guest.phase1 : [],
+            phase2: Array.isArray(parsed.attempts?.guest?.phase2) ? parsed.attempts.guest.phase2 : [],
+            phase3: Array.isArray(parsed.attempts?.guest?.phase3) ? parsed.attempts.guest.phase3 : []
           }
         },
         maintenance: normalizeMaintenance(parsed.maintenance || fresh.maintenance),
@@ -172,7 +178,7 @@ function freshState(){
     words: { phase1: PHASE_DATA.phase1.words, phase2: PHASE_DATA.phase2.words, phase3: PHASE_DATA.phase3.words },
     scores: { maaike: [], vincent: [] },
     mistakes: { maaike: { phase1: {}, phase2: {}, phase3: {} }, vincent: { phase1: {}, phase2: {}, phase3: {} } },
-    attempts: { maaike: { phase1: [], phase2: [], phase3: [] }, vincent: { phase1: [], phase2: [], phase3: [] } },
+    attempts: { maaike: { phase1: [], phase2: [], phase3: [] }, vincent: { phase1: [], phase2: [], phase3: [] }, guest: { phase1: [], phase2: [], phase3: [] } },
     maintenance: emptyMaintenance(),
     reminder: defaultReminder(),
     wordOverrides: emptyWordOverrides(),
@@ -306,7 +312,7 @@ function sharedState(){
     version: 1,
     scores: state.scores,
     mistakes: state.mistakes,
-    attempts: state.attempts,
+    attempts: { maaike:state.attempts.maaike, vincent:state.attempts.vincent },
     dailyPractice: Object.fromEntries(Object.entries(state.dailyPractice).filter(([name])=>name !== "guest")),
     maintenance: state.maintenance,
     wordOverrides: state.wordOverrides,
@@ -1669,19 +1675,49 @@ function renderQuizSetup(){
   }
 }
 function dailyPracticeWords(){
-  return createDailyPractice(state.words, PHASE_DATA, today(), availablePhaseKeys());
+  return createDailyPractice(state.words, PHASE_DATA, today(), availablePhaseKeys(), state.attempts[user || "guest"]);
 }
 function renderDailyPractice(){
+  const previousSelection = $("#daily .core-selection");
+  const selectionOpen = previousSelection?.open ?? window.location.hash === "#essentials";
+  const searchQuery = $("#coreSearch")?.value || "";
+  const catalogTop = $("#coreCatalog")?.scrollTop || 0;
+  const searchFocused = document.activeElement?.id === "coreSearch";
   const words = dailyPracticeWords();
   const result = state.dailyPractice[user || "guest"];
-  const completed = result?.date === today();
+  const completed = result?.date === today() && result.planVersion === DAILY_PLAN_VERSION;
+  const coreWords = importantWords(state.words, availablePhaseKeys());
+  const history = learningHistory(state.attempts[user || "guest"],today(),true);
+  const availableKeys = new Set(availablePhaseKeys().flatMap(phaseKey=>phaseWordsFor(phaseKey)).map(learningKey));
+  const tomorrowCount = [...history].filter(([key,stats])=>availableKeys.has(key) && stats.reviewDue).length;
+  const steady = coreWords.filter(word=>history.get(learningKey(word))?.mastered).length;
+  const reviewCount = words.filter(word=>word.review).length;
+  const coreCount = words.filter(word=>word.core).length;
   const steps = availablePhaseKeys().map((phaseKey)=>{
     const count = words.filter((word)=>word.phaseKey === phaseKey).length;
-    const description = {phase1:"Recognise the Hindi",phase2:"Type the English",phase3:"Recall the Hindi"}[phaseKey];
+    const description = {phase1:"Recognise & recall",phase2:"Type the English",phase3:"Recall the Hindi"}[phaseKey];
     return `<li><span>Phase ${phaseKey.slice(-1)}</span><strong>${count} words</strong><small>${description}</small></li>`;
   }).join("");
-  $("#daily").innerHTML = `<div class="panel daily-practice-panel"><span class="daily-badge">${displayDate(today())} · ${words.length} words</span><h2>Daily practice</h2><p class="daily-intro">Start with the first lessons of Phase 1. Work forward through your lessons and finish with your newest Phase 3 words.</p><ol class="daily-steps">${steps}</ol><p class="daily-note">A fresh selection each day. The same words stay ready all day, in lesson order. Take your time.</p>${completed?`<div class="daily-result"><span>Completed today</span><strong>${result.correct}/${result.total}</strong><small>correct in your last round</small></div>`:""}<button class="start-btn" id="startDailyPractice" type="button" ${words.length?"":"disabled"}>${completed?"Practise today’s words again":"Start daily practice"}</button></div>`;
+  $("#daily").innerHTML = `<div class="panel daily-practice-panel"><span class="daily-badge">${displayDate(today())} · ${words.length} words</span><h2>Daily practice</h2><p class="daily-intro">Build your everyday Hindi, from Phase 1 to Phase 3. Important words come first; words you miss return the next day.</p><div class="daily-priorities"><span>${reviewCount} to review</span><span>${coreCount} essential words</span><span>${steady}/${coreWords.length} essentials steady</span></div><ol class="daily-steps">${steps}</ol><p class="daily-note">Missed or difficult words return on later days until you get them right on two different days. Today’s selection stays the same.${words.length > 20 ? " All due reviews are included, so today’s round is longer than 20 words." : ""}</p>${completed?`<div class="daily-result"><span>Completed today</span><strong>${result.correct}/${result.total}</strong><small>correct in your last round</small></div>`:""}<button class="start-btn" id="startDailyPractice" type="button" ${words.length?"":"disabled"}>${completed?"Practise today’s words again":"Start daily practice"}</button><details class="core-selection"><summary>View the ${coreWords.length} important words</summary><p>Selected from your lessons for everyday conversations, practical needs and getting around. A word becomes steady after correct answers on three different days, including typing or recall.</p><label class="form-label" for="coreSearch">Search important words</label><input id="coreSearch" type="search" placeholder="Search Hindi, English or topic"><p class="core-count" id="coreCount"></p><ul class="core-catalog" id="coreCatalog"></ul></details><p class="daily-storage-note">${user?"Your answers and reviews sync with your account.":"Without login, your answers and tomorrow’s reviews stay in this browser. Log in to keep them across devices."}</p></div>`;
   $("#startDailyPractice").addEventListener("click",startDailyPractice);
+  const selection = $("#daily .core-selection");
+  const tomorrowNotice = document.createElement("p");
+  tomorrowNotice.className = "daily-note review-forecast";
+  tomorrowNotice.textContent = `${tomorrowCount} word${tomorrowCount === 1?"":"s"} already queued for tomorrow’s review.`;
+  $("#daily .daily-note").after(tomorrowNotice);
+  selection.id = "essentials";
+  selection.open = selectionOpen;
+  $("#coreSearch").value = searchQuery;
+  const renderCoreWords = ()=>{
+    const query = $("#coreSearch").value.trim().toLowerCase();
+    const visible = coreWords.filter(word=>`${word.hindi} ${word.english.join(" ")} ${word.themeLabel}`.toLowerCase().includes(query));
+    $("#coreCount").textContent = `${visible.length} important words`;
+    $("#coreCatalog").innerHTML = visible.map(word=>`<li><strong lang="hi">${escapeHtml(word.hindi)}</strong><span>${escapeHtml(word.english.join("; "))}</span><small>${escapeHtml(word.themeLabel)}${history.get(learningKey(word))?.mastered?" · Steady":""}</small></li>`).join("") || "<li>No matching words.</li>";
+  };
+  $("#coreSearch").addEventListener("input",renderCoreWords);
+  renderCoreWords();
+  $("#coreCatalog").scrollTop = catalogTop;
+  if(searchFocused) $("#coreSearch").focus({preventScroll:true});
 }
 function startDailyPractice(){
   const queue = dailyPracticeWords();
@@ -1697,7 +1733,7 @@ function dailyPracticeQuestionHtml(word){
     const status = phaseKey === word.phaseKey ? "current" : PHASE_KEYS.indexOf(phaseKey) < PHASE_KEYS.indexOf(word.phaseKey) ? "done" : "";
     return `<span class="${status}"${status === "current"?' aria-current="step"':""}>Phase ${phaseKey.slice(-1)}</span>`;
   }).join("");
-  return `<div class="daily-question-head"><button class="ghost" id="exitDailyPractice" type="button">Back to daily practice</button><div class="daily-path">${steps}</div><p>Daily practice · ${escapeHtml(word.category)}</p></div>`;
+  return `<div class="daily-question-head"><button class="ghost" id="exitDailyPractice" type="button">Back to daily practice</button><div class="daily-path">${steps}</div><p>Daily practice · ${escapeHtml(word.category)}</p><p class="daily-word-purpose">${word.review?"Review from an earlier day":word.core?"Everyday essential":"Build your vocabulary"}</p></div>`;
 }
 function startPracticeByMastery(levels, forcedMode=mode){
   const wanted = new Set(levels);
@@ -1757,7 +1793,7 @@ function challengeModesForWords(words, name=user){
   return queue.map((_,index)=>choiceIndexes.has(index) ? "mc" : "type");
 }
 function sessionModeForQuestion(value){
-  if(value.source === "daily-practice") return { phase1:"mc", phase2:"type", phase3:"recall" }[value.queue[value.index].phaseKey];
+  if(value.source === "daily-practice") return value.queue[value.index].practiceMode;
   if(value.source==="challenge") return value.modes[value.index];
   if(value.mode==="mixed" && typeOnlySource(value.source)) return "type";
   if(value.mode==="mixed" && recallBlendSource(value.source)) return recallBlendMode();
@@ -1960,12 +1996,12 @@ function clearNextKeyHandler(){
 }
 function nextQuestion(){ clearNextKeyHandler(); session.index++; renderQuestion(); }
 function recordAttempt(word, correct, close, answer, elapsedMs=null){
-  if(!user) return null;
+  const owner = user || "guest";
   const phaseKey = wordPhaseKey(word);
   const createdAt = new Date().toISOString();
   const attempt = {
     id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-    date: createdAt.slice(0,10),
+    date: today(),
     createdAt,
     week: weekKey(createdAt),
     phase: phaseKey,
@@ -1980,9 +2016,9 @@ function recordAttempt(word, correct, close, answer, elapsedMs=null){
     approved: false,
     ms: Number.isFinite(elapsedMs) ? elapsedMs : session?.started ? Math.max(0, Math.round(performance.now() - session.started)) : 0
   };
-  state.attempts[user][phaseKey].push(attempt);
-  state.attempts[user][phaseKey] = state.attempts[user][phaseKey].slice(-2500);
-  updateMistakeStatus(word, correct, answer);
+  state.attempts[owner][phaseKey].push(attempt);
+  state.attempts[owner][phaseKey] = state.attempts[owner][phaseKey].slice(-2500);
+  if(user) updateMistakeStatus(word, correct, answer);
   save();
   return attempt.id;
 }
@@ -2015,11 +2051,12 @@ function updateMistakeStatus(word, correct, answer){
   };
 }
 function approveAttempt(id, word){
-  if(!user || !id) return;
+  if(!id) return;
+  const owner = user || "guest";
   const phaseKey = wordPhaseKey(word);
-  const attempt=state.attempts[user][phaseKey].find((item)=>item.id===id);
+  const attempt=state.attempts[owner][phaseKey].find((item)=>item.id===id);
   if(attempt){ attempt.correct=true; attempt.approved=true; }
-  const bucket=state.mistakes[user][phaseKey];
+  const bucket=user ? state.mistakes[user][phaseKey] : {};
   const key=keyFor(word);
   if(bucket[key]){
     bucket[key].count=Math.max(0,(bucket[key].count||1)-1);
@@ -2028,9 +2065,10 @@ function approveAttempt(id, word){
   save();
 }
 function markAttemptHard(id, word){
-  if(!user || !id) return;
+  if(!id) return;
+  const owner = user || "guest";
   const phaseKey = wordPhaseKey(word);
-  const attempt=state.attempts[user][phaseKey].find((item)=>item.id===id);
+  const attempt=state.attempts[owner][phaseKey].find((item)=>item.id===id);
   if(!attempt || !attempt.correct) return;
   attempt.close = true;
   attempt.effort = "hard";
@@ -2075,7 +2113,7 @@ function finishSession(){
   clearTimer();
   const finished = session;
   if(finished.source === "daily-practice"){
-    state.dailyPractice[user || "guest"] = { date:finished.date, correct:finished.correct, total:finished.queue.length, updatedAt:new Date().toISOString() };
+    state.dailyPractice[user || "guest"] = { date:finished.date, correct:finished.correct, total:finished.queue.length, planVersion:DAILY_PLAN_VERSION, updatedAt:new Date().toISOString() };
     save();
   }
   if(finished.source==="challenge" && user){

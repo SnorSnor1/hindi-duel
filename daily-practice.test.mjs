@@ -1,22 +1,100 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { PHASE_DATA } from "./data.js";
-import { createDailyPractice, mergeDailyPractice } from "./daily-practice.js";
+import { createDailyPractice, mergeDailyPractice, learningHistory } from "./daily-practice.js";
+import { CORE_THEMES,coreTheme,importantWords,learningKey } from "./core-vocabulary.js";
 
 const words = Object.fromEntries(Object.entries(PHASE_DATA).map(([phase,data])=>[phase,data.words]));
 const key = (word)=>`${word.phaseKey}|${word.category}|${word.hindi}`;
 
-test("daily round spans the curriculum in ascending order, including the first and last lesson",()=>{
+test("daily round prioritises essentials and keeps phases and lessons in ascending order",()=>{
   const round = createDailyPractice(words, PHASE_DATA, "2026-10-23");
   assert.equal(round.length,20);
   assert.equal(new Set(round.map(key)).size,20);
   assert.deepEqual(round.map(w=>w.phaseKey),[...Array(6).fill("phase1"),...Array(7).fill("phase2"),...Array(7).fill("phase3")]);
-  assert.equal(round[0].category,PHASE_DATA.phase1.words[0].category);
-  assert.equal(round.at(-1).category,"Aladdin · Lesson 22");
+  assert.ok(round.every(word=>word.core));
+  assert.equal(new Set(round.map(learningKey)).size,20);
   for(const phase of Object.keys(words)){
-    const ranks=round.filter(w=>w.phaseKey===phase).map(w=>words[phase].findIndex(candidate=>candidate.hindi===w.hindi && candidate.category===w.category));
+    const categories=[...new Set(words[phase].map(word=>word.category))];
+    const ranks=round.filter(w=>w.phaseKey===phase).map(w=>categories.indexOf(w.category));
     assert.deepEqual(ranks,[...ranks].sort((a,b)=>a-b));
   }
+});
+
+const one = (phase,hindi)=>({...words[phase].find(word=>learningKey(word)===learningKey(hindi)),phaseKey:phase});
+const attempt = (word,date,correct,extra={})=>({...word,phase:word.phaseKey,date,createdAt:`${date}T10:00:00Z`,correct,close:false,mode:"type",source:"practice",...extra});
+
+test("the editorial selection only contains existing words, with everyday needs before story props",()=>{
+  const available=new Set(Object.values(words).flat().map(learningKey));
+  assert.ok(CORE_THEMES.flatMap(theme=>theme.words).every(word=>available.has(learningKey(word))));
+  const selection=importantWords(words);
+  assert.equal(new Set(selection.map(learningKey)).size,selection.length);
+  for(const hindi of ["पानी","चाहिए","मदद मांगना","सही","क्या हाल है?"]) assert.ok(coreTheme(hindi));
+  for(const hindi of ["परी","हीरा","जादूई छड़ी","गिद्ध"]) assert.equal(coreTheme(hindi),null);
+});
+
+test("a missed nonessential word from any practice returns tomorrow, even after a same-day correction",()=>{
+  const diamond=one("phase3","हीरा");
+  const attempts={phase3:[attempt(diamond,"2026-10-22",false),attempt(diamond,"2026-10-22",true,{createdAt:"2026-10-22T11:00:00Z"})]};
+  const next=createDailyPractice(words,PHASE_DATA,"2026-10-23",undefined,attempts);
+  assert.ok(next.some(word=>learningKey(word)===learningKey(diamond) && word.review && !word.core));
+});
+
+test("today's answers do not change today's set or add same-day reviews",()=>{
+  const original=createDailyPractice(words,PHASE_DATA,"2026-10-23");
+  const missed=one("phase3","हीरा");
+  const attempts={phase3:[attempt(missed,"2026-10-23",false)]};
+  assert.deepEqual(createDailyPractice(words,PHASE_DATA,"2026-10-23",undefined,attempts),original);
+  assert.ok(createDailyPractice(words,PHASE_DATA,"2026-10-24",undefined,attempts).some(word=>word.hindi===missed.hindi && word.review));
+});
+
+test("a review stays due until it is correct on two later, separate days",()=>{
+  const missed=one("phase3","हीरा");
+  const attempts={phase3:[attempt(missed,"2026-10-20",false),attempt(missed,"2026-10-21",true)]};
+  assert.equal(learningHistory(attempts,"2026-10-22").get(learningKey(missed)).reviewDue,true);
+  attempts.phase3.push(attempt(missed,"2026-10-21",true,{createdAt:"2026-10-21T12:00:00Z"}));
+  assert.equal(learningHistory(attempts,"2026-10-22").get(learningKey(missed)).reviewDue,true);
+  attempts.phase3.push(attempt(missed,"2026-10-22",true));
+  assert.equal(learningHistory(attempts,"2026-10-23").get(learningKey(missed)).reviewDue,false);
+  attempts.phase3.push(attempt(missed,"2026-10-23",false));
+  assert.equal(learningHistory(attempts,"2026-10-24").get(learningKey(missed)).reviewDue,true);
+});
+
+test("all due errors are included, including backlog beyond the normal daily quota",()=>{
+  const failures=words.phase3.slice(0,25);
+  const attempts={phase3:failures.map(word=>attempt({...word,phaseKey:"phase3"},"2026-10-22",false))};
+  const next=createDailyPractice(words,PHASE_DATA,"2026-10-23",undefined,attempts);
+  const selected=new Set(next.map(learningKey));
+  assert.ok(failures.every(word=>selected.has(learningKey(word))));
+  assert.equal(next.filter(word=>word.review).length,new Set(failures.map(learningKey)).size);
+  assert.ok(next.length>20);
+  assert.ok(next.slice(0,6).every(word=>word.phaseKey==="phase1"));
+});
+
+test("recognition advances to typing, and three successful days include active recall",()=>{
+  const water=one("phase1","पानी");
+  const attempts={phase1:[attempt(water,"2026-10-20",true,{mode:"mc"}),attempt(water,"2026-10-21",true,{mode:"mc"}),attempt(water,"2026-10-22",true,{mode:"mc"})]};
+  assert.equal(learningHistory(attempts,"2026-10-23").get(learningKey(water)).mastered,false);
+  const pool={phase1:[water]};const curriculum={phase1:{words:[water]}};
+  assert.equal(createDailyPractice(pool,curriculum,"2026-10-23",["phase1"],attempts)[0].practiceMode,"type");
+  attempts.phase1.push(attempt(water,"2026-10-23",true));
+  assert.equal(learningHistory(attempts,"2026-10-23").get(learningKey(water)).mastered,false);
+  assert.equal(learningHistory(attempts,"2026-10-23",true).get(learningKey(water)).mastered,true);
+});
+
+test("duplicates across lessons and phases are learned as one word and reviewed only once",()=>{
+  const buy=one("phase2","खरीदना");
+  const attempts={phase2:[attempt(buy,"2026-10-22",false),attempt({...buy,category:"Lesson 14b"},"2026-10-22",false)]};
+  const next=createDailyPractice(words,PHASE_DATA,"2026-10-23",undefined,attempts);
+  assert.equal(next.filter(word=>learningKey(word)===learningKey(buy)).length,1);
+});
+
+test("approved answers are not repeated as mistakes, while difficult answers get a review",()=>{
+  const diamond=one("phase3","हीरा");
+  const approved={phase3:[attempt(diamond,"2026-10-22",true,{approved:true})]};
+  assert.equal(learningHistory(approved,"2026-10-23").get(learningKey(diamond)).reviewDue,false);
+  const difficult={phase3:[attempt(diamond,"2026-10-22",true,{close:true})]};
+  assert.equal(learningHistory(difficult,"2026-10-23").get(learningKey(diamond)).reviewDue,true);
 });
 
 test("a day's words stay stable, vary the next day and ignore saved word order",()=>{
