@@ -28,7 +28,7 @@ The daily checkpoint records the next unanswered word. Resuming after the final 
 ## Verification before declaring activation complete
 
 - Run `node --test *.test.mjs`.
-- Validate the rules with the Firebase emulator or a dedicated test project: unauthenticated access denied, another UID denied, own Google UID permitted, malformed/unsupported profile denied.
+- Validate the rules with the Firebase emulator or a dedicated test project: unauthenticated access denied, another UID denied, own Google UID permitted, unsupported profile version denied.
 - In isolated sessions A and B, authenticate as the same learner. Answer on A; confirm B receives the answer and revised coach progress. Reverse the direction.
 - Answer on both sessions before a refresh. Both attempt IDs must remain after transaction retry.
 - Disconnect A's network, answer, reload, reconnect; confirm B receives the queued progress and the UI reports success only after acknowledgment.
@@ -36,5 +36,16 @@ The daily checkpoint records the next unanswered word. Resuming after the final 
 - Confirm **Count as correct**, **Felt hard**, the daily result and score resets survive an older device reconnecting.
 - A different Google account must not read the first account's profile or import its locally bound data.
 - Capture the deployed Sync screen as proof. Until these real-service checks pass, describe the feature as prepared, not activated.
+
+## Reproducible local rules test
+
+Requires Node 20+ and Java 21+. Install the test SDK outside the repository, then use the explicit demo project:
+
+```sh
+npm install --prefix /tmp/hindi-sync-tests --no-audit --no-fund @firebase/rules-unit-testing@3.0.4 firebase@10.14.0
+HINDI_RULES_TEST_PACKAGE=/tmp/hindi-sync-tests/package.json npx -y firebase-tools@latest emulators:exec --only database --project demo-hindi-duel --config firebase.emulator.json "node tests/firebase-rules.emulator.mjs"
+```
+
+The script refuses any project other than `demo-hindi-duel` and any database host other than `127.0.0.1:9400`. It uses synthetic learning records. On 23 October 2026, the test passed against Database Emulator 4.11.2 with Firebase SDK 10.14.0: own Google clients could read/write and preserve concurrent answers; guests, anonymous auth, other UIDs, parent listing, unknown profiles and unsupported versions were denied. These are emulator results, not proof of an activated production service.
 
 Official references: [Firebase Google authentication](https://firebase.google.com/docs/auth/web/google-signin), [database transactions](https://firebase.google.com/docs/database/web/read-and-write#save_data_as_transactions), [security rules](https://firebase.google.com/docs/database/security), [public Firebase configuration/API keys](https://firebase.google.com/docs/projects/api-keys).
