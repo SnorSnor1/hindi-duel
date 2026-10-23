@@ -7,6 +7,8 @@ const PHASES = ['phase1','phase2','phase3'];
 const list = value=>Array.isArray(value)?value:Object.values(value || {});
 const stamp = value=>[value?.updatedAt,value?.approvedAt,value?.markedHardAt,value?.lastWrongAt,value?.lastCorrectAt,value?.createdAt].filter(Boolean).sort().at(-1) || '';
 const stable = value=>JSON.stringify(value,(_,v)=>v && typeof v==='object' && !Array.isArray(v)?Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b))):v);
+// Match local JSON persistence: Firebase rejects undefined optional fields.
+const storedValue = value=>JSON.parse(JSON.stringify(value));
 function newest(a,b){
   if(!a) return b;
   if(!b) return a;
@@ -40,7 +42,7 @@ export function mergeRun(a,b){
 }
 
 export function makeProgressProfile(state, owner, options={}){
-  return {
+  return storedValue({
     version:SYNC_VERSION,
     attempts:Object.fromEntries(PHASES.map(phase=>[phase,state.attempts?.[owner]?.[phase] || []])),
     scores:state.scores?.[owner] || [],
@@ -51,7 +53,7 @@ export function makeProgressProfile(state, owner, options={}){
     scoreResets:rows(state.scoreResets?.[owner]),
     reminder:state.reminder || {},settings:(options.includeGuest ? newest(state.practiceSettings?.[owner],state.practiceSettings?.guest) : state.practiceSettings?.[owner]) || {},
     ...(options.includeGuest ? {attempts:Object.fromEntries(PHASES.map(phase=>[phase,mergeList(state.attempts?.[owner]?.[phase],state.attempts?.guest?.[phase],attemptKey)]))} : {})
-  };
+  });
 }
 const attemptKey = a=>a.id || `${a.date}|${a.createdAt}|${a.hindi}|${a.category}|${a.answer}`;
 const scoreKey = a=>a.phase && a.date ? `${a.phase}|${a.date}` : '';
@@ -62,13 +64,13 @@ export function mergeProgressProfiles(local={}, remote={}){
   const scoreResets = mergeRows(local.scoreResets,remote.scoreResets);
   const resetMap = fromRows(scoreResets);
   const scores = mergeList(local.scores,remote.scores,scoreKey).filter(score=>!resetMap[scoreKey(score)] || stamp(score)>stamp(resetMap[scoreKey(score)]));
-  return {
+  return storedValue({
     version:SYNC_VERSION,attempts,scores,scoreResets,
     mistakes:Object.fromEntries(PHASES.map(phase=>[phase,mergeRows(local.mistakes?.[phase],remote.mistakes?.[phase])])),
     wordOverrides:Object.fromEntries(PHASES.map(phase=>[phase,mergeRows(local.wordOverrides?.[phase],remote.wordOverrides?.[phase])])),
     dailyPractice:newest(local.dailyPractice,remote.dailyPractice) || null,
     run:mergeRun(local.run,remote.run),reminder:newest(local.reminder,remote.reminder) || {},settings:newest(local.settings,remote.settings) || {}
-  };
+  });
 }
 
 export function restoreProgressProfile(state, owner, incoming){

@@ -106,3 +106,23 @@ test('the short daily preference follows the selected learner and preserves the 
   restoreProgressProfile(state,'maaike',stale);
   assert.equal(state.practiceSettings.maaike.dailyLimit,20);
 });
+
+test('legacy optional fields and daily checkpoints remain valid Firebase values',()=>{
+  const state=initial();
+  const legacy={...a('legacy','2026-10-22',false),createdAt:undefined,answer:undefined};
+  state.attempts.maaike.phase1=[legacy];
+  state.practiceRuns={maaike:sessionCheckpoint(round,'2026-10-23T10:00:00Z')};
+  restoreProgressProfile(state,'maaike',{});
+  const profile=makeProgressProfile(state,'maaike');
+  function check(value){
+    assert.notEqual(value,undefined);
+    if(value && typeof value==='object') Object.values(value).forEach(check);
+  }
+  check(profile);
+  check(mergeProgressProfiles(profile,{attempts:{phase1:[legacy]}}));
+  assert.equal(profile.attempts.phase1.length,1);
+  assert.equal(profile.run.queue.length,2);
+  assert.equal(profile.run.correct,0);
+  profile.run.index=1;
+  assert.equal(state.practiceRuns.maaike.index,0);
+});

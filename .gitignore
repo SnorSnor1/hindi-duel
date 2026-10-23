@@ -1,1 +1,5 @@
 .DS_Store
+.firebase/
+firebase-debug.log*
+database-debug.log*
+ui-debug.log*

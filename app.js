@@ -1,5 +1,5 @@
-import { makeProgressProfile, restoreProgressProfile, sessionCheckpoint, resumableRun, mergeRun, PROFILE_NAMES } from "./progress-sync.js?v=20261023-7";
-import { createCloudProgress } from "./cloud-progress.js?v=20261023-7";
+import { makeProgressProfile, restoreProgressProfile, sessionCheckpoint, resumableRun, mergeRun, PROFILE_NAMES } from "./progress-sync.js?v=20261023-8";
+import { createCloudProgress } from "./cloud-progress.js?v=20261023-8";
 import { learningDashboard } from "./learning-dashboard.js?v=20261023-7";
 import { PHASE_DATA } from "./data.js?v=20261023-1";
 import { createDailyPractice, mergeDailyPractice, learningHistory, prioritisePractice, dailyRoundLimit, MAX_ROUND_WORDS, DAILY_PLAN_VERSION } from "./daily-practice.js?v=20261023-7";

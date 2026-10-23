@@ -1,4 +1,4 @@
-import { mergeProgressProfiles, privateProgressPath } from './progress-sync.js?v=20261023-7';
+import { mergeProgressProfiles, privateProgressPath } from './progress-sync.js?v=20261023-8';
 
 // Firebase is injected so merging/retries can be checked without production data.
 export function createCloudProgress({firebase,config,getOwner,getProfile,applyProfile,canBind,bind,onStatus}){
