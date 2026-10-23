@@ -64,7 +64,7 @@ const categories = () => {
   const values = [...new Set(phaseWords().map((word) => word.category))];
   return phase === "phase3" ? values.sort((a,b)=>lessonRank(a)-lessonRank(b)) : values;
 };
-const canUsePhase2 = () => user === "maaike";
+const canUsePhase2 = () => !user || user === "maaike";
 const canUsePhase3 = () => true;
 const availablePhaseKeys = () => canUsePhase2() ? PHASE_KEYS : ["phase1", "phase3"];
 
