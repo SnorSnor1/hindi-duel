@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hindi Duel</title>
-  <link rel="stylesheet" href="styles.css?v=20261023-3">
+  <title>Hindi Duel · A little every day</title>
+  <meta name="theme-color" content="#163d36">
+  <meta name="description" content="Your personal Hindi learning studio. Practise everyday essentials with a coach that adapts to your answers.">
+  <link rel="stylesheet" href="styles.css?v=20261023-4">
+  <link rel="stylesheet" href="studio.css?v=20261023-4">
 </head>
 <body>
-  <nav>
-    <h1>Hindi <span>Duel</span></h1>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav aria-label="Main navigation">
+    <h1><span class="brand-symbol" lang="hi" aria-hidden="true">ह</span> Hindi <span>Duel</span><small>A little every day.</small></h1>
     <div class="nav-btns">
-      <button class="nav-btn active" data-screen="quiz">Practice</button>
+      <button class="nav-btn" data-screen="coach">My coach</button>
+      <button class="nav-btn active" data-screen="quiz">Lessons</button>
       <button class="nav-btn" data-screen="daily">Daily practice</button>
       <button class="nav-btn" data-screen="images">Images</button>
-      <button class="nav-btn private hidden" data-screen="coach">Coach</button>
       <button class="nav-btn private hidden" data-screen="challenge">Daily Challenge</button>
       <button class="nav-btn private hidden" data-screen="mistakes">Mistakes</button>
       <button class="nav-btn private hidden" data-screen="stats">Stats</button>
@@ -23,7 +27,7 @@
       <button class="nav-btn hidden" id="logoutBtn">Log out</button>
     </div>
   </nav>
-  <main>
+  <main id="main">
     <section id="coach" class="screen hidden"></section>
     <section id="quiz" class="screen"></section>
     <section id="daily" class="screen hidden"></section>
@@ -35,10 +39,11 @@
     <section id="manage" class="screen hidden"></section>
     <section id="login" class="screen hidden"></section>
   </main>
+  <footer class="studio-footer"><span>Hindi Duel</span><span>Small steps. Real conversations.</span><span lang="hi">हर दिन थोड़ा सा</span></footer>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
   <script src="firebase-config.js"></script>
-  <script type="module" src="app.js?v=20261023-3"></script>
+  <script type="module" src="app.js?v=20261023-4"></script>
 </body>
 </html>

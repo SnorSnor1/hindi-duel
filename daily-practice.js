@@ -1,7 +1,15 @@
 import { coreTheme, learningKey } from "./core-vocabulary.js?v=20261023-3";
 
 export const DAILY_PHASE_COUNTS = { phase1: 6, phase2: 7, phase3: 7 };
-export const DAILY_PLAN_VERSION = 2;
+export const DAILY_PLAN_VERSION = 3;
+export const REVIEW_INTERVALS = [1, 3, 7, 14, 30, 60];
+
+// Calendar arithmetic in UTC avoids shorter/longer days at daylight-saving changes.
+export function reviewDate(date, days){
+  const value = new Date(`${date}T12:00:00Z`);
+  value.setUTCDate(value.getUTCDate() + days);
+  return value.toISOString().slice(0,10);
+}
 
 function dayHash(value){
   let hash = 2166136261;
@@ -48,18 +56,34 @@ export function learningHistory(attemptsByPhase, date, includeToday=false){
     const correct = attempts.filter(attempt=>attempt.correct && !attempt.close);
     const correctDays = new Set(correct.map(attempt=>attempt.date));
     const reviewDays = new Set(correct.filter(attempt=>!failure || attempt.date > failure.date).map(attempt=>attempt.date));
-    const activeRecall = correct.some(attempt=>attempt.mode === "type" || attempt.mode === "recall");
+    const successful = correct.filter(attempt=>!failure || attempt.date > failure.date);
+    const successDays = new Set(successful.map(attempt=>attempt.date)).size;
+    const activeRecall = successful.some(attempt=>attempt.mode === "type" || attempt.mode === "recall");
     const reviewDue = Boolean(failure && reviewDays.size < 2);
-    return [key,{correctDays:correctDays.size,activeRecall,reviewDue,failure,lastDate:attempts.at(-1).date,mastered:correctDays.size >= 3 && activeRecall && !reviewDue}];
+    const intervalDays = reviewDue || !activeRecall ? 1 : REVIEW_INTERVALS[Math.min(Math.max(0,successDays-1),REVIEW_INTERVALS.length-1)];
+    const lastDate = attempts.at(-1).date;
+    const dueAt = reviewDate(lastDate,intervalDays);
+    const due = reviewDue || dueAt <= date;
+    return [key,{correctDays:correctDays.size,successDays,activeRecall,reviewDue,failure,lastDate,
+      intervalDays,dueAt,due,resting:!due,attemptCount:attempts.length,
+      wrongCount:failures.length,mastered:successDays >= 3 && activeRecall && !reviewDue}];
   }));
+}
+
+// Free practice may include resting words if the learner explicitly requests
+// a large set. Its default order still gives difficult and due words priority.
+export function prioritisePractice(words, history, random=Math.random){
+  return words.map(word=>{
+    const stats = history.get(learningKey(word));
+    const priority = stats?.reviewDue ? 0 : stats?.due ? 1 : !stats ? 2 : 3;
+    return {word,priority,tie:random()};
+  }).sort((a,b)=>a.priority-b.priority || a.tie-b.tie).map(item=>item.word);
 }
 
 export function createDailyPractice(wordsByPhase, curriculum, date, phaseKeys=Object.keys(DAILY_PHASE_COUNTS), attemptsByPhase={}){
   const history = learningHistory(attemptsByPhase,date);
   const phases = phaseKeys.map(phaseKey=>({phaseKey,words:orderedPhaseWords(wordsByPhase[phaseKey] || [],curriculum[phaseKey]?.words || [],phaseKey)}));
   const allWords = phases.flatMap(phase=>phase.words);
-  const allCoreKeys = new Set(allWords.filter(coreTheme).map(learningKey));
-  const foundationReady = allCoreKeys.size > 0 && [...allCoreKeys].every(key=>history.get(key)?.mastered);
   const reviews = new Map();
   for(const [key,stats] of history){
     if(!stats.reviewDue) continue;
@@ -72,12 +96,12 @@ export function createDailyPractice(wordsByPhase, curriculum, date, phaseKeys=Ob
   return phases.flatMap(({phaseKey,words})=>{
     const selected = [...reviews.values()].filter(word=>word.phaseKey === phaseKey);
     const count = Math.max(DAILY_PHASE_COUNTS[phaseKey] || 0,selected.length);
-    const candidates = words.filter(word=>!chosen.has(learningKey(word))).map((word,rank)=>{
+    const candidates = words.filter(word=>!chosen.has(learningKey(word)) && history.get(learningKey(word))?.resting !== true).map((word,rank)=>{
       const stats = history.get(learningKey(word));
       const core = Boolean(coreTheme(word));
-      const priority = foundationReady ? (core ? 1 : 0) : core ? (stats?.mastered ? 1 : 0) : 2;
-      return {word,rank,priority,practised:stats?.correctDays || 0,tie:dayHash(`${date}|${phaseKey}|${learningKey(word)}`)};
-    }).sort((a,b)=>a.priority-b.priority || a.practised-b.practised || a.tie-b.tie || a.rank-b.rank);
+      const priority = stats?.due ? (core ? 0 : 1) : core ? 2 : 3;
+      return {word,rank,priority,overdue:stats?.dueAt || date,practised:stats?.successDays || 0,tie:dayHash(`${date}|${phaseKey}|${learningKey(word)}`)};
+    }).sort((a,b)=>a.priority-b.priority || a.overdue.localeCompare(b.overdue) || a.practised-b.practised || a.tie-b.tie || a.rank-b.rank);
     for(const {word} of candidates){
       if(selected.length >= count) break;
       const key = learningKey(word);
@@ -90,7 +114,7 @@ export function createDailyPractice(wordsByPhase, curriculum, date, phaseKeys=Ob
       const key = learningKey(word);
       const stats = history.get(key);
       const core = Boolean(coreTheme(word));
-      return {...word,core,review:reviews.has(key),practiceMode:phaseKey === "phase1" ? (stats?.correctDays ? "type" : "mc") : phaseKey === "phase2" ? "type" : "recall"};
+      return {...word,core,review:reviews.has(key),scheduledReview:Boolean(stats?.due && !reviews.has(key)),practiceMode:phaseKey === "phase1" ? (stats?.correctDays ? "type" : "mc") : phaseKey === "phase2" ? "type" : "recall"};
     });
   });
 }

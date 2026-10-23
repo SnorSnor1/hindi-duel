@@ -124,3 +124,51 @@ test("sync preserves each user's newest completed round and local guest result",
   assert.deepEqual(mergeDailyPractice({maaike:current,guest:previous},{maaike:previous,vincent:current}),{maaike:current,vincent:current,guest:previous});
   assert.deepEqual(mergeDailyPractice({}, {maaike:{date:"2026-10-23",correct:30,total:20}}),{});
 });
+
+test("known words rest through expanding intervals and are never fillers before they are due",()=>{
+  const water=one("phase1","पानी");
+  const attempts={phase1:[attempt(water,"2026-10-01",true),attempt(water,"2026-10-03",true),attempt(water,"2026-10-10",true)]};
+  const pool={phase1:[water]}, curriculum={phase1:{words:[water]}};
+  const stats=learningHistory(attempts,"2026-10-11").get(learningKey(water));
+  assert.equal(stats.mastered,true);
+  assert.equal(stats.intervalDays,7);
+  assert.equal(stats.dueAt,"2026-10-17");
+  assert.equal(stats.resting,true);
+  assert.deepEqual(createDailyPractice(pool,curriculum,"2026-10-16",["phase1"],attempts),[]);
+  const due=createDailyPractice(pool,curriculum,"2026-10-17",["phase1"],attempts);
+  assert.equal(due.length,1);
+  assert.equal(due[0].scheduledReview,true);
+  assert.equal(due[0].review,false);
+});
+
+test("a new failure resets a previously mastered word and rebuilds its interval",()=>{
+  const water=one("phase1","पानी");
+  const attempts={phase1:["01","03","05","07","09","11"].map(day=>attempt(water,`2026-10-${day}`,true))};
+  assert.equal(learningHistory(attempts,"2026-10-12").get(learningKey(water)).intervalDays,60);
+  attempts.phase1.push(attempt(water,"2026-10-12",false));
+  let stats=learningHistory(attempts,"2026-10-13").get(learningKey(water));
+  assert.equal(stats.intervalDays,1);assert.equal(stats.mastered,false);assert.equal(stats.reviewDue,true);
+  attempts.phase1.push(attempt(water,"2026-10-13",true),attempt(water,"2026-10-14",true));
+  stats=learningHistory(attempts,"2026-10-15").get(learningKey(water));
+  assert.equal(stats.reviewDue,false);assert.equal(stats.intervalDays,3);assert.equal(stats.mastered,false);
+});
+
+test("same-day repetitions cannot manufacture mastery or a longer interval",()=>{
+  const water=one("phase1","पानी");
+  const attempts={phase1:Array.from({length:25},(_,index)=>attempt(water,"2026-10-22",true,{createdAt:`2026-10-22T10:${String(index).padStart(2,"0")}:00Z`}))};
+  const stats=learningHistory(attempts,"2026-10-23").get(learningKey(water));
+  assert.equal(stats.successDays,1);assert.equal(stats.intervalDays,1);assert.equal(stats.mastered,false);
+});
+
+test("a due familiar word takes priority over unseen words, and future words keep resting",()=>{
+  const water=one("phase1","पानी");
+  const todayPlan=createDailyPractice(words,PHASE_DATA,"2026-10-23",undefined,{phase1:[attempt(water,"2026-10-22",true)]});
+  assert.ok(todayPlan.some(word=>learningKey(word)===learningKey(water) && word.scheduledReview));
+});
+
+test('free practice prioritises difficult and due words while allowing an explicitly requested resting word',async()=>{
+  const {prioritisePractice}=await import('./daily-practice.js');
+  const water=one('phase1','पानी'),food=one('phase1','खाना'),tea=one('phase1','चाय'),milk=one('phase1','दूध');
+  const history=new Map([[learningKey(water),{resting:true}],[learningKey(food),{reviewDue:true}],[learningKey(tea),{due:true}]]);
+  assert.deepEqual(prioritisePractice([water,milk,tea,food],history,()=>0).map(learningKey),[food,tea,milk,water].map(learningKey));
+});
