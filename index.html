@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#163d36">
   <meta name="description" content="Your personal Hindi learning studio. Practise everyday essentials with a coach that adapts to your answers.">
   <link rel="stylesheet" href="styles.css?v=20261023-4">
-  <link rel="stylesheet" href="studio.css?v=20261023-4">
+  <link rel="stylesheet" href="studio.css?v=20261023-6">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -23,11 +23,13 @@
       <button class="nav-btn private hidden" data-screen="stats">Stats</button>
       <button class="nav-btn private hidden" data-screen="scoreboard">Scoreboard</button>
       <button class="nav-btn maaike hidden" data-screen="manage">Manage</button>
+      <button class="nav-btn" data-screen="sync">Sync devices</button>
       <button class="nav-btn" id="loginBtn">Log in</button>
       <button class="nav-btn hidden" id="logoutBtn">Log out</button>
     </div>
   </nav>
   <main id="main">
+    <section id="sync" class="screen hidden"></section>
     <section id="coach" class="screen hidden"></section>
     <section id="quiz" class="screen"></section>
     <section id="daily" class="screen hidden"></section>
@@ -43,7 +45,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script type="module" src="app.js?v=20261023-5"></script>
+  <script src="firebase-config.js?v=20261023-6"></script>
+  <script type="module" src="app.js?v=20261023-6"></script>
 </body>
 </html>

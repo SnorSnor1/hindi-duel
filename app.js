@@ -1,3 +1,5 @@
+import { makeProgressProfile, restoreProgressProfile, sessionCheckpoint, resumableRun, mergeRun, PROFILE_NAMES } from "./progress-sync.js?v=20261023-6";
+import { createCloudProgress } from "./cloud-progress.js?v=20261023-6";
 import { learningDashboard } from "./learning-dashboard.js?v=20261023-4";
 import { PHASE_DATA } from "./data.js?v=20261023-1";
 import { createDailyPractice, mergeDailyPractice, learningHistory, prioritisePractice, DAILY_PLAN_VERSION } from "./daily-practice.js?v=20261023-4";
@@ -6,7 +8,6 @@ import { importantWords, learningKey } from "./core-vocabulary.js?v=20261023-3";
 const USERS = { maaike: "Maaike10!", vincent: "chailavie" };
 const STORE = "hindi.seekho.combined.v1";
 const FIREBASE_CONFIG = window.HINDI_DUEL_FIREBASE_CONFIG || null;
-const FIREBASE_STATE_PATH = "hindiDuel/sharedState";
 const CLOUD_SYNC_ENABLED = Boolean(FIREBASE_CONFIG);
 const PUBLIC_APP_URL = "https://snorsnor1.github.io/hindi-duel/";
 const PHASE1_SHEET_URL = "https://docs.google.com/spreadsheets/d/1cBDf3LfWuA50xTL5N_-A1YUIWmkjWMl9JWJIkq9RYs4/export?format=csv&gid=0";
@@ -46,19 +47,17 @@ let mode = "mixed";
 let session = null;
 let timer = null;
 let activeScreen = "quiz";
-let cloudReady = false;
-let cloudSaveTimer = null;
-let cloudSaveInFlight = false;
-let lastCloudPayload = "";
-let firebaseRef = null;
-let applyingCloudState = false;
 let coachNotice = "";
 const learningCache = new Map();
 let nextKeyHandler = null;
+let cloudProgress = null;
+let syncOwner = state.cloudOwner || user || "maaike";
+let includeGuestProgress = false;
+let syncStatus = {state:CLOUD_SYNC_ENABLED?"signed-out":"unconfigured"};
 let imageSession = null;
 let imageSelectedCategories = new Set();
 
-const screens = ["coach","quiz","daily","images","challenge","mistakes","stats","scoreboard","manage","login"];
+const screens = ["sync","coach","quiz","daily","images","challenge","mistakes","stats","scoreboard","manage","login"];
 const $ = (selector) => document.querySelector(selector);
 const PHASE_KEYS = ["phase1", "phase2", "phase3"];
 const phaseWordsFor = (phaseKey) => (state.words[phaseKey] || []).filter((word) => word.english.length);
@@ -301,6 +300,8 @@ function applyChallengeResetMigrations(nextState){
   return nextState;
 }
 function save(options={}){
+  const checkpoint = sessionCheckpoint(session,new Date().toISOString());
+  if(checkpoint){state.practiceRuns ||= {};state.practiceRuns[user || "guest"] = mergeRun(state.practiceRuns[user || "guest"],checkpoint);}
   learningCache.clear();
   state.phase = phase;
   state.user = user;
@@ -308,70 +309,6 @@ function save(options={}){
   if(options.sync === false) return;
   if(options.immediate) pushCloudState();
   else scheduleCloudSave();
-}
-function sharedState(){
-  return {
-    version: 1,
-    scores: state.scores,
-    mistakes: state.mistakes,
-    attempts: { maaike:state.attempts.maaike, vincent:state.attempts.vincent },
-    dailyPractice: Object.fromEntries(Object.entries(state.dailyPractice).filter(([name])=>name !== "guest")),
-    maintenance: state.maintenance,
-    wordOverrides: state.wordOverrides,
-    challengeResets: state.challengeResets
-  };
-}
-function mergeScores(local=[], remote=[]){
-  const merged = new Map();
-  [...local, ...remote].forEach((score)=>{
-    if(!score || !score.date || !score.phase) return;
-    const key = `${score.phase}|${score.date}`;
-    const previous = merged.get(key);
-    const previousTime = previous?.updatedAt || previous?.createdAt || "";
-    const scoreTime = score.updatedAt || score.createdAt || "";
-    if(!previous || scoreTime >= previousTime || (score.completed && !previous.completed)) merged.set(key, score);
-  });
-  return [...merged.values()].sort((a,b)=>(a.createdAt || a.date).localeCompare(b.createdAt || b.date));
-}
-function mergeAttempts(local=[], remote=[]){
-  const merged = new Map();
-  [...local, ...remote].forEach((attempt)=>{
-    if(!attempt) return;
-    const id = attempt.id || `${attempt.date}|${attempt.hindi}|${attempt.answer}|${attempt.createdAt || ""}`;
-    merged.set(id, attempt);
-  });
-  return [...merged.values()].sort((a,b)=>(a.createdAt || a.date || "").localeCompare(b.createdAt || b.date || "")).slice(-2500);
-}
-function latestMistake(a={}, b={}){
-  const aTime = a.lastCorrectAt || a.lastWrongAt || "";
-  const bTime = b.lastCorrectAt || b.lastWrongAt || "";
-  if(bTime > aTime) return b;
-  if(aTime > bTime) return a;
-  return (b.count || 0) >= (a.count || 0) ? b : a;
-}
-function mergeMistakeBucket(local={}, remote={}){
-  const merged = { ...local };
-  Object.entries(remote || {}).forEach(([key,value])=>{
-    merged[key] = merged[key] ? latestMistake(merged[key], value) : value;
-  });
-  return merged;
-}
-function mergeCloudState(remote){
-  learningCache.clear();
-  if(!remote || typeof remote !== "object") return;
-  ["maaike","vincent"].forEach((name)=>{
-    state.scores[name] = mergeScores(state.scores[name], remote.scores?.[name]);
-    PHASE_KEYS.forEach((phaseKey)=>{
-      state.attempts[name][phaseKey] = mergeAttempts(state.attempts[name][phaseKey], remote.attempts?.[name]?.[phaseKey]);
-      state.mistakes[name][phaseKey] = mergeMistakeBucket(state.mistakes[name][phaseKey], remote.mistakes?.[name]?.[phaseKey]);
-    });
-  });
-  state.challengeResets = [...new Set([...(state.challengeResets || []), ...(remote.challengeResets || [])])];
-  state.maintenance = mergeMaintenance(state.maintenance, remote.maintenance);
-  state.wordOverrides = mergeWordOverrides(state.wordOverrides, remote.wordOverrides);
-  state.dailyPractice = mergeDailyPractice(state.dailyPractice, remote.dailyPractice);
-  PHASE_KEYS.forEach((phaseKey)=>{ state.words[phaseKey] = applyWordOverrides(state.words[phaseKey], phaseKey); });
-  applyChallengeResetMigrations(state);
 }
 function rerenderCloudSensitiveScreen(){
   if(session) return;
@@ -381,85 +318,67 @@ function rerenderCloudSensitiveScreen(){
   if(activeScreen === "stats") renderStats();
   if(activeScreen === "mistakes") renderMistakes();
   if(activeScreen === "daily") renderDailyPractice();
+  if(activeScreen === "sync") renderSync();
 }
 async function initCloudSync(){
-  if(!CLOUD_SYNC_ENABLED) return false;
-  if(!window.firebase?.initializeApp || !window.firebase?.database){
-    console.warn("Firebase SDK unavailable; shared scores are disabled.");
-    return false;
-  }
-  try {
-    if(!window.firebase.apps.length) window.firebase.initializeApp(FIREBASE_CONFIG);
-    if(window.firebase.auth){
-      try {
-        const auth = window.firebase.auth();
-        if(!auth.currentUser) await auth.signInAnonymously();
-      } catch (error) {
-        console.warn("Firebase anonymous auth unavailable; trying database without auth.", error);
-      }
-    }
-    firebaseRef = window.firebase.database().ref(FIREBASE_STATE_PATH);
-    firebaseRef.on("value",(snapshot)=>{
-      const remote = snapshot.val();
-      applyingCloudState = true;
-      mergeCloudState(remote);
-      cloudReady = true;
-      save({ sync:false });
-      lastCloudPayload = JSON.stringify(remote || {});
-      if(user) rerenderCloudSensitiveScreen();
-      applyingCloudState = false;
-      scheduleCloudSave();
-    },(error)=>{
-      console.warn("Firebase shared state unavailable", error);
-    });
-    return true;
-  } catch (error) {
-    console.warn("Firebase setup failed", error);
-    return false;
-  }
+  cloudProgress=createCloudProgress({
+    firebase:window.firebase,config:FIREBASE_CONFIG,getOwner:()=>syncOwner,
+    getProfile:()=>makeProgressProfile(state,syncOwner,{includeGuest:includeGuestProgress}),
+    canBind:(owner,uid)=>!state.syncBindings?.[owner] || state.syncBindings[owner]===uid,
+    applyProfile:(profile,owner)=>{
+      restoreProgressProfile(state,owner,profile);
+      includeGuestProgress=false;
+      PHASE_KEYS.forEach(key=>{state.words[key]=applyWordOverrides(state.words[key],key);});
+      save({sync:false});
+      if(!session) rerenderCloudSensitiveScreen();
+    },
+    bind:(owner,uid)=>{
+      state.syncBindings ||= {}; state.syncBindings[owner]=uid;
+      state.cloudOwner=owner;user=owner;
+      save({sync:false});renderNav();
+    },
+    onStatus:value=>{syncStatus={...value,at:new Date().toISOString()};renderSyncStatus();}
+  });
+  return cloudProgress.init();
 }
-async function loadCloudState(options={}){
-  if(!CLOUD_SYNC_ENABLED) return false;
-  if(!firebaseRef) return false;
-  try {
-    const snapshot = await firebaseRef.get();
-    const remote = snapshot.val();
-    applyingCloudState = true;
-    mergeCloudState(remote);
-    cloudReady = true;
-    save({ sync:false });
-    lastCloudPayload = JSON.stringify(remote || {});
-    if(options.rerender) rerenderCloudSensitiveScreen();
-    applyingCloudState = false;
-    scheduleCloudSave();
-    return true;
-  } catch (error) {
-    applyingCloudState = false;
-    console.warn("Firebase shared state unavailable", error);
-    return false;
-  }
+function scheduleCloudSave(){cloudProgress?.schedule();}
+function pushCloudState(){return cloudProgress?.flush();}
+async function loadCloudState(){return cloudProgress?.refresh();}
+async function disconnectCloudSync(){await cloudProgress?.signOut();}
+function syncStatusLabel(){
+  return ({unconfigured:"Saved on this device",'signed-out':"Saved on this device",connecting:"Connecting…",syncing:"Syncing…",synced:"Synced across devices",offline:"Offline · saved on this device",error:"Sync needs attention",'account-mismatch':"Choose the original Google account"})[syncStatus.state] || "Saved on this device";
 }
-function scheduleCloudSave(){
-  if(!CLOUD_SYNC_ENABLED) return;
-  if(applyingCloudState) return;
-  if(!cloudReady) return;
-  clearTimeout(cloudSaveTimer);
-  cloudSaveTimer = setTimeout(pushCloudState, 700);
+function renderSyncStatus(){
+  document.querySelectorAll('[data-sync-status]').forEach(element=>{element.textContent=syncStatusLabel();element.dataset.state=syncStatus.state;});
+  if(activeScreen==='sync') renderSync();
 }
-async function pushCloudState(){
-  if(!CLOUD_SYNC_ENABLED) return;
-  if(!firebaseRef || !cloudReady || applyingCloudState || cloudSaveInFlight) return;
-  const payload = JSON.stringify(sharedState());
-  if(payload === lastCloudPayload) return;
-  cloudSaveInFlight = true;
-  try {
-    await firebaseRef.set(JSON.parse(payload));
-    lastCloudPayload = payload;
-  } catch (error) {
-    console.warn("Firebase shared state save failed", error);
-  } finally {
-    cloudSaveInFlight = false;
-  }
+function renderSync(){
+  const connected=['synced','syncing','offline','connecting'].includes(syncStatus.state);
+  const currentOwner=user || 'guest';
+  const localCount=Object.values(state.attempts[currentOwner] || {}).reduce((sum,entries)=>sum+entries.length,0);
+  const run=state.practiceRuns?.[currentOwner];
+  $("#sync").innerHTML=`<div class="panel sync-panel"><span class="eyebrow">Your Hindi, wherever you are</span><h2>One journey.<br>Every device.</h2><p>Keep your answers, difficult words, review schedule and daily practice position together on your phone and laptop.</p><div class="sync-state" role="status"><i></i><strong>${escapeHtml(syncStatusLabel())}</strong></div>${syncStatus.detail?`<p class="sync-detail">${escapeHtml(syncStatus.detail)}</p>`:''}
+    ${!CLOUD_SYNC_ENABLED?`<div class="sync-setup-note"><strong>Cloud setup is still needed</strong><p>The private Firebase service has not been connected yet. Your ${localCount} saved answers stay on this device. Google sign-in will become available after setup.</p></div>`:''}
+    <label class="form-label" for="syncProfile">Learner profile</label><select id="syncProfile" ${connected?'disabled':''}>${PROFILE_NAMES.map(name=>`<option value="${name}" ${syncOwner===name?'selected':''}>${displayName(name)}</option>`).join('')}</select>
+    ${currentOwner==='guest' && localCount?`<label class="sync-import"><input type="checkbox" id="includeGuest" checked> Include this browser’s ${localCount} practice answers in my profile</label>`:''}
+    <p class="sync-privacy">With Google sign-in, your answers, scores, difficult words and daily practice position are stored privately in Google Firebase. Use the same Google account and learner profile on both devices. Your local password is never uploaded.</p>
+    <div class="sync-actions">${connected?`<button class="start-btn" id="retrySync">Sync now</button><button class="ghost" id="disconnectSync">Disconnect Google</button>`:`<button class="start-btn" id="connectSync" ${CLOUD_SYNC_ENABLED?'':'disabled'}>Continue with Google</button>`}${!connected && CLOUD_SYNC_ENABLED && syncStatus.state!=='signed-out'?`<button class="ghost" id="disconnectSync">Choose another Google account</button>`:''}<button class="ghost" id="downloadProgress">Download a progress backup</button></div>
+    ${resumableRun(run)?`<div class="sync-resume"><strong>Daily practice saved</strong><p>${run.index} of ${run.queue.length} words answered. You can resume from the next word.</p><button class="ghost" id="syncResume">Continue daily practice</button></div>`:''}
+    <ol class="sync-instructions"><li>Connect Google on the device that has your progress.</li><li>Wait until the status says “Synced across devices”.</li><li>Open this same website on your other device and choose the same account and learner profile.</li></ol></div>`;
+  $('#connectSync')?.addEventListener('click',()=>{
+    syncOwner=$('#syncProfile').value;
+    includeGuestProgress=Boolean($('#includeGuest')?.checked);
+    state.cloudOwner=syncOwner;save({sync:false});
+    cloudProgress?.signIn();
+  });
+  $('#retrySync')?.addEventListener('click',()=>loadCloudState());
+  $('#disconnectSync')?.addEventListener('click',disconnectCloudSync);
+  $('#syncResume')?.addEventListener('click',resumeDailyPractice);
+  $('#downloadProgress').addEventListener('click',()=>{
+    const profile=makeProgressProfile(state,currentOwner);
+    const blob=new Blob([JSON.stringify({format:'hindi-duel-private-progress',exportedAt:new Date().toISOString(),profile},null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=`hindi-progress-${today()}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
 }
 function shuffle(items){ for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]];} return items; }
 function normEnglish(value){ return String(value||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\s]/g," ").replace(/\b(to|a|an|the)\b/g," ").replace(/\s+/g," ").trim(); }
@@ -697,6 +616,7 @@ function show(screen){
   activeScreen = screen;
   screens.forEach((id)=>$("#"+id).classList.toggle("hidden", id!==screen));
   markActiveNav(screen);
+  if(screen==="sync") renderSync();
   if(screen==="coach") renderCoach();
   if(screen==="quiz") renderQuizSetup();
   if(screen==="daily") renderDailyPractice();
@@ -789,6 +709,7 @@ function resetTodaysChallenge(){
   if(!user) return;
   const date = today();
   state.scores[user] = (state.scores[user] || []).filter((score)=>!(score.date===date && score.phase==="phase1"));
+  state.scoreResets ||= {};state.scoreResets[user] ||= {};state.scoreResets[user][`phase1|${date}`]={updatedAt:new Date().toISOString()};
   if(session?.source === "challenge") session = null;
   save({ immediate:true });
   renderChallenge();
@@ -1482,9 +1403,9 @@ function maintenanceHtml(){
   return `<div class="coach-maintenance"><div class="maintenance-head"><div><h3>Lesson list maintenance</h3><p>Phase 1 stays maintained. Phase 2 gets checked before lessons.</p></div><button class="ghost" id="openManage" type="button">Manage lists</button></div><div class="maintenance-grid"><div><span>Phase 1</span><strong>${phase1Status}</strong><small>${phase1.lastCount || state.words.phase1.length} words · last sync ${formatDateTime(phase1.lastSyncedAt)}</small><button class="ghost" id="coachSyncPhase1" type="button">Sync Phase 1</button></div><div><span>Phase 2</span><strong>${phase2Status}</strong><small>${phase2.lastCount || state.words.phase2.length} words · last sync ${formatDateTime(phase2.lastSyncedAt)}</small><button class="ghost" id="coachSyncPhase2" type="button">Sync Phase 2</button></div></div><label class="form-label" for="nextLessonAt">Next Hindi lesson</label><div class="lesson-prep-row"><input id="nextLessonAt" type="datetime-local" value="${dateTimeInputValue(prep.nextLessonAt)}"><button class="retry-btn" id="saveLessonPrep" type="button">Save lesson prep</button></div><p id="coachSyncStatus" class="sync-line">${prep.checkedAt?`Last prep check ${formatDateTime(prep.checkedAt)}.`:"No prep check saved yet."}</p></div>`;
 }
 function progressStorageNote(){
-  if(!CLOUD_SYNC_ENABLED) return "Answers and reviews are saved in this browser on this device. Keep using the same browser to retain your progress.";
-  return user ? "Answers are saved in this browser and sync with your account when connected."
-    : "Without login, answers stay in this browser. Log in to sync account progress across devices.";
+  if(syncStatus.state==='synced') return "Your progress is synced. Use the same Google account and learner profile on your phone and laptop.";
+  if(['offline','error','account-mismatch'].includes(syncStatus.state)) return "Your latest answers are saved on this device. Connect again and wait for confirmation before continuing on another device.";
+  return "Answers are saved in this browser. Open Sync devices to connect your phone and laptop.";
 }
 function memoryRhythmHtml(){
   return `<div class="memory-rhythm"><div><span class="eyebrow">A rhythm that adapts to you</span><h3>Know it better. See it later.</h3><p>Successful recall on different days increases the gap. A missed or difficult word returns tomorrow, until two later days go well.</p></div><ol aria-label="Review intervals after successful recall on different days">${[1,3,7,14,30,60].map((days,index)=>`<li><b>${days}</b><span>${days===1?"day":"days"}</span><i>${index===0?"Build":""}</i></li>`).join("")}</ol><small>Choice-only answers keep a one-day interval. Same-day repeats never increase the gap.</small></div>`;
@@ -1507,7 +1428,7 @@ function renderCoach(){
   const phasePlan = availablePhaseKeys().map(key=>`<li><span>0${key.slice(-1)}</span><div><strong>Phase ${key.slice(-1)}</strong><small>${{phase1:"Recognise & remember",phase2:"Find the English",phase3:"Recall the Hindi"}[key]}</small></div><b>${plan.filter(word=>word.phaseKey===key).length}</b></li>`).join("");
   $("#coach").innerHTML = `<div class="studio-shell">
     <div class="studio-heading"><span class="eyebrow">Your personal learning studio</span><span class="studio-date">${new Date(`${today()}T12:00:00`).toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"})}${user?` · ${escapeHtml(displayName(user))}`:""}</span></div>
-    <div class="studio-hero"><div class="hero-story"><span class="hero-kicker"><i></i> A little every day</span><h2>Small steps.<br><em>Real Hindi.</em></h2><p>${focusLine}</p><div class="hero-actions"><button class="start-btn" id="coachStartDaily" ${plan.length?"":"disabled"}>${completed?"Revisit today’s practice":plan.length?"Let’s practise":"You’re all caught up"}<span aria-hidden="true">↗</span></button><button class="text-button" id="coachBrowse">Explore your lessons <span aria-hidden="true">→</span></button></div><div class="hero-footnote"><span lang="hi">नमस्ते</span><small>Make room for the words that matter.</small></div></div>
+    <button class="sync-overview" id="openSync"><span class="sync-dot" data-sync-state></span><span data-sync-status>${escapeHtml(syncStatusLabel())}</span><small>Sync phone & laptop ↗</small></button><div class="studio-hero"><div class="hero-story"><span class="hero-kicker"><i></i> A little every day</span><h2>Small steps.<br><em>Real Hindi.</em></h2><p>${focusLine}</p><div class="hero-actions"><button class="start-btn" id="coachStartDaily" ${plan.length?"":"disabled"}>${completed?"Revisit today’s practice":plan.length?"Let’s practise":"You’re all caught up"}<span aria-hidden="true">↗</span></button><button class="text-button" id="coachBrowse">Explore your lessons <span aria-hidden="true">→</span></button></div><div class="hero-footnote"><span lang="hi">नमस्ते</span><small>Make room for the words that matter.</small></div></div>
     <div class="today-plan"><div class="plan-heading"><span class="eyebrow">${completed?"Today, completed":"Made for today"}</span><span class="plan-status">${completed?`${result.correct}/${result.total} correct`:"Adaptive practice"}</span></div><div class="plan-number">${plan.length}<span>words.<br>Your pace.</span></div><p>${reviewCount} to revisit · ${newCount} new to learn</p><ol class="plan-phases">${phasePlan}</ol><button class="text-button" id="coachPlan">See today’s plan <span aria-hidden="true">→</span></button></div></div>
     <div class="studio-metrics"><div><span class="metric-dot coral"></span><strong>${model.difficult.length}</strong><span>need attention</span></div><div><span class="metric-dot mint"></span><strong>${model.resting}</strong><span>resting until due</span></div><div><span class="metric-dot violet"></span><strong>${model.steady}</strong><span>essentials steady</span></div><div><strong>${activeDays}<small>/7</small></strong><span>days practised</span></div></div>
     <div class="studio-columns"><article class="studio-card focus-card"><div class="card-title"><div><span class="eyebrow">Your next breakthrough</span><h3>${model.difficult.length?"Give these a little love.":"A fresh start, every day."}</h3></div><span class="card-symbol" aria-hidden="true">↗</span></div><p>${model.difficult.length?"Missed and difficult words from your lessons, brought together.":model.due.length?"These familiar words are ready for a memory check.":"No difficult words waiting. Each answer helps your coach choose what comes next."}</p><div class="focus-words">${focusWords.slice(0,4).map(word=>`<div><strong lang="hi">${escapeHtml(word.hindi)}</strong><span>${escapeHtml(word.english.join("; "))}</span><small>Phase ${word.phaseKey.slice(-1)}</small></div>`).join("") || `<div class="focus-empty"><span lang="hi">धीरे धीरे</span><p>Little by little.<br>That’s how a language becomes yours.</p></div>`}</div>${focusWords.length?`<button class="ghost" id="coachFocus">Practise ${Math.min(focusWords.length,8)} focus word${focusWords.length===1?"":"s"}</button>`:""}</article>
@@ -1515,7 +1436,9 @@ function renderCoach(){
     <div class="week-strip"><div><span class="eyebrow">Your last seven days</span><h3>${weekTotal} answer${weekTotal===1?"":"s"}. Every one counts.</h3></div><div class="week-days">${model.week.map(day=>`<div class="${day.total?"practised":""}" title="${day.date}: ${day.correct} correct out of ${day.total}"><span>${new Date(`${day.date}T12:00:00`).toLocaleDateString("en-GB",{weekday:"short"}).slice(0,1)}</span><b>${day.total || "·"}</b><small>${day.date.slice(8)}</small></div>`).join("")}</div></div>
     ${memoryRhythmHtml()}<p class="storage-caption">${progressStorageNote()}</p>
     ${user?`<details class="coach-extras"><summary>Reminders & lesson tools</summary>${coachReminderHtml()}${user==="maaike"?maintenanceHtml():""}</details>`:""}</div>`;
+  $("#openSync").addEventListener("click",()=>show("sync"));
   $("#coachStartDaily").addEventListener("click",startDailyPractice);
+  addResumeButton($("#coachStartDaily"));
   $("#coachPlan").addEventListener("click",()=>show("daily"));
   $("#coachBrowse").addEventListener("click",()=>show("quiz"));
   $("#coachEssentials").addEventListener("click",()=>{ show("daily"); $("#essentials").open=true; $("#essentials").scrollIntoView({block:"start",behavior:"smooth"}); });
@@ -1723,6 +1646,7 @@ function renderDailyPractice(){
   }).join("");
   $("#daily").innerHTML = `<div class="panel daily-practice-panel"><span class="daily-badge">${displayDate(today())} · ${words.length} words</span><h2>Daily practice</h2><p class="daily-intro">Your personal route from Phase 1 to Phase 3. Difficult words get attention, essentials come first, and familiar words wait until they are due.</p><div class="daily-priorities"><span>${reviewCount} to review</span><span>${coreCount} essential words</span><span>${steady}/${coreWords.length} essentials steady</span></div><ol class="daily-steps">${steps}</ol><p class="daily-note">Correct answers on different days stretch the next review to 1, 3, 7, 14, 30 or 60 days. Missed or difficult words return tomorrow until two later days go well. Today’s selection stays the same.${words.length > 20 ? " All due reviews are included, so today’s round is longer than 20 words." : ""}</p>${completed?`<div class="daily-result"><span>Completed today</span><strong>${result.correct}/${result.total}</strong><small>correct in your last round</small></div>`:""}<button class="start-btn" id="startDailyPractice" type="button" ${words.length?"":"disabled"}>${completed?"Practise today’s words again":words.length?"Start daily practice":"All caught up — familiar words are resting"}</button>${!words.length?`<p class="daily-empty">No words due today. Enjoy the break, or explore your lessons for optional practice.</p>`:""}${memoryRhythmHtml()}<details class="core-selection"><summary>View the ${coreWords.length} important words</summary><p>Selected from your lessons for everyday conversations, practical needs and getting around. A word becomes steady after correct answers on three different days, including typing or recall since its latest difficult answer. Steady words are still checked occasionally.</p><label class="form-label" for="coreSearch">Search important words</label><input id="coreSearch" type="search" placeholder="Search Hindi, English or topic"><p class="core-count" id="coreCount"></p><ul class="core-catalog" id="coreCatalog"></ul></details><p class="daily-storage-note">${progressStorageNote()}</p></div>`;
   $("#startDailyPractice").addEventListener("click",startDailyPractice);
+  addResumeButton($("#startDailyPractice"));
   const selection = $("#daily .core-selection");
   const tomorrowNotice = document.createElement("p");
   tomorrowNotice.className = "daily-note review-forecast";
@@ -1746,9 +1670,25 @@ function startDailyPractice(){
   const queue = dailyPracticeWords();
   if(!queue.length) return;
   show("quiz");
-  session = { source:"daily-practice", phaseKey:phase, returnScreen:"daily", date:today(), queue, index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{} };
+  session = { source:"daily-practice", runId:crypto.randomUUID(), runStartedAt:new Date().toISOString(), phaseKey:phase, returnScreen:"daily", date:today(), queue, index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{} };
   markActiveNav("daily");
-  renderQuestion();
+  save();renderQuestion();
+}
+function addResumeButton(startButton){
+  const run=state.practiceRuns?.[user || 'guest'];
+  if(!resumableRun(run)) return;
+  const button=document.createElement('button');button.type='button';button.className='resume-practice ghost';
+  button.textContent=`Continue saved practice · ${run.index}/${run.queue.length} answered`;
+  startButton.before(button);button.addEventListener('click',resumeDailyPractice);
+}
+function resumeDailyPractice(){
+  const run=state.practiceRuns?.[user || 'guest'];
+  if(!resumableRun(run)) return;
+  show('quiz');
+  session={source:'daily-practice',runId:run.id,runStartedAt:run.startedAt,date:run.date,phaseKey:run.phaseKey || phase,
+    returnScreen:'daily',queue:run.queue,index:run.index,correct:run.correct || 0,wrong:run.wrong || 0,
+    approved:run.approved || 0,mode:'mixed',started:0,modes:[],missed:Object.fromEntries((run.missed || []).map(word=>[wordSessionKey(word),word]))};
+  markActiveNav('daily');renderQuestion();
 }
 function dailyPracticeQuestionHtml(word){
   if(session?.source === "coach-focus") return `<div class="daily-question-head"><button class="ghost" id="exitCoachFocus" type="button">Back to coach</button><p>Focus practice · Phase ${word.phaseKey.slice(-1)}</p><p class="daily-word-purpose">A little extra attention, at your pace.</p></div>`;
@@ -2090,7 +2030,7 @@ function approveAttempt(id, word){
   const owner = user || "guest";
   const phaseKey = wordPhaseKey(word);
   const attempt=state.attempts[owner][phaseKey].find((item)=>item.id===id);
-  if(attempt){ attempt.correct=true; attempt.approved=true; }
+  if(attempt){ attempt.correct=true; attempt.approved=true; attempt.approvedAt=new Date().toISOString(); }
   const bucket=user ? state.mistakes[user][phaseKey] : {};
   const key=keyFor(word);
   if(bucket[key]){
@@ -2147,6 +2087,7 @@ function renderSessionComplete(finished){
 function finishSession(){
   clearTimer();
   const finished = session;
+  finished.completed=true;
   if(finished.source === "daily-practice"){
     state.dailyPractice[user || "guest"] = { date:finished.date, correct:finished.correct, total:finished.queue.length, planVersion:DAILY_PLAN_VERSION, updatedAt:new Date().toISOString() };
     save();
@@ -2499,10 +2440,10 @@ function renderManage(){
   renderRows();
 }
 function showLogin(){ renderLogin(); show("login"); }
-function renderLogin(){ $("#login").innerHTML=`<div class="login-card"><h2>Log in</h2><p>Personal progress, scoreboard and your learning history.</p><input id="username" type="text" placeholder="Username"><input id="password" type="password" placeholder="Password"><button class="login-btn" id="doLogin">Log in</button><p id="loginError" style="color:var(--red);min-height:22px;margin-top:10px"></p></div>`; $("#doLogin").addEventListener("click",()=>{const name=$("#username").value.trim().toLowerCase(); const pass=$("#password").value; if(USERS[name] && USERS[name]===pass){user=name; if(user==="vincent") phase="phase1"; save(); renderNav(); show("coach");} else $("#loginError").textContent="Incorrect username or password.";}); }
+function renderLogin(){ $("#login").innerHTML=`<div class="login-card"><h2>Log in</h2><p>Personal progress, scoreboard and your learning history.</p><input id="username" type="text" placeholder="Username"><input id="password" type="password" placeholder="Password"><button class="login-btn" id="doLogin">Log in</button><p id="loginError" style="color:var(--red);min-height:22px;margin-top:10px"></p></div>`; $("#doLogin").addEventListener("click",async()=>{const name=$("#username").value.trim().toLowerCase(); const pass=$("#password").value; if(USERS[name] && USERS[name]===pass){await disconnectCloudSync();user=name; if(user==="vincent") phase="phase1"; save(); renderNav(); show("coach");} else $("#loginError").textContent="Incorrect username or password.";}); }
 document.querySelectorAll("[data-screen]").forEach((button)=>button.addEventListener("click",()=>show(button.dataset.screen)));
 $("#loginBtn").addEventListener("click",()=>{renderLogin(); show("login");});
-$("#logoutBtn").addEventListener("click",()=>{user=null; save(); renderNav(); show("quiz");});
+$("#logoutBtn").addEventListener("click",async()=>{await disconnectCloudSync();user=null; save(); renderNav(); show("quiz");});
 window.addEventListener("popstate",()=>{
   if(session?.source==="challenge"){
     lockChallengeNavigation();
@@ -2517,14 +2458,15 @@ window.addEventListener("beforeunload",(event)=>{
   event.returnValue = "";
 });
 window.addEventListener("visibilitychange",()=>{
-  if(CLOUD_SYNC_ENABLED && document.visibilityState === "visible" && user) loadCloudState({ rerender:true });
+  if(CLOUD_SYNC_ENABLED && document.visibilityState === "visible") loadCloudState({ rerender:true });
 });
-if(CLOUD_SYNC_ENABLED) setInterval(()=>{ if(user && !session) loadCloudState({ rerender:true }); }, 60000);
+if(CLOUD_SYNC_ENABLED) setInterval(()=>{ if(!session) loadCloudState({ rerender:true }); }, 60000);
 renderNav();
 const practiceLink = new URLSearchParams(window.location.search);
 const linkedPhase = practiceLink.get("phase");
 const linkedLesson = practiceLink.get("lesson");
 if(practiceLink.get("practice") === "daily") show("daily");
+else if(practiceLink.get("view") === "sync") show("sync");
 else if(practiceLink.get("view") === "coach") show("coach");
 else if(availablePhaseKeys().includes(linkedPhase)){
   phase = linkedPhase;
@@ -2535,4 +2477,5 @@ else if(availablePhaseKeys().includes(linkedPhase)){
 }
 else show("coach");
 autoSyncPublishedSheets();
-initCloudSync().then(()=>loadCloudState({ rerender:true }));
+initCloudSync();
+window.addEventListener("online",()=>loadCloudState());

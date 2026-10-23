@@ -1,0 +1,19 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "hindiDuel": {
+      "users": {
+        "$uid": {
+          "profiles": {
+            "$profile": {
+              ".read": "auth != null && auth.uid === $uid && auth.token.firebase.sign_in_provider === 'google.com' && ($profile === 'maaike' || $profile === 'vincent')",
+              ".write": "auth != null && auth.uid === $uid && auth.token.firebase.sign_in_provider === 'google.com' && ($profile === 'maaike' || $profile === 'vincent')",
+              ".validate": "newData.hasChild('version') && newData.child('version').val() === 2"
+            }
+          }
+        }
+      }
+    }
+  }
+}

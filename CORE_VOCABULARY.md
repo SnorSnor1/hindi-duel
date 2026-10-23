@@ -12,7 +12,7 @@ Daily practice gives due reviews priority, then unseen essentials before other n
 
 All missed or difficult words from earlier days get a review slot, including words outside the essential selection. They remain due until correct on two distinct days after the most recent failure. Fixing a word on the same day does not cancel tomorrow's review. The round normally contains 20 words; more review words increase the relevant phase's quota so no due error is silently left out. Words remain ordered by phase and lesson.
 
-Guest attempts are stored in this browser and excluded from cloud payloads. Signed-in attempts use the existing account sync only when Firebase is configured. The current checked-in configuration is disabled, so answers remain local to this browser; the UI states that explicitly. Answers are saved immediately, even before a round is finished. Today's answers affect tomorrow's selection, keeping today's round stable.
+Guest attempts are stored in this browser. Private authenticated sync can import them into a selected learner profile only when explicitly selected during connection. Signed-in attempts use the existing account sync only when Firebase is configured. The current checked-in configuration is disabled, so answers remain local to this browser; the UI states that explicitly. Answers are saved immediately, even before a round is finished. Today's answers affect tomorrow's selection, keeping today's round stable.
 
 Run `node --test daily-practice.test.mjs daily-learning.test.mjs` after changes to selection or review logic.
 
@@ -25,3 +25,7 @@ The coach, daily practice, free-practice prioritisation and practice mastery lab
 The home page opens the coach. Existing phase, lesson and daily links still work; `?view=coach` is a direct coach link. `studio.css` provides the responsive visual layer and reduced-motion support. The previous challenge remains available as an optional tool for logged-in users.
 
 Verification: `node --test daily-practice.test.mjs daily-learning.test.mjs learning-dashboard.test.mjs`.
+
+## Phone and laptop progress
+
+`progress-sync.js` owns private learner snapshots and merge rules; `cloud-progress.js` owns Google authentication, connection state and transactional writes. `SYNC_SETUP.md` documents activation, privacy and required verification. No cloud service is active while the Firebase configuration remains null. Daily rounds now save a local checkpoint immediately and can resume at the next unanswered word, even before cloud setup is finished.
