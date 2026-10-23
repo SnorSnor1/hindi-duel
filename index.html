@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hindi Duel</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261023-2">
 </head>
 <body>
   <nav>
     <h1>Hindi <span>Duel</span></h1>
     <div class="nav-btns">
       <button class="nav-btn active" data-screen="quiz">Practice</button>
+      <button class="nav-btn" data-screen="daily">Daily practice</button>
       <button class="nav-btn" data-screen="images">Images</button>
       <button class="nav-btn private hidden" data-screen="coach">Coach</button>
       <button class="nav-btn private hidden" data-screen="challenge">Daily Challenge</button>
@@ -25,6 +26,7 @@
   <main>
     <section id="coach" class="screen hidden"></section>
     <section id="quiz" class="screen"></section>
+    <section id="daily" class="screen hidden"></section>
     <section id="images" class="screen hidden"></section>
     <section id="challenge" class="screen hidden"></section>
     <section id="mistakes" class="screen hidden"></section>
@@ -37,6 +39,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
   <script src="firebase-config.js"></script>
-  <script type="module" src="app.js?v=20261023-1"></script>
+  <script type="module" src="app.js?v=20261023-2"></script>
 </body>
 </html>
