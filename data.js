@@ -11075,6 +11075,7 @@ export const PHASE_DATA = {
   "phase3": {
     "title": "Hindi Phase 3",
     "subtitle": "Story vocabulary",
+    "updatedThrough": "21 October 2026",
     "words": PHASE3_WORDS
   }
 };

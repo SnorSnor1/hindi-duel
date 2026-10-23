@@ -60,7 +60,10 @@ const $ = (selector) => document.querySelector(selector);
 const PHASE_KEYS = ["phase1", "phase2", "phase3"];
 const phaseWordsFor = (phaseKey) => (state.words[phaseKey] || []).filter((word) => word.english.length);
 const phaseWords = () => phaseWordsFor(phase);
-const categories = () => [...new Set(phaseWords().map((word) => word.category))];
+const categories = () => {
+  const values = [...new Set(phaseWords().map((word) => word.category))];
+  return phase === "phase3" ? values.sort((a,b)=>lessonRank(a)-lessonRank(b)) : values;
+};
 const canUsePhase2 = () => user === "maaike";
 const canUsePhase3 = () => true;
 const availablePhaseKeys = () => canUsePhase2() ? PHASE_KEYS : ["phase1", "phase3"];
@@ -651,7 +654,7 @@ async function autoSyncPublishedSheets(){
   }
 
   if(!changed) return;
-  selectedCategories = new Set(categories());
+  if(phase !== "phase3") selectedCategories = new Set(categories());
   save();
   if(session) return;
   if(activeScreen === "coach") renderCoach();
@@ -693,10 +696,21 @@ function phaseToggleHtml(){
 function bindPhaseButtons(){ document.querySelectorAll("[data-phase]").forEach((button)=>button.addEventListener("click",()=>{phase=button.dataset.phase; if(!availablePhaseKeys().includes(phase)) phase="phase1"; selectedCategories=new Set(categories()); save(); show(activeScreen);})); }
 function renderCategoryChips(){
   const counts = Object.fromEntries(categories().map((cat)=>[cat, phaseWords().filter((word)=>word.category===cat).length]));
-  return `<div class="category-chips">${categories().map((cat)=>`<button type="button" class="cat-chip ${selectedCategories.has(cat)?"selected":""}" data-cat="${escapeAttr(cat)}">${escapeHtml(displayCategory(cat))} <span class="count">${counts[cat]}</span></button>`).join("")}</div>`;
+  const latest = latestPhaseCategories("phase3", 1)[0];
+  const lessonTools = phase === "phase3" && latest
+    ? `<p class="panel-note">${categories().length} lessons · ${phaseWords().length} words · Updated through ${escapeHtml(PHASE_DATA.phase3.updatedThrough)}</p><div class="actions"><button class="ghost" id="selectLatestLesson" type="button">Latest: ${escapeHtml(latest)} (${counts[latest]} words)</button><button class="ghost" id="selectAllLessons" type="button">All lessons</button></div>` : "";
+  return `${lessonTools}<div class="category-chips">${categories().map((cat)=>`<button type="button" class="cat-chip ${selectedCategories.has(cat)?"selected":""}" data-cat="${escapeAttr(cat)}">${escapeHtml(displayCategory(cat))} <span class="count">${counts[cat]}</span></button>`).join("")}</div>`;
 }
 function escapeAttr(value){ return String(value).replace(/"/g,"&quot;"); }
 function bindCategoryChips(){
+  $("#selectLatestLesson")?.addEventListener("click",()=>{
+    selectedCategories = new Set(latestPhaseCategories("phase3", 1));
+    renderQuizSetup();
+  });
+  $("#selectAllLessons")?.addEventListener("click",()=>{
+    selectedCategories = new Set(categories());
+    renderQuizSetup();
+  });
   document.querySelectorAll("[data-cat]").forEach((button)=>{
     button.addEventListener("click",()=>{ const cat=button.dataset.cat; selectedCategories.has(cat)?selectedCategories.delete(cat):selectedCategories.add(cat); if(!selectedCategories.size) selectedCategories=new Set(categories()); renderQuizSetup(); });
     button.addEventListener("dblclick",()=>{ selectedCategories=new Set([button.dataset.cat]); renderQuizSetup(); });
