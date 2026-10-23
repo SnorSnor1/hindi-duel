@@ -95,3 +95,14 @@ test('explicit guest import carries the saved daily position and result into the
   assert.equal(state.practiceRuns.maaike.index,1);
   assert.equal(state.practiceRuns.guest.index,1);
 });
+
+test('the short daily preference follows the selected learner and preserves the newest choice',()=>{
+  const state=initial();state.practiceSettings={guest:{dailyLimit:10,updatedAt:'2026-10-23T10:00:00Z'}};
+  const imported=makeProgressProfile(state,'maaike',{includeGuest:true});
+  assert.equal(imported.settings.dailyLimit,10);
+  restoreProgressProfile(state,'maaike',imported);
+  const stale=makeProgressProfile(state,'maaike');
+  state.practiceSettings.maaike={dailyLimit:20,updatedAt:'2026-10-23T11:00:00Z'};
+  restoreProgressProfile(state,'maaike',stale);
+  assert.equal(state.practiceSettings.maaike.dailyLimit,20);
+});

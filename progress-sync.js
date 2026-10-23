@@ -1,5 +1,5 @@
 // One learner profile per authenticated account path. No passwords or tokens.
-import { learningHistory } from './daily-practice.js?v=20261023-4';
+import { learningHistory } from './daily-practice.js?v=20261023-7';
 
 export const PROFILE_NAMES = ['maaike','vincent'];
 export const SYNC_VERSION = 2;
@@ -49,7 +49,7 @@ export function makeProgressProfile(state, owner, options={}){
     dailyPractice:(options.includeGuest ? newest(state.dailyPractice?.[owner],state.dailyPractice?.guest) : state.dailyPractice?.[owner]) || null,
     run:options.includeGuest ? mergeRun(state.practiceRuns?.[owner],state.practiceRuns?.guest) : state.practiceRuns?.[owner] || null,
     scoreResets:rows(state.scoreResets?.[owner]),
-    reminder:state.reminder || {},
+    reminder:state.reminder || {},settings:(options.includeGuest ? newest(state.practiceSettings?.[owner],state.practiceSettings?.guest) : state.practiceSettings?.[owner]) || {},
     ...(options.includeGuest ? {attempts:Object.fromEntries(PHASES.map(phase=>[phase,mergeList(state.attempts?.[owner]?.[phase],state.attempts?.guest?.[phase],attemptKey)]))} : {})
   };
 }
@@ -67,7 +67,7 @@ export function mergeProgressProfiles(local={}, remote={}){
     mistakes:Object.fromEntries(PHASES.map(phase=>[phase,mergeRows(local.mistakes?.[phase],remote.mistakes?.[phase])])),
     wordOverrides:Object.fromEntries(PHASES.map(phase=>[phase,mergeRows(local.wordOverrides?.[phase],remote.wordOverrides?.[phase])])),
     dailyPractice:newest(local.dailyPractice,remote.dailyPractice) || null,
-    run:mergeRun(local.run,remote.run),reminder:newest(local.reminder,remote.reminder) || {}
+    run:mergeRun(local.run,remote.run),reminder:newest(local.reminder,remote.reminder) || {},settings:newest(local.settings,remote.settings) || {}
   };
 }
 
@@ -81,6 +81,7 @@ export function restoreProgressProfile(state, owner, incoming){
   state.mistakes[owner]=Object.fromEntries(PHASES.map(phase=>[phase,deriveMistakes(profile.attempts[phase],fromRows(profile.mistakes[phase]))]));
   state.wordOverrides=Object.fromEntries(PHASES.map(phase=>[phase,fromRows(profile.wordOverrides[phase])]));
   state.reminder=profile.reminder;
+  state.practiceSettings ||= {};state.practiceSettings[owner]=profile.settings;
   return profile;
 }
 

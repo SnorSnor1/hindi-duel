@@ -60,14 +60,16 @@ test("a review stays due until it is correct on two later, separate days",()=>{
   assert.equal(learningHistory(attempts,"2026-10-24").get(learningKey(missed)).reviewDue,true);
 });
 
-test("all due errors are included, including backlog beyond the normal daily quota",()=>{
+test("a large review backlog stays saved but never makes a round longer than 20",()=>{
   const failures=words.phase3.slice(0,25);
   const attempts={phase3:failures.map(word=>attempt({...word,phaseKey:"phase3"},"2026-10-22",false))};
+  const before=structuredClone(attempts);
   const next=createDailyPractice(words,PHASE_DATA,"2026-10-23",undefined,attempts);
-  const selected=new Set(next.map(learningKey));
-  assert.ok(failures.every(word=>selected.has(learningKey(word))));
-  assert.equal(next.filter(word=>word.review).length,new Set(failures.map(learningKey)).size);
-  assert.ok(next.length>20);
+  assert.equal(next.length,20);
+  assert.equal(next.filter(word=>word.review).length,7);
+  assert.deepEqual(attempts,before);
+  const history=learningHistory(attempts,"2026-10-23");
+  assert.ok(failures.every(word=>history.get(learningKey(word)).reviewDue));
   assert.ok(next.slice(0,6).every(word=>word.phaseKey==="phase1"));
 });
 
@@ -171,4 +173,28 @@ test('free practice prioritises difficult and due words while allowing an explic
   const water=one('phase1','पानी'),food=one('phase1','खाना'),tea=one('phase1','चाय'),milk=one('phase1','दूध');
   const history=new Map([[learningKey(water),{resting:true}],[learningKey(food),{reviewDue:true}],[learningKey(tea),{due:true}]]);
   assert.deepEqual(prioritisePractice([water,milk,tea,food],history,()=>0).map(learningKey),[food,tea,milk,water].map(learningKey));
+});
+
+
+test('191 pending words rotate across short rounds while the complete history remains intact',()=>{
+  const byKey=new Map(words.phase1.map(word=>[learningKey(word),{...word,phaseKey:'phase1'}]));
+  const failures=[...byKey.values()].slice(0,191);
+  const attempts={phase1:failures.map(word=>attempt(word,'2026-10-22',false)),phase2:[],phase3:[]};
+  const first=createDailyPractice(words,PHASE_DATA,'2026-10-23',undefined,attempts);
+  assert.equal(first.length,20);
+  const firstReviews=new Set(first.filter(word=>word.review).map(learningKey));
+  first.forEach(word=>attempts[word.phaseKey].push(attempt(word,'2026-10-23',true)));
+  const second=createDailyPractice(words,PHASE_DATA,'2026-10-24',undefined,attempts);
+  assert.ok(second.length<=20);
+  assert.ok(second.filter(word=>word.review).every(word=>!firstReviews.has(learningKey(word))));
+  assert.equal(learningHistory(attempts,'2026-10-24').size>=191,true);
+  assert.equal(attempts.phase1.filter(a=>!a.correct).length,191);
+});
+
+test('a 10-word daily round is deterministic, balanced across phases and ordered from easy to hard',()=>{
+  const round=createDailyPractice(words,PHASE_DATA,'2026-10-23',undefined,{},10);
+  assert.equal(round.length,10);
+  assert.deepEqual(round.map(w=>w.phaseKey),[...Array(3).fill('phase1'),...Array(3).fill('phase2'),...Array(4).fill('phase3')]);
+  assert.deepEqual(createDailyPractice(words,PHASE_DATA,'2026-10-23',undefined,{},10),round);
+  assert.ok(createDailyPractice(words,PHASE_DATA,'2026-10-23',undefined,{},191).length<=20);
 });

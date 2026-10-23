@@ -1,8 +1,8 @@
-import { makeProgressProfile, restoreProgressProfile, sessionCheckpoint, resumableRun, mergeRun, PROFILE_NAMES } from "./progress-sync.js?v=20261023-6";
-import { createCloudProgress } from "./cloud-progress.js?v=20261023-6";
-import { learningDashboard } from "./learning-dashboard.js?v=20261023-4";
+import { makeProgressProfile, restoreProgressProfile, sessionCheckpoint, resumableRun, mergeRun, PROFILE_NAMES } from "./progress-sync.js?v=20261023-7";
+import { createCloudProgress } from "./cloud-progress.js?v=20261023-7";
+import { learningDashboard } from "./learning-dashboard.js?v=20261023-7";
 import { PHASE_DATA } from "./data.js?v=20261023-1";
-import { createDailyPractice, mergeDailyPractice, learningHistory, prioritisePractice, DAILY_PLAN_VERSION } from "./daily-practice.js?v=20261023-4";
+import { createDailyPractice, mergeDailyPractice, learningHistory, prioritisePractice, dailyRoundLimit, MAX_ROUND_WORDS, DAILY_PLAN_VERSION } from "./daily-practice.js?v=20261023-7";
 import { importantWords, learningKey } from "./core-vocabulary.js?v=20261023-3";
 
 const USERS = { maaike: "Maaike10!", vincent: "chailavie" };
@@ -601,11 +601,14 @@ async function autoSyncPublishedSheets(){
 }
 
 function markActiveNav(screen){
+  if(screen === "coach") screen = "daily";
   document.querySelectorAll("[data-screen]").forEach(button=>{ const active = button.dataset.screen===screen; button.classList.toggle("active",active); if(active) button.setAttribute("aria-current","page"); else button.removeAttribute("aria-current"); });
 }
 function show(screen){
+  if(screen === "coach") screen = "daily";
   const screenChanged = activeScreen!==screen;
-  if(session?.source === "daily-practice" || session?.source === "coach-focus"){
+  if(session){
+    if(session.source === "challenge") updateChallengeScore(false);
     clearTimer();
     clearNextKeyHandler();
     session = null;
@@ -678,7 +681,8 @@ function bindPracticeShortcuts(){
 function refreshPracticeSelection(){
   updateCategoryChipStates();
   $("#practiceInsights").innerHTML = practiceInsightHtml();
-  $("#smartPracticePanel").innerHTML = smartPracticeHtml(Number($("#wordCount").value) || 20);
+  $("#smartPracticePanel").innerHTML = "";
+  updatePracticeRound();
   bindPracticeShortcuts();
 }
 function todaysChallengeScore(name=user){
@@ -1131,13 +1135,17 @@ function masteryCountsForPractice(words){
   return counts;
 }
 function practiceInsightHtml(){
-  const selected = selectedPracticeWordsWithMastery();
-  const counts = masteryCountsForPractice(selected);
-  const lessonCount = selectedCategories.size || categories().length;
-  const statusHtml = user
-    ? `<div><strong>${counts.mastered}</strong><small>sturdy</small></div><div><strong>${counts.building}</strong><small>building</small></div><div><strong>${counts.fragile}</strong><small>fragile</small></div><div><strong>${counts.due}</strong><small>due</small></div><div><strong>${counts.repair}</strong><small>repair</small></div><div><strong>${counts.new}</strong><small>unproven</small></div>`
-    : `<div><strong>${selected.length}</strong><small>selected</small></div><div><strong>${lessonCount}</strong><small>lessons</small></div>`;
-  return `<div class="practice-insight"><div><strong>${selected.length}</strong><small>selected words</small></div><div><strong>${lessonCount}</strong><small>lessons</small></div>${statusHtml}</div>${user?`<div class="practice-shortcuts"><button class="ghost" id="selectAllCategories" type="button">All lessons</button><button class="ghost" id="practiceNotSturdy" type="button" ${selected.some((word)=>word.mastery!=="mastered")?"":"disabled"}>Practice not sturdy</button><button class="ghost" id="practiceSturdy" type="button" ${counts.mastered?"":"disabled"}>Practice sturdy</button></div>`:""}`;
+  const selected=selectedPracticeWordsWithMastery();
+  const lessonCount=selectedCategories.size || categories().length;
+  return `<div class="practice-pool"><strong>${selected.length} available words</strong><span>from ${lessonCount} selected lesson${lessonCount===1?'':'s'}</span><p>This is your word bank. A round uses at most ${MAX_ROUND_WORDS} words.</p></div>`;
+}
+function practiceRoundSize(){
+  const value=Number($("#wordCount")?.value);
+  return Number.isFinite(value) && value>0 ? Math.min(MAX_ROUND_WORDS,Math.max(1,Math.floor(value))) : MAX_ROUND_WORDS;
+}
+function updatePracticeRound(){
+  const count=Math.min(practiceRoundSize(),phaseWords().filter(word=>selectedCategories.has(word.category)).length);
+  if($("#startPractice")){$("#startPractice").textContent=`Start a ${count}-word round`;$("#startPractice").disabled=!count;}
 }
 function smartPracticeWords(phaseKey=phase, count=20){
   const mistakeWords = wordsForPhaseWithKey(phaseKey, user ? activeMistakesFor(user, phaseKey) : []);
@@ -1408,48 +1416,9 @@ function progressStorageNote(){
   return "Answers are saved in this browser. Open Sync devices to connect your phone and laptop.";
 }
 function memoryRhythmHtml(){
-  return `<div class="memory-rhythm"><div><span class="eyebrow">A rhythm that adapts to you</span><h3>Know it better. See it later.</h3><p>Successful recall on different days increases the gap. A missed or difficult word returns tomorrow, until two later days go well.</p></div><ol aria-label="Review intervals after successful recall on different days">${[1,3,7,14,30,60].map((days,index)=>`<li><b>${days}</b><span>${days===1?"day":"days"}</span><i>${index===0?"Build":""}</i></li>`).join("")}</ol><small>Choice-only answers keep a one-day interval. Same-day repeats never increase the gap.</small></div>`;
+  return `<div class="memory-rhythm"><div><span class="eyebrow">A rhythm that adapts to you</span><h3>Know it better. See it later.</h3><p>Successful recall on different days increases the gap. Missed or difficult words stay in your review queue until two later days go well. Larger queues are spread over short daily rounds.</p></div><ol aria-label="Review intervals after successful recall on different days">${[1,3,7,14,30,60].map((days,index)=>`<li><b>${days}</b><span>${days===1?"day":"days"}</span><i>${index===0?"Build":""}</i></li>`).join("")}</ol><small>Choice-only answers keep a one-day interval. Same-day repeats never increase the gap.</small></div>`;
 }
-function renderCoach(){
-  const model = learningDashboard(state.words,state.attempts[user || "guest"],today(),availablePhaseKeys());
-  const plan = dailyPracticeWords();
-  const pct = model.essentials.length ? Math.round(model.steady/model.essentials.length*100) : 0;
-  const result = state.dailyPractice[user || "guest"];
-  const completed = result?.date===today() && result.planVersion===DAILY_PLAN_VERSION;
-  const reviewCount = plan.filter(word=>word.review || word.scheduledReview).length;
-  const newCount = plan.length-reviewCount;
-  const weekTotal = model.week.reduce((sum,day)=>sum+day.total,0);
-  const activeDays = model.week.filter(day=>day.total).length;
-  const focusWords = model.difficult.length ? model.difficult : model.due;
-  const focusLine = model.difficult.length
-    ? `${model.difficult.length} word${model.difficult.length===1?" needs":"s need"} another encounter. Missed words return tomorrow, or practise them now below.`
-    : model.started ? `Your foundation is growing. ${model.resting} familiar words are taking a well-earned break.`
-    : "A few useful words today. More confidence in your next conversation.";
-  const phasePlan = availablePhaseKeys().map(key=>`<li><span>0${key.slice(-1)}</span><div><strong>Phase ${key.slice(-1)}</strong><small>${{phase1:"Recognise & remember",phase2:"Find the English",phase3:"Recall the Hindi"}[key]}</small></div><b>${plan.filter(word=>word.phaseKey===key).length}</b></li>`).join("");
-  $("#coach").innerHTML = `<div class="studio-shell">
-    <div class="studio-heading"><span class="eyebrow">Your personal learning studio</span><span class="studio-date">${new Date(`${today()}T12:00:00`).toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"})}${user?` · ${escapeHtml(displayName(user))}`:""}</span></div>
-    <button class="sync-overview" id="openSync"><span class="sync-dot" data-sync-state></span><span data-sync-status>${escapeHtml(syncStatusLabel())}</span><small>Sync phone & laptop ↗</small></button><div class="studio-hero"><div class="hero-story"><span class="hero-kicker"><i></i> A little every day</span><h2>Small steps.<br><em>Real Hindi.</em></h2><p>${focusLine}</p><div class="hero-actions"><button class="start-btn" id="coachStartDaily" ${plan.length?"":"disabled"}>${completed?"Revisit today’s practice":plan.length?"Let’s practise":"You’re all caught up"}<span aria-hidden="true">↗</span></button><button class="text-button" id="coachBrowse">Explore your lessons <span aria-hidden="true">→</span></button></div><div class="hero-footnote"><span lang="hi">नमस्ते</span><small>Make room for the words that matter.</small></div></div>
-    <div class="today-plan"><div class="plan-heading"><span class="eyebrow">${completed?"Today, completed":"Made for today"}</span><span class="plan-status">${completed?`${result.correct}/${result.total} correct`:"Adaptive practice"}</span></div><div class="plan-number">${plan.length}<span>words.<br>Your pace.</span></div><p>${reviewCount} to revisit · ${newCount} new to learn</p><ol class="plan-phases">${phasePlan}</ol><button class="text-button" id="coachPlan">See today’s plan <span aria-hidden="true">→</span></button></div></div>
-    <div class="studio-metrics"><div><span class="metric-dot coral"></span><strong>${model.difficult.length}</strong><span>need attention</span></div><div><span class="metric-dot mint"></span><strong>${model.resting}</strong><span>resting until due</span></div><div><span class="metric-dot violet"></span><strong>${model.steady}</strong><span>essentials steady</span></div><div><strong>${activeDays}<small>/7</small></strong><span>days practised</span></div></div>
-    <div class="studio-columns"><article class="studio-card focus-card"><div class="card-title"><div><span class="eyebrow">Your next breakthrough</span><h3>${model.difficult.length?"Give these a little love.":"A fresh start, every day."}</h3></div><span class="card-symbol" aria-hidden="true">↗</span></div><p>${model.difficult.length?"Missed and difficult words from your lessons, brought together.":model.due.length?"These familiar words are ready for a memory check.":"No difficult words waiting. Each answer helps your coach choose what comes next."}</p><div class="focus-words">${focusWords.slice(0,4).map(word=>`<div><strong lang="hi">${escapeHtml(word.hindi)}</strong><span>${escapeHtml(word.english.join("; "))}</span><small>Phase ${word.phaseKey.slice(-1)}</small></div>`).join("") || `<div class="focus-empty"><span lang="hi">धीरे धीरे</span><p>Little by little.<br>That’s how a language becomes yours.</p></div>`}</div>${focusWords.length?`<button class="ghost" id="coachFocus">Practise ${Math.min(focusWords.length,8)} focus word${focusWords.length===1?"":"s"}</button>`:""}</article>
-    <article class="studio-card foundation-card"><div class="card-title"><div><span class="eyebrow">Everyday essentials</span><h3>A foundation for real life.</h3></div><span class="foundation-percentage">${pct}<small>%</small></span></div><p>${model.steady} of ${model.essentials.length} useful words steady. Correct on three different days, including typing or recall.</p><div class="foundation-track" role="progressbar" aria-label="Steady essential words" aria-valuemin="0" aria-valuemax="${model.essentials.length}" aria-valuenow="${model.steady}"><span style="width:${pct}%"></span></div><div class="foundation-topics">${model.themes.slice(0,4).map(theme=>`<div><span>${escapeHtml(theme.label)}</span><small>${theme.steady}/${theme.total}</small></div>`).join("")}</div><button class="text-button" id="coachEssentials">Explore all ${model.essentials.length} essentials <span aria-hidden="true">→</span></button></article></div>
-    <div class="week-strip"><div><span class="eyebrow">Your last seven days</span><h3>${weekTotal} answer${weekTotal===1?"":"s"}. Every one counts.</h3></div><div class="week-days">${model.week.map(day=>`<div class="${day.total?"practised":""}" title="${day.date}: ${day.correct} correct out of ${day.total}"><span>${new Date(`${day.date}T12:00:00`).toLocaleDateString("en-GB",{weekday:"short"}).slice(0,1)}</span><b>${day.total || "·"}</b><small>${day.date.slice(8)}</small></div>`).join("")}</div></div>
-    ${memoryRhythmHtml()}<p class="storage-caption">${progressStorageNote()}</p>
-    ${user?`<details class="coach-extras"><summary>Reminders & lesson tools</summary>${coachReminderHtml()}${user==="maaike"?maintenanceHtml():""}</details>`:""}</div>`;
-  $("#openSync").addEventListener("click",()=>show("sync"));
-  $("#coachStartDaily").addEventListener("click",startDailyPractice);
-  addResumeButton($("#coachStartDaily"));
-  $("#coachPlan").addEventListener("click",()=>show("daily"));
-  $("#coachBrowse").addEventListener("click",()=>show("quiz"));
-  $("#coachEssentials").addEventListener("click",()=>{ show("daily"); $("#essentials").open=true; $("#essentials").scrollIntoView({block:"start",behavior:"smooth"}); });
-  $("#coachFocus")?.addEventListener("click",()=>{ startWordSession(focusWords.slice(0,8),"coach-focus","mixed"); session.returnScreen="coach"; });
-  $("#saveDailyReminder")?.addEventListener("click",saveDailyReminder);
-  $("#downloadDailyReminder")?.addEventListener("click",downloadDailyReminder);
-  $("#openManage")?.addEventListener("click",()=>show("manage"));
-  $("#coachSyncPhase1")?.addEventListener("click",()=>syncPhase1FromSheet($("#coachSyncStatus")));
-  $("#coachSyncPhase2")?.addEventListener("click",()=>syncPhase2FromSheet($("#coachSyncStatus")));
-  $("#saveLessonPrep")?.addEventListener("click",()=>{ state.maintenance = normalizeMaintenance(state.maintenance); state.maintenance.lessonPrep = { ...state.maintenance.lessonPrep, nextLessonAt: isoFromDateTimeInput($("#nextLessonAt").value), checkedAt: new Date().toISOString(), updatedAt: new Date().toISOString() }; save({ immediate:true }); renderCoach(); });
-}
+function renderCoach(){ show("daily"); }
 function coachTaskById(id){
   return dailyContractFor(user).tasks.find((task)=>task.id===id);
 }
@@ -1514,11 +1483,12 @@ function renderImagePractice(){
   const selectedWords = imagePracticeWords().filter((word)=>imageSelectedCategories.has(word.category));
   const total = imagePracticeWords().length;
   const count = Math.min(20, selectedWords.length || total);
-  $("#images").innerHTML = `<div class="setup-card image-setup"><div class="daily-badge">Phase 1 images</div><h2>Image Practice</h2><p class="image-intro">Choose the Hindi word that matches the picture. No login needed.</p><label class="form-label">Image categories</label>${renderImageCategoryChips()}<label class="form-label">Images</label><input id="imageWordCount" type="number" min="1" max="100" value="${count}"><div class="image-count-note">${selectedWords.length} selected image words · ${total} total</div><button class="start-btn" id="startImagePractice" type="button" ${selectedWords.length?"":"disabled"}>Start image practice</button></div>`;
+  $("#images").innerHTML = `<div class="setup-card image-setup"><div class="daily-badge">Phase 1 images</div><h2>Image Practice</h2><p class="image-intro">Choose the Hindi word that matches the picture. No login needed.</p><label class="form-label">Image categories</label>${renderImageCategoryChips()}<label class="form-label">Images</label><input id="imageWordCount" type="number" min="1" max="20" value="${Math.min(count,MAX_ROUND_WORDS)}"><div class="image-count-note">${selectedWords.length} available image words · maximum 20 per round</div><button class="start-btn" id="startImagePractice" type="button" ${selectedWords.length?"":"disabled"}>Start image practice</button></div>`;
   bindImageCategoryChips();
   $("#startImagePractice")?.addEventListener("click",()=>startImagePractice(Number($("#imageWordCount").value || count)));
 }
 function startImagePractice(count=20, forcedWords=null){
+  count=Math.min(MAX_ROUND_WORDS,Math.max(1,Number(count) || MAX_ROUND_WORDS));
   const pool = forcedWords || imagePracticeWords().filter((word)=>imageSelectedCategories.has(word.category));
   const queue = prioritisePractice(pool,currentLearningHistory()).slice(0, Math.min(count, pool.length)).map((word)=>({ ...word, phaseKey:"phase1" }));
   if(!queue.length) return renderImagePractice();
@@ -1598,7 +1568,7 @@ function renderQuizSetup(){
   const keepPosition = previousList?.dataset.listPhase === phase;
   const listTop = previousList?.scrollTop || 0;
   const pageTop = window.scrollY;
-  const wordCount = Number($("#wordCount")?.value) || 20;
+  const wordCount = practiceRoundSize();
   if(!canUsePhase2() && phase==="phase2"){
     phase = "phase1";
     selectedCategories = new Set();
@@ -1610,61 +1580,83 @@ function renderQuizSetup(){
     save();
   }
   if(!selectedCategories.size) selectedCategories = new Set(categories());
-  $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>${PHASE_DATA[phase].title}</h2><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="recall"?"selected":""}" data-mode="recall">English → Hindi recall</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi choices</button></div><label class="form-label">Categories</label>${renderCategoryChips()}<div id="practiceInsights">${practiceInsightHtml()}</div><label class="form-label">Words</label><input id="wordCount" type="number" min="1" max="200" value="${wordCount}"><div id="smartPracticePanel">${smartPracticeHtml(wordCount)}</div><p class="practice-adaptive-note">Your selected lessons, adapted to you. Difficult and due words first; familiar words less often.</p><button class="start-btn" id="startPractice">Start practice</button></div>`;
+  $("#quiz").innerHTML = `<div class="setup-card">${phaseToggleHtml()}<h2>Practise a lesson</h2><p class="lesson-intro">Optional extra practice from your own lessons.</p><details class="lesson-mode"><summary>Answer mode · ${mode==="mixed"?"Mixed":mode==="type"?"Hindi → English":mode==="recall"?"Recall Hindi":"Choose Hindi"}</summary><label class="form-label">Mode</label><div class="mode-toggle"><button class="${mode==="mixed"?"selected":""}" data-mode="mixed">Mixed</button><button class="${mode==="type"?"selected":""}" data-mode="type">Hindi → English</button><button class="${mode==="recall"?"selected":""}" data-mode="recall">English → Hindi recall</button><button class="${mode==="mc"?"selected":""}" data-mode="mc">English → Hindi choices</button></div></details><label class="form-label">Choose your lessons</label>${renderCategoryChips()}<div id="practiceInsights">${practiceInsightHtml()}</div><label class="form-label" for="wordCount">Words in this round · maximum 20</label><input id="wordCount" type="number" min="1" max="20" value="${wordCount}"><div id="smartPracticePanel" class="hidden"></div><p class="practice-adaptive-note">Your selected lessons, adapted to you. Difficult and due words first; familiar words less often.</p><button class="start-btn" id="startPractice">Start practice</button></div>`;
   bindPhaseButtons(); bindCategoryChips();
   document.querySelectorAll("[data-mode]").forEach((button)=>button.addEventListener("click",()=>{mode=button.dataset.mode; renderQuizSetup();}));
   bindPracticeShortcuts();
-  $("#startPractice").addEventListener("click",()=>startSession("practice", Number($("#wordCount").value||20)));
+  $("#startPractice").addEventListener("click",()=>startSession("practice", practiceRoundSize()));
+  $("#wordCount").addEventListener("input",updatePracticeRound);
+  $("#wordCount").addEventListener("change",()=>{$("#wordCount").value=practiceRoundSize();updatePracticeRound();});
+  updatePracticeRound();
   if(keepPosition){
     $("#quiz .category-chips").scrollTop = listTop;
     window.scrollTo(window.scrollX, pageTop);
   }
 }
+function dailyPracticeLimit(){ return dailyRoundLimit(state.practiceSettings?.[user || "guest"]?.dailyLimit ?? 10); }
 function dailyPracticeWords(){
-  return createDailyPractice(state.words, PHASE_DATA, today(), availablePhaseKeys(), state.attempts[user || "guest"]);
+  return createDailyPractice(state.words, PHASE_DATA, today(), availablePhaseKeys(), state.attempts[user || "guest"],dailyPracticeLimit());
 }
 function renderDailyPractice(){
-  const previousSelection = $("#daily .core-selection");
-  const selectionOpen = previousSelection?.open ?? window.location.hash === "#essentials";
-  const searchQuery = $("#coreSearch")?.value || "";
-  const catalogTop = $("#coreCatalog")?.scrollTop || 0;
-  const searchFocused = document.activeElement?.id === "coreSearch";
-  const words = dailyPracticeWords();
-  const result = state.dailyPractice[user || "guest"];
-  const completed = result?.date === today() && result.planVersion === DAILY_PLAN_VERSION;
-  const coreWords = importantWords(state.words, availablePhaseKeys());
-  const history = learningHistory(state.attempts[user || "guest"],today(),true);
-  const availableKeys = new Set(availablePhaseKeys().flatMap(phaseKey=>phaseWordsFor(phaseKey)).map(learningKey));
-  const tomorrowCount = [...history].filter(([key,stats])=>availableKeys.has(key) && stats.reviewDue).length;
-  const steady = coreWords.filter(word=>history.get(learningKey(word))?.mastered).length;
-  const reviewCount = words.filter(word=>word.review || word.scheduledReview).length;
-  const coreCount = words.filter(word=>word.core).length;
-  const steps = availablePhaseKeys().map((phaseKey)=>{
-    const count = words.filter((word)=>word.phaseKey === phaseKey).length;
-    const description = {phase1:"Recognise & recall",phase2:"Type the English",phase3:"Recall the Hindi"}[phaseKey];
-    return `<li><span>Phase ${phaseKey.slice(-1)}</span><strong>${count} words</strong><small>${description}</small></li>`;
-  }).join("");
-  $("#daily").innerHTML = `<div class="panel daily-practice-panel"><span class="daily-badge">${displayDate(today())} · ${words.length} words</span><h2>Daily practice</h2><p class="daily-intro">Your personal route from Phase 1 to Phase 3. Difficult words get attention, essentials come first, and familiar words wait until they are due.</p><div class="daily-priorities"><span>${reviewCount} to review</span><span>${coreCount} essential words</span><span>${steady}/${coreWords.length} essentials steady</span></div><ol class="daily-steps">${steps}</ol><p class="daily-note">Correct answers on different days stretch the next review to 1, 3, 7, 14, 30 or 60 days. Missed or difficult words return tomorrow until two later days go well. Today’s selection stays the same.${words.length > 20 ? " All due reviews are included, so today’s round is longer than 20 words." : ""}</p>${completed?`<div class="daily-result"><span>Completed today</span><strong>${result.correct}/${result.total}</strong><small>correct in your last round</small></div>`:""}<button class="start-btn" id="startDailyPractice" type="button" ${words.length?"":"disabled"}>${completed?"Practise today’s words again":words.length?"Start daily practice":"All caught up — familiar words are resting"}</button>${!words.length?`<p class="daily-empty">No words due today. Enjoy the break, or explore your lessons for optional practice.</p>`:""}${memoryRhythmHtml()}<details class="core-selection"><summary>View the ${coreWords.length} important words</summary><p>Selected from your lessons for everyday conversations, practical needs and getting around. A word becomes steady after correct answers on three different days, including typing or recall since its latest difficult answer. Steady words are still checked occasionally.</p><label class="form-label" for="coreSearch">Search important words</label><input id="coreSearch" type="search" placeholder="Search Hindi, English or topic"><p class="core-count" id="coreCount"></p><ul class="core-catalog" id="coreCatalog"></ul></details><p class="daily-storage-note">${progressStorageNote()}</p></div>`;
-  $("#startDailyPractice").addEventListener("click",startDailyPractice);
-  addResumeButton($("#startDailyPractice"));
-  const selection = $("#daily .core-selection");
-  const tomorrowNotice = document.createElement("p");
-  tomorrowNotice.className = "daily-note review-forecast";
-  tomorrowNotice.textContent = `${tomorrowCount} word${tomorrowCount === 1?"":"s"} already queued for tomorrow’s review.`;
-  $("#daily .daily-note").after(tomorrowNotice);
-  selection.id = "essentials";
-  selection.open = selectionOpen;
-  $("#coreSearch").value = searchQuery;
-  const renderCoreWords = ()=>{
-    const query = $("#coreSearch").value.trim().toLowerCase();
-    const visible = coreWords.filter(word=>`${word.hindi} ${word.english.join(" ")} ${word.themeLabel}`.toLowerCase().includes(query));
-    $("#coreCount").textContent = `${visible.length} important words`;
-    $("#coreCatalog").innerHTML = visible.map(word=>`<li><strong lang="hi">${escapeHtml(word.hindi)}</strong><span>${escapeHtml(word.english.join("; "))}</span><small>${escapeHtml(word.themeLabel)}${history.get(learningKey(word))?.reviewDue?" · Needs attention":history.get(learningKey(word))?.resting?` · Next review ${displayDate(history.get(learningKey(word)).dueAt)}`:history.get(learningKey(word))?.mastered?" · Steady":""}</small></li>`).join("") || "<li>No matching words.</li>";
+  const openDetails=new Map([...document.querySelectorAll('#daily details[id]')].map(element=>[element.id,element.open]));
+  const selectionOpen=openDetails.get('essentials') ?? window.location.hash==='#essentials';
+  const searchQuery=$("#coreSearch")?.value || '';
+  const catalogTop=$("#coreCatalog")?.scrollTop || 0;
+  const searchFocused=document.activeElement?.id==='coreSearch';
+  const limit=dailyPracticeLimit();
+  const result=state.dailyPractice[user || 'guest'];
+  const completed=result?.date===today();
+  const savedRun=state.practiceRuns?.[user || 'guest'];
+  const continuing=resumableRun(savedRun);
+  const words=continuing?savedRun.queue.slice(savedRun.index,Math.max(savedRun.index,limit)):dailyPracticeWords();
+  const model=learningDashboard(state.words,state.attempts[user || 'guest'],today(),availablePhaseKeys());
+  const coreWords=model.essentials;
+  const history=model.history;
+  const baseline=learningHistory(state.attempts[user || 'guest'],today());
+  const availableKeys=new Set(model.words.map(learningKey));
+  const pending=[...baseline].filter(([key,stats])=>availableKeys.has(key) && stats.reviewDue).length;
+  const reviewCount=words.filter(word=>word.review || word.scheduledReview).length;
+  const deferred=Math.max(0,pending-words.filter(word=>word.review).length);
+  const steps=availablePhaseKeys().map(key=>{
+    const count=words.filter(word=>word.phaseKey===key).length;
+    return count?`<span>Phase ${key.slice(-1)} <b>${count}</b></span>`:'';
+  }).filter(Boolean).join('<i aria-hidden="true">→</i>');
+  const limitButtons=[10,20].map(size=>`<button type="button" data-daily-limit="${size}" aria-pressed="${limit===size}">${size} words${size===10?' · short':''}</button>`).join('');
+  $("#daily").innerHTML=`<div class="panel daily-practice-panel simple-daily"><div class="daily-heading"><span class="eyebrow">Your daily routine</span><span>${displayDate(today())}</span></div><h2>Your Hindi today.</h2><p class="daily-intro">One short round. Difficult words get priority; familiar words get a break.</p>
+    <div class="daily-size" role="group" aria-label="Words per daily round">${limitButtons}</div>
+    ${completed?`<div class="daily-done"><strong>Done for today.</strong><p>${result.correct}/${result.total} correct in your last round. Your progress is saved. You can stop here.</p></div>`:`<div class="daily-count"><strong>${words.length}</strong><div><b>${continuing?"words left in this round":"words in this round"}</b><span>${reviewCount} to review · ${words.length-reviewCount} new</span></div></div>`}
+    ${!completed && words.length?`<div class="daily-route" aria-label="Easy to challenging">${steps}</div>`:''}
+    <div class="daily-primary-action"><button class="${completed?'ghost':'start-btn'}" id="startDailyPractice" type="button" ${words.length?'':'disabled'}>${completed?'Optional extra round':words.length?`Start ${words.length}-word round`:'All caught up'}</button></div>
+    ${deferred?`<p class="daily-backlog">More words are waiting for review. They stay saved and are spread across later days; today’s round stays at ${limit} words or fewer.</p>`:''}
+    <p class="daily-reassurance">This is your daily practice. Lesson practice and the timed quiz are optional extras.</p>
+    <div class="daily-details"><details class="daily-progress-details" id="dailyProgress"><summary>Your progress</summary><p>${model.steady}/${coreWords.length} essentials steady · ${model.resting} words resting · ${model.week.filter(day=>day.total).length}/7 days practised.</p>${deferred?`<p>${deferred} review words remain in your queue. No words have been removed.</p>`:''}<p>A steady word has been correct on three different days, including typing or recall.</p></details>
+    <details class="core-selection" id="essentials"><summary>Browse important words</summary><p>The full word bank for everyday conversations, practical needs and getting around. This list is not a daily assignment.</p><label class="form-label" for="coreSearch">Search important words</label><input id="coreSearch" type="search" placeholder="Search Hindi, English or topic"><p class="core-count" id="coreCount"></p><ul class="core-catalog" id="coreCatalog"></ul></details>
+    <details class="daily-how" id="dailyHow"><summary>How your practice adapts</summary><p>Rounds contain at most ${limit} words. Missed words get priority in your review queue. A large queue is spread across days, with the least recently practised words first. Words remain ordered from Phase 1 to Phase 3.</p>${memoryRhythmHtml()}</details>
+    ${user?`<details class="coach-extras" id="dailySettings"><summary>Reminders & lesson settings</summary>${coachReminderHtml()}${user==='maaike'?maintenanceHtml():''}</details>`:''}</div>
+    <p class="daily-storage-note"><span data-sync-status>${escapeHtml(syncStatusLabel())}</span> · <button class="text-button" id="dailySync" type="button">Sync devices</button></p></div>`;
+  document.querySelectorAll('[data-daily-limit]').forEach(button=>button.addEventListener('click',()=>{
+    state.practiceSettings ||= {};state.practiceSettings[user || 'guest']={dailyLimit:Number(button.dataset.dailyLimit),updatedAt:new Date().toISOString()};save();renderDailyPractice();
+  }));
+  $('#startDailyPractice').addEventListener('click',startDailyPractice);
+  addResumeButton($('#startDailyPractice'));
+  $('#dailySync').addEventListener('click',()=>show('sync'));
+  $('#saveDailyReminder')?.addEventListener('click',saveDailyReminder);
+  $('#downloadDailyReminder')?.addEventListener('click',downloadDailyReminder);
+  $('#openManage')?.addEventListener('click',()=>show('manage'));
+  $('#coachSyncPhase1')?.addEventListener('click',()=>syncPhase1FromSheet($('#coachSyncStatus')));
+  $('#coachSyncPhase2')?.addEventListener('click',()=>syncPhase2FromSheet($('#coachSyncStatus')));
+  $('#saveLessonPrep')?.addEventListener('click',()=>{state.maintenance=normalizeMaintenance(state.maintenance);state.maintenance.lessonPrep={...state.maintenance.lessonPrep,nextLessonAt:isoFromDateTimeInput($('#nextLessonAt').value),checkedAt:new Date().toISOString(),updatedAt:new Date().toISOString()};save({immediate:true});renderDailyPractice();});
+  openDetails.forEach((open,id)=>{const element=document.getElementById(id);if(element)element.open=open;});
+  $('#essentials').open=selectionOpen;
+  $('#coreSearch').value=searchQuery;
+  const renderCoreWords=()=>{
+    const query=$('#coreSearch').value.trim().toLowerCase();
+    const visible=coreWords.filter(word=>`${word.hindi} ${word.english.join(' ')} ${word.themeLabel}`.toLowerCase().includes(query));
+    $('#coreCount').textContent=`${visible.length} words in the full word bank`;
+    $('#coreCatalog').innerHTML=visible.map(word=>`<li><strong lang="hi">${escapeHtml(word.hindi)}</strong><span>${escapeHtml(word.english.join('; '))}</span><small>${escapeHtml(word.themeLabel)}${history.get(learningKey(word))?.reviewDue?' · Needs attention':history.get(learningKey(word))?.resting?` · Next review ${displayDate(history.get(learningKey(word)).dueAt)}`:history.get(learningKey(word))?.mastered?' · Steady':''}</small></li>`).join('') || '<li>No matching words.</li>';
   };
-  $("#coreSearch").addEventListener("input",renderCoreWords);
-  renderCoreWords();
-  $("#coreCatalog").scrollTop = catalogTop;
-  if(searchFocused) $("#coreSearch").focus({preventScroll:true});
+  $('#coreSearch').addEventListener('input',renderCoreWords);renderCoreWords();
+  $('#coreCatalog').scrollTop=catalogTop;if(searchFocused)$('#coreSearch').focus({preventScroll:true});
 }
 function startDailyPractice(){
   const queue = dailyPracticeWords();
@@ -1677,8 +1669,11 @@ function startDailyPractice(){
 function addResumeButton(startButton){
   const run=state.practiceRuns?.[user || 'guest'];
   if(!resumableRun(run)) return;
-  const button=document.createElement('button');button.type='button';button.className='resume-practice ghost';
-  button.textContent=`Continue saved practice · ${run.index}/${run.queue.length} answered`;
+  const button=document.createElement('button');button.type='button';button.className='resume-practice start-btn';
+  const remaining=Math.max(0,Math.min(run.queue.length,dailyPracticeLimit())-run.index);
+  const optional=state.dailyPractice[user || 'guest']?.date===today();
+  button.textContent=remaining?`Continue${optional?' optional round':''} · ${remaining} words left`:'Save completed round';
+  startButton.className='text-button new-round-link';startButton.textContent='Start a new round instead';
   startButton.before(button);button.addEventListener('click',resumeDailyPractice);
 }
 function resumeDailyPractice(){
@@ -1686,14 +1681,14 @@ function resumeDailyPractice(){
   if(!resumableRun(run)) return;
   show('quiz');
   session={source:'daily-practice',runId:run.id,runStartedAt:run.startedAt,date:run.date,phaseKey:run.phaseKey || phase,
-    returnScreen:'daily',queue:run.queue,index:run.index,correct:run.correct || 0,wrong:run.wrong || 0,
+    returnScreen:'daily',queue:run.queue.slice(0,Math.max(run.index,dailyPracticeLimit())),index:run.index,correct:run.correct || 0,wrong:run.wrong || 0,
     approved:run.approved || 0,mode:'mixed',started:0,modes:[],missed:Object.fromEntries((run.missed || []).map(word=>[wordSessionKey(word),word]))};
-  markActiveNav('daily');renderQuestion();
+  markActiveNav('daily');save();renderQuestion();
 }
 function dailyPracticeQuestionHtml(word){
   if(session?.source === "coach-focus") return `<div class="daily-question-head"><button class="ghost" id="exitCoachFocus" type="button">Back to coach</button><p>Focus practice · Phase ${word.phaseKey.slice(-1)}</p><p class="daily-word-purpose">A little extra attention, at your pace.</p></div>`;
   if(session?.source !== "daily-practice") return "";
-  const steps = availablePhaseKeys().map((phaseKey)=>{
+  const steps = [...new Set(session.queue.map(item=>item.phaseKey))].sort((a,b)=>PHASE_KEYS.indexOf(a)-PHASE_KEYS.indexOf(b)).map((phaseKey)=>{
     const status = phaseKey === word.phaseKey ? "current" : PHASE_KEYS.indexOf(phaseKey) < PHASE_KEYS.indexOf(word.phaseKey) ? "done" : "";
     return `<span class="${status}"${status === "current"?' aria-current="step"':""}>Phase ${phaseKey.slice(-1)}</span>`;
   }).join("");
@@ -1767,6 +1762,7 @@ function sessionModeForQuestion(value){
 function startSession(source, count=20, forcedMode=mode){
   if(source==="challenge" && todaysChallengeScore()) return show("challenge");
   const pool = phaseWords().filter((word)=>selectedCategories.has(word.category));
+  count=Math.min(MAX_ROUND_WORDS,Math.max(1,Number(count) || MAX_ROUND_WORDS));
   const selectedWords = source === "challenge"
     ? phase1MaintenanceChallengeWords(user, count)
     : prioritisePractice(pool,currentLearningHistory()).slice(0, Math.min(count, pool.length)).map((word)=>({ ...word, phaseKey:phase }));
@@ -1782,15 +1778,15 @@ function startSession(source, count=20, forcedMode=mode){
 function startWordSession(words, source="practice", forcedMode=mode){
   if(!words.length) return;
   show("quiz");
-  session = { source, phaseKey:phase, queue:interleaveWords(words), index:0, correct:0, wrong:0, approved:0, mode:forcedMode, started:0, modes:[], missed:{} };
+  session = { source, phaseKey:phase, queue:interleaveWords(words.slice(0,MAX_ROUND_WORDS)), index:0, correct:0, wrong:0, approved:0, mode:forcedMode, started:0, modes:[], missed:{} };
   if(source === "coach-focus") markActiveNav("coach");
   renderQuestion();
 }
 function startRepairSession(words, returnScreen="quiz"){
-  const queue = interleaveWords(words);
+  const queue = interleaveWords(words.slice(0,MAX_ROUND_WORDS));
   if(!queue.length) return show(returnScreen);
-  session = { source:"round-repair", phaseKey:phase, returnScreen, queue, index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{}, repair:true, repeatCounts:{} };
   show("quiz");
+  session = { source:"round-repair", phaseKey:phase, returnScreen, queue, index:0, correct:0, wrong:0, approved:0, mode:"mixed", started:0, modes:[], missed:{}, repair:true, repeatCounts:{} };
   renderQuestion();
 }
 function renderQuestion(){
@@ -1817,7 +1813,7 @@ function questionTimeLimit(qMode){
   return 0;
 }
 function timerHtml(){
-  return `<div class="timer"><div class="timer-row"><span>Daily timer</span><strong id="timerNum"></strong></div><div class="timer-bar"><div id="timerFill" class="timer-fill"></div></div></div>`;
+  return `<div class="timer"><div class="timer-row"><span>Quiz timer</span><strong id="timerNum"></strong></div><div class="timer-bar"><div id="timerFill" class="timer-fill"></div></div></div>`;
 }
 function typeHtml(word){
   return `<div class="hindi-word">${word.hindi}</div><form id="answerForm" class="answer-form"><input id="answerInput" class="answer-input" autocomplete="off" placeholder="Type in English"><button class="check-btn" type="submit">Check</button></form>`;
@@ -1873,7 +1869,7 @@ function autoRepeatSource(source){
   return source === "round-repair" || (source !== "coach-focus" && String(source || "").startsWith("coach-"));
 }
 function scheduleSameSessionRepeat(word, reason="miss"){
-  if(!session || !autoRepeatSource(session.source)) return;
+  if(!session || !autoRepeatSource(session.source) || session.queue.length>=MAX_ROUND_WORDS) return;
   const key = wordSessionKey(word);
   const upcoming = session.queue.slice(session.index + 1).some((item)=>wordSessionKey(item) === key);
   if(upcoming) return;
@@ -1960,7 +1956,7 @@ function refreshMemoryFeedback(word){
   const target = $("#memoryFeedback");
   if(!target) return;
   const stats = currentLearningHistory().get(learningKey(word));
-  target.textContent = stats?.reviewDue ? "Saved for tomorrow · two later successful days will rebuild this word."
+  target.textContent = stats?.reviewDue ? "Saved in your review queue · two later successful days will rebuild this word."
     : stats ? `Next memory check: ${displayDate(stats.dueAt)} · ${stats.intervalDays} ${stats.intervalDays===1?"day":"days"} between reviews.` : "";
 }
 function clearNextKeyHandler(){
@@ -2061,15 +2057,15 @@ function completionBackScreen(finished){
 function completionTitle(finished, missed){
   if(finished?.repair && missed.length) return "Repair round";
   if(finished?.repair) return "All repaired";
-  if(finished?.source === "challenge") return "Daily complete";
+  if(finished?.source === "challenge") return "Timed quiz complete";
   if(finished?.source === "daily-practice") return "Daily practice complete";
   if(finished?.source === "coach-weak") return "Weak lesson focus complete";
   return "Session complete";
 }
 function repairPanelHtml(missed, finished){
   if(missed.length){
-    const intro = finished?.repair ? "Keep going with only the words still wrong." : "Practise only the words you missed; repair rounds repeat misses until the round is clean.";
-    return `<div class="repair-box"><strong>${missed.length} word${missed.length===1?"":"s"} to repair</strong><p>${intro}</p><div class="repair-list">${missed.slice(0,8).map((word)=>`<span>${escapeHtml(word.hindi)} · ${escapeHtml(formatPrimaryEnglish(word))}</span>`).join("")}${missed.length>8?`<span>+${missed.length-8} more</span>`:""}</div><button class="retry-btn" id="repairRoundMistakes" type="button">${finished?.repair?"Try remaining words again":"Repair missed words now"}</button></div>`;
+    const intro = finished?.repair ? "These words stay saved for later. Another short review is optional." : "An optional short review, with at most 20 questions. Difficult words also stay saved for later days.";
+    return `<div class="repair-box"><strong>${missed.length} word${missed.length===1?"":"s"} to repair</strong><p>${intro}</p><div class="repair-list">${missed.slice(0,8).map((word)=>`<span>${escapeHtml(word.hindi)} · ${escapeHtml(formatPrimaryEnglish(word))}</span>`).join("")}${missed.length>8?`<span>+${missed.length-8} more</span>`:""}</div><button class="retry-btn" id="repairRoundMistakes" type="button">${finished?.repair?"Try remaining words again":"Optional short review"}</button></div>`;
   }
   if(finished?.repair) return `<div class="repair-box repair-done"><strong>Clean repair</strong><p>Every word in this repair round was correct.</p></div>`;
   return "";
@@ -2117,7 +2113,7 @@ function renderChallenge(){
   const total = done?.total || DAILY_CHALLENGE_TARGET;
   const previewWords = done ? [] : phase1MaintenanceChallengeWords(user, total);
   const questionCounts = previewWords.length ? challengeQuestionCounts(previewWords) : challengeQuestionCounts(total);
-  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Phase 1 daily</div><h2>Daily Challenge</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>${total}</strong><small>words</small></div><div><strong>${questionCounts.typed}</strong><small>typed recall</small></div><div><strong>${questionCounts.choices}</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">An adaptive Phase 1 maintenance run: weak, due and recently missed words come first, then broad coverage. Once you start, today’s attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/${DAILY_CHALLENGE_TARGET}</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button><button class="ghost" id="resetChallengeToday" type="button">Reset today</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start today’s challenge</button>`}</div>`;
+  $("#challenge").innerHTML=`<div class="challenge-card daily-card"><div class="daily-badge">Optional extra · Phase 1</div><h2>Timed quiz</h2><p class="challenge-date">${displayDate(today())}</p><div class="daily-metrics"><div><strong>${total}</strong><small>words</small></div><div><strong>${questionCounts.typed}</strong><small>typed recall</small></div><div><strong>${questionCounts.choices}</strong><small>choices</small></div><div><strong>${recent.length?best:"-"}</strong><small>7-run best</small></div></div><p class="challenge-info">An optional scored quiz, separate from your Daily practice. Up to 20 Phase 1 words, with one scored attempt per day. Once started, that attempt is locked.</p>${done?`<div class="daily-result"><span>${doneLabel}</span><strong>${done.correct}/${total}</strong><small>${Math.round(((done.correct||0)/total)*100)}% ${doneNote} · 7-run average ${average || 0}/${DAILY_CHALLENGE_TARGET}</small></div>${done.completed?challengeReviewHtml():""}<div class="daily-actions"><button class="retry-btn secondary-action" id="practiceAfterChallenge" type="button">Practise Phase 1</button><button class="retry-btn" id="goScoreboard" type="button">Go to scoreboard</button><button class="ghost" id="resetChallengeToday" type="button">Reset today</button></div>`:`<button class="start-btn daily-start" id="startChallenge" type="button">Start optional timed quiz</button>`}</div>`;
   $("#startChallenge")?.addEventListener("click",async()=>{ await loadCloudState({ rerender:false }); startSession("challenge",DAILY_CHALLENGE_TARGET,"mixed"); });
   $("#repairChallengeMistakes")?.addEventListener("click",()=>startRepairSession(missedWordsFromAttempts(todaysChallengeAttempts()), "coach"));
   $("#resetChallengeToday")?.addEventListener("click", resetTodaysChallenge);
@@ -2441,9 +2437,11 @@ function renderManage(){
 }
 function showLogin(){ renderLogin(); show("login"); }
 function renderLogin(){ $("#login").innerHTML=`<div class="login-card"><h2>Log in</h2><p>Personal progress, scoreboard and your learning history.</p><input id="username" type="text" placeholder="Username"><input id="password" type="password" placeholder="Password"><button class="login-btn" id="doLogin">Log in</button><p id="loginError" style="color:var(--red);min-height:22px;margin-top:10px"></p></div>`; $("#doLogin").addEventListener("click",async()=>{const name=$("#username").value.trim().toLowerCase(); const pass=$("#password").value; if(USERS[name] && USERS[name]===pass){await disconnectCloudSync();user=name; if(user==="vincent") phase="phase1"; save(); renderNav(); show("coach");} else $("#loginError").textContent="Incorrect username or password.";}); }
-document.querySelectorAll("[data-screen]").forEach((button)=>button.addEventListener("click",()=>show(button.dataset.screen)));
-$("#loginBtn").addEventListener("click",()=>{renderLogin(); show("login");});
-$("#logoutBtn").addEventListener("click",async()=>{await disconnectCloudSync();user=null; save(); renderNav(); show("quiz");});
+document.querySelectorAll("[data-screen]").forEach((button)=>button.addEventListener("click",()=>{show(button.dataset.screen);const menu=$(".nav-more");if(menu)menu.open=false;}));
+document.addEventListener("click",event=>{if(!event.target.closest(".nav-more")){const menu=$(".nav-more");if(menu)menu.open=false;}});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){const menu=$(".nav-more");if(menu)menu.open=false;}});
+$("#loginBtn").addEventListener("click",()=>{$(".nav-more").open=false;renderLogin(); show("login");});
+$("#logoutBtn").addEventListener("click",async()=>{$(".nav-more").open=false;await disconnectCloudSync();user=null; save(); renderNav(); show("quiz");});
 window.addEventListener("popstate",()=>{
   if(session?.source==="challenge"){
     lockChallengeNavigation();

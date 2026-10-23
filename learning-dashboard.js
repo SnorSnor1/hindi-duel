@@ -1,4 +1,4 @@
-import { learningHistory, reviewDate } from './daily-practice.js?v=20261023-4';
+import { learningHistory, reviewDate } from './daily-practice.js?v=20261023-7';
 import { importantWords, learningKey, CORE_THEMES } from './core-vocabulary.js?v=20261023-3';
 
 export function learningDashboard(wordsByPhase, attemptsByPhase, date, phaseKeys){

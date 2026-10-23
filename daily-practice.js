@@ -1,7 +1,8 @@
 import { coreTheme, learningKey } from "./core-vocabulary.js?v=20261023-3";
 
 export const DAILY_PHASE_COUNTS = { phase1: 6, phase2: 7, phase3: 7 };
-export const DAILY_PLAN_VERSION = 3;
+export const DAILY_PLAN_VERSION = 4;
+export const MAX_ROUND_WORDS = 20;
 export const REVIEW_INTERVALS = [1, 3, 7, 14, 30, 60];
 
 // Calendar arithmetic in UTC avoids shorter/longer days at daylight-saving changes.
@@ -80,8 +81,22 @@ export function prioritisePractice(words, history, random=Math.random){
   }).sort((a,b)=>a.priority-b.priority || a.tie-b.tie).map(item=>item.word);
 }
 
-export function createDailyPractice(wordsByPhase, curriculum, date, phaseKeys=Object.keys(DAILY_PHASE_COUNTS), attemptsByPhase={}){
+export function dailyRoundLimit(value){ return Number(value)===10 ? 10 : MAX_ROUND_WORDS; }
+
+function phaseQuotas(phaseKeys, limit){
+  const weights=phaseKeys.map(key=>DAILY_PHASE_COUNTS[key] || 0);
+  const total=weights.reduce((sum,count)=>sum+count,0);
+  if(!total) return {};
+  const target=Math.min(limit,total);
+  const shares=weights.map((weight,index)=>({key:phaseKeys[index],exact:target*weight/total,count:Math.floor(target*weight/total)}));
+  let remaining=target-shares.reduce((sum,share)=>sum+share.count,0);
+  [...shares].sort((a,b)=>(b.exact-b.count)-(a.exact-a.count) || b.key.localeCompare(a.key)).forEach(share=>{if(remaining>0){share.count++;remaining--;}});
+  return Object.fromEntries(shares.map(share=>[share.key,share.count]));
+}
+
+export function createDailyPractice(wordsByPhase, curriculum, date, phaseKeys=Object.keys(DAILY_PHASE_COUNTS), attemptsByPhase={}, limit=MAX_ROUND_WORDS){
   const history = learningHistory(attemptsByPhase,date);
+  const quotas = phaseQuotas(phaseKeys,dailyRoundLimit(limit));
   const phases = phaseKeys.map(phaseKey=>({phaseKey,words:orderedPhaseWords(wordsByPhase[phaseKey] || [],curriculum[phaseKey]?.words || [],phaseKey)}));
   const allWords = phases.flatMap(phase=>phase.words);
   const reviews = new Map();
@@ -94,8 +109,13 @@ export function createDailyPractice(wordsByPhase, curriculum, date, phaseKeys=Ob
   }
   const chosen = new Set(reviews.keys());
   return phases.flatMap(({phaseKey,words})=>{
-    const selected = [...reviews.values()].filter(word=>word.phaseKey === phaseKey);
-    const count = Math.max(DAILY_PHASE_COUNTS[phaseKey] || 0,selected.length);
+    const count = quotas[phaseKey] || 0;
+    // Oldest encounters get attention first, so a large backlog rotates rather
+    // than silently becoming a daily assignment of hundreds of words.
+    const selected = [...reviews.values()].filter(word=>word.phaseKey === phaseKey)
+      .sort((a,b)=>history.get(learningKey(a)).lastDate.localeCompare(history.get(learningKey(b)).lastDate)
+        || dayHash(`${date}|${learningKey(a)}`)-dayHash(`${date}|${learningKey(b)}`))
+      .slice(0,count);
     const candidates = words.filter(word=>!chosen.has(learningKey(word)) && history.get(learningKey(word))?.resting !== true).map((word,rank)=>{
       const stats = history.get(learningKey(word));
       const core = Boolean(coreTheme(word));

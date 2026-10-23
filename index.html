@@ -7,26 +7,27 @@
   <meta name="theme-color" content="#163d36">
   <meta name="description" content="Your personal Hindi learning studio. Practise everyday essentials with a coach that adapts to your answers.">
   <link rel="stylesheet" href="styles.css?v=20261023-4">
-  <link rel="stylesheet" href="studio.css?v=20261023-6">
+  <link rel="stylesheet" href="studio.css?v=20261023-7">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <nav aria-label="Main navigation">
     <h1><span class="brand-symbol" lang="hi" aria-hidden="true">ह</span> Hindi <span>Duel</span><small>A little every day.</small></h1>
     <div class="nav-btns">
-      <button class="nav-btn" data-screen="coach">My coach</button>
-      <button class="nav-btn active" data-screen="quiz">Lessons</button>
-      <button class="nav-btn" data-screen="daily">Daily practice</button>
-      <button class="nav-btn" data-screen="images">Images</button>
-      <button class="nav-btn private hidden" data-screen="challenge">Daily Challenge</button>
-      <button class="nav-btn private hidden" data-screen="mistakes">Mistakes</button>
-      <button class="nav-btn private hidden" data-screen="stats">Stats</button>
-      <button class="nav-btn private hidden" data-screen="scoreboard">Scoreboard</button>
-      <button class="nav-btn maaike hidden" data-screen="manage">Manage</button>
-      <button class="nav-btn" data-screen="sync">Sync devices</button>
-      <button class="nav-btn" id="loginBtn">Log in</button>
-      <button class="nav-btn hidden" id="logoutBtn">Log out</button>
+      <button class="nav-btn active" data-screen="daily">Daily practice</button>
+      <button class="nav-btn" data-screen="quiz">Lessons</button>
     </div>
+    <details class="nav-more"><summary aria-label="More options">More</summary><div class="nav-more-menu">
+      <button class="nav-btn" data-screen="images" aria-label="Image practice">Image practice</button>
+      <button class="nav-btn private hidden" data-screen="challenge" aria-label="Optional timed quiz">Optional timed quiz</button>
+      <button class="nav-btn private hidden" data-screen="mistakes" aria-label="Difficult words">Difficult words</button>
+      <button class="nav-btn private hidden" data-screen="stats" aria-label="Progress">Progress</button>
+      <button class="nav-btn private hidden" data-screen="scoreboard" aria-label="Scoreboard">Scoreboard</button>
+      <button class="nav-btn maaike hidden" data-screen="manage" aria-label="Manage lessons">Manage lessons</button>
+      <button class="nav-btn" data-screen="sync" aria-label="Sync devices">Sync devices</button>
+      <button class="nav-btn" id="loginBtn" aria-label="Log in">Log in</button>
+      <button class="nav-btn hidden" id="logoutBtn" aria-label="Log out">Log out</button>
+    </div></details>
   </nav>
   <main id="main">
     <section id="sync" class="screen hidden"></section>
@@ -46,6 +47,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
   <script src="firebase-config.js?v=20261023-6"></script>
-  <script type="module" src="app.js?v=20261023-6"></script>
+  <script type="module" src="app.js?v=20261023-7"></script>
 </body>
 </html>
