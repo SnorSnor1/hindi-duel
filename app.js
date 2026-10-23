@@ -1,4 +1,4 @@
-import { PHASE_DATA } from "./data.js?v=20260819-2";
+import { PHASE_DATA } from "./data.js?v=20261023-1";
 
 const USERS = { maaike: "Maaike10!", vincent: "chailavie" };
 const STORE = "hindi.seekho.combined.v1";
@@ -2362,7 +2362,17 @@ window.addEventListener("visibilitychange",()=>{
 });
 if(CLOUD_SYNC_ENABLED) setInterval(()=>{ if(user && !session) loadCloudState({ rerender:true }); }, 60000);
 renderNav();
-if(user) show("coach");
+const practiceLink = new URLSearchParams(window.location.search);
+const linkedPhase = practiceLink.get("phase");
+const linkedLesson = practiceLink.get("lesson");
+if(availablePhaseKeys().includes(linkedPhase)){
+  phase = linkedPhase;
+  const lessonPattern = /^\d+[a-c]?$/i.test(linkedLesson || "")
+    ? new RegExp(`\\bLesson ${linkedLesson}\\b`, "i") : null;
+  selectedCategories = new Set(categories().filter((category)=>!lessonPattern || lessonPattern.test(category)));
+  show("quiz");
+}
+else if(user) show("coach");
 else renderQuizSetup();
 autoSyncPublishedSheets();
 initCloudSync().then(()=>loadCloudState({ rerender:true }));

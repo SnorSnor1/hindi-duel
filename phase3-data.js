@@ -64,5 +64,13 @@ export const PHASE3_WORDS = [
   { hindi: "तारीफ़ करना", english: ["to praise", "to compliment"], category: "The Hare and the Tortoise · Lesson 8a" },
   { hindi: "तालियाँ बजाना", english: ["to clap", "to applaud"], category: "The Hare and the Tortoise · Lesson 9a" },
   { hindi: "पछतावा होना", english: ["to regret", "to feel sorry"], category: "The Hare and the Tortoise · Lesson 9a" },
-  { hindi: "माफ़ी माँगना", english: ["to apologise", "to apologize", "to ask for forgiveness"], category: "The Hare and the Tortoise · Lesson 9a" }
+  { hindi: "माफ़ी माँगना", english: ["to apologise", "to apologize", "to ask for forgiveness"], category: "The Hare and the Tortoise · Lesson 9a" },
+  { hindi: "तकलीफ़", english: ["trouble", "difficulty", "pain", "discomfort"], category: "Aladdin · Lesson 22" },
+  { hindi: "फटना", english: ["to tear", "to rip", "to burst", "to split"], category: "Aladdin · Lesson 22" },
+  { hindi: "चमकना", english: ["to shine", "to sparkle", "to glitter"], category: "Aladdin · Lesson 22" },
+  { hindi: "तेल", english: ["oil"], category: "Aladdin · Lesson 22" },
+  { hindi: "गुफा", english: ["cave"], category: "Aladdin · Lesson 22" },
+  { hindi: "हीरा", english: ["diamond"], category: "Aladdin · Lesson 22" },
+  { hindi: "मोती", english: ["pearl"], category: "Aladdin · Lesson 22" },
+  { hindi: "तब्दील होना", english: ["to change", "to transform", "to be transformed", "to turn into"], category: "Aladdin · Lesson 22" }
 ];
