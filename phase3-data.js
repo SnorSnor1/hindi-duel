@@ -160,5 +160,12 @@ export const PHASE3_WORDS = [
   { hindi: "गुफा", english: ["cave"], category: "Aladdin · Lesson 22" },
   { hindi: "हीरा", english: ["diamond"], category: "Aladdin · Lesson 22" },
   { hindi: "मोती", english: ["pearl"], category: "Aladdin · Lesson 22" },
-  { hindi: "तब्दील होना", english: ["to change", "to transform", "to be transformed", "to turn into"], category: "Aladdin · Lesson 22" }
+  { hindi: "तब्दील होना", english: ["to change", "to transform", "to be transformed", "to turn into"], category: "Aladdin · Lesson 22" },
+  { hindi: "कई", english: ["several", "many"], category: "Aladdin, part 2 · Lesson 23" },
+  { hindi: "जिन्न", english: ["genie", "jinn", "djinn", "spirit"], category: "Aladdin, part 2 · Lesson 23" },
+  { hindi: "हुक्म", english: ["order", "command", "decree"], category: "Aladdin, part 2 · Lesson 23" },
+  { hindi: "आका", english: ["master", "lord", "owner"], category: "Aladdin, part 2 · Lesson 23" },
+  { hindi: "ख़िदमत", english: ["service", "attendance"], category: "Aladdin, part 2 · Lesson 23" },
+  { hindi: "अनजान", english: ["unknown", "unfamiliar", "unaware", "a stranger", "stranger"], category: "Aladdin, part 2 · Lesson 23" },
+  { hindi: "क़दम", english: ["step", "footstep", "pace"], category: "Aladdin, part 2 · Lesson 23" }
 ];

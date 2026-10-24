@@ -1,4 +1,4 @@
-import { PHASE3_WORDS } from "./phase3-data.js?v=20261023-1";
+import { PHASE3_WORDS } from "./phase3-data.js?v=20261024-1";
 
 export const PHASE_DATA = {
   "phase1": {
@@ -11075,7 +11075,7 @@ export const PHASE_DATA = {
   "phase3": {
     "title": "Hindi Phase 3",
     "subtitle": "Story vocabulary",
-    "updatedThrough": "21 October 2026",
+    "updatedThrough": "23 October 2026",
     "words": PHASE3_WORDS
   }
 };
